@@ -1,0 +1,203 @@
+defaults: &defaults
+  docker:
+    - image: circleci/node:8-browsers
+      environment:
+        JOBS: 2
+
+node_key: &node_key
+  key: node-deps-{{ checksum "yarn.lock" }}-{{ checksum "circle.yml" }}
+
+restore_node: &restore_node
+  restore_cache:
+    <<: *node_key
+
+deploy_static: &deploy_static
+  <<: *defaults
+  steps:
+    - checkout
+    - <<: *restore_node
+    - deploy:
+        name: Deploy to S3
+        command: |
+          env | sed -n "s/^${ENV}_//p" >> .env
+          npx ember deploy "$(echo $ENV | awk '{print tolower($0)}')" --verbose
+
+deploy_fastboot: &deploy_fastboot
+  docker:
+    - image: circleci/python:3.6
+  steps:
+    - checkout
+    - setup_remote_docker
+    - restore_cache:
+        key: deploy-{{ checksum "circle.yml" }}
+    - run:
+        name: Install Requirements
+        command: |
+          if [[ ! -d ~/.venv ]]; then
+            python3 -m venv ~/.venv
+            source ~/.venv/bin/activate
+            pip3 install -U git+https://github.com/nypublicradio/nyprsetuptools.git
+          fi
+    - deploy:
+        name: Deploy Fastboot
+        command: |
+          TAG=${CIRCLE_TAG:-demo}
+          source ~/.venv/bin/activate
+          nyprsetuptools DockerDeploy --environment=$ENV \
+                                      --ecs-cluster=fastboot \
+                                      --ecr-repository=gothamist-client \
+                                      --tag=$TAG \
+                                      --wait=300 \
+                                      --fargate \
+                                      --execution-role=gothamist-client-$ENV \
+                                      --task-role=gothamist-client-$ENV \
+                                      --ports=3000 \
+                                      --cpu=256 \
+                                      --memory-reservation=512
+    - save_cache:
+        key: deploy-{{ checksum "circle.yml" }}
+        paths:
+          - ~/.venv
+
+version: 2
+
+jobs:
+  build-static:
+    <<: *defaults
+
+    steps:
+      - checkout
+
+      - <<: *restore_node
+      - run:
+          name: Install node dependencies
+          command: |
+            if [ ! -d node_modules ]; then
+              yarn --pure-lockfile
+            fi
+      - save_cache:
+          <<: *node_key
+          paths:
+            - node_modules
+
+  test-static:
+    <<: *defaults
+
+    steps:
+      - checkout
+      - <<: *restore_node
+      - run:
+          name: Test
+          environment:
+            CIRCLE_TEST_RESULTS: test-results
+          command: npx ember test
+      - store_test_results:
+          path: test-results/
+
+  deploy-static-qa:
+    <<: *defaults
+
+    steps:
+      - checkout
+      - <<: *restore_node
+      - deploy:
+          name: Deploying QA Build
+          command: |
+            env | sed -n "s/^DEMO_//p" > .env
+            npx ember deploy qa:$CIRCLE_BRANCH --verbose --activate
+      - run:
+          name: Make QA artifact
+          command: |
+            mkdir /tmp/qa-builds
+            echo "<a href=\"https://$QA_HOST?build=$CIRCLE_BRANCH\">https://$QA_HOST?build=$CIRCLE_BRANCH</a>" > /tmp/qa-builds/$CIRCLE_SHA1.html
+
+      - store_artifacts:
+          path: /tmp/qa-builds
+
+  deploy-static-demo:
+    environment:
+      ENV: DEMO
+    <<: *deploy_static
+
+  deploy-fastboot-demo:
+    environment:
+      ENV: demo
+    <<: *deploy_fastboot
+
+  deploy-static-prod:
+    environment:
+      ENV: PROD
+    <<: *deploy_static
+
+  deploy-fastboot-prod:
+    environment:
+      ENV: prod
+    <<: *deploy_fastboot
+
+workflows:
+  version: 2
+  just-test:
+    jobs:
+      - build-static:
+          filters:
+            branches:
+              ignore: /master|[A-Za-z-_]+/[A-Za-z-_\d]+/
+      - test-static:
+          requires:
+            - build-static
+
+  deploy-qa:
+    jobs:
+      - build-static:
+          filters:
+            branches:
+              only: /[A-Za-z-_]+/[A-Za-z-_\d]+/
+      - test-static:
+          requires:
+            - build-static
+      - deploy-static-qa:
+          requires:
+            - test-static
+
+  deploy-demo:
+    jobs:
+      - build-static:
+          filters:
+            branches:
+              only: master
+      - test-static:
+          requires:
+            - build-static
+      - deploy-static-demo:
+          requires:
+            - test-static
+      - deploy-fastboot-demo:
+          requires:
+            - test-static
+
+  deploy-prod:
+    jobs:
+      - build-static:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+/
+      - test-static:
+          filters:
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+/
+          requires:
+            - build-static
+      - deploy-static-prod:
+          filters:
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+/
+          requires:
+            - test-static
+      - deploy-fastboot-prod:
+          filters:
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+/
+          requires:
+            - test-static
