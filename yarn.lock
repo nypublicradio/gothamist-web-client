@@ -1039,7 +1039,7 @@ abbrev@1:
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
   integrity sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==
 
-abortcontroller-polyfill@^1.2.1:
+abortcontroller-polyfill@^1.2.1, abortcontroller-polyfill@^1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/abortcontroller-polyfill/-/abortcontroller-polyfill-1.2.4.tgz#057008f240d9e60521d03a69144308e7da3bfd17"
   integrity sha512-2jA0QLoel1I791Tv881otBa3TLXBiaffc4PL2dBITNj00oRI8lZr4C0IEiaaImeuHtWVvaIknlHCGquqkpplSA==

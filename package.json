@@ -76,6 +76,7 @@
     "node": "6.* || 8.* || >= 10.*"
   },
   "dependencies": {
+    "abortcontroller-polyfill": "^1.2.4",
     "dotenv": "^6.2.0",
     "nypr-fastboot": "^0.6.2"
   }
