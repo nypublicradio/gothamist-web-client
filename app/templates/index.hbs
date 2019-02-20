@@ -1,0 +1,15 @@
+<h2>Gothamist Homepage</h2>
+
+{{#each model as |story|}}
+  <article>
+    <h3>
+      <a href={{story.permalink}} target="_blank" rel="noopener">
+        {{story.title}}
+      </a>
+    </h3>
+    <p>{{story.author_nickname}}</p>
+
+    {{!-- template-lint-disable no-triple-curlies --}}
+    {{{story.excerpt_pretty}}}
+  </article>
+{{/each}}
