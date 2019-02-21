@@ -1,3 +1,5 @@
+import config from '../config/environment';
+
 export default function() {
 
   // These comments are here to help you get started. Feel free to delete them.
@@ -23,4 +25,18 @@ export default function() {
 
     http://www.ember-cli-mirage.com/docs/v0.4.x/shorthands/
   */
+
+  this.urlPrefix = config.apiServer;
+
+  this.get('/topics/search', function(schema, request) {
+    let { term, count, record } = request.queryParams;
+    if (term === '@main') {
+      // homepage
+      return schema.stories.where({tags: ['@main']});
+    }
+
+    if (record) {
+      return schema.stories.where({ permalink: record });
+    }
+  });
 }
