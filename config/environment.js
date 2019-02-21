@@ -24,7 +24,10 @@ module.exports = function(environment) {
 
     fastboot: {
       hostWhitelist: [/^localhost:\d+$/, /^\d+\.\d+\.\d+\.\d+:\d+$/].concat(process.env.HOST_WHITELIST ? process.env.HOST_WHITELIST.split(',') : [])
-    }
+    },
+
+    // ENDPOINTS
+    gothamistAPI: process.env.GOTHAMIST_API,
   };
 
   if (environment === 'development') {
@@ -39,6 +42,9 @@ module.exports = function(environment) {
     ENV['ember-cli-mirage'] = {
       enabled: !!process.env.mirage
     };
+
+    // for mirage endpoints
+    ENV.apiServer = 'https://api.demo.nypr.digital';
   }
 
   if (environment === 'test') {
@@ -51,6 +57,9 @@ module.exports = function(environment) {
 
     ENV.APP.rootElement = '#ember-testing';
     ENV.APP.autoboot = false;
+
+    // for mirage endpoints
+    ENV.apiServer = 'https://api.demo.nypr.digital';
   }
 
   if (environment === 'production') {
