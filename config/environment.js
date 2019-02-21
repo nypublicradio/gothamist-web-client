@@ -34,8 +34,10 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
 
+    // enable mirage on the command line by running `$ mirage=true ember serve`
+    // anything truthy will work: `$ mirage=1 ember serve`
     ENV['ember-cli-mirage'] = {
-      enabled: false,
+      enabled: !!process.env.mirage
     };
   }
 
