@@ -3,9 +3,7 @@
 {{#each model as |story|}}
   <article>
     <h3>
-      <a href={{story.permalink}} target="_blank" rel="noopener">
-        {{story.title}}
-      </a>
+      {{link-to story.title 'wrapper' story.permalink}}
     </h3>
     <p>{{story.author_nickname}}</p>
 
