@@ -29,7 +29,11 @@ export default function() {
   this.urlPrefix = config.apiServer;
 
   this.get('/topics/search', function(schema, request) {
-    let { term, count, record } = request.queryParams;
+    let {
+      term,
+      record,
+      // count,
+    } = request.queryParams;
     if (term === '@main') {
       // homepage
       return schema.stories.where({tags: ['@main']});
