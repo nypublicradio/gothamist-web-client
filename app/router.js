@@ -7,7 +7,7 @@ const Router = EmberRouter.extend({
 });
 
 Router.map(function() {
-  this.route('wrapper', {path: '*any'});
+  this.route('story', {path: '*any'});
 });
 
 export default Router;
