@@ -1,0 +1,32 @@
+import DS from 'ember-data';
+
+export default DS.Model.extend({
+  allowComments: DS.attr('boolean'),
+  authorId: DS.attr('number'),
+  authorName: DS.attr('string'),
+  authorNickname: DS.attr('string'),
+  authoredOn: DS.attr('string'),
+  authoredOnUtc: DS.attr('string'),
+  blodId: DS.attr('number'),
+  categories: DS.attr(),
+  commentCount: DS.attr('number'),
+  entrytopics: DS.attr(),
+  excerpt: DS.attr('string'),
+  excerptFull: DS.attr('string'),
+  excerptPretty: DS.attr('string'),
+  excerptSponsor: DS.attr('string'),
+  hasGallery: DS.attr('boolean'),
+  modifiedOn: DS.attr('string'),
+  modifiedOnUtc: DS.attr('string'),
+  permalink: DS.attr('string'),
+  platypusId: DS.attr('string'),
+  socialtopics: DS.attr(),
+  tags: DS.attr(),
+  text: DS.attr('string'),
+  textMore: DS.attr('string'),
+  thumbnail60: DS.attr('string'),
+  thumbnail105: DS.attr('string'),
+  thumbnail300: DS.attr('string'),
+  thumbnail640: DS.attr('string'),
+  title: DS.attr('string')
+});
