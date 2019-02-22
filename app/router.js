@@ -7,6 +7,8 @@ const Router = EmberRouter.extend({
 });
 
 Router.map(function() {
+  this.route('404', {path: '*'});
+
   this.route('story', {path: '*any'});
 });
 
