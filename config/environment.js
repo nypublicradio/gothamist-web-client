@@ -27,7 +27,7 @@ module.exports = function(environment) {
     },
 
     // ENDPOINTS
-    gothamistAPI: process.env.GOTHAMIST_API,
+    apiServer: process.env.API_SERVER,
   };
 
   if (environment === 'development') {
