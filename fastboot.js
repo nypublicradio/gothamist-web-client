@@ -5,6 +5,9 @@ const server = fastboot({
   manifestKey: process.env.FASTBOOT_MANIFEST,
   healthCheckerUA: 'ELB-HealthChecker',
   sentryDSN: process.env.SENTRY_DSN,
+  env: process.env.ENV,
+  serviceName: process.env.SERVICE_NAME,
+  fastbootConfig: {resilient: true}
 });
 
 server.start();
