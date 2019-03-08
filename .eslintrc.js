@@ -1,6 +1,7 @@
 module.exports = {
   globals: {
     server: true,
+    google: true,
   },
   root: true,
   parserOptions: {

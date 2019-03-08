@@ -78,5 +78,10 @@
     "abortcontroller-polyfill": "^1.2.4",
     "dotenv": "^6.2.0",
     "nypr-fastboot": "^0.6.2"
+  },
+  "ember-addon": {
+    "paths": [
+      "lib/google-custom-search"
+    ]
   }
 }
