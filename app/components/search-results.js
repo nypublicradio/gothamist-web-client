@@ -14,8 +14,15 @@ export default Component.extend({
         }
       })
 
+      this.set('google', google.search.cse.element.getElement('search'));
+
       this.google.execute(this.query);
     });
   },
 
+  didRender() {
+    if (this.google) {
+      this.google.execute(this.query);
+    }
+  }
 });
