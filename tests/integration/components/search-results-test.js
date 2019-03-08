@@ -18,7 +18,7 @@ module('Integration | Component | search-results', function(hooks) {
       search: {
         cse: {
           element: {
-            render: this.mock('redner').once(),
+            render: this.mock('render').once(),
             getElement: () => ({
               execute: this.mock('execute').once().withArgs(QUERY),
             })
