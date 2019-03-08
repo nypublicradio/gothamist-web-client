@@ -10,6 +10,7 @@ Router.map(function() {
   this.route('404', {path: '*'});
 
   this.route('story', {path: '*any'});
+  this.route('search');
 });
 
 export default Router;
