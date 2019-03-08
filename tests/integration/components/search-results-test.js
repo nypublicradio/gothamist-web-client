@@ -14,9 +14,9 @@ module('Integration | Component | search-results', function(hooks) {
       search: {
         cse: {
           element: {
-            render: this.mock().once(),
+            render: this.mock('redner').once(),
             getElement: () => ({
-              execute: this.mock().once().withArgs(QUERY),
+              execute: this.mock('execute').once().withArgs(QUERY),
             })
           }
         }
