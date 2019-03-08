@@ -10,6 +10,10 @@ module('Integration | Component | search-results', function(hooks) {
   test('it renders', async function() {
     const QUERY = 'foo';
 
+    window.__gcse = {
+      finished: Promise.resolve(),
+    };
+
     window.google = {
       search: {
         cse: {
