@@ -6,16 +6,19 @@ export default Component.extend({
 
     window.__gcse.finished.then(() => {
       google.search.cse.element.render({
-        div: 'search',
-        gname: 'search',
+        div: 'search', // id of target container
         tag: 'searchresults-only', // type of google cse element to render
+        gname: 'search', // google api identifier
         attributes: {
-          autoSearchOnLoad: false,
+          autoSearchOnLoad: false, // force a fresh execution on every load
         }
       })
 
       this.set('google', google.search.cse.element.getElement('search'));
 
+      // execute the search on every load
+      // the google cse library preserves query params between renders
+      // execute the query by hand to ensure any cached state is refreshed
       this.google.execute(this.query);
     });
   },
