@@ -7,8 +7,8 @@ export default Component.extend({
     window.__gcse.finished.then(() => {
       google.search.cse.element.render({
         div: 'search',
-        tag: 'search',
         gname: 'search',
+        tag: 'searchresults-only', // type of google cse element to render
         attributes: {
           autoSearchOnLoad: false,
         }
