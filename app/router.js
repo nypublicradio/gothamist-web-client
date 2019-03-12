@@ -11,6 +11,7 @@ Router.map(function() {
 
   this.route('story', {path: '*any'});
   this.route('search');
+  this.route('tags', {path: 'tags/:tag'});
 });
 
 export default Router;

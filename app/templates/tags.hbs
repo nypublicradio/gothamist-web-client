@@ -1,0 +1,7 @@
+<h1>Articles about "{{model.tag}}"</h1>
+
+<p>{{link-to 'Back to home' 'index'}}</p>
+
+{{#each model.stories as |story|}}
+  {{story-card story=story}}
+{{/each}}
