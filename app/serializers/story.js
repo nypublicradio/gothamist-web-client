@@ -10,5 +10,12 @@ export default DS.RESTSerializer.extend({
     // ember wants a single record in response to `queryRecord` calls
     payload.entries = payload.entries[0];
     return this._super(...arguments);
+  },
+
+  extractMeta(store, storyClass, payload) {
+    return {
+      total: payload.total_entries,
+      count: payload.listed_entries,
+    }
   }
 });
