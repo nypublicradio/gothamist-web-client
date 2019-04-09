@@ -47,6 +47,8 @@ export default Route.extend({
     error(e) {
       if (e instanceof DS.NotFoundError) {
         this.transitionTo('404', e.url);
+      } else {
+        throw e;
       }
     }
   }
