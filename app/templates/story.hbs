@@ -1,7 +1,75 @@
-<h1>{{model.title}}</h1>
+<div class="u-section-spacing l-container l-wrap">
+  <article class="c-article l-container u-spacing--double">
+    <NyprOArticleHeader as |header|>
+      <header.top as |top|>
+        <top.breadcrumb @breadcrumbs={{model.breadcrumb}}/>
 
-{{{model.text}}}
+        <top.headline>
+          {{model.title}}
+        </top.headline>
 
-<p>
-  {{link-to 'Home' 'index'}}
-</p>
+        <top.meta @galleryPhotosCount={{model.gallery.length}} as |meta|>
+          <meta.byline @authors={{model.authors}} @sponsor={{model.sponsor}}/>
+          <meta.publishDate @publishDate={{utc model.authoredOnUtc 'YYYYMMDDHHmmss'}} />
+        </top.meta>
+
+      </header.top>
+
+      <header.lead as |lead|>
+        <lead.left>
+          <NyprMShareTools @vertical={{true}} as |share|>
+            <share.link @service='twitter'/>
+            <share.link @service='facebook'/>
+            <share.link @service='instagram'/>
+            <share.link @service='email'/>
+          </NyprMShareTools>
+        </lead.left>
+
+        <lead.center>
+          {{#if model.gallery}}
+            <NyprMGalleryLead @slides={{model.gallery}} />
+          {{else}}
+            <NyprMFigure
+              @src-s={{model.thumbnail640}}
+              @caption={{model.leadImageCaption}}
+              @credit={{STORY.leadImageCredit}}
+            />
+          {{/if}}
+        </lead.center>
+
+        {{!-- <lead.right>
+          <NyprORelatedContent @items={{STORY.relatedItems}}/>
+        </lead.right> --}}
+
+      </header.lead>
+
+    </NyprOArticleHeader>
+
+    <NyprOArticleBody @body={{model.text}}/>
+
+    <div class="l-container--content u-section-spacing">
+      <NyprOArticleFooter as |footer|>
+        <footer.tags @tags={{model.displayTags}} as |Tag tag|>
+          <Tag @url='/tags/{{tag}}'/>
+        </footer.tags>
+
+        <footer.contact>
+          <p><strong>Do you know the scoop?</strong> &nbsp; <a href="">Comment</a> below or <a href="">Send us a Tip</a></p>
+        </footer.contact>
+
+        <footer.donate
+          @linkText='Donate'
+          @linkUrl='https://pledge3.wnyc.org/donate/gothamist/onestep'>
+          <p>
+            Hey, do you know that it  takes money to write these stories? Help us tell more with your help today.
+          </p>
+        </footer.donate>
+
+        <footer.comments>
+          comments go here
+        </footer.comments>
+      </NyprOArticleFooter>
+    </div>
+
+  </article>
+</div>
