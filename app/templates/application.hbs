@@ -1,7 +1,91 @@
-{{head-layout}}
+<HeadLayout/>
 
-<header>
-  {{search-field}}
-</header>
+<NyprOHeader
+  @donateURL={{DONATE_URL}}
+  as |header|>
+
+  {{#if showLeaderboard}}
+    <header.leaderboard>
+    </header.leaderboard>
+  {{/if}}
+
+  <header.menu as |menu|>
+    <menu.branding>
+      <NyprASvg @icon='gothamist-logo'/>
+    </menu.branding>
+
+    <menu.primaryNav @navItems={{model.primaryNav}}/>
+    <menu.secondaryNav @navItems={{model.secondaryNav}}/>
+  </header.menu>
+
+  <header.left as |left|>
+    <left.branding>
+      {{#link-to 'index'}}
+        <NyprASvg @icon='gothamist-logo'/>
+      {{/link-to}}
+    </left.branding>
+
+    {{#if headline}}
+      <left.headline>
+        {{headline}}
+      </left.headline>
+    {{/if}}
+
+  </header.left>
+
+  {{#if showNav}}
+    <header.nav @navItems={{model.primaryNav}}/>
+  {{/if}}
+
+  <header.right as |right|>
+    {{#if showShareTools}}
+      <NyprMShareTools @label='Share' as |tools|>
+        <tools.share @service='facebook'/>
+        <tools.share @service='twitter'/>
+      </NyprMShareTools>
+    {{/if}}
+
+    {{#if showDonate}}
+      <NyprAButton class='c-main-header__donate o-button--sm' @url={{DONATE_URL}}>
+        Donate
+      </NyprAButton>
+    {{/if}}
+
+    {{#if showSearch}}
+      <right.search as |search|>
+        <search.open/>
+        <search.form/>
+      </right.search>
+    {{/if}}
+
+  </header.right>
+
+</NyprOHeader>
 
 {{outlet}}
+
+<NyprOFooter as |footer|>
+  <footer.slogan>
+    <p>
+      A website about New York.
+    </p>
+  </footer.slogan>
+
+  <footer.nav @navItems={{model.secondaryNav}}/>
+
+  <footer.signup>
+    <NyprMNewsletter as |newsletter|>
+      <newsletter.graphic>
+        <NyprASvg @icon='confetti'/>
+      </newsletter.graphic>
+
+      <newsletter.blurb>
+        Sign Up Today
+      </newsletter.blurb>
+
+      <newsletter.legal/>
+    </NyprMNewsletter>
+
+  </footer.signup>
+
+</NyprOFooter>
