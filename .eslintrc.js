@@ -32,6 +32,7 @@ module.exports = {
         'config/**/*.js',
         'lib/*/index.js',
         'fastboot.js',
+        'server/**/*.js',
       ],
       parserOptions: {
         sourceType: 'script',
