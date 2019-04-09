@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@ember/optional-features": "^0.6.3",
+    "@types/ember": "^3.0.27",
     "broccoli-asset-rev": "^2.7.0",
     "ember-auto-import": "^1.2.20",
     "ember-cli": "~3.9.0",
@@ -67,6 +68,7 @@
     "eslint-plugin-ember": "^5.2.0",
     "include-media": "^1.4.9",
     "loader.js": "^4.7.0",
+    "nypr-design-system": "^0.1.0-rc2",
     "qunit-dom": "^0.8.0",
     "sass": "^1.17.0"
   },
