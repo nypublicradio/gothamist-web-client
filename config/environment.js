@@ -26,6 +26,10 @@ module.exports = function(environment) {
       hostWhitelist: [/^localhost:\d+$/, /^\d+\.\d+\.\d+\.\d+:\d+$/].concat(process.env.HOST_WHITELIST ? process.env.HOST_WHITELIST.split(',') : [])
     },
 
+    moment: {
+      includeTimezone: 'all',
+    },
+
     // ENDPOINTS
     apiServer: process.env.API_SERVER,
   };
