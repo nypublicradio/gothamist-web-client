@@ -7,5 +7,14 @@ export default Route.extend({
       term: '@main',
       count: 3
     });
+  },
+
+  afterModel() {
+    this.controllerFor('application').setProperties({
+      showNav: true,
+      showShareTools: false,
+      headline: null,
+      showLeaderboard: true,
+    });
   }
 });
