@@ -57,12 +57,16 @@ export default DS.Model.extend({
 
   parsed: computed('text', function() {
     if (typeof FastBoot === 'undefined') {
-      let parsed = {};
       let text = this.text;
       let nodes =  document.createRange().createContextualFragment(text);
 
+      let parsed = {
+        nodes,
+      };
+
       let caption = nodes.querySelector('.image-none i');
       if (caption) {
+        parsed.nodes.querySelector('.image-none').remove();
         let match = caption.textContent.match(/^([^(]+)\(([^)]+)\)$/);
         if (match) {
           parsed.caption = match[1];

@@ -45,7 +45,9 @@
 
     </NyprOArticleHeader>
 
-    <NyprOArticleBody @body={{model.text}}/>
+    <NyprOArticleBody>
+      {{model.parsed.nodes}}
+    </NyprOArticleBody>
 
     <div class="l-container--content u-section-spacing">
       <NyprOArticleFooter as |footer|>
