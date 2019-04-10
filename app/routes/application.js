@@ -19,7 +19,7 @@ export default Route.extend({
         title: 'News',
       }, {
         url: '/tags/arts-entertainment',
-        title: 'Arts & Entertainmeht',
+        title: 'Arts & Entertainment',
       }, {
         url: '/tags/food',
         title: 'Food',
