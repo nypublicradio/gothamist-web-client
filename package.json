@@ -68,7 +68,7 @@
     "eslint-plugin-ember": "^5.2.0",
     "include-media": "^1.4.9",
     "loader.js": "^4.7.0",
-    "nypr-design-system": "^0.1.0-rc8",
+    "nypr-design-system": "^0.1.0-rc9",
     "qunit-dom": "^0.8.0",
     "sass": "^1.17.0"
   },
