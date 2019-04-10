@@ -17,4 +17,6 @@ export default Controller.extend({
 
   // on story pages
   headline: null,
+
+  headerLandmark: null,
 });

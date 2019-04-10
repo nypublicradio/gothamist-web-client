@@ -26,6 +26,7 @@ export default Route.extend({
       showShareTools: false,
       headline: null,
       showLeaderboard: true,
+      headerLandmark: null,
     });
   }
 });

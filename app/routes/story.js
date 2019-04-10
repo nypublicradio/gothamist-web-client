@@ -18,6 +18,7 @@ export default Route.extend({
       showShareTools: true,
       headline: model.title,
       showLeaderboard: false,
+      headerLandmark: '.c-article__share',
     });
 
     this.headData.setProperties({
