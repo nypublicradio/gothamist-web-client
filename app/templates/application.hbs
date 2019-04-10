@@ -26,7 +26,7 @@
       {{/link-to}}
     </left.branding>
 
-    {{#if headline}}
+    {{#if (and headline header.outOfViewport)}}
       <left.headline>
         {{headline}}
       </left.headline>
@@ -34,12 +34,12 @@
 
   </header.left>
 
-  {{#if showNav}}
+  {{#if (or (eq router.currentRouteName 'index') (and showNav (not header.outOfViewport)))}}
     <header.nav @navItems={{model.primaryNav}}/>
   {{/if}}
 
   <header.right as |right|>
-    {{#if showShareTools}}
+    {{#if (and showShareTools header.outOfViewport)}}
       <NyprMShareTools @label='Share' as |tools|>
         <tools.share @service='facebook'/>
         <tools.share @service='twitter'/>

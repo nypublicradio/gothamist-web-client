@@ -14,7 +14,7 @@ export default Route.extend({
 
   afterModel(model) {
     this.controllerFor('application').setProperties({
-      showNav: false,
+      showNav: true,
       showShareTools: true,
       headline: model.title,
       showLeaderboard: false,
