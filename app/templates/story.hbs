@@ -30,7 +30,7 @@
             <NyprMGalleryLead @slides={{model.gallery}} />
           {{else}}
             <NyprMFigure
-              @src-s={{model.thumbnail640}}
+              @src-s={{make-https model.thumbnail640}}
               @caption={{model.leadImageCaption}}
               @credit={{STORY.leadImageCredit}}
             />
