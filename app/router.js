@@ -1,8 +1,10 @@
+import RouterScroll from 'ember-router-scroll';
+
 import EmberRouter from '@ember/routing/router';
 import { inject } from '@ember/service';
 import config from './config/environment';
 
-const Router = EmberRouter.extend({
+const Router = EmberRouter.extend(RouterScroll, {
   headData: inject(),
   location: config.locationType,
   rootURL: config.rootURL,

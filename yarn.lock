@@ -942,7 +942,7 @@
   dependencies:
     "@types/estree" "*"
 
-"@types/ember@^3.0.27":
+"@types/ember@^3.0.27", "@types/ember@^3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@types/ember/-/ember-3.1.0.tgz#3c44b846c41a1340bc823910f9222746585b3314"
   integrity sha512-RHP/N7k81XIS16DLF/yTfnWEKdFFftRAUgjWO1oKNJ5ho3+iTH3vVq8u11PrhaHd+FHXNB1XKV20d5o1KEOnUQ==
@@ -1109,7 +1109,7 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.47.tgz#655b4a1cc52c8ab08f48cc055061990d6846bc97"
   integrity sha512-56wEJWXZs+3XXoTe/OCpdZ6czrONhy+6hT0GdPOb7HvudLTMJ1T5tuZPs37K5cPR5t+J9+vLPFDQgUQ8NWJE1w==
 
-"@types/rsvp@*":
+"@types/rsvp@*", "@types/rsvp@^4.0.2":
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/@types/rsvp/-/rsvp-4.0.2.tgz#bf9f72eaa6771292638a85bb8ce1db97e754b371"
   integrity sha512-48ZwxFD1hdBj8QMOSNGA2kYuo3+SKh8OEYh5cMi7cPRZXBF9jwVPV4yqA7EcJTNlAJL0v99pEUYetl0TsufMQA==
@@ -4189,6 +4189,17 @@ elliptic@^6.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.0"
 
+ember-app-scheduler@^1.0.5:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/ember-app-scheduler/-/ember-app-scheduler-1.0.8.tgz#37adacce2fa5ab59324e2c0b08f3c4a3568025b4"
+  integrity sha512-fYCOhQTLb1b+TZ2PBSqyvHXVAxf7qfWD0ZSJTd/IdU/xbLJSt34X75w7qK2uBHZCkVvCNm/ATW3pjFC/0zYk7A==
+  dependencies:
+    "@types/ember" "^3.1.0"
+    "@types/rsvp" "^4.0.2"
+    ember-cli-babel "^7.1.3"
+    ember-cli-typescript "^2.0.0"
+    ember-compatibility-helpers "^1.1.2"
+
 ember-assign-polyfill@~2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/ember-assign-polyfill/-/ember-assign-polyfill-2.4.0.tgz#acb00466f7d674b3e6b030acfe255b3b1f6472e1"
@@ -4875,7 +4886,7 @@ ember-cli@~3.9.0:
     watch-detector "^0.1.0"
     yam "^1.0.0"
 
-ember-compatibility-helpers@^1.1.1, ember-compatibility-helpers@^1.2.0:
+ember-compatibility-helpers@^1.1.1, ember-compatibility-helpers@^1.1.2, ember-compatibility-helpers@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/ember-compatibility-helpers/-/ember-compatibility-helpers-1.2.0.tgz#feee16c5e9ef1b1f1e53903b241740ad4b01097e"
   integrity sha512-pUW4MzJdcaQtwGsErYmitFRs0rlCYBAnunVzlFFUBr4xhjlCjgHJo0b53gFnhTgenNM3d3/NqLarzRhDTjXRTg==
@@ -5082,6 +5093,16 @@ ember-router-generator@^1.2.3:
   integrity sha1-jtLKhv8yM2MSD8FCeBkeno8TFe4=
   dependencies:
     recast "^0.11.3"
+
+ember-router-scroll@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/ember-router-scroll/-/ember-router-scroll-1.1.0.tgz#17f7ead22a4e9f43a8956d942ca37b5e507bada5"
+  integrity sha512-1eFbmsfY/DN95/3zhrMZSTGFavwtgWf7HrfM7SFipu/+Dn7w8Y5dWtqbk/hqE8FTDMiklFR52VcjTHEffRu0sw==
+  dependencies:
+    ember-app-scheduler "^1.0.5"
+    ember-cli-babel "^7.1.2"
+    ember-compatibility-helpers "^1.1.2"
+    ember-getowner-polyfill "^2.2.0"
 
 ember-sinon-qunit@^3.4.0:
   version "3.4.0"
