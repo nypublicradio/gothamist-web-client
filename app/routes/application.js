@@ -8,6 +8,10 @@ export default Route.extend({
     this.moment.setTimeZone('America/New_York');
   },
 
+  title(tokens) {
+    return `${tokens.join(' - ')} - Gothamist`
+  },
+
   model() {
     return {
       primaryNav: [{

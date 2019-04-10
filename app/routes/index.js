@@ -1,6 +1,17 @@
 import Route from '@ember/routing/route';
+import { inject } from '@ember/service';
 
 export default Route.extend({
+  headData: inject(),
+
+  titleToken: 'Homepage',
+
+  beforeModel() {
+    this.headData.setProperties({
+      metaDescription: 'A website about New York',
+    });
+  },
+
   model() {
     return this.store.query('story', {
       index: 'gothamist',
