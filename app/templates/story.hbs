@@ -18,10 +18,10 @@
       <header.lead as |lead|>
         <lead.left>
           <NyprMShareTools @vertical={{true}} as |share|>
-            <share.link @service='twitter'/>
-            <share.link @service='facebook'/>
-            <share.link @service='instagram'/>
-            <share.link @service='email'/>
+            <share.share @service='facebook'/>
+            <share.share @service='twitter' @params={{hash text=model.title}}/>
+            <share.share @service='reddit' @params={{hash url=model.permalink title=model.title}}/>
+            <share.share @service='email' @params={{hash body=(concat model.title ' - ' model.permalink)}}/>
           </NyprMShareTools>
         </lead.left>
 

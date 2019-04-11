@@ -46,7 +46,9 @@
     {{#if (and showShareTools header.outOfViewport)}}
       <NyprMShareTools @label='Share' as |tools|>
         <tools.share @service='facebook'/>
-        <tools.share @service='twitter'/>
+        <tools.share @service='twitter' @params={{hash text=model.title}}/>
+        <tools.share @service='reddit' @params={{hash url=model.permalink title=model.title}}/>
+        <tools.share @service='email' @params={{hash body=(concat model.title ' - ' model.permalink)}}/>
       </NyprMShareTools>
     {{/if}}
 
