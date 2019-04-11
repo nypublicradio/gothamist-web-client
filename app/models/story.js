@@ -55,7 +55,8 @@ export default DS.Model.extend({
     return tags.includes('@sponsored');
   }),
 
-  parsedLegacyContent: computed('text', function() {
+
+  get parsedLegacyContent() {
     let text = this.text;
     let parsed = {};
 
@@ -90,7 +91,7 @@ export default DS.Model.extend({
       parsed.nodes = text;
     }
     return parsed;
-  }),
+  },
 
   displayTags: computed('tags', function() {
     let tags = this.tags || [];
