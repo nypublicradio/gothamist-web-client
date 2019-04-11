@@ -4,7 +4,7 @@
       <header.top as |top|>
         <top.breadcrumb @breadcrumbs={{model.breadcrumb}}/>
 
-        <top.headline>
+        <top.headline data-test-story-headline>
           {{model.title}}
         </top.headline>
 
@@ -45,7 +45,7 @@
 
     </NyprOArticleHeader>
 
-    <NyprOArticleBody>
+    <NyprOArticleBody data-test-article-body>
       {{model.parsed.nodes}}
     </NyprOArticleBody>
 

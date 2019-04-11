@@ -27,7 +27,7 @@
     </left.branding>
 
     {{#if (and headline header.outOfViewport)}}
-      <left.headline>
+      <left.headline data-test-top-headline>
         {{headline}}
       </left.headline>
     {{/if}}
@@ -35,7 +35,7 @@
   </header.left>
 
   {{#if (or (eq router.currentRouteName 'index') (and showNav (not header.outOfViewport)))}}
-    <header.nav @navItems={{model.primaryNav}}/>
+    <header.nav @navItems={{model.primaryNav}} data-test-top-nav/>
   {{/if}}
 
   <header.right as |right|>
