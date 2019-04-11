@@ -74,6 +74,10 @@ export default DS.Model.extend({
 
       // do some minor processing
 
+      // make sure images are http
+      parsed.nodes = this._makeImagesSecure(parsed.nodes);
+
+
       // look for a caption
       // the fist element will contain this MT tag if there's an image
       if (parsed.nodes.firstElementChild && parsed.nodes.firstElementChild.querySelector('.mt-enclosure-image')) {
@@ -100,4 +104,10 @@ export default DS.Model.extend({
     return parsed;
   },
 
+  _makeImagesSecure(nodes) {
+    nodes.querySelectorAll('img').forEach(img => {
+      img.src = img.src.replace(/^https?:/, '');
+    });
+    return nodes;
+  }
 });
