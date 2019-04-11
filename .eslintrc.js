@@ -34,6 +34,9 @@ module.exports = {
         'fastboot.js',
         'server/**/*.js',
       ],
+      excludedFiles: [
+        'config/deprecation-workflow.js',
+      ],
       parserOptions: {
         sourceType: 'script',
         ecmaVersion: 2015
