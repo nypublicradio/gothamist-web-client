@@ -59,13 +59,16 @@
           <p><strong>Do you know the scoop?</strong> &nbsp; <a href="">Comment</a> below or <a href="">Send us a Tip</a></p>
         </footer.contact>
 
-        <footer.donate
-          @linkText='Donate'
-          @linkUrl='https://pledge3.wnyc.org/donate/gothamist/onestep'>
-          <p>
-            Hey, do you know that it  takes money to write these stories? Help us tell more with your help today.
-          </p>
-        </footer.donate>
+        {{#unless footerClosed}}
+          <footer.donate
+            @close={{action (mut footerClosed) true}}
+            @linkText='Donate'
+            @linkUrl='https://pledge3.wnyc.org/donate/gothamist/onestep'>
+            <p>
+              Hey, do you know that it  takes money to write these stories? Help us tell more with your help today.
+            </p>
+          </footer.donate>
+        {{/unless}}
 
         <footer.comments>
           comments go here
