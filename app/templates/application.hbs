@@ -59,7 +59,7 @@
     {{#if showSearch}}
       <right.search as |search|>
         <search.open/>
-        <search.form/>
+        <search.form @search={{action this.search}}/>
       </right.search>
     {{/if}}
 
