@@ -55,6 +55,13 @@ export default DS.Model.extend({
     return tags.includes('@sponsored');
   }),
 
+  leadImageCaption: reads('parsedLegacyContent.caption'),
+  leadImageCredit: reads('parsedLegacyContent.credit'),
+
+  displayTags: computed('tags', function() {
+    let tags = this.tags || [];
+    return tags.filter(tag => !tag.match(/^@/));
+  }),
 
   get parsedLegacyContent() {
     let text = this.text;
@@ -93,11 +100,4 @@ export default DS.Model.extend({
     return parsed;
   },
 
-  displayTags: computed('tags', function() {
-    let tags = this.tags || [];
-    return tags.filter(tag => !tag.match(/^@/));
-  }),
-
-  leadImageCaption: reads('parsedLegacyContent.caption'),
-  leadImageCredit: reads('parsedLegacyContent.credit'),
 });
