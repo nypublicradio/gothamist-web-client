@@ -55,27 +55,41 @@ export default DS.Model.extend({
     return tags.includes('@sponsored');
   }),
 
-  parsed: computed('text', function() {
+  parsedLegacyContent: computed('text', function() {
+    let text = this.text;
+    let parsed = {};
+
     if (typeof FastBoot === 'undefined') {
-      let text = this.text;
-      let nodes =  document.createRange().createContextualFragment(text);
+      // in a browser environment, use the native DOM parser to generate concrete nodes
+      const range = document.createRange();
+      parsed.nodes = range.createContextualFragment(text);
 
-      let parsed = {
-        nodes,
-      };
+      // do some minor processing
 
-      let caption = nodes.querySelector('.image-none i');
-      if (caption) {
-        parsed.nodes.querySelector('.image-none').remove();
-        let match = caption.textContent.match(/^([^(]+)\(([^)]+)\)$/);
+      // look for a caption
+      // the fist element will contain this MT tag if there's an image
+      if (parsed.nodes.firstElementChild && parsed.nodes.firstElementChild.querySelector('.mt-enclosure-image')) {
+        // due to broken MT output, this is where the image ends up
+        let actualImageWrapper = parsed.nodes.firstElementChild.nextElementSibling;
+        // this image will be the same as `thumbnail640`, which is displayed as the lead image
+        // remove it from this node collection so it isn't rendered twice
+        actualImageWrapper.remove()
+
+        // caption is the text in the `<i/>` tag
+        let caption = actualImageWrapper.querySelector('i');
+
+
+        // parse HTML string for caption and credit
+        let match = caption.innerHTML.match(/^([^(]+)\(([^)]+)\)$/);
         if (match) {
           parsed.caption = match[1];
           parsed.credit = match[2];
         }
       }
-
-      return parsed;
+    } else {
+      parsed.nodes = text;
     }
+    return parsed;
   }),
 
   displayTags: computed('tags', function() {
@@ -83,6 +97,6 @@ export default DS.Model.extend({
     return tags.filter(tag => !tag.match(/^@/));
   }),
 
-  leadImageCaption: reads('parsed.caption'),
-  leadImageCredit: reads('parsed.credit'),
+  leadImageCaption: reads('parsedLegacyContent.caption'),
+  leadImageCredit: reads('parsedLegacyContent.credit'),
 });
