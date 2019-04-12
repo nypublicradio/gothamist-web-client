@@ -55,8 +55,8 @@ export default DS.Model.extend({
     return tags.includes('@sponsored');
   }),
 
-  leadImageCaption: reads('parsedLegacyContent.caption'),
-  leadImageCredit: reads('parsedLegacyContent.credit'),
+  leadImageCaption: reads('_parsedLegacyContent.caption'),
+  leadImageCredit: reads('_parsedLegacyContent.credit'),
 
   displayTags: computed('tags', function() {
     let tags = this.tags || [];
