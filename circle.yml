@@ -1,70 +1,92 @@
-defaults: &defaults
-  docker:
-    - image: circleci/node:10-browsers
-      environment:
-        JOBS: 2
+---
+templates:
+  defaults: &defaults
+    docker:
+      - image: circleci/node:10-browsers
+        environment:
+          JOBS: 2
 
-node_key: &node_key
-  key: node-deps-{{ checksum "yarn.lock" }}-{{ checksum "circle.yml" }}
+  node_key: &node_key
+    key: node-deps-{{ checksum "yarn.lock" }}-{{ checksum "circle.yml" }}
 
-restore_node: &restore_node
-  restore_cache:
-    <<: *node_key
+  restore_node: &restore_node
+    restore_cache:
+      <<: *node_key
 
-deploy_static: &deploy_static
-  <<: *defaults
-  steps:
-    - checkout
-    - <<: *restore_node
-    - deploy:
-        name: Deploy to S3
-        command: |
-          env | sed -n "s/^${ENV}_//p" >> .env
-          npx ember deploy "$(echo $ENV | awk '{print tolower($0)}')" --verbose
+  deploy_static: &deploy_static
+    <<: *defaults
+    steps:
+      - checkout
+      - <<: *restore_node
+      - deploy:
+          name: Deploy to S3
+          command: |
+            env | sed -n "s/^${ENV}_//p" >> .env
+            npx ember deploy "$(echo $ENV | awk '{print tolower($0)}')" --verbose
 
-deploy_fastboot: &deploy_fastboot
-  docker:
-    - image: circleci/python:3.6
-  steps:
-    - checkout
-    - setup_remote_docker
-    - restore_cache:
-        key: deploy-{{ checksum "circle.yml" }}
-    - run:
-        name: Install Requirements
-        command: |
-          if [[ ! -d ~/.venv ]]; then
-            python3 -m venv ~/.venv
+
+  filter_demo: &filter_demo
+    filters:
+      branches:
+        only: master
+      tags:
+        only: demo
+
+  filter_prod: &filter_prod
+    filters:
+      branches:
+        ignore: /.*/
+      tags:
+        only: /^v[0-9]+\.[0-9]+\.[0-9]+/
+
+  filter_qa: &filter_qa
+    filters:
+      branches:
+        only: /[A-Za-z-_]+/[A-Za-z-_\d]+/
+
+  deploy_fastboot: &deploy_fastboot
+    docker:
+      - image: circleci/python:3.6
+    steps:
+      - checkout
+      - setup_remote_docker
+      - restore_cache:
+          key: deploy-{{ checksum "circle.yml" }}
+      - run:
+          name: Install Requirements
+          command: |
+            if [[ ! -d ~/.venv ]]; then
+              python3 -m venv ~/.venv
+              source ~/.venv/bin/activate
+              pip3 install -U git+https://github.com/nypublicradio/nyprsetuptools.git
+            fi
+      - deploy:
+          name: Deploy Fastboot
+          command: |
+            TAG=${CIRCLE_TAG:-demo}
             source ~/.venv/bin/activate
-            pip3 install -U git+https://github.com/nypublicradio/nyprsetuptools.git
-          fi
-    - deploy:
-        name: Deploy Fastboot
-        command: |
-          TAG=${CIRCLE_TAG:-demo}
-          source ~/.venv/bin/activate
-          nyprsetuptools DockerDeploy --environment=$ENV \
-                                      --ecs-cluster=fastboot \
-                                      --ecr-repository=gothamist-client \
-                                      --tag=$TAG \
-                                      --wait=300 \
-                                      --fargate \
-                                      --execution-role=gothamist-client-$ENV \
-                                      --task-role=gothamist-client-$ENV \
-                                      --ports=3000 \
-                                      --cpu=256 \
-                                      --memory-reservation=512
-    - save_cache:
-        key: deploy-{{ checksum "circle.yml" }}
-        paths:
-          - ~/.venv
+            nyprsetuptools DockerDeploy \
+              --cpu=256 \
+              --ecr-repository=gothamist-client \
+              --ecs-cluster=fastboot \
+              --environment=$ENV \
+              --execution-role=gothamist-client-$ENV \
+              --fargate \
+              --memory-reservation=512 \
+              --ports=80 \
+              --tag=$TAG \
+              --task-role=gothamist-client-$ENV \
+              --test='./scripts/test_nginx.sh' \
+              --wait=300
+      - save_cache:
+          key: deploy-{{ checksum "circle.yml" }}
+          paths:
+            - ~/.venv
 
 version: 2
-
 jobs:
   build-static:
     <<: *defaults
-
     steps:
       - checkout
 
@@ -82,7 +104,6 @@ jobs:
 
   test-static:
     <<: *defaults
-
     steps:
       - checkout
       - <<: *restore_node
@@ -96,7 +117,6 @@ jobs:
 
   deploy-static-qa:
     <<: *defaults
-
     steps:
       - checkout
       - <<: *restore_node
@@ -149,9 +169,7 @@ workflows:
   deploy-qa:
     jobs:
       - build-static:
-          filters:
-            branches:
-              only: /[A-Za-z-_]+/[A-Za-z-_\d]+/
+          <<: *filter_qa
       - test-static:
           requires:
             - build-static
@@ -162,42 +180,33 @@ workflows:
   deploy-demo:
     jobs:
       - build-static:
-          filters:
-            branches:
-              only: master
+          <<: *filter_demo
       - test-static:
+          <<: *filter_demo
           requires:
             - build-static
       - deploy-static-demo:
+          <<: *filter_demo
           requires:
             - test-static
       - deploy-fastboot-demo:
+          <<: *filter_demo
           requires:
             - test-static
 
   deploy-prod:
     jobs:
       - build-static:
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^v[0-9]+\.[0-9]+\.[0-9]+/
+          <<: *filter_prod
       - test-static:
-          filters:
-            tags:
-              only: /^v[0-9]+\.[0-9]+\.[0-9]+/
+          <<: *filter_prod
           requires:
             - build-static
       - deploy-static-prod:
-          filters:
-            tags:
-              only: /^v[0-9]+\.[0-9]+\.[0-9]+/
+          <<: *filter_prod
           requires:
             - test-static
       - deploy-fastboot-prod:
-          filters:
-            tags:
-              only: /^v[0-9]+\.[0-9]+\.[0-9]+/
+          <<: *filter_prod
           requires:
             - test-static

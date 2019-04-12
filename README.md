@@ -71,3 +71,24 @@ It will build with any values specified in your `.env` file, so make sure it's g
 * Development Browser Extensions
   * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
   * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
+
+
+### Nginx
+
+The production/demo fastboot clients sit behind an Nginx reverse proxy.
+Nginx runs alongside the fastboot application within the same container.
+Both processes are managed by [supervisord](http://supervisord.org/).
+The supervisord config is `nginx/supervisord.conf`.
+
+Nginx handles a series of legacy re-redirects ported from the pre-NYPR
+frontend Apache config. These can be found in `nginx/nginx.conf`.
+
+Nginx also provides a 1s cache to rate-limit requests to the fastboot app,
+this should help relieve the 'thundering herd' effect caused by cache invalidation.
+
+A set of tests for Nginx rules is available in `scripts/test_nginx.sh`.
+To run the tests: build the Docker image and run the script from a container.
+```bash
+docker build -t gothamist-web-client .
+docker run gothamist-web-client ./scripts/test_nginx.sh
+```

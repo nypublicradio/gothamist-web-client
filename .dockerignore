@@ -1,4 +1,10 @@
-tmp
-node_modules
+.env
+.git
+Dockerfile
+README.md
+circle.yml
 dist
-.eggs
+node_modules
+npm-debug.log
+test-results
+tmp
