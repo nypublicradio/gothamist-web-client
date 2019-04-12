@@ -43,17 +43,19 @@ deploy_fastboot: &deploy_fastboot
         command: |
           TAG=${CIRCLE_TAG:-demo}
           source ~/.venv/bin/activate
-          nyprsetuptools DockerDeploy --environment=$ENV \
-                                      --ecs-cluster=fastboot \
-                                      --ecr-repository=gothamist-client \
-                                      --tag=$TAG \
-                                      --wait=300 \
-                                      --fargate \
-                                      --execution-role=gothamist-client-$ENV \
-                                      --task-role=gothamist-client-$ENV \
-                                      --ports=3000 \
-                                      --cpu=256 \
-                                      --memory-reservation=512
+          nyprsetuptools DockerDeploy \
+            --cpu=256 \
+            --ecr-repository=gothamist-client \
+            --ecs-cluster=fastboot \
+            --environment=$ENV \
+            --execution-role=gothamist-client-$ENV \
+            --fargate \
+            --memory-reservation=512 \
+            --ports=80 \
+            --tag=$TAG \
+            --task-role=gothamist-client-$ENV \
+            --test='./scripts/test_nginx.sh' \
+            --wait=300
     - save_cache:
         key: deploy-{{ checksum "circle.yml" }}
         paths:
