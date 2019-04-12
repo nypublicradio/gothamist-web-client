@@ -74,7 +74,7 @@ export default DS.Model.extend({
 
       // do some minor processing
 
-      // make sure images are http
+      // make sure images are https
       parsed.nodes = this._makeImagesSecure(parsed.nodes);
 
 
