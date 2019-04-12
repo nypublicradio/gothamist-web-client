@@ -43,4 +43,6 @@ export default function() {
       return schema.stories.where({ permalink: record });
     }
   });
+
+  this.get('https://disqus.com/api/3.0/threads/details.json', {response: {posts: 100}});
 }

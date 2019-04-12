@@ -1,26 +1,26 @@
-import { module, test } from 'qunit';
+import { module } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import test from 'ember-sinon-qunit/test-support/test';
 
 module('Integration | Component | disqus-comments', function(hooks) {
   setupRenderingTest(hooks);
+  hooks.beforeEach(function() {
+    window.DISQUS = {reset() {}};
+  })
 
-  test('it renders', async function(assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
+  test('it calls reset if the script is present', async function() {
+    var fakeScript = document.createElement('script');
+    fakeScript.id = 'disqus-lib';
+    document.head.appendChild(fakeScript);
 
-    await render(hbs`{{disqus-comments}}`);
+    this.mock(window.DISQUS)
+      .expects('reset')
+      .once();
 
-    assert.equal(this.element.textContent.trim(), '');
+    await render(hbs`<DisqusComments/>`);
 
-    // Template block usage:
-    await render(hbs`
-      {{#disqus-comments}}
-        template block text
-      {{/disqus-comments}}
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
+    document.head.removeChild(fakeScript);
   });
 });

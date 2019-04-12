@@ -1,3 +1,4 @@
+/* global instgrm */
 import fetch from 'fetch';
 
 import Route from '@ember/routing/route';
