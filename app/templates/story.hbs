@@ -8,9 +8,14 @@
           {{model.title}}
         </top.headline>
 
-        <top.meta @galleryPhotosCount={{model.gallery.length}} as |meta|>
+        <top.meta
+          @galleryPhotosCount={{model.gallery.length}}
+          @commentCount={{model.commentCount}}
+          as |meta|>
+
           <meta.byline @authors={{model.authors}} @sponsor={{model.sponsor}}/>
           <meta.publishDate @publishDate={{utc model.authoredOnUtc 'YYYYMMDDHHmmss'}} />
+
         </top.meta>
 
       </header.top>
