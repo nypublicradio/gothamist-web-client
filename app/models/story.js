@@ -63,45 +63,62 @@ export default DS.Model.extend({
     return tags.filter(tag => !tag.match(/^@/));
   }),
 
-  get parsedLegacyContent() {
-    let text = this.text;
-    let parsed = {};
-
-    if (typeof FastBoot === 'undefined') {
-      // in a browser environment, use the native DOM parser to generate concrete nodes
-      const range = document.createRange();
-      parsed.nodes = range.createContextualFragment(text);
-
-      // do some minor processing
-
-      // make sure images are https
-      parsed.nodes = this._makeImagesSecure(parsed.nodes);
-
-
-      // look for a caption
-      // the fist element will contain this MT tag if there's an image
-      if (parsed.nodes.firstElementChild && parsed.nodes.firstElementChild.querySelector('.mt-enclosure-image')) {
-        // due to broken MT output, this is where the image ends up
-        let actualImageWrapper = parsed.nodes.firstElementChild.nextElementSibling;
-        // this image will be the same as `thumbnail640`, which is displayed as the lead image
-        // remove it from this node collection so it isn't rendered twice
-        actualImageWrapper.remove()
-
-        // caption is the text in the `<i/>` tag
-        let caption = actualImageWrapper.querySelector('i');
-
-
-        // parse HTML string for caption and credit
-        let match = caption.innerHTML.match(/^([^(]+)\(([^)]+)\)$/);
-        if (match) {
-          parsed.caption = match[1];
-          parsed.credit = match[2];
-        }
-      }
-    } else {
-      parsed.nodes = text;
+  get body() {
+    if (typeof FastBoot !== 'undefined') {
+      return this.text;
     }
+    return cloneNodes(this._parsedLegacyContent.nodes);
+  },
+
+  _parsedLegacyContent: computed('text', function() {
+    if (typeof FastBoot !== 'undefined') {
+      return;
+    }
+
+    const parsed = {};
+
+    // in a browser environment, use the native DOM parser to turn text into concrete nodes
+    const range = document.createRange();
+    parsed.nodes = range.createContextualFragment(this.text);
+
+    // do some minor processing
+
+    // make sure images are https
+    parsed.nodes = this._makeImagesSecure(parsed.nodes);
+
+    // remove duplicate lead image
+    // mutates parsed.nodes
+    let leadImage = this._extractLeadImage(parsed.nodes);
+
+    // extract caption and credit
+    if (leadImage) {
+      let [, caption, credit] = this._getImageMeta(leadImage);
+      parsed.caption = caption
+      parsed.credit = credit;
+    }
+
     return parsed;
+  }),
+
+  _extractLeadImage(nodes) {
+    // the fist element will contain this MT tag if there's an image
+    if (nodes.firstElementChild && nodes.firstElementChild.querySelector('.mt-enclosure-image')) {
+      // due to broken MT output, this is where the image ends up
+      let actualImageWrapper = nodes.firstElementChild.nextElementSibling;
+
+      // this image will be the same as `thumbnail640`, which is displayed as the lead image
+      // remove it from this node collection so it isn't rendered twice
+      return actualImageWrapper.parentNode.removeChild(actualImageWrapper);
+    }
+  },
+
+  _getImageMeta(imageWrapper) {
+      // caption is the text in the `<i/>` tag
+      let text = imageWrapper.querySelector('i');
+
+      // parse HTML string for caption and credit
+      let match = text.innerHTML.match(/^([^(]+)\(([^)]+)\)$/);
+      return match || [];
   },
 
   _makeImagesSecure(nodes) {
@@ -109,5 +126,11 @@ export default DS.Model.extend({
       img.src = img.src.replace(/^https?:/, '');
     });
     return nodes;
-  }
+  },
+
 });
+
+function cloneNodes(nodes) {
+  const DEEP_COPY = true;
+  return nodes.cloneNode(DEEP_COPY);
+}
