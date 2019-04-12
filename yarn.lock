@@ -8557,10 +8557,9 @@ number-is-nan@^1.0.0:
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
   integrity sha1-CXtgK1NCKlIsGvuHkDGDNpQaAR0=
 
-nypr-design-system@^0.1.0:
+nypr-design-system@nypublicradio/nypr-design-system:
   version "0.1.0"
-  resolved "https://registry.yarnpkg.com/nypr-design-system/-/nypr-design-system-0.1.0.tgz#fbd23d5f82cb55bab3ee868e5902151bd9aba14e"
-  integrity sha512-scVNSYwFjGmJR5Y9payXXCWeodOMOLizUFvn0hh0hz+PGHJPLu78eaSNG9skeh7vr6pkr6gWkuhVQBGXyo0g+g==
+  resolved "https://codeload.github.com/nypublicradio/nypr-design-system/tar.gz/cf78d770c04c6ac04e80bdb86eabca8080760bf2"
   dependencies:
     broccoli-merge-files "^0.8.0"
     ember-auto-import "^1.2.19"
