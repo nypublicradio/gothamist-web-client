@@ -34,6 +34,7 @@ export default DS.Model.extend({
   title: DS.attr('string'),
 
   // computed
+  moveableTypeId: reads('id'),
 
   breadcrumb: computed('categories', function() {
     let categories = this.categories || [];

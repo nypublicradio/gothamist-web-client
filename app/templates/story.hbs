@@ -10,6 +10,7 @@
 
         <top.meta
           @galleryPhotosCount={{model.gallery.length}}
+          @commentsUrl='#comments'
           @commentCount={{model.commentCount}}
           as |meta|>
 
@@ -76,7 +77,7 @@
         {{/unless}}
 
         <footer.comments>
-          comments go here
+          <DisqusComments @id="comments" @identifier={{model.moveableTypeId}} @url={{model.permalink}}/>
         </footer.comments>
       </NyprOArticleFooter>
     </div>
