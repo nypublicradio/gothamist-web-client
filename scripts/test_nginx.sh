@@ -106,7 +106,6 @@ test_redirect /pretty.php 301 /
 test_redirect '/tag.php?term=foo&page=1' 301 /tags/foo/1
 
 title "Checking non-php exact match redirects..."
-test_redirect /archives/food.xml 301 /food/index.xml
 test_redirect /checkout 301 /2017/08/09/check_out.php
 test_redirect /contribute 301 /labs/contribute
 test_redirect /favorites 301 /labs/favorites
@@ -122,7 +121,6 @@ test_redirect /index.xml 301 https://feeds.gothamistllc.com/gothamist05
 
 title "Checking regex redirects..."
 test_redirect /archives/foo.php 301 /foo.php
-test_redirect /archives/foo.xml 301 /foo.xml
 test_redirect /blog.php 301 /
 test_redirect /blog2.php 301 /
 test_redirect /blog3.php 301 /
