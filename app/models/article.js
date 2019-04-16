@@ -33,6 +33,9 @@ export default DS.Model.extend({
   thumbnail640: DS.attr('string'),
   title: DS.attr('string'),
 
+  // relationships
+  gallery: DS.belongsTo('gallery'),
+
   // computed
   moveableTypeId: reads('id'),
 
