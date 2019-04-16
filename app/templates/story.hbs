@@ -23,7 +23,7 @@
 
       <header.lead as |lead|>
         <lead.left>
-          <NyprMShareTools @vertical={{true}} as |share|>
+          <NyprMShareTools @vertical={{media 'isMediumAndUp'}} as |share|>
             <share.share @service='facebook'/>
             <share.share @service='twitter' @params={{hash text=model.title}}/>
             <share.share @service='reddit' @params={{hash url=model.permalink title=model.title}}/>
