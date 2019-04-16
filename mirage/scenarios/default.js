@@ -5,8 +5,8 @@ export default function(server) {
     This data will not be loaded in your tests.
   */
 
-  server.create('story', {tags: ['@main'], permalink: 'foo', title: 'test homepage story'});
-  server.createList('story', 3, {
+  server.create('article', {tags: ['@main'], permalink: 'foo', title: 'test homepage article'});
+  server.createList('article', 3, {
     tags: ['@main']
   });
 }

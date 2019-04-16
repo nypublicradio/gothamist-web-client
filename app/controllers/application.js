@@ -18,7 +18,7 @@ export default Controller.extend({
 
   showSearch: true,
 
-  // on story pages
+  // on article pages
   headline: null,
 
   headerLandmark: null,
@@ -34,7 +34,7 @@ export default Controller.extend({
     // if there are 3 or more articles for the given query
     // go to the tag listing for that term
     // otherwise do a full site search
-    this.store.query('story', {
+    this.store.query('article', {
       index: 'gothamist',
       offset: 2, // start at 3
       count: 1, // only  need to know if there's at least 1 entry (i.e. 3 or more is valid)

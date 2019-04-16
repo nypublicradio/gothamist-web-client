@@ -3,23 +3,23 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | story-card', function(hooks) {
+module('Integration | Component | article-card', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    const STORY = {
+    const article = {
       title: 'foo',
       permalink: 'http://example.com',
       authorNickname: 'bar baz',
       excerptPretty: 'biz buz',
     };
 
-    this.set('story', STORY);
-    await render(hbs`{{story-card story=story}}`);
+    this.set('article', article);
+    await render(hbs`{{article-card article=article}}`);
 
-    assert.dom('h3').hasText(STORY.title);
-    assert.dom('p').hasText(STORY.authorNickname);
+    assert.dom('h3').hasText(article.title);
+    assert.dom('p').hasText(article.authorNickname);
 
-    assert.dom('article').includesText(STORY.excerptPretty);
+    assert.dom('article').includesText(article.excerptPretty);
   });
 });

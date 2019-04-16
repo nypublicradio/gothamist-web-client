@@ -17,7 +17,7 @@ export default Route.extend({
   titleToken: model => model.title,
 
   model({ any }) {
-    return this.store.queryRecord('story', {
+    return this.store.queryRecord('article', {
       record: any
     });
   },

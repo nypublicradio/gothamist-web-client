@@ -36,11 +36,11 @@ export default function() {
     } = request.queryParams;
     if (term === '@main') {
       // homepage
-      return schema.stories.where({tags: ['@main']});
+      return schema.articles.where({tags: ['@main']});
     }
 
     if (record) {
-      return schema.stories.where({ permalink: record });
+      return schema.articles.where({ permalink: record });
     }
   });
 

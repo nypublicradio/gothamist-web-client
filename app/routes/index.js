@@ -13,7 +13,7 @@ export default Route.extend({
   },
 
   model() {
-    return this.store.query('story', {
+    return this.store.query('article', {
       index: 'gothamist',
       term: '@main',
       count: 3

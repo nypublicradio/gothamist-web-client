@@ -19,7 +19,7 @@ export default Route.extend({
     }
     return hash({
       tag,
-      stories: this.store.query('story', {
+      stories: this.store.query('article', {
         index: 'gothamist',
         term: tag,
         count: 10,
