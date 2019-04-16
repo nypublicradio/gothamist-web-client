@@ -32,8 +32,8 @@
         </lead.left>
 
         <lead.center>
-            <NyprMGalleryLead @slides={{model.gallery}} />
           {{#if model.hasGallery}}
+            <NyprMGalleryLead @slides={{model.gallery.slides}} />
           {{else}}
             <NyprMFigure
               @src-s={{make-https model.thumbnail640}}
