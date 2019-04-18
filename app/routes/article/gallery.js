@@ -3,6 +3,12 @@ import { inject } from '@ember/service';
 import { reads } from '@ember/object/computed';
 
 export default Route.extend({
+  queryParams: {
+    image: {
+      replace: true,
+    },
+  },
+
   fastboot: inject(),
   headData: inject(),
 
