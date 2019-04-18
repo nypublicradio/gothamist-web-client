@@ -22,8 +22,10 @@ export default Route.extend({
       section: model.section,
       tags: model.displayTags,
       authors: model.authors,
-      image: model.thumbnail640,
-      imageWidth: 640,
+      image: {
+        full: model.thumbnail640,
+        width: 640,
+      }
     });
   }
 });

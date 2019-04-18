@@ -33,9 +33,7 @@ export default Route.extend({
     if (this.image) {
       let slide = model.gallery.slides[this.image] || {};
       this.headData.setProperties({
-        image: slide.full,
-        imageWidth: slide.width,
-        imageHeight: slide.height,
+        image: slide,
       });
     }
   }

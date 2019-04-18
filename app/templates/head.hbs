@@ -5,11 +5,18 @@
 --}}
 <title>{{model.title}}</title>
 
+<link rel="canonical" href={{model.url}}>
+
 <meta name="description" content={{model.metaDescription}}>
 
-<meta property="og:image" content={{model.image}}>
-<meta property="og:image:width" content={{model.imageWidth}}>
-<meta property="og:image:height" content={{model.imageHeight}}>
+<meta property="og:site_name" content="Gothamist">
+
+{{#if model.image}}
+  <meta property="og:image" content={{model.image.full}}>
+  <meta property="og:image:width" content={{model.image.width}}>
+  <meta property="og:image:height" content={{model.image.height}}>
+  <meta property="og:image:alt" content={{model.image.caption}}>
+{{/if}}
 
 <meta property="og:url" content={{model.url}}>
 <meta property="og:title" content={{model.title}}>
@@ -17,11 +24,13 @@
 
 <meta property="og:type" content={{model.ogType}}>
 
+<meta property="og:locale" content="en_US">
+
 {{#if (eq model.ogType 'article')}}
-  <meta property="og:article:published_time" content={{model.publishedTime}}>
-  <meta property="og:article:modified_time" content={{model.modifiedTime}}>
-  <meta property="og:article:section" content={{model.section}}>
-  <meta property="og:article:tag" content={{model.tags}}>
+  <meta property="article:published_time" content={{model.publishedTime}}>
+  <meta property="article:modified_time" content={{model.modifiedTime}}>
+  <meta property="article:section" content={{model.section}}>
+  <meta property="article:tag" content={{model.tags}}>
   {{#each model.authors as |author|}}
     <meta property="article:author" content={{author.url}}>
   {{/each}}
@@ -31,4 +40,5 @@
   <meta property="og:image" content={{slide.full}}>
   <meta property="og:image:width" content={{slide.width}}>
   <meta property="og:image:height" content={{slide.height}}>
+  <meta property="og:image:alt" content={{slide.caption}}>
 {{/each}}
