@@ -3,6 +3,8 @@ import { computed } from '@ember/object';
 import { dasherize } from '@ember/string';
 import { reads } from '@ember/object/computed';
 
+import { makeHttps } from '../helpers/make-https';
+
 export default DS.Model.extend({
   allowComments: DS.attr('boolean'),
   authorId: DS.attr('number'),
@@ -34,12 +36,37 @@ export default DS.Model.extend({
 
   // gallery attrs
   gallery: DS.attr(),
+
   hasGallery: DS.attr('boolean'),
   galleryDropbox: DS.attr('boolean'),
   galleryFull: DS.attr(),
   galleryArray: DS.attr(),
   galleryCaptions: DS.attr(),
   galleryCredit: DS.attr(),
+
+  async loadGallery() {
+    if (!this.hasGallery) {
+      return this;
+    }
+
+    if (this.galleryDropbox) {
+      let gallery = await this.store.findRecord('gallery', this.entrytopics[0])
+      this.set('gallery', gallery);
+    } else {
+      let slides = [];
+      for (let i = 0; i < this.galleryFull.length; i++) {
+        slides.push({
+          full: makeHttps([this.galleryFull[i]]),
+          src: makeHttps([this.galleryArray[i]]),
+          caption: this.galleryCaptions[i],
+          credit: this.galleryCredit[i],
+        });
+      }
+      this.set('gallery', {slides});
+    }
+
+    return this;
+  },
 
 
   // computed
