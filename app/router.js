@@ -15,7 +15,9 @@ const Router = EmberRouter.extend({
 Router.map(function() {
   this.route('404', {path: '*'});
 
-  this.route('article', {path: '*any'});
+  this.route('article', {path: '*any'}, function() {
+    this.route('gallery');
+  });
   this.route('search');
   this.route('tags', {path: 'tags/:tag'});
 });

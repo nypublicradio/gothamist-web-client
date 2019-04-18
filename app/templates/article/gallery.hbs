@@ -1,0 +1,11 @@
+{{!-- pattern lab hack --}}
+<div class="gallery-is-active">
+  <NyprOGalleryOverlay
+    @title={{model.title}}
+    @parentRoute='article'
+    @parentModel={{model}}
+    @slides={{model.gallery.slides}}
+    @viewedSlide={{action this.viewedSlide}}
+    @activeImage={{this.image}}
+  />
+</div>

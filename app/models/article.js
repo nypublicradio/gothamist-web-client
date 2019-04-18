@@ -18,7 +18,6 @@ export default DS.Model.extend({
   excerptFull: DS.attr('string'),
   excerptPretty: DS.attr('string'),
   excerptSponsor: DS.attr('string'),
-  hasGallery: DS.attr('boolean'),
   modifiedOn: DS.attr('string'),
   modifiedOnUtc: DS.attr('string'),
   permalink: DS.attr('string'),
@@ -32,6 +31,16 @@ export default DS.Model.extend({
   thumbnail300: DS.attr('string'),
   thumbnail640: DS.attr('string'),
   title: DS.attr('string'),
+
+  // gallery attrs
+  gallery: DS.attr(),
+  hasGallery: DS.attr('boolean'),
+  galleryDropbox: DS.attr(),
+  galleryFull: DS.attr(),
+  galleryArray: DS.attr(),
+  galleryCaptions: DS.attr(),
+  galleryCredit: DS.attr(),
+
 
   // computed
   moveableTypeId: reads('id'),
