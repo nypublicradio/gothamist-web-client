@@ -9,7 +9,7 @@ export default Route.extend({
   // isFastBoot: reads('fastboot.isFastBoot'),
   image: reads('fastboot.request.queryParams.image'),
 
-  titleToken: model => `Photos - ${model.title}`,
+  titleToken: model => model.title,
 
   afterModel(model) {
     this.controllerFor('application').setProperties({
