@@ -35,7 +35,7 @@ export default DS.Model.extend({
   // gallery attrs
   gallery: DS.attr(),
   hasGallery: DS.attr('boolean'),
-  galleryDropbox: DS.attr(),
+  galleryDropbox: DS.attr('boolean'),
   galleryFull: DS.attr(),
   galleryArray: DS.attr(),
   galleryCaptions: DS.attr(),
