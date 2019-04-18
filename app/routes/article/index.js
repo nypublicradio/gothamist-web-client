@@ -1,6 +1,5 @@
 /* global instgrm */
 import fetch from 'fetch';
-import moment from 'moment';
 
 import Route from '@ember/routing/route';
 import { inject } from '@ember/service';
@@ -11,7 +10,6 @@ import config from '../../config/environment';
 
 export default Route.extend({
   fastboot: inject(),
-  headData: inject(),
 
   isFastBoot: reads('fastboot.isFastBoot'),
 
@@ -24,18 +22,6 @@ export default Route.extend({
       headline: model.title,
       showLeaderboard: false,
       headerLandmark: '.c-article__share',
-    });
-
-    this.headData.setProperties({
-      metaDescription: model.excerptPretty,
-      ogType: 'article',
-      publishedTime: moment.utc(model.authoredOnUtc, 'YYYYMMDDHHmmss').tz('America/New_York').format(),
-      modifiedTime: moment.utc(model.modifiedOnUtc, 'YYYYMMDDHHmmss').tz('America/New_York').format(),
-      section: model.section,
-      tags: model.displayTags,
-      authors: model.authors,
-      image: model.thumbnail640,
-      imageWidth: 640,
     });
 
     // save the comment API call for the client

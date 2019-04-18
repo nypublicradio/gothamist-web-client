@@ -1,7 +1,12 @@
+import moment from 'moment';
+
 import Route from '@ember/routing/route';
 import { makeHttps } from '../helpers/make-https';
+import { inject } from '@ember/service';
 
 export default Route.extend({
+  headData: inject(),
+
   model({ any }) {
     return this.store.queryRecord('article', {
       record: any
@@ -31,4 +36,19 @@ export default Route.extend({
       }
     })
   },
+
+  afterModel(model) {
+
+    this.headData.setProperties({
+      metaDescription: model.excerptPretty,
+      ogType: 'article',
+      publishedTime: moment.utc(model.authoredOnUtc, 'YYYYMMDDHHmmss').tz('America/New_York').format(),
+      modifiedTime: moment.utc(model.modifiedOnUtc, 'YYYYMMDDHHmmss').tz('America/New_York').format(),
+      section: model.section,
+      tags: model.displayTags,
+      authors: model.authors,
+      image: model.thumbnail640,
+      imageWidth: 640,
+    });
+  }
 });
