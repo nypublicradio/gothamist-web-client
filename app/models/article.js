@@ -43,6 +43,9 @@ export default DS.Model.extend({
 
 
   // computed
+  section: computed('categories', function() {
+    return this.categories[0].label;
+  }),
   moveableTypeId: reads('id'),
 
   breadcrumb: computed('categories', function() {

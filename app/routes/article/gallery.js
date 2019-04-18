@@ -20,11 +20,16 @@ export default Route.extend({
       headerLandmark: null,
     });
 
+    this.headData.setProperties({
+      gallery: model.gallery.slides,
+    });
+
     if (this.image) {
-      let slide = model.gallery.slides[this.image];
-      let src = slide ? slide.full : '';
+      let slide = model.gallery.slides[this.image] || {};
       this.headData.setProperties({
-        metaImage: src
+        image: slide.src,
+        imageWidth: slide.width,
+        imageHeight: slide.height,
       });
     }
   }

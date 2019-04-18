@@ -9,6 +9,7 @@ export default Route.extend({
   beforeModel() {
     this.headData.setProperties({
       metaDescription: 'A website about New York',
+      ogType: 'website',
     });
   },
 

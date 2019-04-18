@@ -14,7 +14,9 @@ export default DS.RESTSerializer.extend({
     payload.gallery.items.forEach(item => {
       slides.push({
         src: makeHttps([item.img_square]),
-        full: makeHttps([item.img_full]),
+        full: makeHttps([item.img_web_gallery]),
+        width: item.img_web_width,
+        height: item.img_web_height,
         caption: item.caption,
         credit: item.photographer,
       });

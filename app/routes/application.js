@@ -3,7 +3,10 @@ import Route from '@ember/routing/route';
 import { inject } from '@ember/service';
 
 export default Route.extend({
+  fastboot: inject(),
+  headData: inject(),
   moment: inject(),
+
   beforeModel() {
     this.moment.setTimeZone('America/New_York');
   },
@@ -44,6 +47,22 @@ export default Route.extend({
         url: '/staff',
         title: 'Staff'
       }]
+    }
+  },
+
+  afterModel() {
+    if (this.fastboot.isFastBoot) {
+      let { protocol, host, path, queryParams } = this.fastboot.request;
+      let url = `${protocol}//${host}${path.replace(/\/$/, '')}`;
+
+      let qp = Object.keys(queryParams).map(key => `${key}=${queryParams[key]}`);
+      if (qp.length) {
+        url += `?${qp.join('&')}`;
+      }
+
+      this.headData.setProperties({
+        url,
+      });
     }
   },
 
