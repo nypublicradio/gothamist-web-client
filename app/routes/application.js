@@ -54,6 +54,12 @@ export default Route.extend({
       } else {
         throw e;
       }
+    },
+
+    didTransition() {
+      if (typeof FastBoot === 'undefined') {
+        window.scrollTo(0, 0);
+      }
     }
   }
 });
