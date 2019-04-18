@@ -32,6 +32,7 @@ module.exports = function(environment) {
 
     // ENDPOINTS
     apiServer: process.env.API_SERVER,
+    platypusServer: process.env.PLATYPUS_SERVER,
     disqusAPI: process.env.DISQUS_API,
     disqusKey: process.env.DISQUS_PUBLIC_KEY,
   };
