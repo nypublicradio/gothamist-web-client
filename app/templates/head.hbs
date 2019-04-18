@@ -18,10 +18,10 @@
 <meta property="og:type" content={{model.ogType}}>
 
 {{#if (eq model.ogType 'article')}}
-  <meta property="article:published_time" content={{model.publishedTime}}>
-  <meta property="article:modified_time" content={{model.modifiedTime}}>
-  <meta property="article:section" content={{model.section}}>
-  <meta property="article:tag" content={{model.tags}}>
+  <meta property="og:article:published_time" content={{model.publishedTime}}>
+  <meta property="og:article:modified_time" content={{model.modifiedTime}}>
+  <meta property="og:article:section" content={{model.section}}>
+  <meta property="og:article:tag" content={{model.tags}}>
   {{#each model.authors as |author|}}
     <meta property="article:author" content={{author.url}}>
   {{/each}}
