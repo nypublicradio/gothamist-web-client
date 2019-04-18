@@ -52,13 +52,8 @@ export default Route.extend({
 
   afterModel() {
     if (this.fastboot.isFastBoot) {
-      let { protocol, host, path, queryParams } = this.fastboot.request;
+      let { protocol, host, path } = this.fastboot.request;
       let url = `${protocol}//${host}${path.replace(/\/$/, '')}`;
-
-      let qp = Object.keys(queryParams).map(key => `${key}=${queryParams[key]}`);
-      if (qp.length) {
-        url += `?${qp.join('&')}`;
-      }
 
       this.headData.setProperties({
         url,
