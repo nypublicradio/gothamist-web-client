@@ -11,18 +11,29 @@ export default Route.extend({
 
   fastboot: inject(),
   headData: inject(),
+  header: inject('nypr-o-header'),
 
-  // isFastBoot: reads('fastboot.isFastBoot'),
   image: reads('fastboot.request.queryParams.image'),
 
   titleToken: model => model.title,
 
+  beforeModel() {
+    this.header.addRule('article.gallery', {
+      resting: {
+        nav: true,
+        donate: true,
+        search: true,
+        leaderboard: true,
+      },
+      floating: {
+        close: true,
+        share: true,
+      }
+    })
+  },
+
   afterModel(model) {
     this.controllerFor('application').setProperties({
-      showNav: true,
-      showShareTools: true,
-      headline: null,
-      showLeaderboard: false,
       headerLandmark: null,
     });
 

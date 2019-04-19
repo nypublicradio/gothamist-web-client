@@ -10,17 +10,27 @@ import config from '../../config/environment';
 
 export default Route.extend({
   fastboot: inject(),
+  header: inject('nypr-o-header'),
 
   isFastBoot: reads('fastboot.isFastBoot'),
 
   titleToken: model => model.title,
 
   afterModel(model) {
+    this.header.addRule('article.index', {
+      resting: {
+        nav: true,
+        donate: true,
+        search: true,
+      },
+      floating: {
+        headline: model.title,
+        share: true,
+        donate: true,
+        search: true,
+      }
+    })
     this.controllerFor('application').setProperties({
-      showNav: true,
-      showShareTools: true,
-      headline: model.title,
-      showLeaderboard: false,
       headerLandmark: '.c-article__share',
     });
 
