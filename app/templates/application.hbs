@@ -1,6 +1,8 @@
 <HeadLayout/>
 
 <NyprOHeader
+  class={{if (eq this.target.currentRouteName 'article.index') 'c-main-header--article'}}
+  class={{if (eq this.target.currentRouteName 'article.gallery') 'c-main-header--article'}}
   @floatLandmark={{headerLandmark}}
   @donateURL={{DONATE_URL}}
   as |header|>
