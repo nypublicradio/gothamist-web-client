@@ -7,5 +7,11 @@
     @slides={{model.gallery.slides}}
     @viewedSlide={{action this.viewedSlide}}
     @activeImage={{this.image}}
-  />
+    as |index gallery|>
+      {{#if (eq index 1)}}
+        <gallery.billboard>
+          billboard goes here
+        </gallery.billboard>
+      {{/if}}
+  </NyprOGalleryOverlay>
 </div>
