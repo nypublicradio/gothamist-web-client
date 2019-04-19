@@ -5,14 +5,12 @@
   @donateURL={{DONATE_URL}}
   as |header|>
 
-  {{#if showLeaderboard}}
-    <header.leaderboard>
-      <picture>
-        <source media="(min-width: 750px)" srcset="https://tpc.googlesyndication.com/simgad/3866766746825522936">
-        <img src="https://s0.2mdn.net/5188901/TINCUP_OUTSIDEONLINE_300x50.jpg" alt="">
-      </picture>
-    </header.leaderboard>
-  {{/if}}
+  <header.leaderboard>
+    <picture>
+      <source media="(min-width: 750px)" srcset="https://tpc.googlesyndication.com/simgad/3866766746825522936">
+      <img src="https://s0.2mdn.net/5188901/TINCUP_OUTSIDEONLINE_300x50.jpg" alt="">
+    </picture>
+  </header.leaderboard>
 
   <header.menu as |menu|>
     <menu.branding>
@@ -30,20 +28,20 @@
       {{/link-to}}
     </left.branding>
 
-    {{#if (and headline header.outOfViewport)}}
+    {{#if header.rules.headline}}
       <left.headline data-test-top-headline>
-        {{headline}}
+        {{header.rules.headline}}
       </left.headline>
     {{/if}}
 
   </header.left>
 
-  {{#if (or (eq router.currentRouteName 'index') (and showNav (not header.outOfViewport)))}}
+  {{#if header.rules.nav}}
     <header.nav @navItems={{model.primaryNav}} data-test-top-nav/>
   {{/if}}
 
   <header.right as |right|>
-    {{#if (and showShareTools header.outOfViewport)}}
+    {{#if header.rules.share}}
       <NyprMShareTools @label='Share' as |tools|>
         <tools.share @service='facebook'/>
         <tools.share @service='twitter' @params={{hash text=model.title}}/>
@@ -52,13 +50,13 @@
       </NyprMShareTools>
     {{/if}}
 
-    {{#if showDonate}}
+    {{#if header.rules.donate}}
       <NyprAButton class='c-main-header__donate o-button--sm' @url={{DONATE_URL}}>
         Donate
       </NyprAButton>
     {{/if}}
 
-    {{#if showSearch}}
+    {{#if header.rules.search}}
       <right.search as |search|>
         <search.open/>
         <search.form @search={{action this.search}}/>
