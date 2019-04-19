@@ -42,7 +42,7 @@
 
   <header.right as |right|>
     {{#if header.rules.share}}
-      <NyprMShareTools @label='Share' as |tools|>
+      <NyprMShareTools class="c-main-header__share" @label='Share' as |tools|>
         <tools.share @service='facebook'/>
         <tools.share @service='twitter' @params={{hash text=model.title}}/>
         <tools.share @service='reddit' @params={{hash url=model.permalink title=model.title}}/>
