@@ -63,6 +63,12 @@
       </right.search>
     {{/if}}
 
+    {{#if header.rules.close}}
+      <NyprAButton @blank={{true}} @onclick={{header.rules.close}} class="u-padding--half">
+        <NyprASvg @icon='close' class='c-main-header__close'/>
+      </NyprAButton>
+    {{/if}}
+
   </header.right>
 
 </NyprOHeader>

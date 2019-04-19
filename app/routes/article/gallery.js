@@ -26,7 +26,7 @@ export default Route.extend({
         leaderboard: true,
       },
       floating: {
-        close: true,
+        close: this.closeGallery.bind(this),
         share: true,
       }
     })
@@ -47,5 +47,9 @@ export default Route.extend({
         image: slide,
       });
     }
+  },
+
+  closeGallery() {
+    this.transitionTo('article.index');
   }
 });
