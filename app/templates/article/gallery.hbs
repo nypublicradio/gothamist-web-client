@@ -1,17 +1,14 @@
-{{!-- pattern lab hack --}}
-<div class="gallery-is-active">
-  <NyprOGalleryOverlay
-    @title={{model.title}}
-    @parentRoute='article'
-    @parentModel={{model}}
-    @slides={{model.gallery.slides}}
-    @viewedSlide={{action this.viewedSlide}}
-    @activeImage={{this.image}}
-    as |index gallery|>
-    {{#if (eq index 1)}}
-      <gallery.billboard>
-        billboard goes here
-      </gallery.billboard>
-    {{/if}}
-  </NyprOGalleryOverlay>
-</div>
+<NyprOGalleryOverlay
+  @title={{model.title}}
+  @parentRoute='article'
+  @parentModel={{model}}
+  @slides={{model.gallery.slides}}
+  @viewedSlide={{action this.viewedSlide}}
+  @activeSlide={{this.image}}
+  as |index gallery|>
+  {{#if (eq index 1)}}
+    <gallery.billboard>
+      billboard goes here
+    </gallery.billboard>
+  {{/if}}
+</NyprOGalleryOverlay>
