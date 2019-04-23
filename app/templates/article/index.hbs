@@ -9,7 +9,8 @@
         </top.headline>
 
         <top.meta
-          @galleryPhotosCount={{model.gallery.length}}
+          @galleryPhotosCount={{model.gallery.slides.length}}
+          @galleryRoute='article.gallery'
           @commentsUrl='#comments'
           @commentCount={{model.commentCount}}
           as |meta|>
