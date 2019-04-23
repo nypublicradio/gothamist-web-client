@@ -5,6 +5,7 @@
   @slides={{model.gallery.slides}}
   @viewedSlide={{action this.viewedSlide}}
   @activeSlide={{this.image}}
+  @share={{this.shareMetadata}}
   as |index gallery|>
   {{#if (eq index 1)}}
     <gallery.billboard>
