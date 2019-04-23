@@ -72,6 +72,7 @@
     "include-media": "^1.4.9",
     "loader.js": "^4.7.0",
     "nypr-auth": "^0.2.4",
+    "nypr-ads": "^1.0.0",
     "nypr-design-system": "nypublicradio/nypr-design-system",
     "nypr-metrics": "nypublicradio/nypr-metrics",
     "qunit-dom": "^0.8.0",

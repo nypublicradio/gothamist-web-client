@@ -2,6 +2,7 @@ import DS from 'ember-data';
 import Route from '@ember/routing/route';
 import { inject } from '@ember/service';
 import { schedule } from '@ember/runloop';
+import { doTargetingForPath, clearTargetingForPath } from 'nypr-ads';
 
 export default Route.extend({
   router: inject(),
@@ -88,9 +89,14 @@ export default Route.extend({
     },
 
     didTransition() {
+      doTargetingForPath();
       if (typeof FastBoot === 'undefined') {
         window.scrollTo(0, 0);
       }
+    },
+
+    willTransition() {
+      clearTargetingForPath();
     }
   }
 });

@@ -30,6 +30,10 @@ module.exports = function(environment) {
       includeTimezone: 'all',
     },
 
+    'nypr-ads': {
+      prefix: process.env.AD_PREFIX,
+    },
+
     // ENDPOINTS
     apiServer: process.env.API_SERVER,
     disqusAPI: process.env.DISQUS_API,
