@@ -8617,7 +8617,7 @@ number-is-nan@^1.0.0:
 
 nypr-design-system@nypublicradio/nypr-design-system:
   version "0.1.0"
-  resolved "https://codeload.github.com/nypublicradio/nypr-design-system/tar.gz/83c0148211e8ec75b1e19836644c6586bf4bb4e2"
+  resolved "https://codeload.github.com/nypublicradio/nypr-design-system/tar.gz/0c6d2c9fd62b2acb8347a40e0cdf047496fefba9"
   dependencies:
     broccoli-merge-files "^0.8.0"
     ember-auto-import "^1.2.19"
