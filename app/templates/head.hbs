@@ -13,14 +13,22 @@
 
 {{#if model.image}}
   <meta property="og:image" content={{model.image.full}}>
+  <meta property="twitter:image" content={{model.image.full}}>
+
   <meta property="og:image:width" content={{model.image.width}}>
   <meta property="og:image:height" content={{model.image.height}}>
+
   <meta property="og:image:alt" content={{model.image.caption}}>
+  <meta property="twitter:image:alt" content={{model.image.caption}}>
 {{/if}}
 
 <meta property="og:url" content={{model.url}}>
+
 <meta property="og:title" content={{model.title}}>
+<meta name="twitter:title" content={{model.title}}>
+
 <meta property="og:description" content={{model.metaDescription}}>
+<meta name="twitter:description" content={{model.metaDescription}}>
 
 <meta property="og:type" content={{model.ogType}}>
 
@@ -42,3 +50,7 @@
   <meta property="og:image:height" content={{slide.height}}>
   <meta property="og:image:alt" content={{slide.caption}}>
 {{/each}}
+
+{{!-- twitter specific tags --}}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@gothamist">
