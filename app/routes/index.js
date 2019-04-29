@@ -1,6 +1,10 @@
+import fetch from 'fetch';
+
 import Route from '@ember/routing/route';
 import { inject } from '@ember/service';
 import { hash } from 'rsvp';
+
+import config from '../config/environment';
 
 export default Route.extend({
   header: inject('nypr-o-header'),
@@ -45,6 +49,7 @@ export default Route.extend({
         index: 'gothamist',
         count: 28
       }),
+      wnyc: getWnycStories(),
     }).then(results => {
       results.river = results.river.filter(article => !results.main.includes(article));
       return results;
@@ -57,3 +62,10 @@ export default Route.extend({
     });
   }
 });
+
+async function getWnycStories() {
+  let response =  await fetch(`${config.apiServer}/api/v3/buckets/gothamist-wnyc-crossposting/`);
+  let json = await response.json();
+
+  return json.data.attributes['bucket-items'].map(s => s.attributes);
+}
