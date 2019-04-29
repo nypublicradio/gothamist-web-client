@@ -100,7 +100,7 @@ export default DS.Model.extend({
 
   isSponsored: computed('tags', function() {
     let tags = this.tags || [];
-    return tags.includes('@sponsored');
+    return tags.includes('@sponsored') || tags.includes('@sponsor');
   }),
 
   leadImageCaption: reads('_parsedLegacyContent.caption'),
