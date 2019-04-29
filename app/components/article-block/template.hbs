@@ -1,0 +1,32 @@
+<NyprMBlock @orientation={{@orientation}} @size={{@size}} as |block|>
+  <block.media
+    @route={{array 'article' @article.permalink}}
+    @srcS={{make-https this.thumbnail}}
+    @alt={{@article.leadImageCaption}}
+  />
+
+  <block.object as |o|>
+    <o.eyebrow @text={{@article.section}}/>
+
+    <o.title
+      @h3
+      @route={{array 'article' @article.permalink}}
+      @galleryIcon={{@article.hasGallery}}
+    >
+      {{@article.title}}
+    </o.title>
+
+    <o.body as |body|>
+      {{#unless @hideExcerpt}}
+        <body.text>
+          {{article.excerptPretty}}
+        </body.text>
+      {{/unless}}
+
+      <body.meta
+        @timestamp={{moment-from @article.publishedMoment}}
+        @commentCount={{@article.commentCount}}
+      />
+    </o.body>
+  </block.object>
+</NyprMBlock>
