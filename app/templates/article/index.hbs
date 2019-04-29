@@ -16,7 +16,7 @@
           as |meta|>
 
           <meta.byline @authors={{model.authors}} @sponsor={{model.sponsor}}/>
-          <meta.publishDate @publishDate={{utc model.authoredOnUtc 'YYYYMMDDHHmmss'}} />
+          <meta.publishDate @publishDate={{model.publishedMoment}} />
 
         </top.meta>
 

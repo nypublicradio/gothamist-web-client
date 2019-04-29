@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 import DS from 'ember-data';
 import { computed } from '@ember/object';
 import { dasherize } from '@ember/string';
@@ -70,6 +72,12 @@ export default DS.Model.extend({
 
 
   // computed
+  publishedMoment: computed('authoredOnUtc', function() {
+    return moment.utc(this.authoredOnUtc, 'YYYYMMDDHHmmss');
+  }),
+  modifiedMoment: computed('modifiedOnUtc', function() {
+    return moment.utc(this.modifiedOnUtc, 'YYYYMMDDHHmmss');
+  }),
   section: computed('categories', function() {
     return this.categories[0].label;
   }),
