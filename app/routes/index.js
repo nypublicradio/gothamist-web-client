@@ -1,5 +1,6 @@
 import Route from '@ember/routing/route';
 import { inject } from '@ember/service';
+import { hash } from 'rsvp';
 
 export default Route.extend({
   header: inject('nypr-o-header'),
@@ -29,10 +30,24 @@ export default Route.extend({
   },
 
   model() {
-    return this.store.query('article', {
-      index: 'gothamist',
-      term: '@main',
-      count: 3
+    return hash({
+      main: this.store.query('article', {
+        index: 'gothamist',
+        term: '@main',
+        count: 4
+      }),
+      sponsored: this.store.query('article', {
+        index: 'gothamist',
+        term: '@sponsored',
+        count: 1
+      }),
+      river: this.store.query('article', {
+        index: 'gothamist',
+        count: 28
+      }),
+    }).then(results => {
+      results.river = results.river.filter(article => !results.main.includes(article));
+      return results;
     });
   },
 
