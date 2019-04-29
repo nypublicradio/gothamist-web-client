@@ -1,5 +1,206 @@
-<h2>Gothamist Homepage</h2>
+<div class="c-home__sections u-section-spacing--wide l-container l-container--xl l-wrap u-trigger-floating-header">
 
-{{#each model as |article|}}
-  {{article-card article=article}}
-{{/each}}
+  <NyprOFeaturedBlockList as |fbl|>
+    <fbl.heading>
+      <span class="c-featured-blocks__heading-icon o-icon u-icon--s u-path-fill--quaternary">
+        <NyprASvg @icon='arrow-stylish'/>
+      </span>
+      Featured
+    </fbl.heading>
+
+    <fbl.featured>
+      {{#with model.main.firstObject as |article|}}
+        <ArticleBlock @article={{article}} @thumbnailSize='640'/>
+      {{/with}}
+    </fbl.featured>
+
+    <fbl.col>
+      <NyprMBlockList @items={{slice 1 undefined model.main}} as |item|>
+        <ArticleBlock
+          @article={{item}}
+          @orientation='h'
+          @size='s'
+          @thumbnailSize='105'
+          @hideExcerpt={{true}}
+        />
+      </NyprMBlockList>
+    </fbl.col>
+
+  </NyprOFeaturedBlockList>
+
+  {{#if model.sponsored}}
+    <div class="l-container l-container--16col">
+      <NyprOSponsoredTout @heading="Sponsored">
+        <ArticleBlock @orientation='h' @article={{model.sponsored}}/>
+      </NyprOSponsoredTout>
+    </div>
+  {{/if}}
+
+  <div class="l-container l-container--14col">
+    <NyprOBlockListGroup as |blg|>
+      <blg.col1>
+        <NyprMBlockList @items={{slice 0 7 model.river}} as |item|>
+          <ArticleBlock
+            @orientation='h'
+            @article={{item}}
+            @thumbnailSize='105'
+            @hideExcerpt={{true}}
+          />
+        </NyprMBlockList>
+      </blg.col1>
+      <blg.col2 as |col|>
+        <col.ad @size='short'>
+          Ad here
+        </col.ad>
+      </blg.col2>
+    </NyprOBlockListGroup>
+  </div>
+
+  <div class="l-container l-container--14col">
+    <NyprONewsletterTout
+      @img={{hash
+        src='https://picsum.photos/500/500?image=66'
+        alt='newsletter image'
+      }}
+      as |tout|>
+      <tout.heading>
+        Sign Up for We The Commuters
+      </tout.heading>
+
+      <tout.blurb>
+        You already read our words, now you can read them in email form too! Read a quick bite-sized list of content!
+      </tout.blurb>
+
+      <tout.legal/>
+    </NyprONewsletterTout>
+  </div>
+
+  <div class="l-container l-container--11col">
+    <NyprOBlockListGroup as |blg|>
+      <blg.col1>
+        <ArticleBlock @article={{get model.river 7}} @thumbnailSize='640' />
+
+        <NyprMBlockList @items={{slice 8 14 model.river}} as |item|>
+          <ArticleBlock
+            @orientation='h'
+            @article={{item}}
+            @thumbnailSize='105'
+            @hideExcerpt={{true}}
+          />
+        </NyprMBlockList>
+      </blg.col1>
+    </NyprOBlockListGroup>
+  </div>
+
+  <NyprOFeaturedBlockList class="c-featured-blocks--secondary" as |fbl|>
+    <~fbl.heading class="c-featured-blocks__heading--wnyc">
+      <span class="o-bg-text-accent">
+        New From
+        <NyprASvg @icon='wnyc-logo'/>
+      </span>
+   </~fbl.heading>
+
+    <fbl.featured>
+      {{#with model.wnyc.firstObject as |story|}}
+        <WnycBlock
+          @story={{story}}
+          @imageWidth='466'
+        />
+      {{/with}}
+
+    </fbl.featured>
+
+    <fbl.col>
+      <NyprMBlockList @items={{slice 1 undefined model.wnyc}} as |item|>
+        <WnycBlock
+          @story={{item}}
+          @orientation='h'
+          @size='s'
+          @imageWidth='105'
+          @hideExcerpt={{true}}
+        />
+      </NyprMBlockList>
+
+      <NyprAButton
+        @url='https://www.wnyc.org'
+        class="c-featured-blocks__cta o-button--c-quaternary u-full-width"
+      >
+        Read More on WNYC
+      </NyprAButton>
+    </fbl.col>
+
+  </NyprOFeaturedBlockList>
+
+
+  <div class="l-container l-container--14col">
+    <NyprOBlockListGroup class="c-block-group--with-footer-block" as |blg|>
+      <blg.col1>
+
+        <NyprMBlockList @items={{slice 14 20 model.river}} as |item|>
+          <ArticleBlock
+            @orientation='h'
+            @article={{item}}
+            @thumbnailSize='105'
+            @hideExcerpt={{true}}
+          />
+        </NyprMBlockList>
+
+        <ArticleBlock @article={{get model.river 21}} @thumbnailSize='640' />
+
+      </blg.col1>
+
+      <blg.col2 as |col|>
+        <col.ad @size='tall'>
+          Ad here
+        </col.ad>
+      </blg.col2>
+    </NyprOBlockListGroup>
+  </div>
+</div>
+
+<div class="c-home__sections">
+  <NyprODonate
+    @linkUrl='https://pledge3.wnyc.org/donate/gothamist/onestep'
+    @linkText='Donate'
+    class="c-donate-tout--static">
+    <p>
+      Gothamist is non-profit local news. We rely on reader support. We need YOU so we can keep telling New York stories.
+    </p>
+  </NyprODonate>
+</div>
+
+<div class="c-home__sections u-spacing--quad l-container l-wrap">
+
+  <div class="l-container l-container--14col u-spacing--triple">
+    <NyprOBlockListGroup as |blg|>
+      <blg.col1>
+        <NyprMBlockList @items={{slice 21 undefined model.river}} as |item|>
+          <ArticleBlock
+            @orientation='h'
+            @article={{item}}
+            @thumbnailSize='105'
+            @hideExcerpt={{true}}
+          />
+        </NyprMBlockList>
+      </blg.col1>
+      <blg.col2 as |col|>
+        <col.ad @size='tall'>
+          Ad here
+        </col.ad>
+      </blg.col2>
+    </NyprOBlockListGroup>
+
+    <div class="u-align-center">
+      <NyprAButton class="o-button--c-quaternary o-button--extra">
+        More Results
+      </NyprAButton>
+    </div>
+  </div>
+
+  <div class="l-container l-container--14col">
+    <NyprMNavReadMore @items={{array
+      (hash route=(array 'tags' 'news') label='News')
+    }}/>
+  </div>
+
+</div>
