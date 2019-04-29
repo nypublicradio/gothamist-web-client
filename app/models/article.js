@@ -149,6 +149,9 @@ export default DS.Model.extend({
   }),
 
   _extractLeadImage(nodes) {
+    if (!nodes.firstElementChild) {
+      return;
+    }
     // the fist element will contain this MT tag if there's an image
     let imageWrapper = nodes.firstElementChild.querySelector('.mt-enclosure-image');
     if (imageWrapper) {
@@ -166,6 +169,11 @@ export default DS.Model.extend({
   _getImageMeta(imageWrapper) {
       // caption is the text in the `<i/>` tag
       let text = imageWrapper.querySelector('i');
+
+      if (!text) {
+        // no caption or credit
+        return [];
+      }
 
       // parse HTML string for caption and credit
       let match = text.innerHTML.match(/^([^(]+)\(([^)]+)\)$/);
