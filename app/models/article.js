@@ -150,13 +150,16 @@ export default DS.Model.extend({
 
   _extractLeadImage(nodes) {
     // the fist element will contain this MT tag if there's an image
-    if (nodes.firstElementChild && nodes.firstElementChild.querySelector('.mt-enclosure-image')) {
-      // due to broken MT output, this is where the image ends up
-      let actualImageWrapper = nodes.firstElementChild.nextElementSibling;
+    let imageWrapper = nodes.firstElementChild.querySelector('.mt-enclosure-image');
+    if (imageWrapper) {
+      if (!imageWrapper.querySelector('img')) {
+        // due to broken MT output, this is where the image sometimes ends up
+        imageWrapper = nodes.firstElementChild.nextElementSibling;
+      }
 
       // this image will be the same as `thumbnail640`, which is displayed as the lead image
       // remove it from this node collection so it isn't rendered twice
-      return actualImageWrapper.parentNode.removeChild(actualImageWrapper);
+      return imageWrapper.parentNode.removeChild(imageWrapper);
     }
   },
 
