@@ -4,6 +4,7 @@ import { underscore } from '@ember/string';
 export default DS.RESTSerializer.extend({
   attrs: {
     thumbnail640: 'thumbnail_640',
+    thumbnail105: 'thumbnail_105',
   },
   modelNameFromPayloadKey: () => 'article',
   keyForAttribute: key => underscore(key),
