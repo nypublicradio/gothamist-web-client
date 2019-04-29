@@ -1,0 +1,29 @@
+<NyprMBlock @orientation={{@orientation}} @size={{@size}} as |block|>
+  <block.media
+    @url={{@story.url}}
+    @srcS={{make-https this.thumbnail}}
+    @alt={{@story.image-main.caption}}
+  />
+
+  <block.object as |o|>
+    <o.title
+      @h3
+      @url={{@story.url}}
+    >
+      {{@story.title}}
+    </o.title>
+
+    <o.body as |body|>
+      {{#unless @hideExcerpt}}
+        <body.text>
+          {{@story.tease}}
+        </body.text>
+      {{/unless}}
+
+      <body.meta
+        @timestamp={{moment-from @story.newsdate}}
+        @commentCount={{@story.comments-count}}
+      />
+    </o.body>
+  </block.object>
+</NyprMBlock>
