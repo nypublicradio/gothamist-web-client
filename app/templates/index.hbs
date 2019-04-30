@@ -125,8 +125,9 @@
     <ArticleList @articles={{slice (multiply GROUP_SIZE 3) undefined model.river}} @ad='tall'/>
   </div>
 
+  <div class="l-container l-container--14col">
     <div class="u-align-center">
-      <NyprAButton class="o-button--c-quaternary o-button--extra">
+      <NyprAButton class="o-button--c-quaternary o-button--extra" @onclick={{action getMoreStories}}>
         More Results
       </NyprAButton>
     </div>
