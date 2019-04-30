@@ -81,6 +81,9 @@ export default DS.Model.extend({
   section: computed('categories', function() {
     return this.categories[0].label;
   }),
+  hasMain: computed('tags', function() {
+    return this.tags.includes('@main');
+  }),
   moveableTypeId: reads('id'),
 
   breadcrumb: computed('categories', function() {
