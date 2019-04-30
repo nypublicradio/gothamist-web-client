@@ -1,0 +1,19 @@
+<NyprOBlockListGroup as |blg|>
+  <blg.col1>
+    <NyprMBlockList @items={{@articles}} as |article|>
+      <ArticleBlock
+        @article={{article}}
+        @orientation={{if article.hasMain 'v' 'h'}}
+        @thumbnailSize={{if article.hasMain '640' '105'}}
+        @hideExcerpt={{not article.hasMain}}
+      />
+    </NyprMBlockList>
+  </blg.col1>
+  {{#if @ad}}
+    <blg.col2 as |col|>
+      <col.ad @size={{@ad}}>
+        Ad here
+      </col.ad>
+    </blg.col2>
+  {{/if}}
+</NyprOBlockListGroup>
