@@ -1,4 +1,5 @@
 import Controller from '@ember/controller';
+import fade from 'ember-animated/transitions/fade';
 
 export default Controller.extend({
   page: 1,
@@ -7,6 +8,8 @@ export default Controller.extend({
     this._super(...arguments);
     this.set('moreArticles', []);
   },
+
+  transition: fade,
 
   getMoreStories() {
     const { GROUP_SIZE, COUNT } = this;
