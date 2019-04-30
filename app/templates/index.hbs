@@ -37,23 +37,7 @@
   {{/if}}
 
   <div class="l-container l-container--14col">
-    <NyprOBlockListGroup as |blg|>
-      <blg.col1>
-        <NyprMBlockList @items={{slice 0 7 model.river}} as |item|>
-          <ArticleBlock
-            @orientation='h'
-            @article={{item}}
-            @thumbnailSize='105'
-            @hideExcerpt={{true}}
-          />
-        </NyprMBlockList>
-      </blg.col1>
-      <blg.col2 as |col|>
-        <col.ad @size='short'>
-          Ad here
-        </col.ad>
-      </blg.col2>
-    </NyprOBlockListGroup>
+    <ArticleList @articles={{slice 0 GROUP_SIZE model.river}} @ad='short'/>
   </div>
 
   <div class="l-container l-container--14col">
@@ -76,20 +60,7 @@
   </div>
 
   <div class="l-container l-container--11col">
-    <NyprOBlockListGroup as |blg|>
-      <blg.col1>
-        <ArticleBlock @article={{get model.river 7}} @thumbnailSize='640' />
-
-        <NyprMBlockList @items={{slice 8 14 model.river}} as |item|>
-          <ArticleBlock
-            @orientation='h'
-            @article={{item}}
-            @thumbnailSize='105'
-            @hideExcerpt={{true}}
-          />
-        </NyprMBlockList>
-      </blg.col1>
-    </NyprOBlockListGroup>
+    <ArticleList @articles={{slice GROUP_SIZE (multiply GROUP_SIZE 2)  model.river}}/>
   </div>
 
   <NyprOFeaturedBlockList class="c-featured-blocks--secondary" as |fbl|>
@@ -133,28 +104,7 @@
 
 
   <div class="l-container l-container--14col">
-    <NyprOBlockListGroup class="c-block-group--with-footer-block" as |blg|>
-      <blg.col1>
-
-        <NyprMBlockList @items={{slice 14 20 model.river}} as |item|>
-          <ArticleBlock
-            @orientation='h'
-            @article={{item}}
-            @thumbnailSize='105'
-            @hideExcerpt={{true}}
-          />
-        </NyprMBlockList>
-
-        <ArticleBlock @article={{get model.river 21}} @thumbnailSize='640' />
-
-      </blg.col1>
-
-      <blg.col2 as |col|>
-        <col.ad @size='tall'>
-          Ad here
-        </col.ad>
-      </blg.col2>
-    </NyprOBlockListGroup>
+    <ArticleList @articles={{slice (multiply GROUP_SIZE 2) (multiply GROUP_SIZE 3) model.river}} @ad='tall'/>
   </div>
 </div>
 
@@ -171,24 +121,9 @@
 
 <div class="c-home__sections u-spacing--quad l-container l-wrap">
 
-  <div class="l-container l-container--14col u-spacing--triple">
-    <NyprOBlockListGroup as |blg|>
-      <blg.col1>
-        <NyprMBlockList @items={{slice 21 undefined model.river}} as |item|>
-          <ArticleBlock
-            @orientation='h'
-            @article={{item}}
-            @thumbnailSize='105'
-            @hideExcerpt={{true}}
-          />
-        </NyprMBlockList>
-      </blg.col1>
-      <blg.col2 as |col|>
-        <col.ad @size='tall'>
-          Ad here
-        </col.ad>
-      </blg.col2>
-    </NyprOBlockListGroup>
+  <div class="l-container l-container--14col">
+    <ArticleList @articles={{slice (multiply GROUP_SIZE 3) undefined model.river}} @ad='tall'/>
+  </div>
 
     <div class="u-align-center">
       <NyprAButton class="o-button--c-quaternary o-button--extra">
