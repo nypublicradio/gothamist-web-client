@@ -43,11 +43,14 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
 
-    // enable mirage on the command line by running `$ mirage=true ember serve`
-    // anything truthy will work: `$ mirage=1 ember serve`
-    ENV['ember-cli-mirage'] = {
-      enabled: !!process.env.mirage
-    };
+    // enable mirage on the command line by running `$ MIRAGE=true ember serve`
+    // anything truthy will work: `$ MIRAGE=1 ember serve`
+    if (process.env.MIRAGE) {
+      console.log('mirage enabled');
+      ENV['ember-cli-mirage'] = {
+        enabled: true,
+      };
+    }
 
     // for mirage endpoints
     ENV.apiServer = 'https://api.demo.nypr.digital';

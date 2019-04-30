@@ -26,10 +26,10 @@ You will need the following things properly installed on your computer.
 
 `ember-cli-mirage` is disabled by default, but you run a local dev server with the following:
 ```
-$ mirage=1 ember serve
+$ MIRAGE=1 ember serve
 ```
 
-It can be `mirage=<any truthy value>` to start enable mirage with that local server instance.
+It can be `MIRAGE=<any truthy value>` to start enable mirage with that local server instance.
 
 
 ### Running Tests
