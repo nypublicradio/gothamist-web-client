@@ -1,4 +1,4 @@
-<NyprMBlock @orientation={{@orientation}} @size={{@size}} as |block|>
+<NyprMBlock @orientation={{@orientation}} @size={{@size}} data-test-nypr-block={{@article.id}} as |block|>
   <block.media
     @route={{array 'article' @article.permalink}}
     @srcS={{make-https this.thumbnail}}
