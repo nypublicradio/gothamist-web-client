@@ -5,6 +5,10 @@ export default Component.extend({
   didInsertElement() {
     this._super(...arguments);
 
+    if (window.block_disqus) {
+      return;
+    }
+
     let { identifier, permalink } = this;
     const config = function() {
       this.page.identifier = identifier;

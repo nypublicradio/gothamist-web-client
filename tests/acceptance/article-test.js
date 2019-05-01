@@ -7,6 +7,14 @@ module('Acceptance | article', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
+  hooks.beforeEach(() => {
+    window.block_disqus = true;
+  });
+
+  hooks.afterEach(() => {
+    window.block_disqus = false;
+  })
+
   test('visiting /article', async function(assert) {
     const article = server.create('article');
 
