@@ -68,6 +68,10 @@ module.exports = function(environment) {
       console.log('mirage enabled'); // eslint-disable-line
     }
 
+    ENV['nypr-ads'] = {
+      prefix: '_demo_test',
+    };
+
     // for mirage endpoints
     ENV.apiServer = 'https://api.demo.nypr.digital';
   }

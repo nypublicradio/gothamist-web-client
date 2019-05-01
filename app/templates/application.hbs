@@ -1,3 +1,5 @@
+<DfpAd @slot='gothamist/skin' @sizes={{array (array 1 1)}} />
+
 <HeadLayout/>
 
 <NyprOHeader
@@ -9,10 +11,11 @@
   as |header|>
 
   <header.leaderboard>
-    <picture>
-      <source media="(min-width: 750px)" srcset="https://tpc.googlesyndication.com/simgad/3866766746825522936">
-      <img src="https://s0.2mdn.net/5188901/TINCUP_OUTSIDEONLINE_300x50.jpg" alt="">
-    </picture>
+    {{#if (eq this.target.currentRouteName 'index')}}
+      <AdTagLeaderboard @slot='gothamist/index/leaderboard' />
+    {{else}}
+      <AdTagLeaderboard @slot='gothamist/interior/leaderboard' />
+    {{/if}}
   </header.leaderboard>
 
   <header.menu as |menu|>
