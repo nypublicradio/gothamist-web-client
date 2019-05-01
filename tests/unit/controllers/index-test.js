@@ -29,7 +29,7 @@ module('Unit | Controller | index', function(hooks) {
 
     assert.equal(controller.moreArticles.length, Math.ceil(RESULTS.length / GROUP_SIZE));
     assert.ok(
-      RESULTS.every(set => set.length === GROUP_SIZE),
+      controller.moreArticles.every(set => set.length === GROUP_SIZE),
       'moreArticles should be an array of arrays that are the length of GROUP_SIZE'
     );
   });
