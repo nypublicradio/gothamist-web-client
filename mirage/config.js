@@ -34,9 +34,9 @@ export default function() {
       record,
       // count,
     } = request.queryParams;
-    if (term === '@main') {
+    if (term) {
       // homepage
-      return schema.articles.where({tags: ['@main']});
+      return schema.articles.where({tags: [term]});
     }
 
     if (record) {
