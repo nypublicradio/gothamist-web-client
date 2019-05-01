@@ -1,4 +1,5 @@
 import fetch from 'fetch';
+import moment from 'moment';
 
 import Route from '@ember/routing/route';
 import { inject } from '@ember/service';
@@ -41,15 +42,11 @@ export default Route.extend({
 
   model() {
     return hash({
+      sponsored: this.getSponsoredPost(),
       main: this.store.query('article', {
         index: 'gothamist',
         term: '@main',
         count: MAIN_COUNT,
-      }),
-      sponsored: this.store.query('article', {
-        index: 'gothamist',
-        term: '@sponsored',
-        count: 1,
       }),
       river: this.store.query('article', {
         index: 'gothamist',
@@ -67,10 +64,30 @@ export default Route.extend({
       headerLandmark: null,
     });
   },
+
+  // fetch the most recent sponsor post
+  // filter it out if it's older than 24 hours
+  async getSponsoredPost() {
+    let post = await this.store.query('article', {
+      index: 'gothamist',
+      term: '@sponsor',
+      count: 1,
+    });
+
+    if (!post.firstObject) {
+      return;
+    }
+    if (moment().diff(post.firstObject.publishedMoment, 'hours') <= 24) {
+      return post;
+    }
+  }
 });
 
 async function getWnycStories() {
   let response =  await fetch(`${config.apiServer}/api/v3/buckets/gothamist-wnyc-crossposting/`);
+  if (!response.ok) {
+    return [];
+  }
   let json = await response.json();
 
   return json.data.attributes['bucket-items'].map(s => s.attributes);
