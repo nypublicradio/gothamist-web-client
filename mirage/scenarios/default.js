@@ -5,8 +5,11 @@ export default function(server) {
     This data will not be loaded in your tests.
   */
 
-  server.create('article', {tags: ['@main'], permalink: 'foo', title: 'test homepage article'});
   server.createList('article', 3, {
     tags: ['@main']
   });
+  server.create('article', {tags: ['@sponsored']});
+  server.createList('article', 50);
+
+  server.create('wnyc-story', {id: 'gothamist-wnyc-crossposting'});
 }
