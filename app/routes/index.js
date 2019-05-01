@@ -8,9 +8,9 @@ import config from '../config/environment';
 
 
 const BASE_COUNT = 28;
-const MAIN_COUNT = 4;
-const TOTAL_COUNT = BASE_COUNT + MAIN_COUNT;
-const GROUP_SIZE = 7;
+export const MAIN_COUNT = 4;
+export const TOTAL_COUNT = BASE_COUNT + MAIN_COUNT;
+export const GROUP_SIZE = 7;
 
 export default Route.extend({
   header: inject('nypr-o-header'),
@@ -64,14 +64,6 @@ export default Route.extend({
   afterModel() {
     this.controllerFor('application').setProperties({
       headerLandmark: null,
-    });
-  },
-
-  setupController(controller) {
-    this._super(...arguments);
-    controller.setProperties({
-      TOTAL_COUNT,
-      GROUP_SIZE
     });
   },
 });

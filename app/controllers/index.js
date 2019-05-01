@@ -1,9 +1,15 @@
 import Controller from '@ember/controller';
 import fade from 'ember-animated/transitions/fade';
 
+import {
+  GROUP_SIZE,
+  TOTAL_COUNT,
+} from '../routes/index';
+
+
 export default Controller.extend({
-  GROUP_SIZE: null,
-  TOTAL_COUNT: null,
+  GROUP_SIZE,
+  TOTAL_COUNT,
   page: 1,
 
   init() {
@@ -14,6 +20,7 @@ export default Controller.extend({
   transition: fade,
 
   getMoreStories() {
+    // pull off self to allow for test injection
     const { GROUP_SIZE, TOTAL_COUNT } = this;
 
     this.store.query('article', {
