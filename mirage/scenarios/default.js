@@ -5,7 +5,7 @@ export default function(server) {
     This data will not be loaded in your tests.
   */
 
-  server.createList('article', 3, {
+  server.createList('article', 5, {
     tags: ['@main']
   });
   server.create('article', {tags: ['@sponsored']});
