@@ -32,7 +32,8 @@ export default function() {
     let {
       term,
       record,
-      // count,
+      count,
+      page = 1,
     } = request.queryParams;
     if (term) {
       // homepage
@@ -42,6 +43,9 @@ export default function() {
     if (record) {
       return schema.articles.where({ permalink: record });
     }
+
+    const allArticles =  schema.articles.all();
+    return allArticles.slice((page - 1) * count, page * count);
   });
 
   this.get('/api/v3/buckets/:id', 'wnyc-story');
