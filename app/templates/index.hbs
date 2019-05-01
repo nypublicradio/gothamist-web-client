@@ -31,7 +31,7 @@
   {{#if model.sponsored}}
     <div class="l-container l-container--16col">
       <NyprOSponsoredTout @heading="Sponsored">
-        <ArticleBlock @orientation='h' @article={{model.sponsored}}/>
+        <ArticleBlock @article={{model.sponsored}} @thumbnailSize='300'/>
       </NyprOSponsoredTout>
     </div>
   {{/if}}
