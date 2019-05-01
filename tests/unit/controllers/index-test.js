@@ -13,7 +13,7 @@ module('Unit | Controller | index', function(hooks) {
   test('getMoreStories creates pages of GROUP_SIZE', async function(assert) {
     const GROUP_SIZE = 4;
     // simple, filterable list
-    const RESULTS = Array.from(new Array(50), (el, i) => i);
+    const RESULTS = Array.from(new Array(GROUP_SIZE * 5), (el, i) => i);
     let controller = this.owner.lookup('controller:index');
 
     controller.setProperties({
@@ -28,6 +28,9 @@ module('Unit | Controller | index', function(hooks) {
     await controller.getMoreStories();
 
     assert.equal(controller.moreArticles.length, Math.ceil(RESULTS.length / GROUP_SIZE));
-
+    assert.ok(
+      RESULTS.every(set => set.length === GROUP_SIZE),
+      'moreArticles should be an array of arrays that are the length of GROUP_SIZE'
+    );
   });
 });
