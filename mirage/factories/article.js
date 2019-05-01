@@ -34,7 +34,7 @@ export default Factory.extend({
   excerpt() {
     return this.excerpt_full.slice(0, 220) + '...';
   },
-  excerpt_pretty: () => faker.lorem.sentence(),
+  excerpt_pretty: () => faker.lorem.sentence(20),
   excerpt_sponsor: null,
   has_gallery: false,
   has_map: false,
