@@ -45,11 +45,11 @@ module.exports = function(environment) {
 
     // enable mirage on the command line by running `$ MIRAGE=true ember serve`
     // anything truthy will work: `$ MIRAGE=1 ember serve`
+    ENV['ember-cli-mirage'] = {
+      enabled: !!process.env.MIRAGE, // allow evaluated value to control on/off
+    };
     if (process.env.MIRAGE) {
-      console.log('mirage enabled');
-      ENV['ember-cli-mirage'] = {
-        enabled: true,
-      };
+      console.log('mirage enabled'); // eslint-disable-line
     }
 
     // for mirage endpoints
