@@ -5,11 +5,6 @@ import { inject } from '@ember/service';
 export default Route.extend({
   fastboot: inject(),
   headData: inject(),
-  moment: inject(),
-
-  beforeModel() {
-    this.moment.setTimeZone('America/New_York');
-  },
 
   title(tokens) {
     return `${tokens.join(' - ')} - Gothamist`
