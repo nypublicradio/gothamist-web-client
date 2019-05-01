@@ -24,10 +24,16 @@
     <menu.secondaryNav @navItems={{model.secondaryNav}}/>
   </header.menu>
 
-  <header.left as |left|>
+  <header.left
+    class={{if header.rules.stackLogo 'c-main-header--emphasis'}}
+    as |left|>
     <left.branding>
       {{#link-to 'index'}}
-        <NyprASvg @icon='gothamist-logo'/>
+        {{#if header.rules.stackLogo}}
+          <NyprASvg @icon='gothamist-logo--stacked'/>
+        {{else}}
+          <NyprASvg @icon='gothamist-logo'/>
+        {{/if}}
       {{/link-to}}
     </left.branding>
 

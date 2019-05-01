@@ -26,6 +26,7 @@ export default Route.extend({
         leaderboard: true,
         donate: true,
         search: true,
+        stackLogo: true,
       },
       floating: {
         nav: true,
