@@ -28,6 +28,7 @@ export default Route.extend({
       floating: {
         close: this.closeGallery.bind(this),
         share: true,
+        progressBar: true,
       }
     })
   },

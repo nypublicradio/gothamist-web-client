@@ -28,6 +28,7 @@ export default Route.extend({
         share: true,
         donate: true,
         search: true,
+        progressBar: true,
       }
     })
     this.controllerFor('application').setProperties({
