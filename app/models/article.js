@@ -78,8 +78,12 @@ export default DS.Model.extend({
   modifiedMoment: computed('modifiedOnUtc', function() {
     return moment.utc(this.modifiedOnUtc, 'YYYYMMDDHHmmss');
   }),
-  section: computed('categories', function() {
-    return this.categories[0].label;
+  section: computed('categories', 'isSponsored', function() {
+    if (this.isSponsored) {
+      return 'Sponsored';
+    } else {
+      return this.categories[0].label;
+    }
   }),
   hasMain: computed('tags', function() {
     return this.tags.includes('@main');
