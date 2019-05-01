@@ -16,7 +16,6 @@ module('Acceptance | homepage', function(hooks) {
     server.createList('article', 10, {
       tags: ['@main']
     });
-    server.create('article', {tags: ['@sponsored']});
     server.createList('article', TOTAL_COUNT * 2);
 
     server.create('wnyc-story', {id: 'gothamist-wnyc-crossposting'});
