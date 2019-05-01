@@ -37,7 +37,8 @@ export default function() {
     } = request.queryParams;
     if (term) {
       // homepage
-      return schema.articles.where({tags: [term]});
+      const main = schema.articles.where({tags: [term]});
+      return main.slice((page - 1) * count, page * count);
     }
 
     if (record) {
