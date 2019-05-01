@@ -5,6 +5,7 @@ export default DS.RESTSerializer.extend({
   attrs: {
     thumbnail640: 'thumbnail_640',
     thumbnail105: 'thumbnail_105',
+    thumbnail300: 'thumbnail_300',
   },
   modelNameFromPayloadKey: () => 'article',
   keyForAttribute: key => underscore(key),
