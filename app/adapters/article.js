@@ -8,6 +8,7 @@ export default DS.RESTAdapter.extend(AdapterFetch, {
   pathForType: () => '',
 
   queryRecord(store, type, query) {
+    query.count = 1;
     return this._super(...arguments).then(response => {
       if (response.entries.length === 0) {
         const error = new DS.NotFoundError();

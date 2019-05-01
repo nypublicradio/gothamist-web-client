@@ -46,10 +46,9 @@ export default Route.extend({
         term: '@main',
         count: MAIN_COUNT,
       }),
-      sponsored: this.store.query('article', {
+      sponsored: this.store.queryRecord('article', {
         index: 'gothamist',
         term: '@sponsored',
-        count: 1,
       }),
       river: this.store.query('article', {
         index: 'gothamist',
