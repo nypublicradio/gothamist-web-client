@@ -30,7 +30,7 @@
 
   {{#if model.sponsored}}
     <div class="l-container l-container--16col">
-      <NyprOSponsoredTout @heading="Sponsored">
+      <NyprOSponsoredTout @heading="Sponsored" data-test-sponsored-tout>
         <ArticleBlock @article={{model.sponsored.firstObject}} @thumbnailSize='300'/>
       </NyprOSponsoredTout>
     </div>
