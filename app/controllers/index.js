@@ -23,7 +23,7 @@ export default Controller.extend({
     // pull off self to allow for test injection
     const { GROUP_SIZE, TOTAL_COUNT } = this;
 
-    this.store.query('article', {
+    return this.store.query('article', {
       index: 'gothamist',
       count: TOTAL_COUNT,
       page: this.incrementProperty('page'),
