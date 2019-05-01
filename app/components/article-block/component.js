@@ -10,6 +10,8 @@ export default Component.extend({
         return this.article.thumbnail640;
       case '105':
         return this.article.thumbnail105;
+      default:
+        return this.article.thumbnail300;
     }
   })
 });
