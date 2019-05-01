@@ -25,14 +25,15 @@ module('Acceptance | homepage', function(hooks) {
     assert.equal(currentURL(), '/');
     assert.dom('[data-test-featured-block-list]').exists();
     assert.dom('[data-test-featured-block-list] [data-test-block]').exists();
-    assert.dom('[data-test-block]').exists({count: TOTAL_COUNT + 1}, `${TOTAL_COUNT} blocks plus one for sponsored tout`);
+    assert.dom('[data-test-block]').exists({count: TOTAL_COUNT});
 
     const mainArticleInRiver = server.schema.articles.where({tags:['@main']}).slice(-1).models[0];
     assert.dom(`[data-test-block="${mainArticleInRiver.id}"]`).doesNotHaveClass('c-block--horizontal', 'articles in the "river" tagged main should not have a "--horizontal" modifier class');
 
     await click('[data-test-more-results]');
 
-    assert.dom('[data-test-block]').exists({count: (TOTAL_COUNT * 2) + 1}, 'Clicking "read more" brings in another set of results equal to the amount of TOTAL_COUNT');
+    assert.dom('[data-test-block]').exists({count: TOTAL_COUNT * 2}, 'Clicking "read more" brings in another set of results equal to the amount of TOTAL_COUNT');
+  });
 
   test('sponsored posts younger than 24 hours appear in sponsored tout', async function(assert) {
     const TITLE = 'foo';
