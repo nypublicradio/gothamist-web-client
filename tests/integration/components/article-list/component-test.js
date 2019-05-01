@@ -21,6 +21,6 @@ module('Integration | Component | article-list', function(hooks) {
       <ArticleList @articles={{articles}} />
     `);
 
-    assert.dom('[data-test-nypr-block]').exists({count: 2});
+    assert.dom('[data-test-block]').exists({count: 2});
   });
 });
