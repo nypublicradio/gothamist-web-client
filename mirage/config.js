@@ -44,5 +44,7 @@ export default function() {
     }
   });
 
+  this.get('/api/v3/buckets/:id', 'wnyc-story');
+
   this.get('https://disqus.com/api/3.0/threads/details.json', {response: {posts: 100}});
 }
