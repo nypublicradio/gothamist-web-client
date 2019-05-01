@@ -2,6 +2,8 @@ import Controller from '@ember/controller';
 import fade from 'ember-animated/transitions/fade';
 
 export default Controller.extend({
+  GROUP_SIZE: null,
+  TOTAL_COUNT: null,
   page: 1,
 
   init() {
@@ -12,11 +14,11 @@ export default Controller.extend({
   transition: fade,
 
   getMoreStories() {
-    const { GROUP_SIZE, COUNT } = this;
+    const { GROUP_SIZE, TOTAL_COUNT } = this;
 
     this.store.query('article', {
       index: 'gothamist',
-      count: COUNT,
+      count: TOTAL_COUNT,
       page: this.incrementProperty('page'),
     }).then(results => {
       results = results.filter(a => !this.model.main.includes(a));
