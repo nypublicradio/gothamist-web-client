@@ -1,6 +1,6 @@
 <div class="c-home__sections u-section-spacing--wide l-container l-container--xl l-wrap u-trigger-floating-header">
 
-  <NyprOFeaturedBlockList as |fbl|>
+  <NyprOFeaturedBlockList data-test-featured-block-list as |fbl|>
     <fbl.heading>
       <span class="c-featured-blocks__heading-icon o-icon u-icon--s u-path-fill--quaternary">
         <NyprASvg @icon='arrow-stylish'/>
@@ -135,7 +135,7 @@
 
   <div class="l-container l-container--14col">
     <div class="u-align-center">
-      <NyprAButton class="o-button--c-quaternary o-button--extra" @onclick={{action getMoreStories}}>
+      <NyprAButton data-test-more-results class="o-button--c-quaternary o-button--extra" @onclick={{action getMoreStories}}>
         More Results
       </NyprAButton>
     </div>
