@@ -92,3 +92,13 @@ To run the tests: build the Docker image and run the script from a container.
 docker build -t gothamist-web-client .
 docker run gothamist-web-client ./scripts/test_nginx.sh
 ```
+
+## Notes
+
+### `store.queryRecord('article')` throws a 404
+
+Use `queryRecord` to retrieve a piece of **primary** content, such as for an article detail view. The presumption in this case is that browser URL contains a piece of uniquely identifying information, like a `slug` or an `id`.
+
+Under these circumstances, the semantics dictate that the adapter should throw a `DS.NotFoundError` if the the network request returns a response perceived as empty, and the application **will render a 404 page**.
+
+If you want to make a request that can return empty without rendering a 404 page, use the `query` method on the store. The API is exactly the same, except the returned value will always be a list.
