@@ -21,18 +21,15 @@ export default Route.extend({
 
   beforeModel() {
     this.header.addRule('index', {
-      resting: {
+      all: {
         nav: true,
-        leaderboard: true,
         donate: true,
         search: true,
+      },
+      resting: {
+        leaderboard: true,
         stackLogo: true,
       },
-      floating: {
-        nav: true,
-        donate: true,
-        search: true,
-      }
     });
 
     this.headData.setProperties({
