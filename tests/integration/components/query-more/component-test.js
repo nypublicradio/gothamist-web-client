@@ -1,0 +1,149 @@
+import { module } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render, click } from '@ember/test-helpers';
+import hbs from 'htmlbars-inline-precompile';
+import test from 'ember-sinon-qunit/test-support/test';
+
+module('Integration | Component | query-more', function(hooks) {
+  setupRenderingTest(hooks);
+
+  test('it yields an action that queries the store with the given args', async function() {
+    const MODEL = 'foo';
+    const QUERY = {
+      baz: '1234',
+      qux: true,
+    };
+
+    const store = this.owner.lookup('service:store');
+
+    this.mock(store)
+      .expects('query')
+      .withArgs(MODEL, QUERY)
+      .resolves();
+
+    this.setProperties({
+      MODEL,
+      QUERY,
+    });
+
+    await render(hbs`
+      <QueryMore @query={{QUERY}} @model={{MODEL}} as |more|>
+        <button {{action more.queryMore}} id="query-more">click</button>
+      </QueryMore>
+    `);
+
+    await click('#query-more');
+  });
+
+  test('it yields retrieved results as an array within `pages`', async function(assert) {
+    const RESULTS = ['foo', 'bar', 'baz'];
+    const store = this.owner.lookup('service:store');
+
+    this.mock(store)
+      .expects('query')
+      .resolves(RESULTS);
+
+    await render(hbs`
+      <QueryMore as |more|>
+        <button {{action more.queryMore}} id="query-more">click</button>
+
+        <div id="results">
+          {{#each more.pages as |page|}}
+            {{#each page as |item|}}
+              {{item}}
+            {{/each}}
+          {{/each}}
+        </div>
+      </QueryMore>
+    `);
+
+    await click('#query-more');
+    assert.dom('#results').hasText('foo bar baz');
+  });
+
+  test('it accepts a callback that can alter the retrieved results', async function(assert) {
+    const RESULTS = ['foo', 'bar', 'baz'];
+    const EXPECTED = RESULTS.slice(0, -1);
+    const CALLBACK = results => (results.pop(), results);
+    const store = this.owner.lookup('service:store');
+
+    this.set('callback', CALLBACK);
+    this.mock(store)
+      .expects('query')
+      .resolves(RESULTS);
+
+
+    await render(hbs`
+      <QueryMore @callback={{action callback}} as |more|>
+        <button {{action more.queryMore}} id="query-more">click</button>
+
+        <div id="results">
+          {{#each more.pages as |page|}}
+            {{#each page as |item|}}
+              {{item}}
+            {{/each}}
+          {{/each}}
+        </div>
+      </QueryMore>
+    `);
+
+    await click('#query-more');
+
+    assert.deepEqual(RESULTS, EXPECTED, 'callback should modify resolved value');
+    assert.dom('#results').hasText(EXPECTED.join(' '));
+  });
+
+  test('if a `page` query param is passed, it will be incremented', async function(assert) {
+    const MODEL = 'foo';
+    const QUERY = {
+      page: 1,
+    };
+
+    this.setProperties({
+      MODEL,
+      QUERY,
+    });
+    const store = this.owner.lookup('service:store');
+    this.mock(store)
+      .expects('query')
+      .withArgs(MODEL, {page: 2});
+
+    await render(hbs`
+      <QueryMore @model={{MODEL}} @query={{QUERY}} as |more|>
+        <button {{action more.queryMore}} id="query-more">click</button>
+      </QueryMore>
+    `);
+
+    await click('#query-more');
+
+    assert.equal(QUERY.page, 2);
+  });
+
+  test('it adds to the existing result set', async function(assert) {
+    const EXPECTED = ['foo', 'bar', 'baz', 'qux'];
+    const store = this.owner.lookup('service:store');
+    this.stub(store, 'query')
+      .onCall(0).returns(['foo', 'bar'])
+      .onCall(1).returns(['baz', 'qux']);
+
+    await render(hbs`
+      <QueryMore as |more|>
+        <button {{action more.queryMore}} id="query-more">click</button>
+
+        <div id="results">
+          {{#each more.pages as |page|}}
+            {{#each page as |item|}}
+              {{item}}
+            {{/each}}
+          {{/each}}
+        </div>
+      </QueryMore>
+    `);
+
+    await click('#query-more');
+    assert.dom('#results').hasText('foo bar');
+
+    await click('#query-more');
+    assert.dom('#results').hasText(EXPECTED.join(' '));
+  });
+});
