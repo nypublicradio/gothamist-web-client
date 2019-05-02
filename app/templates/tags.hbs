@@ -1,7 +1,29 @@
-<h1>Articles about "{{model.tag}}"</h1>
+<div class="c-listing__sections u-section-spacing l-container l-container--14col l-wrap">
+  <header class="c-tag-listing__header u-trigger-floating-header">
+    <h1 class="c-tag-listing__heading u-font--secondary">{{model.tag}}</h1>
+  </header>
 
-<p>{{link-to 'Back to home' 'index'}}</p>
+  <hr class="u-border-accent u-hide-until--m">
 
-{{#each model.stories as |article|}}
-  {{article-card article=article}}
-{{/each}}
+  <section class="c-listing__section o-section">
+    <NyprMBlockList @items={{model.articles}} as |article|>
+      <ArticleBlock
+        @article={{article}}
+        @orientation='h'
+        @size='l'
+        @thumbnailSize='300'
+      />
+    </NyprMBlockList>
+  </section>
+
+  <div class="u-align-center">
+    <NyprAButton
+      data-test-more-results
+      class="o-button--c-quaternary o-button--extra"
+      {{!-- @onclick={{action getMoreStories}} --}}
+    >
+      More Results
+    </NyprAButton>
+  </div>
+
+</div>
