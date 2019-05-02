@@ -8699,8 +8699,8 @@ number-is-nan@^1.0.0:
   integrity sha1-CXtgK1NCKlIsGvuHkDGDNpQaAR0=
 
 nypr-design-system@nypublicradio/nypr-design-system:
-  version "0.1.0"
-  resolved "https://codeload.github.com/nypublicradio/nypr-design-system/tar.gz/b090c6ccf5887ac1089cc5d3e34722e09700e0cc"
+  version "0.2.0"
+  resolved "https://codeload.github.com/nypublicradio/nypr-design-system/tar.gz/7ff9015e841dfe26c5332c009f74c9024e11f898"
   dependencies:
     broccoli-merge-files "^0.8.0"
     ember-auto-import "^1.2.19"
