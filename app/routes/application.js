@@ -13,17 +13,17 @@ export default Route.extend({
   model() {
     return {
       primaryNav: [{
-        url: '/tags/news',
-        title: 'News',
+        route: ['tags', 'news'],
+        text: 'News',
       }, {
-        url: '/tags/arts-entertainment',
-        title: 'Arts & Entertainment',
+        route: ['tags', 'arts'],
+        text: 'Arts & Entertainment',
       }, {
-        url: '/tags/food',
-        title: 'Food',
+        route: ['tags', 'food'],
+        text: 'Food',
       }, {
-        url: '/tags/popular',
-        title: 'Popular',
+        route: ['popular'],
+        text: 'Popular',
       }],
 
       secondaryNav: [{
