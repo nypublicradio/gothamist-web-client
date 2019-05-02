@@ -20,6 +20,7 @@ Router.map(function() {
   });
   this.route('search');
   this.route('tags', {path: 'tags/:tag'});
+  this.route('popular');
 });
 
 export default Router;
