@@ -5,6 +5,7 @@ import { inject } from '@ember/service';
 
 const { hash } = RSVP;
 
+export const COUNT = 30;
 export const titleize = [/(\w)\w+/g, ([f, ...rest]) => `${f.toUpperCase()}${rest.join('')}`];
 
 export default Route.extend({
@@ -28,7 +29,7 @@ export default Route.extend({
       articles: this.store.query('article', {
         index: 'gothamist',
         term: tag,
-        count: 10,
+        count: COUNT,
         page,
       })
     });
