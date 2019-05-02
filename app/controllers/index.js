@@ -13,26 +13,29 @@ export default Controller.extend({
   page: 1,
 
   init() {
+    // pull off self to allow for test injection
+    const { TOTAL_COUNT, page } = this;
+
     this._super(...arguments);
-    this.set('moreArticles', []);
+    this.set('riverQuery', {
+      index: 'gothamist',
+      count: TOTAL_COUNT,
+      page,
+    })
   },
 
   transition: fade,
 
-  getMoreStories() {
-    // pull off self to allow for test injection
-    const { GROUP_SIZE, TOTAL_COUNT } = this;
+  riverCallback(results) {
+    const moreArticles = [];
+    const { GROUP_SIZE } = this;
 
-    return this.store.query('article', {
-      index: 'gothamist',
-      count: TOTAL_COUNT,
-      page: this.incrementProperty('page'),
-    }).then(results => {
-      results = results.filter(a => !this.model.main.includes(a));
+    results = results.filter(a => !this.model.main.includes(a));
 
-      for (let i = 0; i < results.length; i += GROUP_SIZE) {
-        this.moreArticles.pushObject(results.slice(i, i + GROUP_SIZE));
-      }
-    });
+    for (let i = 0; i < results.length; i += GROUP_SIZE) {
+      moreArticles.pushObject(results.slice(i, i + GROUP_SIZE));
+    }
+
+    return moreArticles;
   },
 });
