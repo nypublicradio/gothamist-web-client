@@ -8,7 +8,7 @@
   <hr class="u-border-accent u-hide-until--m">
 
   <section class="c-listing__section o-section">
-    <NyprMBlockList @items={{slice 0 6 model.articles}} as |article i|>
+    <NyprMBlockList @items={{slice 0 6 model.articles}} as |article|>
       <ArticleBlock
         @article={{article}}
         @orientation='h'
@@ -28,7 +28,7 @@
   <hr class="u-border-accent u-hide-until--m">
 
   <section class="c-listing__section o-section">
-    <NyprMBlockList @items={{slice 6 undefined model.articles}} as |article i|>
+    <NyprMBlockList @items={{slice 6 undefined model.articles}} as |article|>
       <ArticleBlock
         @article={{article}}
         @orientation='h'
@@ -43,7 +43,7 @@
     <AnimatedContainer class="u-section-spacing" @onInitialRender={{true}}>
       {{#each more.pages as |page|}}
         <section class="c-listing__section o-section">
-          <NyprMBlockList @items={{slice 0 6 page}} as |article i|>
+          <NyprMBlockList @items={{slice 0 6 page}} as |article|>
             <ArticleBlock
               @article={{article}}
               @orientation='h'
@@ -63,7 +63,7 @@
         <hr class="u-border-accent u-hide-until--m">
 
         <section class="c-listing__section o-section">
-          <NyprMBlockList @items={{slice 6 undefined page}} as |article i|>
+          <NyprMBlockList @items={{slice 6 undefined page}} as |article|>
             <ArticleBlock
               @article={{article}}
               @orientation='h'
