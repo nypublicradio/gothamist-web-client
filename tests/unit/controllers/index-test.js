@@ -15,7 +15,7 @@ module('Unit | Controller | index', function(hooks) {
     assert.deepEqual(controller.riverQuery, {
       index: 'gothamist',
       count: TOTAL_COUNT,
-      page: 1,
+      page: 2,
     });
   });
 
