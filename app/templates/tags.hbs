@@ -1,7 +1,7 @@
 <div class="c-listing__sections u-section-spacing l-container l-container--14col l-wrap">
   <header class="c-tag-listing__header u-trigger-floating-header">
     <h1 class="c-tag-listing__heading u-font--secondary" data-test-tag-heading>
-      {{model.tag}}
+      {{model.title}}
     </h1>
   </header>
 
@@ -18,14 +18,31 @@
     </NyprMBlockList>
   </section>
 
-  <div class="u-align-center">
-    <NyprAButton
-      data-test-more-results
-      class="o-button--c-quaternary o-button--extra"
-      {{!-- @onclick={{action getMoreStories}} --}}
-    >
-      More Results
-    </NyprAButton>
-  </div>
+  <QueryMore @query={{query}} @model='article' as |more|>
+    <AnimatedContainer @onInitialRender={{true}}>
+      {{#each more.pages as |page|}}
+        <section class="c-listing__section o-section">
+          <NyprMBlockList @items={{page}} as |article|>
+            <ArticleBlock
+              @article={{article}}
+              @orientation='h'
+              @size='l'
+              @thumbnailSize='300'
+            />
+          </NyprMBlockList>
+        </section>
+      {{/each}}
+    </AnimatedContainer>
+
+    <div class="u-align-center">
+      <NyprAButton
+        data-test-more-results
+        class="o-button--c-quaternary o-button--extra"
+        @onclick={{action more.queryMore}}
+      >
+        More Results
+      </NyprAButton>
+    </div>
+  </QueryMore>
 
 </div>

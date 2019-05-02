@@ -1,5 +1,6 @@
 import Controller from '@ember/controller';
+import fade from 'ember-animated/transitions/fade';
 
 export default Controller.extend({
-  queryParams: ['page'],
+  transition: fade,
 });

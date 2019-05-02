@@ -25,13 +25,27 @@ export default Route.extend({
 
   model({ tag, page = 1 }) {
     return hash({
-      tag: tag.replace(...titleize),
+      tag,
+      title: tag.replace(...titleize),
       articles: this.store.query('article', {
         index: 'gothamist',
         term: tag,
         count: COUNT,
         page,
       })
+    });
+  },
+
+  setupController(controller, model) {
+    this._super(...arguments);
+
+    controller.setProperties({
+      query: {
+        index: 'gothamist',
+        term: model.tag,
+        count: COUNT,
+        page: 1,
+      }
     });
   }
 });
