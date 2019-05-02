@@ -93,7 +93,7 @@ module('Integration | Component | query-more', function(hooks) {
     assert.dom('#results').hasText(EXPECTED.join(' '));
   });
 
-  test('if a `page` query param is passed, it will be incremented', async function(assert) {
+  test('if a `page` query param is passed, it will be incremented afterwards', async function(assert) {
     const MODEL = 'foo';
     const QUERY = {
       page: 1,
@@ -106,7 +106,7 @@ module('Integration | Component | query-more', function(hooks) {
     const store = this.owner.lookup('service:store');
     this.mock(store)
       .expects('query')
-      .withArgs(MODEL, {page: 2});
+      .withArgs(MODEL, {page: 1});
 
     await render(hbs`
       <QueryMore @model={{MODEL}} @query={{QUERY}} as |more|>

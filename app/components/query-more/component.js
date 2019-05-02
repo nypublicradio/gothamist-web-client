@@ -41,11 +41,12 @@ export default Component.extend({
     @return {any} pages
   */
   async queryMore() {
+    let results = await this.store.query(this.model, this.query);
+
     if (this.page) {
       this.incrementProperty('page');
     }
 
-    let results = await this.store.query(this.model, this.query);
     if (typeof this.callback === 'function') {
       results = this.callback(results);
     }
