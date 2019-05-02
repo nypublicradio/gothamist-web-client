@@ -23,7 +23,7 @@ export default Route.extend({
     });
   },
 
-  model({ tag, page = 1 }) {
+  model({ tag }) {
     return hash({
       tag,
       title: tag.replace(...titleize),
@@ -31,7 +31,6 @@ export default Route.extend({
         index: 'gothamist',
         term: tag,
         count: COUNT,
-        page,
       })
     });
   },
