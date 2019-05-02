@@ -5,7 +5,7 @@ import { inject } from '@ember/service';
 
 const { hash } = RSVP;
 
-export const COUNT = 30;
+export const COUNT = 12;
 export const titleize = [/(\w)\w+/g, ([f, ...rest]) => `${f.toUpperCase()}${rest.join('')}`];
 
 export default Route.extend({
