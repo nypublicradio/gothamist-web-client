@@ -24,7 +24,7 @@
       {{/unless}}
 
       <body.meta
-        @timestamp={{this.timestamp}}
+        @timestamp={{timestamp @article.publishedMoment}}
         @commentCount={{@article.commentCount}}
       />
     </o.body>

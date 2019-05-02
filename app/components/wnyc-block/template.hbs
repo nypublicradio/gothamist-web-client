@@ -21,7 +21,7 @@
       {{/unless}}
 
       <body.meta
-        @timestamp={{moment-from @story.newsdate}}
+        @timestamp={{timestamp @story.newsdate}}
         @commentCount={{@story.comments-count}}
       />
     </o.body>
