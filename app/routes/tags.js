@@ -3,6 +3,8 @@ import RSVP from 'rsvp';
 import Route from '@ember/routing/route';
 import { inject } from '@ember/service';
 
+import fade from 'ember-animated/transitions/fade';
+
 const { hash } = RSVP;
 
 export const COUNT = 12;
@@ -45,6 +47,7 @@ export default Route.extend({
         count: COUNT,
         page: 2,
       },
+      transition: fade,
     });
   }
 });
