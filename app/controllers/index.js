@@ -13,10 +13,11 @@ export default Controller.extend({
   page: 1,
 
   init() {
+    this._super(...arguments);
+
     // pull off self to allow for test injection
     const { TOTAL_COUNT, page } = this;
 
-    this._super(...arguments);
     this.set('riverQuery', {
       index: 'gothamist',
       count: TOTAL_COUNT,
