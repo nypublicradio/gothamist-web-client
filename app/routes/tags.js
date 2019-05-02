@@ -44,8 +44,8 @@ export default Route.extend({
         index: 'gothamist',
         term: model.tag,
         count: COUNT,
-        page: 1,
-      }
+        page: 2,
+      },
     });
   }
 });
