@@ -13,13 +13,13 @@ export default Route.extend({
   model() {
     return {
       primaryNav: [{
-        route: ['tags', 'news'],
+        route: ['sections', 'news'],
         text: 'News',
       }, {
-        route: ['tags', 'arts'],
+        route: ['sections', 'arts & entertainment'],
         text: 'Arts & Entertainment',
       }, {
-        route: ['tags', 'food'],
+        route: ['sections', 'food'],
         text: 'Food',
       }, {
         route: ['popular'],
