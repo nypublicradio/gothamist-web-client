@@ -8,8 +8,8 @@ import fade from 'ember-animated/transitions/fade';
 import { titleize } from '../helpers/titleize';
 import addCommentCount from '../utils/add-comment-count';
 
-const { hash } = RSVP;
 
+const { hash } = RSVP;
 export const COUNT = 12;
 
 export default Route.extend({
