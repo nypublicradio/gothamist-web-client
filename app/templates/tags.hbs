@@ -39,7 +39,7 @@
   </section>
 
 
-  <QueryMore @query={{query}} @model='article' as |more|>
+  <QueryMore @query={{query}} @model='article' @callback={{addComments}} as |more|>
     <AnimatedContainer class="u-section-spacing" @onInitialRender={{true}}>
       {{#each more.pages as |page|}}
         <section class="c-listing__section o-section">

@@ -6,12 +6,14 @@ import { inject } from '@ember/service';
 import fade from 'ember-animated/transitions/fade';
 
 import { titleize } from '../helpers/titleize';
+import addCommentCount from '../utils/add-comment-count';
 
 const { hash } = RSVP;
 
 export const COUNT = 12;
 
 export default Route.extend({
+  fastboot: inject(),
   header: inject('nypr-o-header'),
 
   titleToken: model => titleize(model.tag),
@@ -40,7 +42,6 @@ export default Route.extend({
 
   setupController(controller, model) {
     this._super(...arguments);
-
     controller.setProperties({
       query: {
         index: 'gothamist',
@@ -50,5 +51,16 @@ export default Route.extend({
       },
       transition: fade,
     });
+
+    if (this.fastboot.isFastBoot) {
+      return;
+    } else {
+      addCommentCount(model.articles);
+
+      controller.set('addComments', results => {
+        addCommentCount(results);
+        return results;
+      });
+    }
   }
 });
