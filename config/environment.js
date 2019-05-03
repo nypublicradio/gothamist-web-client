@@ -69,6 +69,8 @@ module.exports = function(environment) {
 
     // for mirage endpoints
     ENV.apiServer = 'https://api.demo.nypr.digital';
+    ENV.disqusAPI = 'https://disqus.com';
+    ENV.disqusKey = 'disqus-key';
   }
 
   if (environment === 'production') {
