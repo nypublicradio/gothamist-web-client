@@ -78,6 +78,7 @@ module('Acceptance | homepage', function(hooks) {
     findAll('[data-test-block]').forEach(block => {
       let id = block.dataset.testBlock;
       let { posts } = EXPECTED.find(d => d.identifiers.includes(id));
+      assert.ok(block.querySelector('.c-block-meta__comments'), 'comments are rendered');
       assert.dom(block.querySelector('.c-block-meta__comments')).includesText(String(posts));
     });
   })
