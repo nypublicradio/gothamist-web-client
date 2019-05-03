@@ -140,10 +140,11 @@
       <div class="u-align-center">
         <NyprAButton
           data-test-more-results
+          disabled={{more.queryMore.isRunning}}
           class="o-button--c-quaternary o-button--extra"
-          @onclick={{action more.queryMore}}
+          @onclick={{perform more.queryMore}}
         >
-          More Results
+          {{if more.queryMore.isRunning 'Loading...' 'More Results'}}
         </NyprAButton>
       </div>
     </div>
