@@ -57,10 +57,7 @@ export default Route.extend({
     } else {
       addCommentCount(model.articles);
 
-      controller.set('addComments', results => {
-        addCommentCount(results);
-        return results;
-      });
+      controller.set('addComments', results => (addCommentCount(results), results));
     }
   }
 });
