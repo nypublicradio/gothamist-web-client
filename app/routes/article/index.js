@@ -16,16 +16,16 @@ export default Route.extend({
 
   afterModel(model) {
     this.header.addRule('article.index', {
-      resting: {
-        nav: true,
+      all: {
         donate: true,
         search: true,
+      },
+      resting: {
+        nav: true,
       },
       floating: {
         headline: model.title,
         share: true,
-        donate: true,
-        search: true,
         progressBar: true,
       }
     })
