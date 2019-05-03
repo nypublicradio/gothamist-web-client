@@ -59,7 +59,7 @@ export default Route.extend({
     });
   },
 
-  afterModel() {
+  afterModel(model) {
     this.controllerFor('application').setProperties({
       headerLandmark: null,
     });
@@ -67,7 +67,8 @@ export default Route.extend({
     if (this.fastboot.isFastBoot) {
       return;
     } else {
-      addCommentCount(this.store.peekAll('article'));
+      addCommentCount(model.main);
+      addCommentCount(model.river);
     }
   },
 
