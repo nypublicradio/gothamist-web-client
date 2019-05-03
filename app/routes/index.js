@@ -54,22 +54,20 @@ export default Route.extend({
       }),
       wnyc: getWnycStories(),
     }).then(results => {
+      if (!this.fastboot.isFastBoot) {
+        addCommentCount(results.river);
+        addCommentCount(results.main);
+      }
+
       results.river = results.river.filter(article => !results.main.includes(article));
       return results;
     });
   },
 
-  afterModel(model) {
+  afterModel() {
     this.controllerFor('application').setProperties({
       headerLandmark: null,
     });
-
-    if (this.fastboot.isFastBoot) {
-      return;
-    } else {
-      addCommentCount(model.main);
-      addCommentCount(model.river);
-    }
   },
 
   // fetch the most recent sponsor post
