@@ -1,0 +1,107 @@
+<header class="c-section__header">
+  <h1 class="c-section__heading u-font--secondary-style u-font--secondary" data-test-section-heading>
+    {{model.title}}
+  </h1>
+</header>
+
+<div class="c-listing__sections u-section-spacing l-container l-container--14col l-wrap">
+  <NyprOBlockListGroup @twoUp={{true}} as |blg|>
+    <blg.col1>
+      <ArticleBlock
+        @article={{object-at 0 model.articles}}
+        @orientation='v'
+        @thumbnailSize='640'
+      />
+    </blg.col1>
+
+    <blg.col2>
+      <ArticleBlock
+        @article={{object-at 1 model.articles}}
+        @orientation='v'
+        @thumbnailSize='640'
+      />
+    </blg.col2>
+  </NyprOBlockListGroup>
+
+  <hr class="u-border-accent u-hide-until--m">
+
+  <section class="c-listing__section o-section">
+    <NyprMBlockList @items={{slice 2 6 model.articles}} as |article|>
+      <ArticleBlock
+        @article={{article}}
+        @orientation='h'
+        @size='l'
+        @thumbnailSize='300'
+      />
+    </NyprMBlockList>
+  </section>
+
+  <hr class="u-border-accent u-hide-until--m">
+
+  <div class="c-listing__ad">
+    <p>Ad here</p>
+    <NyprAAdLabel/>
+  </div>
+
+  <hr class="u-border-accent u-hide-until--m">
+
+  <section class="c-listing__section o-section">
+    <NyprMBlockList @items={{slice 6 undefined model.articles}} as |article|>
+      <ArticleBlock
+        @article={{article}}
+        @orientation='h'
+        @size='l'
+        @thumbnailSize='300'
+      />
+    </NyprMBlockList>
+  </section>
+
+
+  <QueryMore @query={{query}} @model='article' @callback={{addComments}} as |more|>
+    <AnimatedContainer class="u-section-spacing" @onInitialRender={{true}}>
+      {{#each more.pages as |page|}}
+        <section class="c-listing__section o-section">
+          <NyprMBlockList @items={{slice 0 6 page}} as |article|>
+            <ArticleBlock
+              @article={{article}}
+              @orientation='h'
+              @size='l'
+              @thumbnailSize='300'
+            />
+          </NyprMBlockList>
+        </section>
+
+        <hr class="u-border-accent u-hide-until--m">
+
+        <div class="c-listing__ad">
+          <p>Ad here</p>
+          <NyprAAdLabel/>
+        </div>
+
+        <hr class="u-border-accent u-hide-until--m">
+
+        <section class="c-listing__section o-section">
+          <NyprMBlockList @items={{slice 6 undefined page}} as |article|>
+            <ArticleBlock
+              @article={{article}}
+              @orientation='h'
+              @size='l'
+              @thumbnailSize='300'
+            />
+          </NyprMBlockList>
+        </section>
+      {{/each}}
+    </AnimatedContainer>
+
+    <div class="u-align-center">
+      <NyprAButton
+        data-test-more-results
+        class="o-button--c-quaternary o-button--extra"
+        @onclick={{perform more.queryMore}}
+      >
+        {{if more.queryMore.isRunning 'Loading...' 'More Results'}}
+      </NyprAButton>
+    </div>
+  </QueryMore>
+
+</div>

@@ -21,6 +21,7 @@ Router.map(function() {
   this.route('search');
   this.route('tags', {path: 'tags/:tag'});
   this.route('popular');
+  this.route('sections', {path: 'sections/:section'});
 });
 
 export default Router;
