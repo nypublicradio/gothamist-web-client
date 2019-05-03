@@ -5,11 +5,14 @@ import { inject } from '@ember/service';
 
 import fade from 'ember-animated/transitions/fade';
 
-const { hash } = RSVP;
+import addCommentCount from '../utils/add-comment-count';
 
+
+const { hash } = RSVP;
 export const COUNT = 12;
 
 export default Route.extend({
+  fastboot: inject(),
   header: inject('nypr-o-header'),
 
   titleToken: 'Popular',
@@ -36,7 +39,7 @@ export default Route.extend({
     });
   },
 
-  setupController(controller) {
+  setupController(controller, model) {
     this._super(...arguments);
 
     controller.setProperties({
@@ -47,7 +50,15 @@ export default Route.extend({
         page: 2,
       },
       transition: fade
-    })
+    });
+
+    if (this.fastboot.isFastBoot) {
+      return;
+    } else {
+      addCommentCount(model.articles);
+
+      controller.set('addComments', results => (addCommentCount(results), results));
+    }
   },
 
   renderTemplate(controller, model) {
