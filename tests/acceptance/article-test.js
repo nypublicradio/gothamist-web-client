@@ -15,7 +15,7 @@ module('Acceptance | article', function(hooks) {
     window.block_disqus = false;
   })
 
-  test('visiting /article', async function(assert) {
+  test('visiting article route', async function(assert) {
     const article = server.create('article');
 
     await visit(`/${article.permalink}`);
