@@ -45,7 +45,7 @@ export default function() {
       return schema.articles.where({ permalink: record });
     }
 
-    const allArticles =  schema.articles.all();
+    const allArticles = schema.articles.all();
     return allArticles.slice((page - 1) * count, page * count);
   });
 
