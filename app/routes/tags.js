@@ -5,15 +5,16 @@ import { inject } from '@ember/service';
 
 import fade from 'ember-animated/transitions/fade';
 
+import { titleize } from '../helpers/titleize';
+
 const { hash } = RSVP;
 
 export const COUNT = 12;
-export const titleize = [/(\w)\w+/g, ([f, ...rest]) => `${f.toUpperCase()}${rest.join('')}`];
 
 export default Route.extend({
   header: inject('nypr-o-header'),
 
-  titleToken: model => model.tag.replace(...titleize),
+  titleToken: model => titleize(model.tag),
 
   beforeModel() {
     this.header.addRule('tags', {
@@ -28,7 +29,7 @@ export default Route.extend({
   model({ tag }) {
     return hash({
       tag,
-      title: tag.replace(...titleize),
+      title: titleize(tag),
       articles: this.store.query('article', {
         index: 'gothamist',
         term: tag,
