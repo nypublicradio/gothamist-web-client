@@ -6,6 +6,7 @@ import { inject } from '@ember/service';
 import { hash } from 'rsvp';
 
 import config from '../config/environment';
+import addCommentCount from '../utils/add-comment-count';
 
 
 const BASE_COUNT = 28;
@@ -16,6 +17,7 @@ export const GROUP_SIZE = 7;
 export default Route.extend({
   header: inject('nypr-o-header'),
   headData: inject(),
+  fastboot: inject(),
 
   titleToken: 'Homepage',
 
@@ -61,6 +63,12 @@ export default Route.extend({
     this.controllerFor('application').setProperties({
       headerLandmark: null,
     });
+
+    if (this.fastboot.isFastBoot) {
+      return;
+    } else {
+      addCommentCount(this.store.peekAll('article'));
+    }
   },
 
   // fetch the most recent sponsor post

@@ -1,11 +1,12 @@
 import moment from 'moment';
 
 import { module, test } from 'qunit';
-import { visit, currentURL, click } from '@ember/test-helpers';
+import { visit, currentURL, click, findAll } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 import { TOTAL_COUNT } from 'gothamist-web-client/routes/index';
+import config from 'gothamist-web-client/config/environment';
 
 
 module('Acceptance | homepage', function(hooks) {
@@ -57,5 +58,27 @@ module('Acceptance | homepage', function(hooks) {
 
     await visit('/');
     assert.dom('[data-test-sponsored-tout]').doesNotExist();
+  });
+
+  test('articles get updated with commentCount', async function(assert) {
+    server.createList('article', 10, {
+      tags: ['@main']
+    });
+    server.createList('article', TOTAL_COUNT * 2);
+    const EXPECTED = server.schema.articles.all()
+      .models.map((a, i) => ({posts: Math.ceil(Math.random() * i + 1), identifiers: [a.id]}));
+
+    server.get(`${config.disqusAPI}/threads/set.json`, {response: EXPECTED});
+
+    await visit('/');
+
+    await click('[data-test-more-results]');
+
+    // assert that articles loaded via "read more" also get updated
+    findAll('[data-test-block]').forEach(block => {
+      let id = block.dataset.testBlock;
+      let { posts } = EXPECTED.find(d => d.identifiers.includes(id));
+      assert.dom(block.querySelector('.c-block-meta__comments')).includesText(String(posts));
+    });
   })
 });

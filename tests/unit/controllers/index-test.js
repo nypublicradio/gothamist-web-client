@@ -5,6 +5,7 @@ import test from 'ember-sinon-qunit/test-support/test';
 import {
   TOTAL_COUNT,
 } from 'gothamist-web-client/routes/index';
+import * as addCommentCount from 'gothamist-web-client/utils/add-comment-count';
 
 module('Unit | Controller | index', function(hooks) {
   setupTest(hooks);
@@ -20,6 +21,8 @@ module('Unit | Controller | index', function(hooks) {
   });
 
   test('riverCallback creates pages of GROUP_SIZE', async function(assert) {
+    this.stub(addCommentCount, 'default');
+
     const GROUP_SIZE = 4;
     // simple, filterable list
     const RESULTS = Array.from(new Array(GROUP_SIZE * 5), (el, i) => i);
