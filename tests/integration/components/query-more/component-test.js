@@ -7,7 +7,7 @@ import test from 'ember-sinon-qunit/test-support/test';
 module('Integration | Component | query-more', function(hooks) {
   setupRenderingTest(hooks);
 
-  test('it yields an action that queries the store with the given args', async function() {
+  test('it yields an ember concurrency task that queries the store with the given args', async function() {
     const MODEL = 'foo';
     const QUERY = {
       baz: '1234',
@@ -28,7 +28,7 @@ module('Integration | Component | query-more', function(hooks) {
 
     await render(hbs`
       <QueryMore @query={{QUERY}} @model={{MODEL}} as |more|>
-        <button {{action more.queryMore}} id="query-more">click</button>
+        <button onclick={{perform more.queryMore}} id="query-more">click</button>
       </QueryMore>
     `);
 
@@ -45,7 +45,7 @@ module('Integration | Component | query-more', function(hooks) {
 
     await render(hbs`
       <QueryMore as |more|>
-        <button {{action more.queryMore}} id="query-more">click</button>
+        <button onclick={{perform more.queryMore}} id="query-more">click</button>
 
         <div id="results">
           {{#each more.pages as |page|}}
@@ -75,7 +75,7 @@ module('Integration | Component | query-more', function(hooks) {
 
     await render(hbs`
       <QueryMore @callback={{action callback}} as |more|>
-        <button {{action more.queryMore}} id="query-more">click</button>
+        <button onclick={{perform more.queryMore}} id="query-more">click</button>
 
         <div id="results">
           {{#each more.pages as |page|}}
@@ -110,7 +110,7 @@ module('Integration | Component | query-more', function(hooks) {
 
     await render(hbs`
       <QueryMore @model={{MODEL}} @query={{QUERY}} as |more|>
-        <button {{action more.queryMore}} id="query-more">click</button>
+        <button onclick={{perform more.queryMore}} id="query-more">click</button>
       </QueryMore>
     `);
 
@@ -128,7 +128,7 @@ module('Integration | Component | query-more', function(hooks) {
 
     await render(hbs`
       <QueryMore as |more|>
-        <button {{action more.queryMore}} id="query-more">click</button>
+        <button onclick={{perform more.queryMore}} id="query-more">click</button>
 
         <div id="results">
           {{#each more.pages as |page|}}

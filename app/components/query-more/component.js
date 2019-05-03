@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { inject } from '@ember/service';
 import { alias } from '@ember/object/computed';
+import { task } from 'ember-concurrency';
 
 export default Component.extend({
   store: inject(),
@@ -37,11 +38,13 @@ export default Component.extend({
   /**
     Runs a query on the story using the arguments passed in at run time. returns a two dimensional array of pages.
 
+    **NOTE** This is an ember concurrency task, so you need to use the `perform` helper instad of
+    the `action` helper when attaching it as a click handler.
     @method queryMore
     @return {any} pages
   */
-  async queryMore() {
-    let results = await this.store.query(this.model, this.query);
+  queryMore: task(function *() {
+    let results = yield this.store.query(this.model, this.query);
 
     if (this.page) {
       this.incrementProperty('page');
@@ -53,7 +56,7 @@ export default Component.extend({
 
     this.pages.pushObject(results);
     return this.pages;
-  },
+  }),
 
   /**
     Alias to a page param passed as part of the query
