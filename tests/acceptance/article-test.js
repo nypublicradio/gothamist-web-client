@@ -25,4 +25,12 @@ module('Acceptance | article', function(hooks) {
     assert.dom('[data-test-article-headline]').hasText(article.title);
     assert.dom('[data-test-article-body]').hasText(article.text);
   });
+
+  test('no disqus if comments are not allowed', async function(assert) {
+    server.create('article', {allow_comments: false, permalink: 'foo'});
+
+    await visit('/foo');
+
+    assert.dom('#comments').doesNotExist();
+  });
 });

@@ -77,9 +77,11 @@
           </footer.donate>
         {{/unless}}
 
-        <footer.comments>
-          <DisqusComments @id="comments" @identifier={{model.moveableTypeId}} @url={{model.permalink}}/>
-        </footer.comments>
+        {{#if model.allowComments}}
+          <footer.comments>
+            <DisqusComments @id="comments" @identifier={{model.moveableTypeId}} @url={{model.permalink}}/>
+          </footer.comments>
+        {{/if}}
       </NyprOArticleFooter>
     </div>
 
