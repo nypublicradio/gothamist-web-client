@@ -10,7 +10,7 @@ module('Integration | Component | article-block', function(hooks) {
     const GOTHAMIST_ITEM = {
       title: 'Article Title',
       excerptPretty: 'Summary of the article',
-      section: 'News',
+      section: {label: 'News', basename: 'news'},
       thumbnail105: 'https://example.com/small.jpeg',
       thumbnail640: 'https://example.com/big.jpeg',
     };

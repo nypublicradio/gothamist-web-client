@@ -36,8 +36,16 @@ export default function() {
       page = 1,
     } = request.queryParams;
     if (term) {
-      // tag queries
-      const articles = schema.articles.where({tags: [term]});
+      let articles;
+      if (term.startsWith('c|')) {
+        // section/category query
+        let category = term.replace('c|', '');
+        articles = schema.articles.all();
+        articles = articles.filter(a => a.categories[0].basename === category);
+      } else {
+        // tag queries
+        articles = schema.articles.where({tags: [term]});
+      }
       return articles.slice((page - 1) * count, page * count);
     }
 

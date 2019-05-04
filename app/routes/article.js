@@ -17,7 +17,7 @@ export default Route.extend({
       ogType: 'article',
       publishedTime: model.publishedMoment.tz('America/New_York').format(),
       modifiedTime: model.modifiedMoment.tz('America/New_York').format(),
-      section: model.section,
+      section: model.section.label,
       tags: model.displayTags,
       authors: model.authors,
       image: {

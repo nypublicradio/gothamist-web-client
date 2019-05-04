@@ -80,9 +80,9 @@ export default DS.Model.extend({
   }),
   section: computed('categories', 'isSponsored', function() {
     if (this.isSponsored) {
-      return 'Sponsored';
+      return {label: 'Sponsored'};
     } else {
-      return this.categories[0].label;
+      return this.categories[0];
     }
   }),
   hasMain: computed('tags', function() {

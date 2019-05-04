@@ -20,10 +20,10 @@ export default Factory.extend({
   categories: faker.list.random([{
     basename: 'news',
     label: 'News',
-  }, {
+  }], [{
     basename: 'arts',
     label: 'Arts & Entertainment',
-  }, {
+  }], [{
     basename: 'food',
     label: 'Food',
 
