@@ -64,12 +64,6 @@ export default Route.extend({
     });
   },
 
-  afterModel() {
-    this.controllerFor('application').setProperties({
-      headerLandmark: null,
-    });
-  },
-
   // fetch the most recent sponsor post
   // filter it out if it's older than 24 hours
   async getSponsoredPost() {

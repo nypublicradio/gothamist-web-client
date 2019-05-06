@@ -34,10 +34,6 @@ export default Route.extend({
   },
 
   afterModel(model) {
-    this.controllerFor('application').setProperties({
-      headerLandmark: null,
-    });
-
     this.headData.setProperties({
       gallery: model.gallery.slides,
     });
