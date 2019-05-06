@@ -13,14 +13,5 @@ module('Integration | Component | ad-tag-wide', function(hooks) {
     await render(hbs`{{ad-tag-wide}}`);
 
     assert.equal(this.element.textContent.trim(), '');
-
-    // Template block usage:
-    await render(hbs`
-      {{#ad-tag-wide}}
-        template block text
-      {{/ad-tag-wide}}
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
   });
 });

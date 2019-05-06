@@ -13,14 +13,5 @@ module('Integration | Component | ad-tag-tall', function(hooks) {
     await render(hbs`{{ad-tag-tall}}`);
 
     assert.equal(this.element.textContent.trim(), '');
-
-    // Template block usage:
-    await render(hbs`
-      {{#ad-tag-tall}}
-        template block text
-      {{/ad-tag-tall}}
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
   });
 });
