@@ -27,16 +27,16 @@ export default Route.extend({
       }],
 
       secondaryNav: [{
-        route: ['advertising'],
+        url: 'https://www.gothamistllc.com/',
         text: 'Advertising',
       }, {
         route: ['contact'],
         text: 'Contact Us'
       }, {
-        route: ['newsletter'],
+        url: 'https://wnyc.us5.list-manage.com/subscribe?u=4109fdd323aaac7078eadaa8f&id=65dbec786b',
         text: 'Newsletter',
       }, {
-        url: '/feed.xml',
+        url: 'https://feeds.gothamistllc.com/gothamist05',
         text: 'RSS Feed',
       }, {
         route: ['staff'],
