@@ -11,7 +11,7 @@ module('Acceptance | section', function(hooks) {
   setupMirage(hooks);
 
   test('visiting section page', async function(assert) {
-    server.createList('article', COUNT * 5, {tags: ['c|news']});
+    server.createList('article', COUNT * 5, {categories: [{basename: 'news'}]});
     await visit('/sections/news');
 
     assert.equal(currentURL(), '/sections/news');
