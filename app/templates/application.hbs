@@ -17,7 +17,9 @@
 
   <header.menu as |menu|>
     <menu.branding>
-      <NyprASvg @icon='gothamist-logo'/>
+      {{#link-to 'index'}}
+        <NyprASvg @icon='gothamist-logo'/>
+      {{/link-to}}
     </menu.branding>
 
     <menu.primaryNav @navItems={{model.primaryNav}}/>

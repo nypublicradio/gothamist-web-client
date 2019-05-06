@@ -2,7 +2,6 @@ import moment from 'moment';
 
 import DS from 'ember-data';
 import { computed } from '@ember/object';
-import { dasherize } from '@ember/string';
 import { reads } from '@ember/object/computed';
 
 import { makeHttps } from '../helpers/make-https';
@@ -94,14 +93,14 @@ export default DS.Model.extend({
     let categories = this.categories || [];
     return categories.map(c => ({
       label: c.label,
-      url: `tags/${c.basename}`,
+      route: ['sections', c.basename],
     }));
   }),
 
   authors: computed('authorNickname', function() {
     return [{
       name: this.authorNickname,
-      url: `/staff/${dasherize(this.authorNickname)}`,
+      route: ['staff.detail', this.authorNickname],
     }]
   }),
 

@@ -27,20 +27,20 @@ export default Route.extend({
       }],
 
       secondaryNav: [{
-        url: '/advertising',
-        title: 'Advertising',
+        route: ['advertising'],
+        text: 'Advertising',
       }, {
-        url: '/contact',
-        title: 'Contact Us'
+        route: ['contact'],
+        text: 'Contact Us'
       }, {
-        url: '/newsletter',
-        title: 'Newsletter',
+        route: ['newsletter'],
+        text: 'Newsletter',
       }, {
         url: '/feed.xml',
-        title: 'RSS Feed',
+        text: 'RSS Feed',
       }, {
-        url: '/staff',
-        title: 'Staff'
+        route: ['staff'],
+        text: 'Staff'
       }]
     }
   },

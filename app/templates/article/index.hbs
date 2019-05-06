@@ -59,11 +59,11 @@
     <div class="l-container--content u-section-spacing">
       <NyprOArticleFooter as |footer|>
         <footer.tags @tags={{model.displayTags}} as |Tag tag|>
-          <Tag @url='/tags/{{tag}}'/>
+          <Tag @route={{array 'tags' tag}}/>
         </footer.tags>
 
         <footer.contact>
-          <p><strong>Do you know the scoop?</strong> &nbsp; <a href="">Comment</a> below or <a href="">Send us a Tip</a></p>
+          <p><strong>Do you know the scoop?</strong> &nbsp; {{#if model.allowComments}}<a href="#comments">Comment</a> below or {{/if}}<a href="mailto:tips@gothamist.com" target="_blank" rel="noopener">Send us a Tip</a></p>
         </footer.contact>
 
         {{#unless footerClosed}}
