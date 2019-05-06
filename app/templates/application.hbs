@@ -11,7 +11,7 @@
   as |header|>
 
   <header.leaderboard>
-    {{#if (eq this.target.currentRouteName 'index')}}
+    {{#if header.rules.homepage}}
       <AdTagLeaderboard @slot='gothamist/index/leaderboard' />
     {{else}}
       <AdTagLeaderboard @slot='gothamist/interior/leaderboard' />

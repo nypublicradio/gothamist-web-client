@@ -36,8 +36,8 @@ export default Route.extend({
       return true;
     },
     willTransition() {
-      let { section, story } = this.currentModel;
-      clearTargetingForModels(section, story);
+      let article = this.currentModel;
+      clearTargetingForModels(article);
       return true;
     }
   }
