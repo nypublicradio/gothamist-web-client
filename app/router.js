@@ -22,6 +22,9 @@ Router.map(function() {
   this.route('tags', {path: 'tags/:tag'});
   this.route('popular');
   this.route('sections', {path: 'sections/:section'});
+  this.route('staff', function() {
+    this.route('detail', {path: ':name'});
+  });
 
   this.route('contact');
   this.route('advertising');
