@@ -1,4 +1,22 @@
-<h1>You searched for "{{q}}"</h1>
-<p>{{link-to 'Back to home' 'index'}}</p>
+<div class="u-spacing--double c-search-results">
 
-{{search-results query=q}}
+  <div class="l-wrap l-container l-container--14col u-spacing">
+    <header class="c-search-results__header c-search-results__header--no-border u-spacing">
+      <h1 class="is-vishidden">Search Results</h1>
+      <div class="c-search-results__result-number u-font--secondary-style u-font--secondary">Results for:</div>
+
+      <div class="c-search-results__term">{{q}}</div>
+    </header>
+
+    <hr class="u-border-accent u-hide-until--m">
+
+  </div>
+
+  <div class="c-listing__sections u-section-spacing l-container l-container--14col l-wrap">
+
+    <div class="u-spacing--quad">
+      {{search-results query=q}}
+    </div>
+
+  </div>
+</div>
