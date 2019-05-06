@@ -69,7 +69,9 @@ export default Route.extend({
     },
     willTransition(transition) {
       if (transition.to.localName !== 'sections') {
-        this.controllerFor('application').set('mainRouteClasses', null);
+        transition.then(() => {
+          this.controllerFor('application').set('mainRouteClasses', null);
+        });
       }
       return true;
     }
