@@ -22,6 +22,12 @@ Router.map(function() {
   this.route('tags', {path: 'tags/:tag'});
   this.route('popular');
   this.route('sections', {path: 'sections/:section'});
+
+  this.route('contact');
+  this.route('advertising');
+  this.route('newsletter');
+  this.route('privacy');
+  this.route('terms');
 });
 
 export default Router;
