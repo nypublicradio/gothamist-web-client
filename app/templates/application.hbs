@@ -24,6 +24,15 @@
 
     <menu.primaryNav @navItems={{model.primaryNav}}/>
     <menu.secondaryNav @navItems={{model.secondaryNav}}/>
+
+    <menu.search
+      @formClass="c-search--side"
+      @search={{action this.search}}
+    />
+
+    <menu.tipButton>
+      Send us a Story Idea
+    </menu.tipButton>
   </header.menu>
 
   <header.left
