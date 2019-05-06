@@ -5,9 +5,14 @@ import { inject } from '@ember/service';
 
 import fade from 'ember-animated/transitions/fade';
 
+import config from '../config/environment';
 import { titleize } from '../helpers/titleize';
 import addCommentCount from '../utils/add-comment-count';
 
+
+const sanitize = tag => tag
+  .replace(/%20|\W/g, '')
+  .toLowerCase();
 
 const { hash } = RSVP;
 export const COUNT = 12;
@@ -36,7 +41,9 @@ export default Route.extend({
         index: 'gothamist',
         term: tag,
         count: COUNT,
-      })
+      }),
+      // HACK
+      isWTC: sanitize(tag) === 'wethecommuters',
     });
   },
 
@@ -50,6 +57,8 @@ export default Route.extend({
         page: 2,
       },
       transition: fade,
+      wtcEndpoint: `${config.apiServer}/opt-in/v1/subscribe/mailchimp`,
+      wtcParams: {list: config.wtcNewsletter},
     });
 
     if (this.fastboot.isFastBoot) {

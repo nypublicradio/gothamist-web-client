@@ -102,3 +102,6 @@ Use `queryRecord` to retrieve a piece of **primary** content, such as for an art
 Under these circumstances, the semantics dictate that the adapter should throw a `DS.NotFoundError` if the the network request returns a response perceived as empty, and the application **will render a 404 page**.
 
 If you want to make a request that can return empty without rendering a 404 page, use the `query` method on the store. The API is exactly the same, except the returned value will always be a list.
+
+### Newsletter Signups
+Use the `opt-in` service to subscribe people to mailchimp newsletters. The `subscribe` end point is described [here](https://github.com/nypublicradio/opt-in#post-v1subscribemailchimp).
