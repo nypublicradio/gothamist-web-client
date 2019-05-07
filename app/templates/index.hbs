@@ -20,7 +20,7 @@
           @article={{item}}
           @orientation='h'
           @size='s'
-          @thumbnailSize='105'
+          @thumbnailSize='300'
           @hideExcerpt={{true}}
         />
       </NyprMBlockList>
@@ -87,7 +87,8 @@
           @story={{item}}
           @orientation='h'
           @size='s'
-          @imageWidth='105'
+          @imageWidth='300'
+          @imageHeight='300'
           @hideExcerpt={{true}}
         />
       </NyprMBlockList>
@@ -126,7 +127,7 @@
   </div>
 
   <QueryMore @query={{riverQuery}} @model='article' @callback={{action riverCallback}} as |more|>
-    <AnimatedContainer @onInitialRender={{true}}>
+    <AnimatedContainer @onInitialRender={{true}} class="u-spacing--quad">
       {{#each more.pages as |page|}}
         {{#animated-each page use=transition initialInsertion=true as |set|}}
           <div class="l-container l-container--14col">

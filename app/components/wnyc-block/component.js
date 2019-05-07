@@ -14,8 +14,8 @@ export default Component.extend({
     if (!this.imageTemplate) {
       return;
     }
-    let x = this.imageWidth;
-    let y = 0;
+    let x = this.imageWidth || 0;
+    let y = this.imageHeight || 0;
     let crop = 'c';
     let quality = '80';
 
