@@ -12,6 +12,6 @@ module('Integration | Component | ad-tag-wide', function(hooks) {
 
     await render(hbs`{{ad-tag-wide}}`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.dom('[id^=ad_]').exists()
   });
 });
