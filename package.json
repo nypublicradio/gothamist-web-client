@@ -71,7 +71,9 @@
     "eslint-plugin-ember": "^5.2.0",
     "include-media": "^1.4.9",
     "loader.js": "^4.7.0",
+    "nypr-auth": "^0.2.4",
     "nypr-design-system": "nypublicradio/nypr-design-system",
+    "nypr-metrics": "^0.5.3",
     "qunit-dom": "^0.8.0",
     "sass": "^1.17.0"
   },
