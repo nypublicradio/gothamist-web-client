@@ -37,6 +37,11 @@ module.exports = function(environment) {
 
     // OTHER CONFIG
     wtcNewsletter: '8c376c6dff',
+    // for nypr-metrics
+    googleTagManager: process.env.GOOGLE_TAG_MANAGER_ID,
+    'nypr-metrics': {
+      disableEagerListenAnalytics: true,
+    },
   };
 
   if (environment === 'development') {
