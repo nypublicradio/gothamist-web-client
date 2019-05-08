@@ -1,6 +1,7 @@
 import DS from 'ember-data';
 import Route from '@ember/routing/route';
 import { inject } from '@ember/service';
+import { schedule } from '@ember/runloop';
 
 export default Route.extend({
   fastboot: inject(),
@@ -81,6 +82,8 @@ export default Route.extend({
       if (typeof FastBoot === 'undefined') {
         window.scrollTo(0, 0);
       }
+
+      schedule('afterRender', () => this.dataLayer.sendPageView());
     }
   }
 });
