@@ -37,6 +37,10 @@ module.exports = function(environment) {
 
     // OTHER CONFIG
     wtcNewsletter: '8c376c6dff',
+
+    // for nypr-auth
+    etagAPI: process.env.BROWSER_ID_ENDPOINT,
+
     // for nypr-metrics
     googleTagManager: process.env.GOOGLE_TAG_MANAGER_ID,
     'nypr-metrics': {

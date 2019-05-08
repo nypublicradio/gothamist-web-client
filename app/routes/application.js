@@ -5,9 +5,19 @@ import { inject } from '@ember/service';
 export default Route.extend({
   fastboot: inject(),
   headData: inject(),
+  session: inject(),
+  dataLayer: inject('nypr-metrics/data-layer'),
 
   title(tokens) {
     return `${tokens.join(' - ')} - Gothamist`
+  },
+
+  beforeModel() {
+    // browser only for browser ids
+    if (!this.fastboot.isFastBoot) {
+      this.session.syncBrowserId()
+        .then(id => this.dataLayer.push({IDCustomEvents: id}));
+    }
   },
 
   model() {
