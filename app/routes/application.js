@@ -4,10 +4,18 @@ import { inject } from '@ember/service';
 import { schedule } from '@ember/runloop';
 
 export default Route.extend({
+  router: inject(),
   fastboot: inject(),
   headData: inject(),
   session: inject(),
   dataLayer: inject('nypr-metrics/data-layer'),
+
+  init() {
+    this._super(...arguments);
+    this.router.on('routeDidChange', () => {
+      schedule('afterRender', () => this.dataLayer.sendPageView());
+    })
+  },
 
   title(tokens) {
     return `${tokens.join(' - ')} - Gothamist`
@@ -82,8 +90,6 @@ export default Route.extend({
       if (typeof FastBoot === 'undefined') {
         window.scrollTo(0, 0);
       }
-
-      schedule('afterRender', () => this.dataLayer.sendPageView());
     }
   }
 });
