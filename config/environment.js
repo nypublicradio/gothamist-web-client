@@ -83,6 +83,7 @@ module.exports = function(environment) {
     ENV.apiServer = 'https://api.demo.nypr.digital';
     ENV.disqusAPI = 'https://disqus.com';
     ENV.disqusKey = 'disqus-key';
+    ENV.etagAPI = 'https://browserid.com';
   }
 
   if (environment === 'production') {
