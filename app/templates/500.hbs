@@ -1,0 +1,45 @@
+<div class="c-listing__sections u-section-spacing l-container l-wrap l-container--11col">
+
+  <header class="c-basic__header u-spacing">
+    <strong class="c-basic__header-kicker u-font--secondary-style u-font--xs">
+      500 Page Error.
+    </strong>
+    <h1 class="c-basic__heading o-3d-heading">
+      Our servers are having a problem right now...
+    </h1>
+  </header>
+
+  <div class="c-basic-page__content u-spacing--and-half">
+    <div class="c-basic-page__lead">
+      <div class="c-lead u-breakout">
+        <NyprMFigure
+          @src-s='/images/404.jpg'
+          @caption='Realize the key to Zubaz is wearing them high. No need to rock these low. They do the work for you.'
+        />
+      </div>
+    </div>
+
+    <div class="u-spacing--triple">
+      <div class="c-article__body o-rte-text u-spacing">
+        <p>
+          Hello! Our servers are having a problem right now - we are working hard to fix them. Please come back soon!
+        </p>
+      </div>
+
+      <section class="c-basic-page__recirc u-spacing--and-half">
+        <NyprMBlockList
+          @items={{model}}
+          @heading='Popular'
+          class='u-spacing'
+          as |article|>
+          <ArticleBlock
+            @article={{article}}
+            @orientation='h'
+            @thumbnailSize='300'
+            @hideExcerpt={{true}}
+          />
+        </NyprMBlockList>
+      </section>
+    </div>
+  </div>
+</div>

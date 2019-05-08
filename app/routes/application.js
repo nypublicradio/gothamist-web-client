@@ -60,6 +60,8 @@ export default Route.extend({
     error(e) {
       if (e instanceof DS.NotFoundError) {
         this.transitionTo('404', e.url);
+      } else if (this.fastboot.isFastBoot) {
+        this.transitionTo('500');
       } else {
         throw e;
       }
