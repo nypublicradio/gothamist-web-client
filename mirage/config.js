@@ -66,4 +66,7 @@ export default function() {
       posts: 100, identifiers: []
     }]
   });
+
+  this.urlPrefix = config.etagAPI;
+  this.get('/', {});
 }
