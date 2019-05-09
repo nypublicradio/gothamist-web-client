@@ -134,6 +134,15 @@ export default DS.Model.extend({
     let tags = this.tags || [];
     return tags.filter(tag => !tag.match(/^@/));
   }),
+  internalTags: computed('tags', function() {
+    let tags = this.tags || [];
+    return tags
+      .filter(tag => tag.match(/^@/))
+      .map(tag => tag.replace(/^@/,''));
+  }),
+  adBindings: computed(function() {
+    return ['internalTags:tags','section.basename:Category'];
+  }),
 
   get body() {
     if (typeof FastBoot !== 'undefined') {

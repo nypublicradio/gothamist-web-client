@@ -1,5 +1,7 @@
 import Route from '@ember/routing/route';
 import { inject } from '@ember/service';
+import { doTargetingForModels, clearTargetingForModels } from 'nypr-ads';
+
 
 export default Route.extend({
   headData: inject(),
@@ -25,5 +27,18 @@ export default Route.extend({
         width: 640,
       }
     });
+  },
+
+  actions: {
+    didTransition() {
+      let article = this.currentModel;
+      doTargetingForModels(article);
+      return true;
+    },
+    willTransition() {
+      let article = this.currentModel;
+      clearTargetingForModels(article);
+      return true;
+    }
   }
 });

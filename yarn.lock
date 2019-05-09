@@ -8757,6 +8757,14 @@ number-is-nan@^1.0.0:
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
   integrity sha1-CXtgK1NCKlIsGvuHkDGDNpQaAR0=
 
+nypr-ads@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/nypr-ads/-/nypr-ads-1.1.0.tgz#dd2a44486c7f2719c9a1278ef2c936c2eff15a81"
+  integrity sha512-HaCV8O/SwhF2ObXPHuxycS1e+GbebHYnkdoVQ9nL1qE4XIm8JJKPclaMOBVZk7F1dOMbRyTShRNlfQOZI/lA2g==
+  dependencies:
+    ember-cli-babel "^6.6.0"
+    ember-cli-htmlbars "^2.0.1"
+
 nypr-auth@^0.2.4:
   version "0.2.4"
   resolved "https://registry.yarnpkg.com/nypr-auth/-/nypr-auth-0.2.4.tgz#4a3f02233eae68b59a74ccff21dc260e1c94399f"

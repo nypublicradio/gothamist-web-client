@@ -30,6 +30,10 @@ module.exports = function(environment) {
       includeTimezone: 'all',
     },
 
+    'nypr-ads': {
+      prefix: process.env.AD_PREFIX,
+    },
+
     // ENDPOINTS
     apiServer: process.env.API_SERVER,
     disqusAPI: process.env.DISQUS_API,
@@ -63,6 +67,10 @@ module.exports = function(environment) {
     if (process.env.MIRAGE) {
       console.log('mirage enabled'); // eslint-disable-line
     }
+
+    ENV['nypr-ads'] = {
+      prefix: '_demo_test',
+    };
 
     // for mirage endpoints
     ENV.apiServer = 'https://api.demo.nypr.digital';
