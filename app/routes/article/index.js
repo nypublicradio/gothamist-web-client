@@ -9,12 +9,15 @@ import addCommentCount from '../../utils/add-comment-count';
 export default Route.extend({
   fastboot: inject(),
   header: inject('nypr-o-header'),
+  dataLayer: inject('nypr-metrics/data-layer'),
 
   isFastBoot: reads('fastboot.isFastBoot'),
 
   titleToken: model => model.title,
 
   afterModel(model) {
+    this.dataLayer.setForType('article', model);
+
     this.header.addRule('article.index', {
       all: {
         donate: true,
@@ -48,5 +51,11 @@ export default Route.extend({
         instgrm.Embeds.process();
       }
     })
+  },
+
+  actions: {
+    willTransition() {
+      this.dataLayer.clearForType('article');
+    }
   }
 });
