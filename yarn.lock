@@ -8805,10 +8805,9 @@ nypr-fastboot@^0.6.2:
     morgan "^1.9.1"
     obj-extend "^0.1.0"
 
-nypr-metrics@^0.5.3:
+nypr-metrics@nypublicradio/nypr-metrics:
   version "0.5.4"
-  resolved "https://registry.yarnpkg.com/nypr-metrics/-/nypr-metrics-0.5.4.tgz#8fcd3abec5412e8826951f034c2307334b8c3965"
-  integrity sha512-Yi94/hlzjEIA2BPFlNd5Q76nznGcI/+n9TBD79Wd9T3pEZXLPLLkjDCG+/JUkjzyP0qz8DRGMTuHtaDWR6VJcA==
+  resolved "https://codeload.github.com/nypublicradio/nypr-metrics/tar.gz/fc934bbd87ce1acfec65f015f48964d225d303f6"
   dependencies:
     ember-cli-babel "^6.6.0"
     ember-get-config "^0.2.2"

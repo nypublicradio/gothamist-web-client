@@ -73,7 +73,7 @@
     "loader.js": "^4.7.0",
     "nypr-auth": "^0.2.4",
     "nypr-design-system": "nypublicradio/nypr-design-system",
-    "nypr-metrics": "^0.5.3",
+    "nypr-metrics": "nypublicradio/nypr-metrics",
     "qunit-dom": "^0.8.0",
     "sass": "^1.17.0"
   },
