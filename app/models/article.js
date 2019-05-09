@@ -141,7 +141,7 @@ export default DS.Model.extend({
       .map(tag => tag.replace(/^@/,''));
   }),
   adBindings: computed(function() {
-    return ['internalTags:tags','section:Category'];
+    return ['internalTags:tags','section.basename:Category'];
   }),
 
   get body() {
