@@ -13,7 +13,7 @@ export default DS.Model.extend({
   authorNickname: DS.attr('string'), // display name
   authoredOn: DS.attr('string'),
   authoredOnUtc: DS.attr('string'),
-  blodId: DS.attr('number'),
+  blogId: DS.attr('number'),
   categories: DS.attr(),
   commentCount: DS.attr('number'),
   entrytopics: DS.attr(),
