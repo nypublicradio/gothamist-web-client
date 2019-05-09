@@ -50,4 +50,24 @@ module('Acceptance | article', function(hooks) {
 
     assert.dom('#comments').doesNotExist();
   });
+
+  test('breadcrumbs', async function(assert) {
+    server.create('article', {permalink: 'opinion', tags: ['@opinion']});
+    server.create('article', {permalink: 'analysis', tags: ['@analysis']});
+    server.create('article', {permalink: 'sponsor', tags: ['@sponsor']});
+    server.create('article', {permalink: 'wtc', tags: ['we the commuters']});
+
+    await visit('/opinion');
+    assert.dom('.o-breadcrumbs').includesText('Opinion');
+
+    await visit('/analysis');
+    assert.dom('.o-breadcrumbs').includesText('Analysis');
+
+    await visit('/sponsor');
+    assert.dom('.o-breadcrumbs').includesText('Sponsored');
+
+    await visit('/wtc');
+    assert.dom('.o-breadcrumbs').includesText('We the Commuters');
+
+  });
 });

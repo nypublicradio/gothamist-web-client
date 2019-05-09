@@ -85,12 +85,26 @@ export default DS.Model.extend({
   }),
   moveableTypeId: reads('id'),
 
-  breadcrumb: computed('categories', function() {
-    let categories = this.categories || [];
-    return categories.map(c => ({
-      label: c.label,
-      route: ['sections', c.basename],
-    }));
+  breadcrumb: computed('section', function() {
+    let breadcrumb = [{
+      route: ['sections', this.section.basename],
+      label: this.section.label
+    }];
+    if (this.isSponsored) {
+      breadcrumb.push({label: 'Sponsored'});
+    }
+    if (this.isOpinion) {
+      breadcrumb.push({label: 'Opinion'});
+    }
+    if (this.isAnalysis) {
+      breadcrumb.push({label: 'Analysis'});
+    }
+
+    // HACK
+    if (this.tags.includes('we the commuters')) {
+      breadcrumb.push({label: 'We the Commuters'});
+    }
+    return breadcrumb;
   }),
 
   authors: computed('authorNickname', function() {
@@ -103,6 +117,14 @@ export default DS.Model.extend({
   isSponsored: computed('tags', function() {
     let tags = this.tags || [];
     return tags.includes('@sponsored') || tags.includes('@sponsor');
+  }),
+  isOpinion: computed('tags', function() {
+    let tags = this.tags || [];
+    return tags.includes('@opinion');
+  }),
+  isAnalysis: computed('tags', function() {
+    let tags = this.tags || [];
+    return tags.includes('@analysis');
   }),
 
   leadImageCaption: reads('_parsedLegacyContent.caption'),
