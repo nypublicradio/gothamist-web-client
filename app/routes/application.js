@@ -12,7 +12,8 @@ export default Route.extend({
 
   init() {
     this._super(...arguments);
-    this.router.on('routeDidChange', () => {
+    this.router.on('routeDidChange', transition => {
+      this.dataLayer.push({template: transition.to.name});
       schedule('afterRender', () => this.dataLayer.sendPageView());
     })
   },
