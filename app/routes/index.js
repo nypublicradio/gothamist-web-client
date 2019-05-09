@@ -27,6 +27,7 @@ export default Route.extend({
         nav: true,
         donate: true,
         search: true,
+        homepage: true,
       },
       resting: {
         leaderboard: true,
