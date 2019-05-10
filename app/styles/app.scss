@@ -27,3 +27,17 @@ $ember-basic-dropdown-content-z-index: 10000;
   margin-left: 8px;
   fill: $wnyc-red;
 }
+
+// make sure embedded captions aren't cut off
+.o-caption {
+  min-height: 26px;
+}
+
+// target links embedded in gothamist captions with proper styling
+.o-caption__text > span > a {
+  display: inline;
+  color: #333;
+  border-bottom: 2px dotted #333;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
