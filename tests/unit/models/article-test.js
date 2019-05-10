@@ -14,6 +14,18 @@ const CAPTION_WITH_CREDIT = `
 </p>
 `;
 
+const CREDIT_WITH_LINK = `
+<p>
+  <span class="mt-enclosure mt-enclosure-image" style="display: inline;">
+    <div class="image-none">
+      <img alt="bigboy040819.jpeg" src="http://gothamist.com/attachments/nyc_clampen/bigboy040819.jpeg" width="640" height="480" />
+      <br />
+      <i> Barsik may just be NYC's biggest cat. (<a href="http://example.com">Animal Care Centers of NYC</a>)</i>
+    </div>
+  </span>
+</p>
+`;
+
 const CAPTION_WITH_LINK = `
 <p>
   <span class="mt-enclosure mt-enclosure-image" style="display: inline;">
@@ -38,16 +50,21 @@ module('Unit | Model | article', function(hooks) {
 
   test('lead images', function(assert) {
     let store = this.owner.lookup('service:store');
-    let model = store.createRecord('article', {
-      text: CAPTION_WITH_CREDIT,
-    });
+    let model = store.createRecord('article', {text: CAPTION_WITH_CREDIT});
 
     assert.equal(model.leadImageCaption, "Barsik may just be NYC's biggest cat.");
     assert.equal(model.leadImageCredit, "Animal Care Centers of NYC");
+
+    model = store.createRecord('article', {text: CREDIT_WITH_LINK});
+
+    assert.equal(model.leadImageCaption, "Barsik may just be NYC's biggest cat.");
+    assert.equal(model.leadImageCredit, `<a href="http://example.com">Animal Care Centers of NYC</a>`);
 
     model = store.createRecord('article', {text: CAPTION_WITH_LINK});
 
     assert.equal(model.leadImageCaption, `A Latch M-series keyless entrance, <a href="https://www.latch.com/m-series">via Latch's website</a>.`);
     assert.notOk(model.leadImateCredit);
+
+
   })
 });
