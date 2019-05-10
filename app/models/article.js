@@ -174,8 +174,8 @@ export default DS.Model.extend({
     // extract caption and credit
     if (leadImage) {
       let [, caption, credit] = this._getImageMeta(leadImage);
-      parsed.caption = caption
-      parsed.credit = credit;
+      parsed.caption = caption ? caption.trim() : '';
+      parsed.credit = credit ? credit.trim() : '';
     }
 
     return parsed;
@@ -209,7 +209,7 @@ export default DS.Model.extend({
       }
 
       // parse HTML string for caption and credit
-      let match = text.innerHTML.match(/^([^(]+)\(([^)]+)\)$/);
+      let match = text.innerHTML.match(/^([^(]+)(?:\(([^)]+)\))?$/);
       return match || [];
   },
 
