@@ -18,10 +18,13 @@ export default Route.extend({
   header: inject('nypr-o-header'),
   headData: inject(),
   fastboot: inject(),
+  dataLayer: inject('nypr-metrics/data-layer'),
 
   titleToken: 'Homepage',
 
   beforeModel() {
+    this.dataLayer.push({template: 'homepage'});
+
     this.header.addRule('index', {
       all: {
         nav: true,

@@ -8,10 +8,13 @@ export const COUNT = 4;
 export default Route.extend({
   fastboot: inject(),
   header: inject('nypr-o-header'),
+  dataLayer: inject('nypr-metrics/data-layer'),
 
   titleToken: '404 Error',
 
   beforeModel() {
+    this.dataLayer.push({template: '404'});
+
     this.header.addRule('404', {
       all: {
         nav: true,

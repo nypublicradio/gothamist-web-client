@@ -17,6 +17,7 @@ export default Route.extend({
 
   afterModel(model) {
     this.dataLayer.setForType('article', model);
+    this.dataLayer.push({template: 'article'});
 
     this.header.addRule('article.index', {
       all: {

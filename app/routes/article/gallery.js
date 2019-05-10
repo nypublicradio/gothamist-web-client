@@ -12,12 +12,15 @@ export default Route.extend({
   fastboot: inject(),
   headData: inject(),
   header: inject('nypr-o-header'),
+  dataLayer: inject('nypr-metrics/data-layer'),
 
   image: reads('fastboot.request.queryParams.image'),
 
   titleToken: model => model.title,
 
   beforeModel() {
+    this.dataLayer.push({template: 'article gallery'});
+
     this.header.addRule('article.gallery', {
       resting: {
         nav: true,
