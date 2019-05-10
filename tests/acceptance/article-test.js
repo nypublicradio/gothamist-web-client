@@ -4,7 +4,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import test from 'ember-sinon-qunit/test-support/test';
 
-import { scrollPastHeader } from 'nypr-design-system/test-support/helpers'
+import { scrollPastHeader } from 'nypr-design-system/test-support';
 import { SERVICE_MAP } from 'nypr-design-system/components/nypr-m-share-tools';
 
 import config from 'gothamist-web-client/config/environment';
