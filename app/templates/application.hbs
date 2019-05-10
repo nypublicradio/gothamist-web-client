@@ -64,14 +64,14 @@
   {{/if}}
 
   <header.right as |right|>
-    {{#if header.rules.share}}
+    {{#with header.rules.share as |share|}}
       <NyprMShareTools class="c-main-header__share" @label='Share' as |tools|>
-        <tools.share @service='facebook'/>
-        <tools.share @service='twitter' @params={{hash text=model.title}}/>
-        <tools.share @service='reddit' @params={{hash url=model.permalink title=model.title}}/>
-        <tools.share @service='email' @params={{hash body=(concat model.title ' - ' model.permalink)}}/>
+        <tools.share @service='facebook' data-test-facebook-share/>
+        <tools.share @service='twitter' @params={{hash text=share.title}} data-test-twitter-share/>
+        <tools.share @service='reddit' @params={{hash title=share.title}} data-test-reddit-share/>
+        <tools.share @service='email' @params={{hash body=(concat share.title ' - ' share.permalink)}} data-test-email-share/>
       </NyprMShareTools>
-    {{/if}}
+    {{/with}}
 
     {{#if header.rules.donate}}
       <NyprAButton class='c-main-header__donate o-button--sm' @url={{DONATE_URL}}>

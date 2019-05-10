@@ -29,8 +29,11 @@ export default Route.extend({
       },
       floating: {
         headline: model.title,
-        share: true,
         progressBar: true,
+        share: {
+          title: model.title,
+          permalink: model.permalink,
+        }
       }
     })
     this.controllerFor('application').setProperties({
