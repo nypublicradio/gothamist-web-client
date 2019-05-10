@@ -27,8 +27,6 @@ Router.map(function() {
   });
 
   this.route('contact');
-  this.route('privacy');
-  this.route('terms');
 
   this.route('500', {path: 'server-error'});
 });
