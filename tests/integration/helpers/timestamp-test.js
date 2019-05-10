@@ -7,7 +7,6 @@ import hbs from 'htmlbars-inline-precompile';
 
 import {
   JUST_NOW,
-  RECENT,
   TIMESTAMP_FORMAT,
 } from 'gothamist-web-client/helpers/timestamp';
 
@@ -25,7 +24,7 @@ module('Integration | Helper | timestamp', function(hooks) {
 
     timestamp.subtract(30, 'minutes');
     await render(hbs`{{timestamp time}}`);
-    assert.equal(this.element.textContent.trim(), RECENT);
+    assert.equal(this.element.textContent.trim(), `${moment().diff(timestamp, 'minutes')} mins ago`);
 
     timestamp.subtract(29, 'minutes');
     await render(hbs`{{timestamp time}}`);
