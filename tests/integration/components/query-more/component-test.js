@@ -147,4 +147,32 @@ module('Integration | Component | query-more', function(hooks) {
     await click('#query-more');
     assert.dom('#results').hasText(EXPECTED.join(' '));
   });
+
+  test('yielded `isFinished` reflects if more results are available on the server', async function(assert) {
+    const store = this.owner.lookup('service:store');
+    this.stub(store, 'query')
+      .onCall(0).resolves({contents: ['foo', 'bar'], meta: {total: 4}})
+      .onCall(1).resolves({contents: ['baz', 'qux'], meta: {total: 4}});
+
+    await render(hbs`
+      <QueryMore @query={{hash count=2}} as |more|>
+        {{#unless more.isFinished}}
+          <button onclick={{perform more.queryMore}} id="query-more">click</button>
+        {{/unless}}
+
+        <div id="results">
+          {{#each more.pages as |page|}}
+            {{#each page as |item|}}
+              {{item}}
+            {{/each}}
+          {{/each}}
+        </div>
+      </QueryMore>
+    `);
+
+    await click('#query-more');
+    await click('#query-more');
+
+    assert.dom('#query-more').doesNotExist('button should be hidden when there are no more results');
+  });
 });
