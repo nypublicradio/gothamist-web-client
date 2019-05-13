@@ -1,8 +1,7 @@
 <DoTargeting key='Template' value='Article Gallery' />
 <NyprOGalleryOverlay
   @title={{model.title}}
-  @parentRoute='article'
-  @parentModel={{model}}
+  @parentRoute={{array 'article' model.permalink}}
   @slides={{model.gallery.slides}}
   @viewedSlide={{action this.viewedSlide}}
   @slideForInit={{this.image}}
