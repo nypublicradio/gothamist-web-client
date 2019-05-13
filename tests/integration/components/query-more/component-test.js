@@ -19,7 +19,7 @@ module('Integration | Component | query-more', function(hooks) {
     this.mock(store)
       .expects('query')
       .withArgs(MODEL, QUERY)
-      .resolves();
+      .resolves({});
 
     this.setProperties({
       MODEL,
@@ -106,7 +106,8 @@ module('Integration | Component | query-more', function(hooks) {
     const store = this.owner.lookup('service:store');
     this.mock(store)
       .expects('query')
-      .withArgs(MODEL, {page: 1});
+      .withArgs(MODEL, {page: 1})
+      .resolves({});
 
     await render(hbs`
       <QueryMore @model={{MODEL}} @query={{QUERY}} as |more|>
