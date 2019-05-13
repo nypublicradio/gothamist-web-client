@@ -3,7 +3,7 @@ import functionalModifier from 'ember-functional-modifiers';
 function countWords(element) {
   let text = element.textContent
   return text.replace(/[^\w ]/g, "").split(/\s+/).length;
-};
+}
 
 const embeds = ['iframe', 'embed', 'video', 'twitter-widget', 'center'];
 const dontInsertBefore = ['blockquote', ...embeds];
