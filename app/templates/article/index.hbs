@@ -74,7 +74,10 @@
     </NyprOArticleHeader>
 
     <NyprOArticleBody class={{unless model.hasLead 'u-space--zero--top'}} data-test-article-body>
-      {{{model.body}}}
+      <div {{insert-target "insertedAd" rootSelector=".c-article__body div"}}>
+        {{{model.body}}}
+      </div>
+      <AdTagWide @slot="gothamist/interior/midpage" @target="insertedAd" />
     </NyprOArticleBody>
 
     <div class="l-container--content u-section-spacing">
