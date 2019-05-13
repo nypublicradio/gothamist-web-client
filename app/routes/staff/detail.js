@@ -15,7 +15,7 @@ export default Route.extend({
   fastboot: inject(),
   header: inject('nypr-o-header'),
 
-  titleToken: model => model.namee,
+  titleToken: model => model.name,
 
   beforeModel() {
     this.header.addRule('staff.detail', {
