@@ -9,7 +9,10 @@
     <div class="c-basic-page__content">
       <section class="c-listing__section o-section">
         <NyprMBlockList @items={{model}} as |author|>
-          <NyprMAuthorBlock @author={{author}} />
+          <NyprMAuthorBlock
+            @author={{author}}
+            @articleRoute={{array 'staff.detail' author.name}}
+          />
         </NyprMBlockList>
       </section>
     </div>
