@@ -5131,6 +5131,14 @@ ember-factory-for-polyfill@^1.3.1:
     node-fetch "^2.3.0"
     whatwg-fetch "^3.0.0"
 
+ember-functional-modifiers@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/ember-functional-modifiers/-/ember-functional-modifiers-0.4.0.tgz#2591c462e758e69dc2e5d0b30a9409388a5106d8"
+  integrity sha512-LSvSIb7SJExPZOl30/C9tj2eZrpvtMBZAdMSHFmy0ya3mNl5SMPSgEqhT2umdjH+ufMqs99AaZNsma/UXywc4A==
+  dependencies:
+    ember-cli-babel "^7.1.2"
+    ember-modifier-manager-polyfill "^1.0.3"
+
 ember-get-config@^0.2.2:
   version "0.2.4"
   resolved "https://registry.yarnpkg.com/ember-get-config/-/ember-get-config-0.2.4.tgz#118492a2a03d73e46004ed777928942021fe1ecd"
@@ -5196,6 +5204,15 @@ ember-maybe-in-element@^0.2.0:
   integrity sha512-R5e6N8yDbfNbA/3lMZsFs2KEzv/jt80TsATiKMCqdqKuSG82KrD25cRdU5VkaE8dTQbziyBeuJs90bBiqOnakQ==
   dependencies:
     ember-cli-babel "^7.1.0"
+
+ember-modifier-manager-polyfill@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/ember-modifier-manager-polyfill/-/ember-modifier-manager-polyfill-1.0.3.tgz#6554b70d09a7d3b80d366b72ed482fb9a3e813c0"
+  integrity sha512-d8Uz0BhAZaqzttF4NXTwJ/A8uPrgd7fMho5jh89BfzJAHu5WZfGewX9cbjh3m6f512ZyxkIeeolw3Z5/Jyaujg==
+  dependencies:
+    ember-cli-babel "^7.4.2"
+    ember-cli-version-checker "^2.1.2"
+    ember-compatibility-helpers "^1.2.0"
 
 ember-moment@^7.8.1:
   version "7.8.1"
