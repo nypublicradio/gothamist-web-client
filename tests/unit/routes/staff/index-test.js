@@ -5,7 +5,7 @@ module('Unit | Route | staff', function(hooks) {
   setupTest(hooks);
 
   test('it exists', function(assert) {
-    let route = this.owner.lookup('route:staff');
+    let route = this.owner.lookup('route:staff.index');
     assert.ok(route);
   });
 });

@@ -1,1 +1,19 @@
-<h1>staff</h1>
+<div class="u-spacing--quad c-basic-page">
+
+  <div class="c-listing__sections u-section-spacing l-container l-wrap l-container--14col">
+
+    <header class="c-basic__header u-spacing">
+      <h1 class="c-basic__heading o-3d-heading">Staff</h1>
+    </header>
+
+    <div class="c-basic-page__content">
+      <section class="c-listing__section o-section">
+        <NyprMBlockList @items={{model}} as |author|>
+          <NyprMAuthorBlock @author={{author}} />
+        </NyprMBlockList>
+      </section>
+    </div>
+
+  </div>
+
+</div>
