@@ -78,7 +78,12 @@ export default DS.Model.extend({
     return moment.utc(this.modifiedOnUtc, 'YYYYMMDDHHmmss');
   }),
   section: computed('categories', function() {
-    return this.categories[0] || {};
+    // HACK: basename for arts & entertainment is wrong
+    let section = this.categories[0] || {};
+    if (section.basename === 'arts') {
+      section.basename = 'arts & entertainment';
+    }
+    return section;
   }),
   hasMain: computed('tags', function() {
     return this.tags.includes('@main');
