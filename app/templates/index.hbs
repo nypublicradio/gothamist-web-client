@@ -42,7 +42,7 @@
   {{/if}}
 
   <div class="l-container l-container--14col">
-    <ArticleList @articles={{slice 0 GROUP_SIZE model.river}} @ad={{true}}/>
+    <ArticleList @articles={{slice 0 GROUP_SIZE model.river}} @ad={{true}} @adSlot='gothamist/index/midpage/1'/>
   </div>
 
   <div class="l-container l-container--14col">
@@ -112,7 +112,7 @@
 
 
   <div class="l-container l-container--14col">
-    <ArticleList @articles={{slice (multiply GROUP_SIZE 2) (multiply GROUP_SIZE 3) model.river}} @ad={{true}}/>
+    <ArticleList @articles={{slice (multiply GROUP_SIZE 2) (multiply GROUP_SIZE 3) model.river}} @ad={{true}} @adSlot='gothamist/index/midpage/2'/>
   </div>
 </div>
 
@@ -130,7 +130,7 @@
 <div class="c-home__sections u-spacing--quad l-container l-wrap">
 
   <div class="l-container l-container--14col">
-    <ArticleList @articles={{slice (multiply GROUP_SIZE 3) undefined model.river}} @ad={{true}}/>
+    <ArticleList @articles={{slice (multiply GROUP_SIZE 3) undefined model.river}} @ad={{true}} @adSlot='gothamist/index/midpage/3'/>
   </div>
 
   <QueryMore
@@ -143,7 +143,7 @@
       {{#each more.pages as |page|}}
         {{#animated-each page use=transition initialInsertion=true as |set|}}
           <div class="l-container l-container--14col">
-            <ArticleList @articles={{set}} @ad={{true}}/>
+            <ArticleList @articles={{set}} @ad={{true}} @adSlot='gothamist/index/midpage/repeating'/>
           </div>
         {{/animated-each}}
       {{/each}}
