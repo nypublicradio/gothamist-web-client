@@ -63,6 +63,7 @@ export default Route.extend({
         addCommentCount(results.main);
       }
 
+      results.meta = results.river.meta;
       results.river = results.river.filter(article => !results.main.includes(article));
       return results;
     });

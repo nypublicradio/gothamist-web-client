@@ -127,7 +127,12 @@
     <ArticleList @articles={{slice (multiply GROUP_SIZE 3) undefined model.river}} @ad='tall'/>
   </div>
 
-  <QueryMore @query={{riverQuery}} @model='article' @callback={{action riverCallback}} as |more|>
+  <QueryMore
+    @query={{riverQuery}}
+    @model='article'
+    @callback={{action riverCallback}}
+    @total={{model.meta.total}}
+    as |more|>
     <AnimatedContainer @onInitialRender={{true}} class="u-spacing--quad">
       {{#each more.pages as |page|}}
         {{#animated-each page use=transition initialInsertion=true as |set|}}

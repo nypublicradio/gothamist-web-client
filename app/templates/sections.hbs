@@ -57,7 +57,12 @@
   </section>
 
 
-  <QueryMore @query={{query}} @model='article' @callback={{addComments}} as |more|>
+  <QueryMore
+    @query={{query}}
+    @model='article'
+    @callback={{addComments}}
+    @total={{model.articles.meta.total}}
+    as |more|>
     <AnimatedContainer class="u-section-spacing" @onInitialRender={{true}}>
       {{#each more.pages as |page|}}
         <section class="c-listing__section o-section">
@@ -93,15 +98,17 @@
       {{/each}}
     </AnimatedContainer>
 
-    <div class="u-align-center">
-      <NyprAButton
-        data-test-more-results
-        class="o-button--c-quaternary o-button--extra"
-        @onclick={{perform more.queryMore}}
-      >
-        {{if more.queryMore.isRunning 'Loading...' 'More Results'}}
-      </NyprAButton>
-    </div>
+    {{#unless more.isFinished}}
+      <div class="u-align-center">
+        <NyprAButton
+          data-test-more-results
+          class="o-button--c-quaternary o-button--extra"
+          @onclick={{perform more.queryMore}}
+        >
+          {{if more.queryMore.isRunning 'Loading...' 'More Results'}}
+        </NyprAButton>
+      </div>
+    {{/unless}}
   </QueryMore>
 
 </div>
