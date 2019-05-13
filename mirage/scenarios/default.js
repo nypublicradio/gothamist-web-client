@@ -5,6 +5,7 @@ export default function(server) {
     This data will not be loaded in your tests.
   */
 
+  server.create('article', 'mtGallery', {permalink: 'foo'});
   server.createList('article', 5, {
     tags: ['@main']
   });
