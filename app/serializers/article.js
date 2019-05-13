@@ -18,10 +18,13 @@ export default DS.RESTSerializer.extend({
   },
 
   extractMeta(store, articleClass, payload) {
-    return {
+    let meta = {
       total: payload.total_entries,
       count: payload.listed_entries,
     }
+    delete payload.total_entries;
+    delete payload.listed_entries;
+    return meta;
   },
 
   // extractRelationships(articleClass, hash) {
