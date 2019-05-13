@@ -16,12 +16,15 @@ export default Component.extend({
       this.page.url = permalink;
     }
 
-    if (document.querySelector('#disqus-lib')) {
+    if (typeof DISQUS !== 'undefined') {
       DISQUS.reset({
         reload: true,
         config,
       });
-    } else {
+    } else if (!document.querySelector('#disqus-lib')) {
+      // if `DISQUS` is undefined AND check for `#disqus-lib`. if it exists, there's probably
+      // and ad blocker at work, so we only want to try to load the disqus script if it hasn't been
+      // attempteed already
       window.disqus_config = config;
       var disqusLib = document.createElement('script');
       disqusLib.id = 'disqus-lib';

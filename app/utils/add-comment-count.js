@@ -39,6 +39,9 @@ export default async function addCommentCount(modelOrRecordArray) {
     }
   } catch(e) {
     console.warn(e); // eslint-disable-line
+    if (!res) {
+      return; // disqus blocked;
+    }
   }
 
   let { response } = await res.json();
