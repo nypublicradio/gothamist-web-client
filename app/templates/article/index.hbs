@@ -35,7 +35,11 @@
 
         <lead.center>
           {{#if model.hasGallery}}
-            <NyprMGalleryLead @slides={{model.gallery.slides}} @viewAll={{action 'viewGallery'}} />
+            <NyprMGalleryLead
+              @slides={{model.gallery.slides}}
+              @viewAll={{action 'viewGallery'}}
+              @goToSlide={{action 'goToSlide'}}
+            />
           {{else}}
             <NyprMFigure
               @src-s={{make-https model.thumbnail640}}

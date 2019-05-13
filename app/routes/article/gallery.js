@@ -1,6 +1,6 @@
 import Route from '@ember/routing/route';
 import { inject } from '@ember/service';
-import { reads } from '@ember/object/computed';
+import { or } from '@ember/object/computed';
 
 export default Route.extend({
   queryParams: {
@@ -14,7 +14,7 @@ export default Route.extend({
   header: inject('nypr-o-header'),
   dataLayer: inject('nypr-metrics/data-layer'),
 
-  image: reads('fastboot.request.queryParams.image'),
+  image: or('fastboot.request.queryParams.image', 'queryParams.image'),
 
   titleToken: model => model.title,
 

@@ -5,7 +5,7 @@
   @parentModel={{model}}
   @slides={{model.gallery.slides}}
   @viewedSlide={{action this.viewedSlide}}
-  @activeSlide={{this.image}}
+  @slideForInit={{this.image}}
   @share={{this.shareMetadata}}
   as |index gallery|>
   {{#if (eq index 1)}}
