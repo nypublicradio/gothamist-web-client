@@ -26,46 +26,4 @@ export default DS.RESTSerializer.extend({
     delete payload.listed_entries;
     return meta;
   },
-
-  // extractRelationships(articleClass, hash) {
-  //   let attrs = this._super(...arguments);
-  //   if (!hash.has_gallery) {
-  //     return attrs;
-  //   }
-  //
-  //   let gallery = {
-  //     type: 'gallery',
-  //   };
-  //   let relationships = {
-  //     gallery: {
-  //       data: gallery,
-  //     },
-  //   };
-  //
-  //   if (hash.gallery_dropbox) {
-  //     gallery.id = hash.entrytopics[0];
-  //   } else {
-  //     let slides = [];
-  //
-  //     gallery.id = `${hash.id}-gallery`;
-  //     gallery.attributes = {
-  //       slides,
-  //     };
-  //
-  //     for (let i = 0; i < hash.gallery_full.length; i++) {
-  //       slides.push({
-  //         src: hash.gallery_array[i],
-  //         caption: hash.gallery_captions[i],
-  //         full: hash.gallery_full[i],
-  //         credit: hash.gallery_credit[i],
-  //       })
-  //     }
-  //
-  //     this.store.push({data: gallery});
-  //
-  //     delete gallery.attributes;
-  //   }
-  //
-  //   return relationships;
-  // }
 });
