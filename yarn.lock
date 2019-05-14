@@ -8822,7 +8822,7 @@ nypr-auth@^0.2.4:
 
 nypr-design-system@nypublicradio/nypr-design-system:
   version "0.2.0"
-  resolved "https://codeload.github.com/nypublicradio/nypr-design-system/tar.gz/c106d6f93d1edf5990741d11ca2a189b65d60868"
+  resolved "https://codeload.github.com/nypublicradio/nypr-design-system/tar.gz/643c2835eb5a57824ad96c5d87a2d5a2d84d2155"
   dependencies:
     broccoli-merge-files "^0.8.0"
     ember-auto-import "^1.2.19"
