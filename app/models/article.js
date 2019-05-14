@@ -58,7 +58,7 @@ export default DS.Model.extend({
       for (let i = 0; i < this.galleryFull.length; i++) {
         slides.push({
           full: makeHttps([this.galleryFull[i]]),
-          src: makeHttps([this.galleryArray[i]]),
+          thumb: makeHttps([this.galleryArray[i]]),
           caption: this.galleryCaptions[i],
           credit: this.galleryCredit[i],
         });
