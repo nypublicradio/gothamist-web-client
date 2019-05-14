@@ -41,6 +41,7 @@ module.exports = function(environment) {
 
     // OTHER CONFIG
     wtcNewsletter: '8c376c6dff',
+    dailyNewsletter: '',
 
     // for nypr-auth
     etagAPI: process.env.BROWSER_ID_ENDPOINT,

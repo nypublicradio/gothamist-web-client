@@ -2,6 +2,7 @@ import Controller from '@ember/controller';
 import fade from 'ember-animated/transitions/fade';
 
 import addCommentCount from '../utils/add-comment-count';
+import config from '../config/environment';
 
 import {
   GROUP_SIZE,
@@ -9,9 +10,15 @@ import {
 } from '../routes/index';
 
 
+const WTC_ENDPOINT = `${config.apiServer}/opt-in/v1/subscribe/mailchimp`;
+const WTC_PARAMS = {list: config.wtcNewsletter};
+
 export default Controller.extend({
   GROUP_SIZE,
   TOTAL_COUNT,
+
+  WTC_ENDPOINT,
+  WTC_PARAMS,
 
   init() {
     this._super(...arguments);

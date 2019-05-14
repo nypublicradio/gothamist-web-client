@@ -117,7 +117,10 @@
   <footer.nav @navItems={{model.secondaryNav}}/>
 
   <footer.signup>
-    <NyprMNewsletter as |newsletter|>
+    <NyprMNewsletter
+      @endpoint={{NEWSLETTER_ENDPOINT}}
+      @params={{NEWSLETTER_PARAMS}}
+      as |newsletter|>
       <newsletter.graphic>
         <NyprASvg @icon='party-confetti'/>
       </newsletter.graphic>
