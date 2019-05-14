@@ -9,7 +9,11 @@ export function initialize() {
       } else {
         return 'p.m.';
       }
-    }
+    },
+    monthsShort: [
+      'Jan.', 'Feb.', 'March', 'April', 'May', 'June',
+      'July', 'Aug.', 'Sept.', 'Oct.', 'Nov.', 'Dec.',
+    ],
   });
 }
 

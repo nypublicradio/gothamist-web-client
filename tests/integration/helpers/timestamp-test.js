@@ -8,6 +8,7 @@ import hbs from 'htmlbars-inline-precompile';
 import {
   JUST_NOW,
   TIMESTAMP_FORMAT,
+  TIMESTAMP_FORMAT_NO_YEAR,
 } from 'gothamist-web-client/helpers/timestamp';
 
 
@@ -36,6 +37,10 @@ module('Integration | Helper | timestamp', function(hooks) {
 
     timestamp.subtract(1, 'day');
     await render(hbs`{{timestamp time}}`);
+    assert.equal(this.element.textContent.trim(), timestamp.format(TIMESTAMP_FORMAT_NO_YEAR));
+
+    timestamp.subtract(1, 'year');
+    await render(hbs`{{timestamp time}}`);
     assert.equal(this.element.textContent.trim(), timestamp.format(TIMESTAMP_FORMAT));
-  })
+  });
 });

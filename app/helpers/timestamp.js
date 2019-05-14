@@ -4,6 +4,7 @@ import { helper } from '@ember/component/helper';
 
 export const JUST_NOW = 'Just now';
 export const TIMESTAMP_FORMAT = 'MMM D, YYYY h:mm a';
+export const TIMESTAMP_FORMAT_NO_YEAR = 'MMM D, h:mm a';
 
 export function timestamp([ timestamp ], { format } = {}) {
   timestamp = moment(timestamp, format);
@@ -16,6 +17,8 @@ export function timestamp([ timestamp ], { format } = {}) {
     return `${minutes} mins ago`;
   } else if (hours < 24) {
     return `${hours} hour${hours > 1 ? 's' : ''} ago`
+  } else if (timestamp.year() === now.year()){
+    return timestamp.format(TIMESTAMP_FORMAT_NO_YEAR);
   } else {
     return timestamp.format(TIMESTAMP_FORMAT);
   }
