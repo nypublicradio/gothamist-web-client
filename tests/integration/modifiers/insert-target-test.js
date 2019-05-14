@@ -77,4 +77,44 @@ module('Integration | Modifier | insert-target', function(hooks) {
     assert.ok(find('div#trgt'));
     assert.deepEqual(elementList, ['p1','p2','p3','iframe','p4','trgt','p5']);
   });
+  test('it should handle bare text nodes part 1', async function(assert) {
+    this.oneHundredWords = oneHundredWords;
+    await render(hbs`<div {{insert-target 'trgt'}}>
+      {{this.oneHundredWords}}
+      <p id="p1">{{this.oneHundredWords}}</p>
+      {{this.oneHundredWords}}
+      <p id="p2">{{this.oneHundredWords}}</p>
+    </div>`);
+    let elementList = [...this.element.firstChild.childNodes]
+      .filter(node => {
+        // ignore whitespace only text nodes.
+        return !(node.nodeName === '#text'
+        && node.textContent.replace(/\s/g, '').length === 0);
+      })
+      .map(el => el.id || 'text');
+
+    assert.ok(find('div#trgt'));
+    // Handlebars makes more text nodes than you would expect
+    assert.deepEqual(elementList, ['text','p1','text','trgt','p2']);
+  });
+
+  test('it should handle bare text nodes part 2', async function(assert) {
+    this.oneHundredWords = oneHundredWords;
+    await render(hbs`<div {{insert-target 'trgt'}}>
+      {{this.oneHundredWords}}
+      {{this.oneHundredWords}}
+      {{this.oneHundredWords}}
+      <p id="p1">{{this.oneHundredWords}}</p>
+    </div>`);
+    let elementList = [...this.element.firstChild.childNodes]
+      .filter(node => {
+        // ignore whitespace only text nodes.
+        return !(node.nodeName === '#text'
+        && node.textContent.replace(/\s/g, '').length === 0);
+      })
+      .map(el => el.id || 'text');
+
+    assert.ok(find('div#trgt'));
+    assert.deepEqual(elementList, [ 'text','text','text','trgt','p1']);
+  });
 });
