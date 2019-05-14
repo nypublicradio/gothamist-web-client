@@ -44,7 +44,7 @@ export default Route.extend({
     controller.setProperties({
       query: {
         index: 'gothamist',
-        term: model.name,
+        term: `a|${model.name}`,
         count: COUNT,
         page: 2,
       },
