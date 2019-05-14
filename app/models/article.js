@@ -2,7 +2,7 @@ import moment from 'moment';
 
 import DS from 'ember-data';
 import { computed } from '@ember/object';
-import { reads } from '@ember/object/computed';
+import { reads, or } from '@ember/object/computed';
 
 import { makeHttps } from '../helpers/make-https';
 
@@ -132,8 +132,11 @@ export default DS.Model.extend({
     return tags.includes('@analysis');
   }),
 
+  hasLead:          or('leadImage', 'hasGallery'),
+
+  leadImage:        reads('_parsedLegacyContent.leadImage'),
   leadImageCaption: reads('_parsedLegacyContent.caption'),
-  leadImageCredit: reads('_parsedLegacyContent.credit'),
+  leadImageCredit:  reads('_parsedLegacyContent.credit'),
 
   displayTags: computed('tags', function() {
     let tags = this.tags || [];
@@ -178,6 +181,9 @@ export default DS.Model.extend({
 
     // extract caption and credit
     if (leadImage) {
+      let img = leadImage.querySelector('img');
+      parsed.leadImage = img ? img.src : '';
+
       let [, caption, credit] = this._getImageMeta(leadImage);
       parsed.caption = caption ? caption.trim() : '';
       parsed.credit = credit ? credit.trim() : '';
