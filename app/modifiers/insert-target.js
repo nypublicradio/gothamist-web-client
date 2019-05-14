@@ -30,9 +30,9 @@ export function insertTarget(element, [id], {wordBoundary=300, containerSelector
       return node;
     }
   })
+  let target = document.createElement('DIV');
+  target.id = id;
   if (boundary) {
-    let target = document.createElement('DIV');
-    target.id = id;
     let parent = boundary.parentNode;
     let next = boundary.nextSibling;
     if (next) {
@@ -40,6 +40,8 @@ export function insertTarget(element, [id], {wordBoundary=300, containerSelector
     } else {
       parent.appendChild(target);
     }
+  } else {
+    container.appendChild(target);
   }
 }
 
