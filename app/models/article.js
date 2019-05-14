@@ -33,7 +33,7 @@ export default DS.Model.extend({
   thumbnail105: DS.attr('string'),
   thumbnail300: DS.attr('string'),
   thumbnail640: DS.attr('string'),
-  title: DS.attr('string'),
+  title: DS.attr('string', {defaultValue:  ''}),
 
   // gallery attrs
   gallery: DS.attr(),
