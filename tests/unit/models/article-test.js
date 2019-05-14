@@ -14,6 +14,18 @@ const CAPTION_WITH_CREDIT = `
 </p>
 `;
 
+const CAPTION_WITH_WHITESPACE = `
+<p>
+  <span class="mt-enclosure mt-enclosure-image" style="display: inline;">
+    <div class="image-none">
+      <img alt="bigboy040819.jpeg" src="http://gothamist.com/attachments/nyc_clampen/bigboy040819.jpeg" width="640" height="480" />
+      <br />
+      <i> Joseph Jordan a.k.a Eric Striker (Courtesy of the Southern Poverty Law Center) </i>
+    </div>
+  </span>
+</p>
+`;
+
 const CREDIT_WITH_LINK = `
 <p>
   <span class="mt-enclosure mt-enclosure-image" style="display: inline;">
@@ -65,6 +77,9 @@ module('Unit | Model | article', function(hooks) {
     assert.equal(model.leadImageCaption, `A Latch M-series keyless entrance, <a href="https://www.latch.com/m-series">via Latch's website</a>.`);
     assert.notOk(model.leadImateCredit);
 
+    model = store.createRecord('article', {text: CAPTION_WITH_WHITESPACE});
 
+    assert.equal(model.leadImageCaption, 'Joseph Jordan a.k.a Eric Striker');
+    assert.equal(model.leadImageCredit, 'Courtesy of the Southern Poverty Law Center');
   })
 });

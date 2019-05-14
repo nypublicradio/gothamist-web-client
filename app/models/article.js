@@ -214,13 +214,13 @@ export default DS.Model.extend({
       }
 
       // parse HTML string for caption and credit
-      let match = text.innerHTML.match(/^([^(]+)(?:\(([^)]+)\))?$/);
+      let match = text.innerHTML.match(/^([^(]+)(?:\(([^)]+)\))?/);
       return match || [];
   },
 
   _makeImagesSecure(nodes) {
     nodes.querySelectorAll('img').forEach(img => {
-      img.src = img.src.replace(/^https?:/, '');
+      img.src = img.src.replace(/^https?:/, 'https:');
     });
     return nodes;
   },
