@@ -70,11 +70,11 @@ module('Unit | Model | article', function(hooks) {
     model = store.createRecord('article', {text: CREDIT_WITH_LINK});
 
     assert.equal(model.leadImageCaption, "Barsik may just be NYC's biggest cat.");
-    assert.equal(model.leadImageCredit, `<a href="http://example.com">Animal Care Centers of NYC</a>`);
+    assert.equal(model.leadImageCredit, `<a href="http://example.com" target="_blank" rel="noopener">Animal Care Centers of NYC</a>`);
 
     model = store.createRecord('article', {text: CAPTION_WITH_LINK});
 
-    assert.equal(model.leadImageCaption, `A Latch M-series keyless entrance, <a href="https://www.latch.com/m-series">via Latch's website</a>.`);
+    assert.equal(model.leadImageCaption, `A Latch M-series keyless entrance, <a href="https://www.latch.com/m-series" target="_blank" rel="noopener">via Latch's website</a>.`);
     assert.notOk(model.leadImateCredit);
 
     model = store.createRecord('article', {text: CAPTION_WITH_WHITESPACE});
