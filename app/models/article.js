@@ -172,6 +172,9 @@ export default DS.Model.extend({
 
     // do some minor processing
 
+    // make sure iframes are https
+    parsed.nodes = this._makeEmbedsSecure(parsed.nodes);
+
     // make sure images are https
     parsed.nodes = this._makeImagesSecure(parsed.nodes);
 
@@ -225,11 +228,14 @@ export default DS.Model.extend({
   },
 
   _makeImagesSecure(nodes) {
-    nodes.querySelectorAll('img').forEach(img => {
-      img.src = img.src.replace(/^https?:/, 'https:');
-    });
+    nodes.querySelectorAll('img').forEach(img => img.src = img.src.replace(/^http?:/, 'https:'));
     return nodes;
   },
+
+  _makeEmbedsSecure(nodes) {
+    nodes.querySelectorAll('iframe').forEach(iframe => iframe.src = iframe.src.replace(/^http:/, 'https:'));
+    return nodes;
+  }
 
 });
 
