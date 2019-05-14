@@ -40,9 +40,9 @@
               @viewAll={{action 'viewGallery'}}
               @goToSlide={{action 'goToSlide'}}
             />
-          {{else}}
+          {{else if model.leadImage}}
             <NyprMFigure
-              @src-s={{make-https model.thumbnail640}}
+              @src-s={{model.leadImage}}
               @caption={{model.leadImageCaption}}
               @credit={{model.leadImageCredit}}
             />
@@ -57,7 +57,7 @@
 
     </NyprOArticleHeader>
 
-    <NyprOArticleBody data-test-article-body>
+    <NyprOArticleBody class={{unless model.hasLead 'u-space--zero--top'}} data-test-article-body>
       {{{model.body}}}
     </NyprOArticleBody>
 
