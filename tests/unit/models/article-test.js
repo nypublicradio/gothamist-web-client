@@ -82,4 +82,25 @@ module('Unit | Model | article', function(hooks) {
     assert.equal(model.leadImageCaption, 'Joseph Jordan a.k.a Eric Striker');
     assert.equal(model.leadImageCredit, 'Courtesy of the Southern Poverty Law Center');
   })
+
+  test('external links', function(assert) {
+    const URL = window.location.toString();
+    let store = this.owner.lookup('service:store');
+    let model = store.createRecord('article', {text: `
+      <p>
+        <a href="http://google.com" id="external">external link</a>
+      </p>
+      <p>
+        <a href="${URL}">internal link</a>
+      </p>
+    `});
+
+    let external = model.body.querySelector('#external');
+    let internal = model.body.querySelector('#internal');
+
+    assert.dom(external).hasAttribute('target', '_blank', 'external link gets target blank');
+    assert.dom(external).hasAttribute('rel', 'noopener', 'target blank gets no opener');
+
+    assert.dom(internal).doesNotHaveAttribute('target');
+  })
 });

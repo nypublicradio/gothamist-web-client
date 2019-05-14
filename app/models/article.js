@@ -172,6 +172,9 @@ export default DS.Model.extend({
 
     // do some minor processing
 
+    // links to other domains open in a new window
+    parsed.nodes = this._targetBlankify(parsed.nodes)
+
     // make sure iframes are https
     parsed.nodes = this._makeEmbedsSecure(parsed.nodes);
 
@@ -235,7 +238,20 @@ export default DS.Model.extend({
   _makeEmbedsSecure(nodes) {
     nodes.querySelectorAll('iframe').forEach(iframe => iframe.src = iframe.src.replace(/^http:/, 'https:'));
     return nodes;
-  }
+  },
+
+  _targetBlankify(nodes) {
+    nodes.querySelectorAll('a').forEach(anchor => {
+      let targetDomain = anchor.host;
+      let currentDomain = window.location.host;
+      if (targetDomain !== currentDomain) {
+        // open in a new window
+        anchor.setAttribute('target', '_blank');
+        anchor.setAttribute('rel', 'noopener');
+      }
+    });
+    return nodes;
+  },
 
 });
 
