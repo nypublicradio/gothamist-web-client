@@ -6,9 +6,11 @@
   />
 
   <block.object as |o|>
-    <o.eyebrow
-      @route={{array 'sections' @article.section.basename}}
-      @text={{@article.section.label}}/>
+    {{#unless @hideEyebrow}}
+      <o.eyebrow
+        @route={{array 'sections' @article.section.basename}}
+        @text={{@article.section.label}}/>
+    {{/unless}}
 
     <o.title
       @h3
