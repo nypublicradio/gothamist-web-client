@@ -16,9 +16,8 @@ export function insertTarget(element, [id], {wordBoundary=300, containerSelector
     return !(['#text', 'P'].includes(node.nodeName)
       && node.textContent.replace(/\s/g, '').length === 0);
   });
-  let boundary;
   let wordCount = 0;
-  children.some((child, index) => {
+  let boundary = children.find((child, index) => {
     wordCount += countWords(child);
 
     let currentTag = child.nodeName.toLowerCase();
@@ -28,8 +27,7 @@ export function insertTarget(element, [id], {wordBoundary=300, containerSelector
     if (wordCount >= wordBoundary
       && !dontInsertAfter.includes(currentTag)
       && !dontInsertBefore.includes(nextTag)) {
-      boundary = child;
-      return true;
+      return child;
     }
   })
   if (boundary) {
