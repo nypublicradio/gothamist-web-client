@@ -1,4 +1,4 @@
-/* global instgrm */
+/* global instgrm, twttr */
 import Route from '@ember/routing/route';
 import { inject } from '@ember/service';
 import { reads } from '@ember/object/computed';
@@ -53,6 +53,12 @@ export default Route.extend({
       // but the IG embed script will only operate once
       if (typeof instgrm !== 'undefined') {
         instgrm.Embeds.process();
+      }
+
+      // twitter widgets will fail to load if the user has an ad blocker running
+      // this should be init'd by a script on the index page so it always loads
+      if (typeof twttr !== 'undefined') {
+        twttr.widgets.load();
       }
     })
   },
