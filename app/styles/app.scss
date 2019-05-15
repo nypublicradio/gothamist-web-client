@@ -75,3 +75,8 @@ $ember-basic-dropdown-content-z-index: 10000;
 .gothamist-logo-icon.is-hiding-letters .letters {
   display: none;
 }
+
+.c-side-menu {
+  -webkit-overflow-scrolling: touch;
+  overflow: scroll;
+}
