@@ -30,6 +30,7 @@ export default Route.extend({
       floating: {
         headline: model.title,
         progressBar: true,
+        hideLogo: true,
         share: {
           title: model.title,
           permalink: model.permalink,
