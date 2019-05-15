@@ -61,3 +61,13 @@ $ember-basic-dropdown-content-z-index: 10000;
     border-bottom-color: #333;
   }
 }
+
+// header compat for hanging logo
+.homepage {
+  .c-main {
+    padding-top: 0;
+  }
+  .c-main-header {
+    padding-bottom: 45px;
+  }
+}
