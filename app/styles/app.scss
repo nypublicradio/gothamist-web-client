@@ -81,3 +81,11 @@ $ember-basic-dropdown-content-z-index: 10000;
   -webkit-overflow-scrolling: touch;
   overflow: scroll;
 }
+
+// fix extra spacing from line breaks
+// try to get both breaks following an image
+.c-article__body > blockquote > br,
+.c-article__body > .image-none + br,
+.c-article__body > .image-none + br + br {
+  display: none;
+}
