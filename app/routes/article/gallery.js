@@ -32,7 +32,7 @@ export default Route.extend({
         close: this.closeGallery.bind(this),
         share: true,
         progressBar: true,
-        hideLogoLetters: true,
+        logoLinkClass: 'is-hiding-letters',
       }
     })
   },

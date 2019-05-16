@@ -46,15 +46,13 @@
     class={{if header.rules.stackLogo 'c-main-header--emphasis'}}
     as |left|>
     <left.branding>
-      {{#unless header.rules.hideLogo}}
-        {{#link-to 'index'}}
-          {{#if header.rules.stackLogo}}
-            <NyprASvg @icon='gothamist-logo--stacked'/>
-          {{else}}
-            <NyprASvg @icon='gothamist-logo' class={{if header.rules.hideLogoLetters 'is-hiding-letters'}}/>
-          {{/if}}
-        {{/link-to}}
-      {{/unless}}
+      {{#link-to 'index' class=header.rules.logoLinkClass}}
+        {{#if header.rules.stackLogo}}
+          <NyprASvg @icon='gothamist-logo--stacked'/>
+        {{else}}
+          <NyprASvg @icon='gothamist-logo'/>
+        {{/if}}
+      {{/link-to}}
     </left.branding>
 
     {{#if header.rules.headline}}
