@@ -1,0 +1,27 @@
+<NyprOBlockListGroup @twoUp={{true}} as |blg|>
+  <blg.col1 class="c-recirc-tout__col1" data-test-recirc-popular>
+    {{#if this.popular}}
+      <NyprMBlockList class="u-spacing--and-half" @items={{slice 0 3 this.popular}} @heading='Popular' as |article|>
+        <ArticleBlock
+          @article={{article}}
+          @orientation='h'
+          @thumbnailSize='300'
+          @hideExcerpt={{true}}
+        />
+      </NyprMBlockList>
+    {{/if}}
+  </blg.col1>
+
+  <blg.col2 class="c-recirc-tout__col2" data-test-recirc-featured>
+    <h2 class="o-section__heading o-bg-text-accent">
+      Featured
+    </h2>
+    {{#if this.featured}}
+      <ArticleBlock
+        @article={{featured.firstObject}}
+        @orientation='v'
+        @thumbnailSize='640'
+      />
+    {{/if}}
+  </blg.col2>
+</NyprOBlockListGroup>
