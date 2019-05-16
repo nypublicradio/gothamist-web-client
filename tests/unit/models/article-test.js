@@ -69,7 +69,7 @@ module('Unit | Model | article', function(hooks) {
     let store = this.owner.lookup('service:store');
     let model = store.createRecord('article', {text: `
       <blockquote>
-        raw text here
+        raw text here, followed by <a href="http://google.com">a link</a>
 
         <p>
           nested text here
@@ -80,7 +80,8 @@ module('Unit | Model | article', function(hooks) {
     let paragraphs = model.body.querySelectorAll('blockquote p');
     assert.equal(paragraphs.length, 2, 'raw text wrapped in a <p/>');
 
-    assert.dom(paragraphs[0]).hasText('raw text here');
+    assert.dom(paragraphs[0]).hasText('raw text here, followed by a link');
+    assert.equal(paragraphs[0].firstElementChild.nodeName, 'A', 'anchor tag is wrapped into paragraph');
   });
 
 });
