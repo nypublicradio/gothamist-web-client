@@ -7,6 +7,7 @@ import {
   CAPTION_WITH_LINK,
   CAPTION_WITH_WHITESPACE,
   CAPTION_WITH_MULTIPLE_PARENS,
+  BAD_ARTICLE,
 } from '../fixtures/article-fixtures';
 
 
@@ -62,5 +63,24 @@ module('Unit | Model | article', function(hooks) {
     assert.dom(external).hasAttribute('rel', 'noopener', 'target blank gets no opener');
 
     assert.dom(internal).doesNotHaveAttribute('target');
-  })
+  });
+
+  test('blockquotes are repaired', function(assert) {
+    let store = this.owner.lookup('service:store');
+    let model = store.createRecord('article', {text: `
+      <blockquote>
+        raw text here
+
+        <p>
+          nested text here
+        </p>
+      </blockquote>
+    `});
+
+    let paragraphs = model.body.querySelectorAll('blockquote p');
+    assert.equal(paragraphs.length, 2, 'raw text wrapped in a <p/>');
+
+    assert.dom(paragraphs[0]).hasText('raw text here');
+  });
+
 });

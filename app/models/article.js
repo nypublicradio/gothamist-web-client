@@ -181,6 +181,9 @@ export default DS.Model.extend({
     // make sure images are https
     parsed.nodes = this._makeImagesSecure(parsed.nodes);
 
+    // make sure blockquotes aren't wrapping raw text
+    parsed.nodes = this._fixBlockquotes(parsed.nodes);
+
     // remove duplicate lead image
     // mutates parsed.nodes
     let leadImage = this._extractLeadImage(parsed.nodes);
@@ -253,6 +256,22 @@ export default DS.Model.extend({
     return nodes;
   },
 
+  _fixBlockquotes(nodes) {
+    if (!nodes.replaceChild) {
+      return nodes;
+    }
+    nodes.querySelectorAll('blockquote').forEach(quote => {
+      quote.childNodes.forEach(node => {
+        // only wrap text nodes that aren't just whitespace
+        if (node.nodeType === node.TEXT_NODE && node.textContent.trim()) {
+          var p = document.createElement('p');
+          p.appendChild(node.cloneNode());
+          quote.replaceChild(p, node);
+        }
+      });
+    });
+    return nodes;
+  },
 });
 
 function cloneNodes(nodes) {
