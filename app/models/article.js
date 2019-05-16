@@ -263,10 +263,10 @@ export default DS.Model.extend({
     nodes.querySelectorAll('blockquote').forEach(quote => {
       quote.childNodes.forEach(node => {
         // only wrap text nodes that aren't just whitespace
-        if (node.nodeType === node.TEXT_NODE && node.textContent.trim()) {
-          var p = document.createElement('p');
-          p.appendChild(node.cloneNode());
-          quote.replaceChild(p, node);
+        node = inspectNode(quote, node);
+        if (node) {
+          let rawNodes = findRawNodes(node);
+          appendTo(quote, rawNodes, 'p');
         }
       });
     });
@@ -277,4 +277,52 @@ export default DS.Model.extend({
 function cloneNodes(nodes) {
   const DEEP_COPY = true;
   return nodes.cloneNode(DEEP_COPY);
+}
+
+// for a given node, skip if:
+// - it's undefined
+// - it's not whitelisted
+const WHITELIST = ['SPAN', 'A', 'BR', '#text'];
+function isGatherable(node) {
+  if (!node) {
+    return false;
+  }
+  return WHITELIST.includes(node.nodeName);
+}
+
+function findRawNodes(node) {
+  const nodeList = [];
+
+  // starting from this node, collect all adjacent inline elements
+  // and put them in this p tag
+  // since `node` is part of a kive NodeList, the tree is updated at run time
+  while(isGatherable(node)) {
+    nodeList.push(node);
+    node = node.nextSibling
+  }
+
+  return nodeList;
+}
+
+function appendTo(tree, nodeList, rootName) {
+  const root = document.createElement(rootName);
+  const target = nodeList.slice(-1)[0].nextSibling;
+
+  nodeList.forEach(node => root.appendChild(node));
+
+  tree.insertBefore(root, target);
+}
+
+// checks if it's a candidate for munging
+function inspectNode(tree, node) {
+  if (node.nodeType === node.TEXT_NODE) {
+    if (node.textContent.trim() === '') {
+      // if it's empty, dump it
+      tree.removeChild(node);
+      return false;
+    }
+    return node;
+  } else {
+    return false;
+  }
 }
