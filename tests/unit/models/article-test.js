@@ -84,4 +84,23 @@ module('Unit | Model | article', function(hooks) {
     assert.equal(paragraphs[0].firstElementChild.nodeName, 'A', 'anchor tag is wrapped into paragraph');
   });
 
+  test('directly nested raw text is also fixed', function(assert) {
+    let store = this.owner.lookup('service:store');
+    let model = store.createRecord('article', {text: BAD_ARTICLE});
+
+    let noTextNodes = [...model.body.childNodes].every(node => {
+      if (node.nodeType !== node.TEXT_NODE) {
+        return true;
+      } else if (!node.textContent.trim()) {
+        // empty text nodes are ok
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+    assert.ok(noTextNodes, 'all text nodes should be wrapped');
+    assert.ok(model.body.childNodes.length, 'make sure nodes are returned');
+
+  });
 });
