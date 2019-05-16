@@ -5,7 +5,7 @@
 </header>
 
 <div class="c-listing__sections u-section-spacing l-container l-container--14col l-wrap">
-  <NyprOBlockListGroup @twoUp={{true}} as |blg|>
+  <NyprOBlockListGroup @layoutType='right-rail' as |blg|>
     <blg.col1>
       <ArticleBlock
         @article={{object-at 0 model.articles}}

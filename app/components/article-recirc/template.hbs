@@ -1,4 +1,4 @@
-<NyprOBlockListGroup @twoUp={{true}} as |blg|>
+<NyprOBlockListGroup @layoutType='offset' as |blg|>
   <blg.col1 class="c-recirc-tout__col1" data-test-recirc-popular>
     {{#if this.popular}}
       <NyprMBlockList class="u-spacing--and-half" @items={{slice 0 3 this.popular}} @heading='Popular' as |article|>
