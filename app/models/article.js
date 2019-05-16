@@ -184,6 +184,9 @@ export default DS.Model.extend({
     // make sure blockquotes aren't wrapping raw text
     parsed.nodes = this._fixBlockquotes(parsed.nodes);
 
+    // fix up the body text too
+    parsed.nodes = this._fixThatText(parsed.nodes);
+
     // remove duplicate lead image
     // mutates parsed.nodes
     let leadImage = this._extractLeadImage(parsed.nodes);
@@ -272,6 +275,22 @@ export default DS.Model.extend({
     });
     return nodes;
   },
+
+  _fixThatText(body) {
+    if (!body.replaceChild) {
+      return body;
+    }
+    body.childNodes.forEach(node => {
+      // only wrap text nodes that aren't just whitespace
+      node = inspectNode(body, node);
+      if (node) {
+        let rawNodes = findRawNodes(node);
+        appendTo(body, rawNodes, 'p');
+      }
+    });
+    return body;
+  }
+
 });
 
 function cloneNodes(nodes) {
