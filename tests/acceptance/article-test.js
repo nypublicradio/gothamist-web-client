@@ -22,7 +22,8 @@ module('Acceptance | article', function(hooks) {
   })
 
   test('visiting article route', async function(assert) {
-    const article = server.create('article');
+    const article = server.create('article', {categories: [{basename: 'food'}]});
+    server.createList('article', 5, {terms: ['@main'], categories: [{basename: 'food'}]});
 
     await visit(`/${article.permalink}`);
 
@@ -30,6 +31,10 @@ module('Acceptance | article', function(hooks) {
     assert.dom('[data-test-top-nav]').exists('nav should exist at load');
     assert.dom('[data-test-article-headline]').hasText(article.title);
     assert.dom('[data-test-article-body]').hasText(article.text);
+
+    // recirc
+    assert.dom('[data-test-recirc-popular] .c-block').exists({count: 3});
+    assert.dom('[data-test-recirc-featured] .c-block').exists({count: 1});
   });
 
   test('tweeting an article', async function() {
