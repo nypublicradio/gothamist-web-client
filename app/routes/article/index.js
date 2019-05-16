@@ -36,7 +36,8 @@ export default Route.extend({
           permalink: model.permalink,
         }
       }
-    })
+    });
+
     this.controllerFor('application').setProperties({
       headerLandmark: '.c-article__share',
     });
