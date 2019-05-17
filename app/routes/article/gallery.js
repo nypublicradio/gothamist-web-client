@@ -50,6 +50,13 @@ export default Route.extend({
     }
   },
 
+  resetController(controller, isExiting) {
+    if (isExiting) {
+      // don't save gallery position
+      controller.set('image', null);
+    }
+  },
+
   closeGallery() {
     this.transitionTo('article.index');
   }
