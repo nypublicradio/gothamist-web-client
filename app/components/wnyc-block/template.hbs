@@ -23,6 +23,7 @@
       <body.meta
         @timestamp={{timestamp @story.newsdate}}
         @commentCount={{@story.comments-count}}
+        @commentURL={{concat @story.url '#comments'}}
       />
     </o.body>
   </block.object>
