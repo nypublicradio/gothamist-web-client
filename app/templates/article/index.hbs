@@ -74,10 +74,9 @@
     </NyprOArticleHeader>
 
     <NyprOArticleBody class={{unless model.hasLead 'u-space--zero--top'}} data-test-article-body>
-      <div {{insert-target "insertedAd" rootSelector=".c-article__body div"}}>
+      <AdTagInside @slot="gothamist/interior/midpage/1">
         {{{model.body}}}
-      </div>
-      <AdTagWide @slot="gothamist/interior/midpage" @target="insertedAd" />
+      </AdTagInside>
     </NyprOArticleBody>
 
     <div class="l-container--content u-section-spacing">
@@ -101,6 +100,14 @@
             </p>
           </footer.donate>
         {{/unless}}
+
+        <footer.ad>
+          <AdTagWide
+            @slot="gothamist/interior/midpage/2"
+            @breakMargins={{true}}
+            @showLabel={{true}}
+          />
+        </footer.ad>
 
         {{#if model.allowComments}}
           <footer.comments>
