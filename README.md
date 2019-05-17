@@ -105,3 +105,26 @@ If you want to make a request that can return empty without rendering a 404 page
 
 ### Newsletter Signups
 Use the `opt-in` service to subscribe people to mailchimp newsletters. The `subscribe` end point is described [here](https://github.com/nypublicradio/opt-in#post-v1subscribemailchimp).
+
+### `link-to` params
+`link-to` components that are nested within the design system have been built to accept a `params` array instead of the conventional positional params, e.g.
+```handlebars
+{{#link-to 'article' 'my-article-identifier'}}`
+  My Article
+{{/link-to}}
+```
+
+`link-to` components accept a `params` argument that is an array of values identical to the positional params, so most `link-to` invocations look like this: `{{link-to params=@params}}`, where `@params` is usually passed in like so:
+```handlebars
+<MyDesignSystemComponent
+  @routeParams={{array 'article' 'my-article-identifier'}}
+/>
+```
+
+This syntax also accepts query params, but with slightly more plumbing involved:
+```handlebars
+<MyDesignSystemComponent
+  @routeParams={{array 'article' 'my-article-identifier' (hash isQueryParams=true values=(hash to='comments'))}}
+/>
+```
+The `link-to` component looks for `isQueyParams` on the final value in the `@params` array, and then uses whatever is at the `values` key to construct query params for the link. It's weird, but it works!

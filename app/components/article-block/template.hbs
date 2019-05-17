@@ -30,6 +30,8 @@
       <body.meta
         @timestamp={{timestamp @article.publishedMoment}}
         @commentCount={{@article.commentCount}}
+        @commentRoute={{array 'article' @article.permalink (hash isQueryParams=true values=(hash to='comments'))}}
+        data-test-article-block-meta
       />
     </o.body>
   </block.object>

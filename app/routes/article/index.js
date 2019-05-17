@@ -62,6 +62,10 @@ export default Route.extend({
       if (typeof twttr !== 'undefined') {
         twttr.widgets.load();
       }
+
+      if (this.controller.to === 'comments') {
+        document.querySelector('#comments').scrollIntoView();
+      }
     })
   },
 
