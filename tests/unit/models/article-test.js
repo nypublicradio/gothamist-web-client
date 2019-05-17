@@ -7,7 +7,7 @@ import {
   CAPTION_WITH_LINK,
   CAPTION_WITH_WHITESPACE,
   // CAPTION_WITH_MULTIPLE_PARENS,
-  // BAD_ARTICLE,
+  BAD_ARTICLE,
 } from '../fixtures/article-fixtures';
 
 
