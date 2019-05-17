@@ -28,8 +28,9 @@
       {{/unless}}
 
       <body.meta
-        @timestamp={{timestamp @article.publishedMoment}}
-        @commentCount={{@article.commentCount}}
+        @author={{if showAuthor @article.authorNickname}}
+        @timestamp={{if showTimestamp (timestamp @article.publishedMoment)}}
+        @commentCount={{if showCommentCount @article.commentCount}}
         @commentRoute={{array 'article' @article.permalink (hash isQueryParams=true values=(hash to=commentsAnchor))}}
         data-test-article-block-meta
       />

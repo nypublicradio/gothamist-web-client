@@ -6,6 +6,10 @@ import config from '../../config/environment';
 export default Component.extend({
   tagName: '',
 
+  showAuthor: false,
+  showTimestamp: true,
+  showCommentCount: true,
+
   commentsAnchor: config.commentsAnchor,
 
   thumbnail: computed('article', 'thumbnailSize', function() {
