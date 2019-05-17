@@ -12,6 +12,9 @@ const NEWSLETTER_PARAMS = {list: config.dailyNewsletter};
 export default Controller.extend({
   router: inject(),
 
+  queryParams: ['build'],
+  build: null,
+
   DONATE_URL,
 
   NEWSLETTER_ENDPOINT,
