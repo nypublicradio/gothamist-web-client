@@ -1,11 +1,13 @@
+import { faker } from 'ember-cli-mirage';
 import { module } from 'qunit';
-import { visit, currentURL, click } from '@ember/test-helpers';
+import { visit, currentURL, click, find } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import test from 'ember-sinon-qunit/test-support/test';
 
 import { scrollPastHeader } from 'nypr-design-system/test-support';
 import { SERVICE_MAP } from 'nypr-design-system/components/nypr-m-share-tools';
+import { inViewport } from 'nypr-design-system/helpers/in-viewport';
 
 import config from 'gothamist-web-client/config/environment';
 
@@ -128,5 +130,21 @@ module('Acceptance | article', function(hooks) {
 
     await visit('/wtc');
     assert.dom('.o-breadcrumbs').includesText('We the Commuters');
+  });
+
+  test('navigating to comments section', async function(assert) {
+    server.create('article', {
+      text: faker.lorem.words(1000),
+      tags: ['@main'],
+      id: '1',
+      permalink: 'foo',
+    });
+
+    await visit('/');
+
+    await click('[data-test-block="1"] [data-test-article-block-meta] a');
+
+    assert.equal(currentURL(), '/foo?to=comments');
+    assert.ok(inViewport(find('#comments')));
   });
 });

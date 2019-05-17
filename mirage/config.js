@@ -1,3 +1,5 @@
+import { faker } from 'ember-cli-mirage';
+
 import config from '../config/environment';
 
 export default function() {
@@ -61,10 +63,16 @@ export default function() {
 
   this.urlPrefix = config.disqusAPI;
 
-  this.get('/threads/set.json', {
-    response: [{
-      posts: 100, identifiers: []
-    }]
+  this.get('/threads/set.json', (schema, request) => {
+    if (!request.queryParams) {
+      return {response: []};
+    }
+    // duplicate keys for `thread:ident` do not get captured by mirage/pretender
+    let params = request.url.split('?')[1];
+    let ids = params.split('&thread:ident=').filter(i => parseInt(i));
+    return {
+      response: ids.map(id => ({posts: faker.random.number(200), identifiers: [id]})),
+    }
   });
 
   this.urlPrefix = config.etagAPI;
