@@ -13,6 +13,7 @@ export default Route.extend({
   fastboot: inject(),
   header: inject('nypr-o-header'),
   dataLayer: inject('nypr-metrics/data-layer'),
+  cookies: inject(),
 
   isFastBoot: reads('fastboot.isFastBoot'),
 
@@ -71,6 +72,14 @@ export default Route.extend({
         document.querySelector(`#${commentsAnchor}`).scrollIntoView();
       }
     })
+  },
+
+  setupController(controller) {
+    this._super(...arguments);
+
+    if (this.cookies.exists(config.donateCookie)) {
+      controller.set('footerClosed', true);
+    }
   },
 
   resetController(controller, isExiting) {

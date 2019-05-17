@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { faker } from 'ember-cli-mirage';
 import { module } from 'qunit';
 import { visit, currentURL, click, find } from '@ember/test-helpers';
@@ -5,7 +6,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import test from 'ember-sinon-qunit/test-support/test';
 
-import { scrollPastHeader } from 'nypr-design-system/test-support';
+import { scrollPastHeader, scrollPastTarget } from 'nypr-design-system/test-support';
 import { SERVICE_MAP } from 'nypr-design-system/components/nypr-m-share-tools';
 import { inViewport } from 'nypr-design-system/helpers/in-viewport';
 
@@ -146,5 +147,29 @@ module('Acceptance | article', function(hooks) {
 
     assert.equal(currentURL(), `/foo?to=${config.commentsAnchor}`);
     assert.ok(inViewport(find(`#${config.commentsAnchor}`)));
+  });
+
+  test('donation tout disappears for 24 hours', async function(assert) {
+    const cookieService = this.owner.lookup('service:cookies');
+    let cookieSpy = this.spy(cookieService, 'write');
+
+    server.create('article', {permalink: 'foo', id: '1'});
+
+    await visit('/foo');
+
+    assert.equal(currentURL(), '/foo');
+
+    let reset = await scrollPastTarget(this, '.c-article__footer', () => find('.c-donate-tout.is-active'));
+
+    await click('[data-test-donate-close]');
+
+    assert.ok(document.cookie.match(config.donateCookie), 'cookie is set');
+    let { expires } = cookieSpy.firstCall.args[2];
+    assert.equal(moment().add(24, 'hours').date(), moment(expires).date(), 'cookie is set to expire tomorrow');
+
+    reset();
+
+    // clear the cookie
+    document.cookie = `${config.donateCookie}=1; expires=${moment().subtract(1, 'day')}`;
   });
 });

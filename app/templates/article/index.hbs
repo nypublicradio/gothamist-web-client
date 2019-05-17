@@ -74,7 +74,7 @@
 
         {{#unless footerClosed}}
           <footer.donate
-            @close={{action (mut footerClosed) true}}
+            @close={{action 'closeDonation'}}
             @linkText='Donate Now'
             @linkUrl='https://pledge3.wnyc.org/donate/gothamist/onestep'>
             <p>

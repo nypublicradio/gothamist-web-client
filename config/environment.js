@@ -43,6 +43,7 @@ module.exports = function(environment) {
     wtcNewsletter: '8c376c6dff',
     dailyNewsletter: '65dbec786b',
     commentsAnchor: 'comments',
+    donateCookie: 'goth_donateToutClosed',
 
     // for nypr-auth
     etagAPI: process.env.BROWSER_ID_ENDPOINT,
