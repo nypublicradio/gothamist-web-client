@@ -26,10 +26,25 @@
       <header.lead as |lead|>
         <lead.left>
           <NyprMShareTools @vertical={{media 'isMediumAndUp'}} as |share|>
-            <share.share @service='facebook'/>
-            <share.share @service='twitter' @params={{hash text=model.title}}/>
-            <share.share @service='reddit' @params={{hash url=model.permalink title=model.title}}/>
-            <share.share @service='email' @params={{hash body=(concat model.title ' - ' model.permalink)}}/>
+            <share.share
+              @service='facebook'
+              @utm={{hash medium='social' source='facebook' campaign='shared_facebook'}}
+            />
+            <share.share
+              @service='twitter'
+              @params={{hash text=model.title via='gothamist'}}
+              @utm={{hash medium='social' source='twitter' campaign='shared_twitter'}}
+            />
+            <share.share
+              @service='reddit'
+              @params={{hash title=model.title}}
+              @utm={{hash medium='social' source='reddit' campaign='shared_twitter'}}
+            />
+            <share.share
+              @service='email'
+              @params={{hash body=(concat model.title ' - {{URL}}')}}
+              @utm={{hash medium='social' source='email' campaign='shared_email'}}
+            />
           </NyprMShareTools>
         </lead.left>
 
