@@ -102,7 +102,7 @@ module('Acceptance | article', function(hooks) {
     await visit(`/${ARTICLE.permalink}`);
 
     assert.dom('.c-article__meta-group a').hasText(`${EXPECTED} Comments`);
-    assert.dom('#comments').exists({count: 1});
+    assert.dom(`#${config.commentsAnchor}`).exists({count: 1});
   });
 
   test('no disqus if comments are not allowed', async function(assert) {
@@ -110,7 +110,7 @@ module('Acceptance | article', function(hooks) {
 
     await visit('/foo');
 
-    assert.dom('#comments').doesNotExist();
+    assert.dom(`#${config.commentsAnchor}`).doesNotExist();
   });
 
   test('breadcrumbs', async function(assert) {
@@ -144,7 +144,7 @@ module('Acceptance | article', function(hooks) {
 
     await click('[data-test-block="1"] [data-test-article-block-meta] a');
 
-    assert.equal(currentURL(), '/foo?to=comments');
-    assert.ok(inViewport(find('#comments')));
+    assert.equal(currentURL(), `/foo?to=${config.commentsAnchor}`);
+    assert.ok(inViewport(find(`#${config.commentsAnchor}`)));
   });
 });

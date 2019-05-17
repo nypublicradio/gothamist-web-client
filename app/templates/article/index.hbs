@@ -12,7 +12,7 @@
         <top.meta
           @galleryPhotosCount={{model.gallery.slides.length}}
           @galleryRoute='article.gallery'
-          @commentsUrl='#comments'
+          @commentsUrl={{concat '#' commentsAnchor}}
           @commentCount={{model.commentCount}}
           as |meta|>
 
@@ -69,7 +69,7 @@
         </footer.tags>
 
         <footer.contact>
-          <p><strong>Do you know the scoop?</strong> &nbsp; {{#if model.allowComments}}<a href="#comments">Comment</a> below or {{/if}}<a href="mailto:tips@gothamist.com" target="_blank" rel="noopener">Send us a Tip</a></p>
+          <p><strong>Do you know the scoop?</strong> &nbsp; {{#if model.allowComments}}<a href="#{{commentsAnchor}}">Comment</a> below or {{/if}}<a href="mailto:tips@gothamist.com" target="_blank" rel="noopener">Send us a Tip</a></p>
         </footer.contact>
 
         {{#unless footerClosed}}
@@ -85,7 +85,7 @@
 
         {{#if model.allowComments}}
           <footer.comments>
-            <DisqusComments @id="comments" @identifier={{model.moveableTypeId}} @url={{model.permalink}}/>
+            <DisqusComments @id={{commentsAnchor}} @identifier={{model.moveableTypeId}} @url={{model.permalink}}/>
           </footer.comments>
         {{/if}}
       </NyprOArticleFooter>

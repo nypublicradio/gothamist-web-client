@@ -1,8 +1,12 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 
+import config from '../../config/environment';
+
 export default Component.extend({
   tagName: '',
+
+  commentsAnchor: config.commentsAnchor,
 
   thumbnail: computed('article', 'thumbnailSize', function() {
     switch(this.thumbnailSize) {

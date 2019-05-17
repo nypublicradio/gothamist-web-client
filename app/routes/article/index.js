@@ -5,6 +5,9 @@ import { reads } from '@ember/object/computed';
 import { schedule } from '@ember/runloop';
 
 import addCommentCount from '../../utils/add-comment-count';
+import config from '../../config/environment';
+
+const { commentsAnchor } = config;
 
 export default Route.extend({
   fastboot: inject(),
@@ -63,8 +66,9 @@ export default Route.extend({
         twttr.widgets.load();
       }
 
-      if (this.controller.to === 'comments') {
-        document.querySelector('#comments').scrollIntoView();
+      let goToComments = this.controller.to === commentsAnchor;
+      if (goToComments) {
+        document.querySelector(`#${commentsAnchor}`).scrollIntoView();
       }
     })
   },
