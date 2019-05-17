@@ -73,6 +73,12 @@ export default Route.extend({
     })
   },
 
+  resetController(controller, isExiting) {
+    if (isExiting) {
+      controller.set('to', null);
+    }
+  },
+
   actions: {
     willTransition() {
       this.dataLayer.clearForType('article');
