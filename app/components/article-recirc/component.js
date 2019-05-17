@@ -1,6 +1,9 @@
 import Component from '@ember/component';
 import { inject } from '@ember/service';
 
+import addCommentCount from '../../utils/add-comment-count';
+
+
 export default Component.extend({
   store: inject(),
 
@@ -40,6 +43,9 @@ export default Component.extend({
 
     // wait for both result sets
     Promise.all([featured, popular]).then(([featured, popular]) => {
+        addCommentCount(featured);
+        addCommentCount(popular);
+
         // remove current article from results
         popular = this._dedupe(this.article, popular);
         featured = this._dedupe(this.article, featured);
