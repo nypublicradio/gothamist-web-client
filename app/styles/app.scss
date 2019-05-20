@@ -72,6 +72,12 @@ $ember-basic-dropdown-content-z-index: 10000;
   }
 }
 
+// improve quick scrolling experience
+// white background peeks through on quick scrolls
+.gallery {
+  background-color: #333;
+}
+
 .is-hiding-letters .gothamist-logo-icon .letters {
   display: none;
 }
