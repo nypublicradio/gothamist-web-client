@@ -95,3 +95,11 @@ $ember-basic-dropdown-content-z-index: 10000;
 .c-article__body > .image-none + br + br {
   display: none;
 }
+
+.c-article__body {
+  .image-right,
+  .image-left {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
