@@ -8,9 +8,10 @@
   @slideForInit={{this.image}}
   @share={{this.shareMetadata}}
   as |index gallery|>
-  {{#if (eq index 1)}}
+  {{!-- every 3rd image --}}
+  {{#if (eq (mod index 3) 2)}}
     <gallery.billboard>
-      billboard goes here
+      <AdTagWide @slot="gothamist/interior/midpage/2" />
     </gallery.billboard>
   {{/if}}
 </NyprOGalleryOverlay>
