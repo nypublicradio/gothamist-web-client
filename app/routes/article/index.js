@@ -71,7 +71,7 @@ export default Route.extend({
   setupController(controller) {
     this._super(...arguments);
 
-    if (this.cookies.exists(config.donateCookie)) {
+    if (this.cookies.exists(config.donateCookie) || this.cookies.read(config.viewCountCookie) < 3) {
       controller.set('footerClosed', true);
     }
   },
