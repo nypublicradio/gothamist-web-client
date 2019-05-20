@@ -6,12 +6,43 @@ const countWords = function(node) {
 }
 
 const inline = ['a', 'b', 'i', 'em', 'strong'];
-const embeds = ['iframe', 'embed', 'video', 'twitter-widget', 'center', 'div'];
+const headers = ['h1', 'h2', 'h3', 'h4', 'h5']
+const embeds = ['iframe', 'embed', 'video',
+                'twitter-widget', 'center', 'div'];
+// a `div` tag in MT article markup is probably from an embed
 const dontInsertBefore = ['blockquote', ...embeds, ...inline];
-const dontInsertAfter = ['h1', 'h2', 'h3', 'h4', 'h5', ...embeds, ...inline];
+const dontInsertAfter = [...headers, ...embeds, ...inline];
 
 const InsertTargetModifier = Modifier.extend({
-  didInsertElement([id], {wordBoundary=300, containerSelector, classNames=[]}) {
+  /**
+    Inserts a div inside the modified element.
+    Uses the following rules:
+    - Iterate the direct children of the container element.
+    - After each child ask:
+      - Have i seen at least {wordBoundary} words?
+      - Is this element not in the `dontInsertAfter` list?
+      - Is the next element not in the `dontInsertBefore` list?
+    - If all of these are true, insert the div after the current elementand stop iterating.
+
+    @param id:string An html id to apply to
+    the created div.
+
+    @param wordBoundary:number Minimum number of
+    words before inserting the div.
+    @default 150
+    @optional
+
+    @param  containerSelector:string CSS selector
+    of the container element to attach the div to,
+    if not the top level modified element.
+    @optional
+
+    @param  classNames:string[] A list of CSS classes
+    to apply to the inserted div.
+    @default
+    @optional
+  */
+  didInsertElement([id], {wordBoundary=150, containerSelector, classNames=[]}) {
     let container = document.querySelector(containerSelector) || this.element;
     let nodes = [...container.childNodes].filter(node => {
       // ignore whitespace only text and P nodes.

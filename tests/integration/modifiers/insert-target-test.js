@@ -10,7 +10,7 @@ module('Integration | Modifier | insert-target', function(hooks) {
 
   test('it inserts ad after 300 words', async function(assert) {
     this.oneHundredWords = oneHundredWords;
-    await render(hbs`<div {{insert-target 'trgt'}}>
+    await render(hbs`<div {{insert-target 'trgt' wordBoundary=300}}>
       <p id="p1">{{this.oneHundredWords}}</p>
       <p id="p2">{{this.oneHundredWords}}</p>
       <p id="p3">{{this.oneHundredWords}}</p>
@@ -36,7 +36,7 @@ module('Integration | Modifier | insert-target', function(hooks) {
 
   test('it accepts containerSelector parameter', async function(assert) {
     this.oneHundredWords = oneHundredWords;
-    await render(hbs`<div {{insert-target 'trgt' containerSelector='.article-body'}}>
+    await render(hbs`<div {{insert-target 'trgt' containerSelector='.article-body' wordBoundary=300}}>
       <main class='article-body'>
         <p id="p1">{{this.oneHundredWords}}</p>
         <p id="p2">{{this.oneHundredWords}}</p>
@@ -51,7 +51,7 @@ module('Integration | Modifier | insert-target', function(hooks) {
 
   test('it should not display ads between headers and paragraph tags', async function(assert) {
     this.oneHundredWords = oneHundredWords;
-    await render(hbs`<div {{insert-target 'trgt'}}>
+    await render(hbs`<div {{insert-target 'trgt' wordBoundary=300}}>
       <p id="p1">{{this.oneHundredWords}}</p>
       <p id="p2">{{this.oneHundredWords}}</p>
       <h2 id="h2">{{this.oneHundredWords}}</h2>
@@ -65,7 +65,7 @@ module('Integration | Modifier | insert-target', function(hooks) {
 
   test('it should not display ads directly above or below social embed or video', async function(assert) {
     this.oneHundredWords = oneHundredWords;
-    await render(hbs`<div {{insert-target 'trgt'}}>
+    await render(hbs`<div {{insert-target 'trgt' wordBoundary=300}}>
       <p id="p1">{{this.oneHundredWords}}</p>
       <p id="p2">{{this.oneHundredWords}}</p>
       <p id="p3">{{this.oneHundredWords}}</p>
@@ -80,7 +80,7 @@ module('Integration | Modifier | insert-target', function(hooks) {
 
   test('it should handle bare text nodes part 1', async function(assert) {
     this.oneHundredWords = oneHundredWords;
-    await render(hbs`<div {{insert-target 'trgt'}}>
+    await render(hbs`<div {{insert-target 'trgt' wordBoundary=300}}>
       {{this.oneHundredWords}}
       <p id="p1">{{this.oneHundredWords}}</p>
       {{this.oneHundredWords}}
@@ -101,7 +101,7 @@ module('Integration | Modifier | insert-target', function(hooks) {
 
   test('it should handle bare text nodes part 2', async function(assert) {
     this.oneHundredWords = oneHundredWords;
-    await render(hbs`<div {{insert-target 'trgt'}}>
+    await render(hbs`<div {{insert-target 'trgt' wordBoundary=300}}>
       {{this.oneHundredWords}}
       {{this.oneHundredWords}}
       {{this.oneHundredWords}}
@@ -121,7 +121,7 @@ module('Integration | Modifier | insert-target', function(hooks) {
 
   test('it should insert at the end if less than 300 words', async function(assert) {
     this.oneHundredWords = oneHundredWords;
-    await render(hbs`<div {{insert-target 'trgt'}}>
+    await render(hbs`<div {{insert-target 'trgt' wordBoundary=300}}>
       <p id="p1">{{this.oneHundredWords}}</p>
       <p id="p2">{{this.oneHundredWords}}</p>
     </div>`);
@@ -132,7 +132,7 @@ module('Integration | Modifier | insert-target', function(hooks) {
 
   test('it should insert at the end if all else fails', async function(assert) {
     this.oneHundredWords = oneHundredWords;
-    await render(hbs`<div {{insert-target 'trgt'}}>
+    await render(hbs`<div {{insert-target 'trgt' wordBoundary=300}}>
       <p id="p1">{{this.oneHundredWords}}</p>
       <iframe id="iframe"></iframe>
       <p id="p2">{{this.oneHundredWords}}</p>

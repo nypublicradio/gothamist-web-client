@@ -9,7 +9,8 @@
 {{!--
   Ember wormhole doesn't work in fastboot for
   target elements that don't exist during
-  fastboot time.
+  fastboot time. Since ad insertion requires
+  the DOM, we delay this until after fastboot.
 --}}
 {{#unless this.fastboot.isFastBoot}}
   {{#ember-wormhole to="inserted-ad"}}
