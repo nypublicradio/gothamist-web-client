@@ -214,6 +214,8 @@ module('Acceptance | article', function(hooks) {
     assert.ok(document.cookie.match(config.donateCookie), 'cookie is set');
     let { expires } = cookieSpy.getCall(3).args[2];
     assert.equal(moment().add(24, 'hours').date(), moment(expires).date(), 'cookie is set to expire tomorrow');
+    let viewCount = document.cookie.match(new RegExp(`${config.articleViewsCookie}=(\\d)`));
+    assert.equal(viewCount[1], '0', 'tracked views should reset when closed');
 
     reset();
   });
