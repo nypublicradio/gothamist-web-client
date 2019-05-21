@@ -29,11 +29,13 @@ module('Acceptance | article', function(hooks) {
 
   hooks.beforeEach(() => {
     document.cookie = `${config.donateCookie}=; expires=${moment().subtract(1, 'day')}`;
+    document.cookie = `${config.articleViewsCookie}=; expires=${moment().subtract(1, 'day')}`;
     window.block_disqus = true;
   });
 
   hooks.afterEach(() => {
     document.cookie = `${config.donateCookie}=; expires=${moment().subtract(1, 'day')}`;
+    document.cookie = `${config.articleViewsCookie}=; expires=${moment().subtract(1, 'day')}`;
     window.block_disqus = false;
   });
 
@@ -164,6 +166,33 @@ module('Acceptance | article', function(hooks) {
     assert.ok(inViewport(find(`#${config.commentsAnchor}`)), 'comments area should be on screen');
   });
 
+  test('donation tout only appears after visiting 3 articles', async function(assert) {
+    server.create('article', {permalink: 'foo'});
+    server.create('article', {permalink: 'bar'});
+    server.create('article', {permalink: 'baz'});
+
+    await visit('/foo');
+    await scrollPastTarget(this, '.c-article__footer');
+
+    assert.equal(currentURL(), '/foo');
+    assert.dom('.c-donate-tout').doesNotExist('not active on first article');
+
+    await visit('/bar');
+    await scrollPastTarget(this, '.c-article__footer');
+
+    assert.equal(currentURL(), '/bar');
+    assert.dom('.c-donate-tout').doesNotExist('not active on second article');
+
+    await visit('/baz');
+    let reset = await scrollPastTarget(this, '.c-article__footer', () => find('.c-donate-tout.is-active'));
+
+    assert.equal(currentURL(), '/baz');
+
+    let viewCount = document.cookie.match(new RegExp(`${config.articleViewsCookie}=(\\d)`));
+    assert.equal(viewCount[1], '3', 'tracks views');
+
+    reset();
+  });
 
   test('donation tout disappears for 24 hours', async function(assert) {
     const cookieService = this.owner.lookup('service:cookies');
