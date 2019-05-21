@@ -7,6 +7,11 @@ import { schedule } from '@ember/runloop';
 import addCommentCount from '../../utils/add-comment-count';
 import config from '../../config/environment';
 
+const {
+  articleViewsCookie,
+  donateCookie,
+} = config;
+
 export default Route.extend({
   fastboot: inject(),
   header: inject('nypr-o-header'),
@@ -71,9 +76,10 @@ export default Route.extend({
   setupController(controller) {
     this._super(...arguments);
 
-    if (this.cookies.exists(config.donateCookie) || this.cookies.read(config.viewCountCookie) < 3) {
-      controller.set('footerClosed', true);
-    }
+    // have seen at least 3 articles
+    // have not closed the donation tout in the past 24 hours
+    let showTout = this.cookies.read(articleViewsCookie) >= 3 && !this.cookies.exists(donateCookie);
+    controller.set('showTout', showTout);
   },
 
   resetController(controller, isExiting) {
