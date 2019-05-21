@@ -44,10 +44,10 @@ module.exports = function(environment) {
     disqusKey: process.env.DISQUS_PUBLIC_KEY,
 
     // OTHER CONFIG
-    wtcNewsletter: '8c376c6dff',
-    dailyNewsletter: '65dbec786b',
-    commentsAnchor: 'comments',
-    donateCookie: 'goth_donateToutClosed',
+    wtcNewsletter:      '8c376c6dff',
+    dailyNewsletter:    '65dbec786b',
+    commentsAnchor:     'comments',
+    donateCookie:       'goth_donateToutClosed',
     articleViewsCookie: 'goth_articleViews',
 
     // for nypr-auth
