@@ -28,10 +28,12 @@ module('Acceptance | article', function(hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(() => {
+    document.cookie = `${config.donateCookie}=; expires=${moment().subtract(1, 'day')}`;
     window.block_disqus = true;
   });
 
   hooks.afterEach(() => {
+    document.cookie = `${config.donateCookie}=; expires=${moment().subtract(1, 'day')}`;
     window.block_disqus = false;
   });
 
@@ -163,8 +165,6 @@ module('Acceptance | article', function(hooks) {
   });
 
   test('donation tout disappears for 24 hours', async function(assert) {
-    // clear the cookie
-    document.cookie = `${config.donateCookie}=1; expires=${moment().subtract(1, 'day')}`;
 
     const cookieService = this.owner.lookup('service:cookies');
     let cookieSpy = this.spy(cookieService, 'write');
@@ -184,8 +184,5 @@ module('Acceptance | article', function(hooks) {
     assert.equal(moment().add(24, 'hours').date(), moment(expires).date(), 'cookie is set to expire tomorrow');
 
     reset();
-
-    // clear the cookie
-    document.cookie = `${config.donateCookie}=1; expires=${moment().subtract(1, 'day')}`;
   });
 });
