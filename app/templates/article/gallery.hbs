@@ -8,10 +8,13 @@
   @slideForInit={{this.image}}
   @share={{this.shareMetadata}}
   as |index gallery|>
-  {{!-- every 3rd image --}}
+  {{!-- 1 ad every 3 photos --}}
   {{#if (eq (mod index 3) 2)}}
-    <gallery.billboard>
-      <AdTagWide @slot="gothamist/interior/midpage/gallery" />
-    </gallery.billboard>
+    {{!-- No more than 2 inline ads on one page --}}
+    {{#if (lt index 6)}}
+      <gallery.billboard>
+        <AdTagWide @slot="gothamist/interior/midpage/gallery" />
+      </gallery.billboard>
+    {{/if}}
   {{/if}}
 </NyprOGalleryOverlay>
