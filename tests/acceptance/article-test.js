@@ -164,13 +164,16 @@ module('Acceptance | article', function(hooks) {
     assert.ok(inViewport(find(`#${config.commentsAnchor}`)), 'comments area should be on screen');
   });
 
-  test('donation tout disappears for 24 hours', async function(assert) {
 
+  test('donation tout disappears for 24 hours', async function(assert) {
     const cookieService = this.owner.lookup('service:cookies');
     let cookieSpy = this.spy(cookieService, 'write');
 
-    server.create('article', {path: 'foo', id: '1'});
+    server.create('article', {permalink: 'foo'});
+    server.create('article', {permalink: 'bar'});
 
+    await visit('/foo');
+    await visit('/bar');
     await visit('/foo');
 
     assert.equal(currentURL(), '/foo');
@@ -180,7 +183,7 @@ module('Acceptance | article', function(hooks) {
     await click('[data-test-donate-close]');
 
     assert.ok(document.cookie.match(config.donateCookie), 'cookie is set');
-    let { expires } = cookieSpy.firstCall.args[2];
+    let { expires } = cookieSpy.getCall(3).args[2];
     assert.equal(moment().add(24, 'hours').date(), moment(expires).date(), 'cookie is set to expire tomorrow');
 
     reset();
