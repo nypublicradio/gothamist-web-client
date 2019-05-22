@@ -73,11 +73,11 @@
 
     </NyprOArticleHeader>
 
-    <NyprOArticleBody class={{unless model.hasLead 'u-space--zero--top'}} data-test-article-body>
-      <AdTagInside @slot="gothamist/interior/midpage/1">
+    <AdTagInside @slot="gothamist/interior/midpage/1">
+      <NyprOArticleBody class={{unless model.hasLead 'u-space--zero--top'}} data-test-article-body>
         {{{model.body}}}
-      </AdTagInside>
-    </NyprOArticleBody>
+      </NyprOArticleBody>
+    </AdTagInside>
 
     <div class="l-container--content u-section-spacing">
       <NyprOArticleFooter as |footer|>

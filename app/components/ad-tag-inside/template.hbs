@@ -1,6 +1,6 @@
 <div
   {{insert-target "inserted-ad"
-    rootSelector=".c-article__body"
+    containerSelector=".c-article__body"
   }}
 >
   {{yield}}
@@ -18,6 +18,6 @@
       @slot={{@slot}}
       @breakMargins={{true}}
       @showLabel={{true}}
-      />
+    />
   {{/ember-wormhole}}
 {{/unless}}

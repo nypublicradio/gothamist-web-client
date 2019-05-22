@@ -24,23 +24,18 @@ const InsertTargetModifier = Modifier.extend({
       - Is the next element not in the `dontInsertBefore` list?
     - If all of these are true, insert the div after the current elementand stop iterating.
 
-    @param id:string An html id to apply to
+    @param {String} [id] An HTML id to apply to
     the created div.
 
-    @param wordBoundary:number Minimum number of
+    @param {Number} [wordBoundary=50] Minimum number of
     words before inserting the div.
-    @default 150
-    @optional
 
-    @param  containerSelector:string CSS selector
+    @param  {String} [containerSelector] CSS selector
     of the container element to attach the div to,
     if not the top level modified element.
-    @optional
 
-    @param  classNames:string[] A list of CSS classes
+    @param  {String[]} [classNames=[]] A list of CSS classes
     to apply to the inserted div.
-    @default
-    @optional
   */
   didInsertElement([id], {wordBoundary=150, containerSelector, classNames=[]}) {
     let container = document.querySelector(containerSelector) || this.element;
@@ -63,32 +58,20 @@ const InsertTargetModifier = Modifier.extend({
         return node;
       }
     })
-    let target = this.target = document.createElement('DIV');
+    let target = this.target = document.createElement('div');
     target.id = id;
-    classNames.forEach(className => target.classList.add(className));
-    if (boundary) {
-      let parent = this.parent = boundary.parentNode;
-      let next = boundary.nextSibling;
-      if (next) {
-        parent.insertBefore(target, next);
-      } else {
-        parent.appendChild(target);
-      }
+    target.classList.add(...classNames)
+    if (boundary && boundary.nextSibling) {
+      container.insertBefore(target, boundary.nextSibling);
     } else {
       container.appendChild(target);
-    }
-  },
-
-  willDestroyElement() {
-    if (this.parent && this.target) {
-      this.parent.removeChild(this.target)
     }
   },
 
   didReceiveArguments(_,{classNames}) {
     if (classNames) {
       this.target.className = '';
-      classNames.forEach(className => this.target.classList.add(className));
+      this.target.classList.add(...classNames);
     }
   }
 });
