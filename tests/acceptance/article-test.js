@@ -28,14 +28,14 @@ module('Acceptance | article', function(hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(() => {
-    document.cookie = `${config.donateCookie}=; expires=${moment().subtract(1, 'day')}`;
-    document.cookie = `${config.articleViewsCookie}=; expires=${moment().subtract(1, 'day')}`;
+    document.cookie = `${config.donateCookie}=; expires=${moment().subtract(1, 'day')}; path=/`;
+    document.cookie = `${config.articleViewsCookie}=; expires=${moment().subtract(1, 'day')}; path=/`;
     window.block_disqus = true;
   });
 
   hooks.afterEach(() => {
-    document.cookie = `${config.donateCookie}=; expires=${moment().subtract(1, 'day')}`;
-    document.cookie = `${config.articleViewsCookie}=; expires=${moment().subtract(1, 'day')}`;
+    document.cookie = `${config.donateCookie}=; expires=${moment().subtract(1, 'day')}; path=/`;
+    document.cookie = `${config.articleViewsCookie}=; expires=${moment().subtract(1, 'day')}; path=/`;
     window.block_disqus = false;
   });
 
