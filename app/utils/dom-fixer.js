@@ -94,41 +94,48 @@ export default class DomFixer {
       throw new Error('Empty nodes must be removed before paragraphs can be split.');
     }
 
-    const brokenGrafWalker = getBrokenWalker(root);
+    root.childNodes.forEach(child => {
+      if (child.nodeName !== 'P') {
+        return;
+      }
+      const GRAF = child;
 
-    while(brokenGrafWalker.nextNode()) {
-      const graf = brokenGrafWalker.currentNode;
+      // get all the pairs of line breaks
+      // filter out any breaks preceded by a `#text` node
+      // `br + br` will match on <br> foo <br>
       const adjacentBreaks = [
-        ...graf.querySelectorAll('br + br')
-      ].map(br => ([br.previousSibling, br]));
+        ...GRAF.querySelectorAll('br + br')
+      ].filter(br => br.previousSibling.nodeName === 'BR')
+      .map(br => ([br.previousSibling, br]));
 
       // for each break boundary
       adjacentBreaks.forEach(([break1, break2]) => {
-        let whereIsBreak1 = [...graf.childNodes].indexOf(break1);
-        let whereIsBreak2 = [...graf.childNodes].indexOf(break2);
+        let whereIsBreak1 = [...GRAF.childNodes].indexOf(break1);
+        let whereIsBreak2 = [...GRAF.childNodes].indexOf(break2);
 
+        const DEEP_CLONE = true;
         const p1 = document.createElement('p');
         const p2 = document.createElement('p');
 
         // get all the nodes leading up to first break, wrap them in a p tag
         for (let i = 0; i < whereIsBreak1; i++) {
-          let node = graf.childNodes[i];
+          let node = GRAF.childNodes[i];
           // append a clone so the `childNodes` NodeList isn't mutated
-          p1.appendChild(node.cloneNode());
+          p1.appendChild(node.cloneNode(DEEP_CLONE));
         }
         // get all the nodes after the second break, wrap them in a p tag
-        for (let i = whereIsBreak2 + 1; i < graf.childNodes.length; i ++) {
-          let node = graf.childNodes[i];
+        for (let i = whereIsBreak2 + 1; i < GRAF.childNodes.length; i ++) {
+          let node = GRAF.childNodes[i];
           // append a clone so the `childNodes` NodeList isn't mutated
-          p2.appendChild(node.cloneNode());
+          p2.appendChild(node.cloneNode(DEEP_CLONE));
         }
 
         // insert them before the graf and remove the graf
-        root.insertBefore(p2, graf);
+        root.insertBefore(p2, GRAF);
         root.insertBefore(p1, p2);
-        root.removeChild(graf);
+        root.removeChild(GRAF);
       });
-    }
+    });
   }
 
   /**
@@ -205,22 +212,4 @@ const getWhiteWalker = root =>
 const getOrphanWalker = root =>
   document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
     acceptNode: node => [...root.childNodes].includes(node),
-  });
-
-/**
-  Creates a TreeWalker configured to find paragraph elements that contain adjacent line breaks (`<br/>`).
-
-  @function getBrokenWalker
-  @param root {Node}
-  @return tree {TreeWalker}
-*/
-const getBrokenWalker = root =>
-  document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT, {
-    acceptNode: node => {
-      if (node.nodeName === 'P' && node.querySelector('br + br')) {
-        return NodeFilter.FILTER_ACCEPT;
-      } else {
-        return NodeFilter.FILTER_SKIP;
-      }
-    }
   });
