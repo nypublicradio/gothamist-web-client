@@ -5,6 +5,7 @@ import { computed } from '@ember/object';
 import { reads, or } from '@ember/object/computed';
 
 import { makeHttps } from '../helpers/make-https';
+import DomFixer from '../utils/dom-fixer';
 
 export default DS.Model.extend({
   allowComments: DS.attr('boolean'),
@@ -167,29 +168,34 @@ export default DS.Model.extend({
     const parsed = {};
 
     // in a browser environment, use the native DOM parser to turn text into concrete nodes
-    const range = document.createRange();
-    parsed.nodes = range.createContextualFragment(this.text);
+    const domFixer = new DomFixer(this.text);
 
     // do some minor processing
 
+    // get rid of the empty nodes
+    domFixer.removeEmptyNodes();
+
     // links to other domains open in a new window
-    parsed.nodes = this._targetBlankify(parsed.nodes)
+    domFixer.externalizeAnchors();
 
     // make sure iframes are https
-    parsed.nodes = this._makeEmbedsSecure(parsed.nodes);
+    domFixer.secureSrc('iframe');
 
     // make sure images are https
-    parsed.nodes = this._makeImagesSecure(parsed.nodes);
-
-    // make sure blockquotes aren't wrapping raw text
-    parsed.nodes = this._fixBlockquotes(parsed.nodes);
+    domFixer.secureSrc('img');
 
     // fix up the body text too
-    parsed.nodes = this._fixThatText(parsed.nodes);
+    // wrap raw text nodes in a paragraph
+    domFixer.rescueOrphans();
+    // split any paragraphs that contain double line breaks
+    domFixer.unbreakParagraphs();
+
+    // make sure blockquotes aren't wrapping raw text
+    domFixer.rescueOrphans('blockquote');
 
     // remove duplicate lead image
-    // mutates parsed.nodes
-    let leadImage = this._extractLeadImage(parsed.nodes);
+    // mutates passed in nodes
+    let leadImage = this._extractLeadImage(domFixer.nodes);
 
     // extract caption and credit
     if (leadImage) {
@@ -201,6 +207,7 @@ export default DS.Model.extend({
       parsed.credit = credit ? credit.trim() : '';
     }
 
+    parsed.nodes = domFixer.nodes;
     return parsed;
   }),
 
@@ -236,112 +243,9 @@ export default DS.Model.extend({
       return match || [];
   },
 
-  _makeImagesSecure(nodes) {
-    nodes.querySelectorAll('img').forEach(img => img.src = img.src.replace(/^http?:/, 'https:'));
-    return nodes;
-  },
-
-  _makeEmbedsSecure(nodes) {
-    nodes.querySelectorAll('iframe').forEach(iframe => iframe.src = iframe.src.replace(/^http:/, 'https:'));
-    return nodes;
-  },
-
-  _targetBlankify(nodes) {
-    nodes.querySelectorAll('a').forEach(anchor => {
-      let targetDomain = anchor.host;
-      let currentDomain = window.location.host;
-      if (targetDomain !== currentDomain) {
-        // open in a new window
-        anchor.setAttribute('target', '_blank');
-        anchor.setAttribute('rel', 'noopener');
-      }
-    });
-    return nodes;
-  },
-
-  _fixBlockquotes(nodes) {
-    if (!nodes.replaceChild) {
-      return nodes;
-    }
-    nodes.querySelectorAll('blockquote').forEach(quote => {
-      quote.childNodes.forEach(node => {
-        // only wrap text nodes that aren't just whitespace
-        node = inspectNode(quote, node);
-        if (node) {
-          let rawNodes = findRawNodes(node);
-          appendTo(quote, rawNodes, 'p');
-        }
-      });
-    });
-    return nodes;
-  },
-
-  _fixThatText(body) {
-    if (!body.replaceChild) {
-      return body;
-    }
-    body.childNodes.forEach(node => {
-      // only wrap text nodes that aren't just whitespace
-      node = inspectNode(body, node);
-      if (node) {
-        let rawNodes = findRawNodes(node);
-        appendTo(body, rawNodes, 'p');
-      }
-    });
-    return body;
-  }
-
 });
 
 function cloneNodes(nodes) {
   const DEEP_COPY = true;
   return nodes.cloneNode(DEEP_COPY);
-}
-
-// for a given node, skip if:
-// - it's undefined
-// - it's not whitelisted
-const WHITELIST = ['SPAN', 'A', 'BR', '#text'];
-function isGatherable(node) {
-  if (!node) {
-    return false;
-  }
-  return WHITELIST.includes(node.nodeName);
-}
-
-function findRawNodes(node) {
-  const nodeList = [];
-
-  // starting from this node, collect all adjacent inline elements
-  // and put them in this p tag
-  // since `node` is part of a kive NodeList, the tree is updated at run time
-  while(isGatherable(node)) {
-    nodeList.push(node);
-    node = node.nextSibling
-  }
-
-  return nodeList;
-}
-
-function appendTo(tree, nodeList, rootName) {
-  const root = document.createElement(rootName);
-  const target = nodeList.slice(-1)[0].nextSibling;
-
-  nodeList.forEach(node => root.appendChild(node));
-
-  tree.insertBefore(root, target);
-}
-
-// checks if it's a candidate for munging
-function inspectNode(tree, node) {
-  if (node.nodeType === node.TEXT_NODE) {
-    if (node.textContent.trim() === '') {
-      // if it's empty, dump it
-      tree.removeChild(node);
-      return false;
-    }
-    return node;
-  } else {
-    return false;
-  }
 }
