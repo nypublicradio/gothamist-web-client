@@ -22,6 +22,17 @@ module('Unit | Model | article', function(hooks) {
     assert.ok(model);
   });
 
+  test('images and iframes are secured', function(assert) {
+    let store = this.owner.lookup('service:store');
+    let model = store.createRecord('article', {text: `
+      <img id="img" src="http://picsum.photos/300"/>
+      <iframe id="iframe" src="http://google.com"></iframe>
+    `});
+
+    assert.ok(model.body.querySelector('#img').src.startsWith('https'));
+    assert.ok(model.body.querySelector('#iframe').src.startsWith('https'));
+  });
+
   test('lead images', function(assert) {
     let store = this.owner.lookup('service:store');
     let model = store.createRecord('article', {text: CAPTION_WITH_CREDIT});
