@@ -23,6 +23,27 @@ export const BAD_ARTICLE = `
 <p>You can find more <a href="http://pacmanhattan.com/about.php">information here</a>, but note that location information has not been updated (you will, however, find the rules).</p>
 `;
 
+export const BAD_ARTICLE_2 = `<p><span class="mt-enclosure mt-enclosure-image" style="display: inline;"> <div class="image-none"> <img alt="052319ea1.jpg" src="http://gothamist.com/attachments/byakas/052319ea1.jpg" width="640" height="480" /> <br /> <i> (Ben Yakas/Gothamist)</i></div> </span></p>
+
+<ul>
+	<li>Follow Gothamist <a href="http://twitter.com/gothamist">on Twitter</a>, <a href="https://instagram.com/gothamist/">Instagram</a>, <a https://www.youtube.com/c/gothamist?sub_confirmation=1">YouTube</a>, and <a href="http://www.facebook.com/pages/Gothamist/13927915491">like us on Facebook</a>.  You can also get the top stories mailed to you&#8212;<a href="https://wnyc.us5.list-manage.com/subscribe/post?u=4109fdd323aaac7078eadaa8f&id=65dbec786b">sign up here</a>.</li>
+	<li>Nancy Pelosi <a href="https://twitter.com/ABCPolitics/status/1131584270927945728">had this to say</a> about Trump's <a href="https://twitter.com/realDonaldTrump/status/1131563848992006144">"extremely calm"</a> mood after he stormed out of a meeting with Democrats yesterday and decided to throw <a href="https://www.cbsnews.com/news/speaker-pelosi-speaks-to-reporters-after-white-house-temper-tantrum-over-investigations-live-stream-today-2019-05-23/">an impromptu press conference</a> about Congressional investigations: "I pray for the president of the United States. I wish that his family or his administration or staff would have an intervention for the good of the country."</li>
+	<li>Mayor de Blasio <a href="https://www.nydailynews.com/news/politics/ny-de-blasio-brooklyn-public-library-funding-budget-cut-20190523-m266so4qhvejfbkww4yt3vh6b4-story.html">is planning on cutting</a> library funding after using the Park Slope branch as a satellite office for years.</li>
+	<li>Sending a child to day care can cost more than the average rent or public college tuition in some states&#8212;so Vox asked the 2020 Democratic candidates <a href="https://www.vox.com/2019/5/22/18302875/2020-election-democrats-child-care-kids-president?utm_campaign=vox.social&utm_medium=social&utm_source=sprout&utm_content=1558529597">what they would do about it.</a></li>
+	<li>Would you get a massage <a href="https://www.nytimes.com/2019/05/21/style/snake-massage.html?module=inline">from a boa constrictor?</a></li>
+	<li>All the post-<em>Terminator 2</em> sequels have been uniformly terrible, but that doesn't mean we didn't get a kick out of the trailer for <a href="https://www.youtube.com/watch?v=jCyEX6u-Yhs"><em>Terminator: Dark Fate</em>.</a></li>
+	<li>An upstate New York man was busted for driving with a <a href="https://nypost.com/2019/05/22/driver-busted-with-ridiculous-fake-new-york-inspection-sticker/">crudely drawn fake vehicle safety inspection sticker.</a></li>
+	<li>The brilliant Bill Callahan <a href="https://pitchfork.com/news/bill-callahan-releases-6-new-songs-listen/">has released six new songs</a> from his upcoming 20-song masterpiece <em>Shepherd in a Sheepskin Vest</em>.</li>
+	<li>Farhad Manjoo thinks American cities are becoming unlivable <a href="https://www.nytimes.com/2019/05/22/opinion/california-housing-nimby.html">because of wealthy liberals.</a></li>
+	<li>Was the <em>Game Of Thrones</eM> finale the <a href="https://www.theringer.com/game-of-thrones/2019/5/23/18636692/season-8-iron-throne-imdb-ratings-worst-tv-finale-ever">most hated TV finale ever?</a></li>
+	<li>A man was <a href="https://newyork.cbslocal.com/2019/05/23/subway-rider-slashed-brooklyn/">slashed in the face</a> while waiting for the G train in Brooklyn.</li>
+	<li>And finally, it is too tiny:</li>
+</ul>
+
+<center><blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">So sweet and cute puppy &#133; 🐶♥️<br>&#133; look at his/er tail !! 🤗<br><br>( Imgur ) <a href="https://t.co/wA70nGfczw">pic.twitter.com/wA70nGfczw</a></p>&mdash; Stefano S. Magi (@StefanodocSM) <a href="https://twitter.com/StefanodocSM/status/1131496172969971712?ref_src=twsrc%5Etfw">May 23, 2019</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</center>`;
+
 export const CAPTION_WITH_CREDIT = `
 <p>
   <span class="mt-enclosure mt-enclosure-image" style="display: inline;">

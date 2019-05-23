@@ -9,6 +9,7 @@ import {
   // CAPTION_WITH_MULTIPLE_PARENS,
   DOUBLE_BREAKS,
   BAD_ARTICLE,
+  BAD_ARTICLE_2,
 } from '../fixtures/article-fixtures';
 
 
@@ -123,5 +124,12 @@ module('Unit | Model | article', function(hooks) {
     let childNodes = [...model.body.childNodes].map(node => node.nodeName);
 
     assert.deepEqual(childNodes, ['P', 'P', 'P'], 'should have 3 paragraphs');
+  });
+
+  test('this bad article', function(assert) {
+    let store = this.owner.lookup('service:store');
+    let model = store.createRecord('article', {text: BAD_ARTICLE_2});
+
+    assert.ok(model.body);
   });
 });
