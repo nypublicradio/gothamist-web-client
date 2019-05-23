@@ -9,7 +9,7 @@ import addCommentCount, {
   BASE,
 } from 'gothamist-web-client/utils/add-comment-count';
 
-module('Unit | Utility | addCommentCount', function(hooks) {
+module('Unit | Utility | add-comment-count', function(hooks) {
   setupTest(hooks);
 
   test('it updates an article model', async function(assert) {
