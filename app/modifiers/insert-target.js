@@ -27,7 +27,7 @@ const InsertTargetModifier = Modifier.extend({
     @param {String} [id] An HTML id to apply to
     the created div.
 
-    @param {Number} [wordBoundary=50] Minimum number of
+    @param {Number} [wordBoundary=150] Minimum number of
     words before inserting the div.
 
     @param  {String} [containerSelector] CSS selector
