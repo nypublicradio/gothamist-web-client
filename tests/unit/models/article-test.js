@@ -7,6 +7,7 @@ import {
   CAPTION_WITH_LINK,
   CAPTION_WITH_WHITESPACE,
   // CAPTION_WITH_MULTIPLE_PARENS,
+  DOUBLE_BREAKS,
   BAD_ARTICLE,
 } from '../fixtures/article-fixtures';
 
@@ -102,5 +103,14 @@ module('Unit | Model | article', function(hooks) {
     assert.ok(noTextNodes, 'all text nodes should be wrapped');
     assert.ok(model.body.childNodes.length, 'make sure nodes are returned');
 
+  });
+
+  test('two adjacent line breaks creates two paragraphs', function(assert) {
+    let store = this.owner.lookup('service:store');
+    let model = store.createRecord('article', {text: DOUBLE_BREAKS});
+
+    let childNodes = [...model.body.childNodes].map(node => node.nodeName);
+
+    assert.deepEqual(childNodes, ['P', 'P', 'P'], 'should have 3 paragraphs');
   });
 });
