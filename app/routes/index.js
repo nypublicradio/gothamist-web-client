@@ -20,7 +20,7 @@ export default Route.extend({
   fastboot: inject(),
   dataLayer: inject('nypr-metrics/data-layer'),
 
-  titleToken: 'Homepage',
+  titleToken: 'Gothamist: New York City Local News, Food, Arts & Events',
 
   beforeModel() {
     this.dataLayer.push({template: 'homepage'});
@@ -39,7 +39,7 @@ export default Route.extend({
     });
 
     this.headData.setProperties({
-      metaDescription: 'A website about New York',
+      metaDescription: 'Gothamist is a website about New York City news, arts and events, and food, brought to you by New York Public Radio.',
       ogType: 'website',
     });
   },
