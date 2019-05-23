@@ -203,7 +203,7 @@ export default DS.Model.extend({
       parsed.leadImage = img ? img.src : '';
 
       let [, caption, credit] = this._getImageMeta(leadImage);
-      parsed.caption = caption ? caption.trim() : '';
+      parsed.caption = caption ? caption.trim() : 'Image from Gothamist';
       parsed.credit = credit ? credit.trim() : '';
     }
 
