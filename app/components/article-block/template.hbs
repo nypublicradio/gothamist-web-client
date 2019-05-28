@@ -1,7 +1,10 @@
 <NyprMBlock @orientation={{@orientation}} @size={{@size}} data-test-block={{@article.id}} as |block|>
   <block.media
     @route={{array 'article' @article.permalink}}
-    @srcS={{make-https this.thumbnail}}
+    @srcS={{this.thumbnail.srcS}}
+    @srcSet={{this.thumbnail.srcSet}}
+    @breakM={{this.thumbnailBreakpoint}}
+    @srcM={{this.thumbnail.srcM}}
     @alt={{@article.leadImageCaption}}
   />
 
