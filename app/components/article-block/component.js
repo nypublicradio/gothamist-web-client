@@ -54,8 +54,8 @@ export default Component.extend({
 
     if (!srcS) {
       // fallback image
-      let section = this.article.section.basename;
-      return FALLBACK_THUMBNAIL[section];
+      let section = this.article.section || {};
+      return FALLBACK_THUMBNAIL[section.basename];
     } else {
       return { srcS };
     }
