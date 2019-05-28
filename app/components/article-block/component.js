@@ -3,6 +3,7 @@ import { computed } from '@ember/object';
 
 import config from '../../config/environment';
 import { medium } from '../../breakpoints';
+import { makeHttps } from '../../helpers/make-https';
 
 
 const PATH = '/images/defaults';
@@ -57,7 +58,7 @@ export default Component.extend({
       let section = this.article.section || {};
       return FALLBACK_THUMBNAIL[section.basename];
     } else {
-      return { srcS };
+      return { srcS: makeHttps([ srcS ]) };
     }
   }),
 
