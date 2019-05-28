@@ -1,10 +1,10 @@
-const xsmall = 360;
-const small = 550;
-const medium = 768;
-const large = 850;
-const xlarge = 1024;
-const xxlarge = 1280;
-const xxxlarge = 1500;
+export const xsmall = 360;
+export const small = 550;
+export const medium = 768;
+export const large = 850;
+export const xlarge = 1024;
+export const xxlarge = 1280;
+export const xxxlarge = 1500;
 
 export default {
   lessThanXsmall: `(max-width: ${xsmall - 1}px)`,
