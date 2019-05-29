@@ -34,6 +34,10 @@ module.exports = function(environment) {
       prefix: process.env.AD_PREFIX,
     },
 
+    'ember-math-helpers': {
+      only: ['mod'],
+    },
+
     // ENDPOINTS
     apiServer: process.env.API_SERVER,
     disqusAPI: process.env.DISQUS_API,
