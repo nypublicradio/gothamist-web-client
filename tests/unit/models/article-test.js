@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
 import {
@@ -117,7 +117,7 @@ module('Unit | Model | article', function(hooks) {
 
   });
 
-  test('two adjacent line breaks creates two paragraphs', function(assert) {
+  skip('two adjacent line breaks creates two paragraphs', function(assert) {
     let store = this.owner.lookup('service:store');
     let model = store.createRecord('article', {text: DOUBLE_BREAKS});
 
