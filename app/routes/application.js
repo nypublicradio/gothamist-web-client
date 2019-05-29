@@ -86,6 +86,10 @@ export default Route.extend({
   actions: {
     error(e, transition) {
       if (e instanceof DS.NotFoundError) {
+        if (this.fastboot.isFastBoot) {
+          this.set('fastboot.response.statusCode', 404);
+        }
+
         // extract required arguments for urlFor:
 
         // The dot-separated, fully-qualified name of the route, like "article.index"
@@ -104,6 +108,7 @@ export default Route.extend({
 
         this.transitionTo('404', path);
       } else if (this.fastboot.isFastBoot) {
+        this.set('fastboot.response.statusCode', 500);
         this.transitionTo('500');
       } else {
         throw e;
