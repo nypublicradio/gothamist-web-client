@@ -94,47 +94,65 @@ export default class DomFixer {
       throw new Error('Empty nodes must be removed before paragraphs can be split.');
     }
 
-    root.childNodes.forEach(child => {
-      if (child.nodeName !== 'P') {
-        return;
-      }
-      const GRAF = child;
+    function splitGraf(graf) {
 
       // get all the pairs of line breaks
       // filter out any breaks preceded by a `#text` node
       // `br + br` will match on <br> foo <br>
-      const adjacentBreaks = [
-        ...GRAF.querySelectorAll('br + br')
-      ].filter(br => br.previousSibling.nodeName === 'BR')
-      .map(br => ([br.previousSibling, br]));
+      const BREAKS = [
+        graf.querySelector('br + br')
+      ].filter(Boolean) // remove null values
+      .filter(br => br.previousSibling.nodeName === 'BR') // make sure there aren't any text nodes in between
+      .map(br => ([br.previousSibling, br])) // grab the previous break
+      .reduce((breaks, br) => breaks.concat(br), []); // flatten
 
-      // for each break boundary
-      adjacentBreaks.forEach(([break1, break2]) => {
-        let whereIsBreak1 = [...GRAF.childNodes].indexOf(break1);
-        let whereIsBreak2 = [...GRAF.childNodes].indexOf(break2);
+      // recursion ended, return given graf, prepped for concatenation
+      if (BREAKS.length === 0) {
+        return [graf];
+      }
 
-        const DEEP_CLONE = true;
-        const p1 = document.createElement('p');
-        const p2 = document.createElement('p');
+      let whereIsBreak1 = [...graf.childNodes].indexOf(BREAKS[0]);
+      let whereIsBreak2 = [...graf.childNodes].indexOf(BREAKS[1]);
 
-        // get all the nodes leading up to first break, wrap them in a p tag
-        for (let i = 0; i < whereIsBreak1; i++) {
-          let node = GRAF.childNodes[i];
-          // append a clone so the `childNodes` NodeList isn't mutated
-          p1.appendChild(node.cloneNode(DEEP_CLONE));
-        }
-        // get all the nodes after the second break, wrap them in a p tag
-        for (let i = whereIsBreak2 + 1; i < GRAF.childNodes.length; i ++) {
-          let node = GRAF.childNodes[i];
-          // append a clone so the `childNodes` NodeList isn't mutated
-          p2.appendChild(node.cloneNode(DEEP_CLONE));
-        }
+      const DEEP_CLONE = true;
+      const CLEANED_GRAF = document.createElement('p');
+      const THE_REST = document.createElement('p');
 
-        // insert them before the graf and remove the graf
-        root.insertBefore(p2, GRAF);
-        root.insertBefore(p1, p2);
-        root.removeChild(GRAF);
-      });
+      // get all the nodes leading up to first break, wrap them in a p tag
+      for (let i = 0; i < whereIsBreak1; i++) {
+        let node = graf.childNodes[i];
+        // append a clone so the `childNodes` we're iterating over isn't mutated
+        CLEANED_GRAF.appendChild(node.cloneNode(DEEP_CLONE));
+      }
+
+      // get all the nodes after the second break, wrap them in a p tag
+      // this will be the new `graf` in the next recursive call
+      for (let i = whereIsBreak2 + 1; i < graf.childNodes.length; i ++) {
+        let node = graf.childNodes[i];
+        // append a clone so the `childNodes` NodeList isn't mutated
+        THE_REST.appendChild(node.cloneNode(DEEP_CLONE));
+      }
+
+      // hold onto the paragraph w/o no known breaks
+      // send the rest of the captured nodes down the recursive path
+      return [CLEANED_GRAF].concat(splitGraf(THE_REST));
+    }
+
+    root.childNodes.forEach(child => {
+      if (child.nodeName !== 'P') {
+        return;
+      }
+      const TARGET_GRAF = child;
+
+      // start with the current paragraph
+      // recursively split it at any pair of line breaks found
+      const SPLIT_GRAFS = splitGraf(TARGET_GRAF);
+
+      // if there's only 1 graf, nothing was split, so nothing to replace
+      if (SPLIT_GRAFS.length > 1) {
+        SPLIT_GRAFS.forEach(p => root.insertBefore(p, TARGET_GRAF));
+        root.removeChild(TARGET_GRAF);
+      }
     });
   }
 
