@@ -11,9 +11,7 @@ export default DS.RESTAdapter.extend(AdapterFetch, {
     query.count = 1;
     return this._super(...arguments).then(response => {
       if (response.entries.length === 0) {
-        const error = new DS.NotFoundError();
-        error.url = query.record;
-        throw error;
+        throw new DS.NotFoundError();
       }
       return response;
     });
