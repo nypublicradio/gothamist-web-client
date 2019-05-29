@@ -18,6 +18,10 @@ export default Route.extend({
 
     this.dataLayer.push({sessionID: uuid()});
 
+    // for 404 tracking
+    this.router.on('routeWillChange', () => this.dataLayer.push({previousPath: this.router.currentURL}));
+
+    // synthetic page view for analytics
     this.router.on('routeDidChange', () => schedule('afterRender', () => this.dataLayer.sendPageView()));
   },
 
