@@ -188,7 +188,7 @@ export default DS.Model.extend({
     // wrap raw text nodes in a paragraph
     domFixer.rescueOrphans();
     // split any paragraphs that contain double line breaks
-    // domFixer.unbreakParagraphs();
+    domFixer.unbreakParagraphs();
 
     // make sure blockquotes aren't wrapping raw text
     domFixer.rescueOrphans('blockquote');
