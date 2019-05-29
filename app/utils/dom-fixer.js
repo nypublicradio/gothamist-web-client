@@ -205,7 +205,7 @@ const DEFAULT_ORPHAN_OPTIONS = {
   @const ORPHAN_NODES
   @type {Array}
 */
-const ORPHAN_NODES = ['SPAN', 'A', 'BR', '#text'];
+const ORPHAN_NODES = ['SPAN', 'A', 'BR', '#text', 'B', 'I', 'EM', 'STRONG'];
 
 /**
   Creates a TreeWalker configured to find `#text` nodes that contain only whitespace.
