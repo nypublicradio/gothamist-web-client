@@ -12,9 +12,7 @@ export default Route.extend({
 
   titleToken: '404 Error',
 
-  beforeModel() {
-    this.dataLayer.push({template: '404'});
-
+  model() {
     this.header.addRule('404', {
       all: {
         nav: true,
@@ -22,9 +20,9 @@ export default Route.extend({
         donate: true,
       }
     });
-  },
 
-  model() {
+    this.dataLayer.push({template: '404'});
+
     return this.store.query('article', {
       index: 'gothamist',
       sort: 'socialtopics_score_1d',
