@@ -1,5 +1,6 @@
 import Route from '@ember/routing/route';
 import { inject } from '@ember/service';
+import { schedule } from '@ember/runloop';
 
 import addCommentCount from '../utils/add-comment-count';
 
@@ -33,6 +34,12 @@ export default Route.extend({
   afterModel(model) {
     if (!this.fastboot.isFastBoot) {
       addCommentCount(model);
+    }
+  },
+
+  actions: {
+    didTransition() {
+      schedule('afterRender', () => this.dataLayer.send404());
     }
   }
 });
