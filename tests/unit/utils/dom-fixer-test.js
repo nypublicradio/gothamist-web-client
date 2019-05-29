@@ -57,13 +57,16 @@ module('Unit | Utility | dom-fixer', function() {
     assert.deepEqual(['P', 'P', 'P', 'P'], [...domFixer.nodes.childNodes].map(n => n.nodeName));
   });
 
-  test('unbreakParagraphs splits a paragraph with double line breaks into two paragraphs', function(assert) {
-    assert.expect(7);
+  test('unbreakParagraphs splits a paragraph with double line breaks into multiple paragraphs', function(assert) {
+    assert.expect(8);
     const HTML = `<p>
       hello world
       <br>
       <br>
       foo bar baz
+      <br>
+      <br>
+      biz buz fuz
     </p>`;
     let domFixer = new DomFixer(HTML);
 
@@ -79,11 +82,12 @@ module('Unit | Utility | dom-fixer', function() {
     domFixer.removeEmptyNodes();
     domFixer.unbreakParagraphs();
 
-    assert.equal(2, domFixer.nodes.childNodes.length);
-    assert.deepEqual(['P', 'P'], [...domFixer.nodes.childNodes].map(n => n.nodeName));
+    assert.equal(3, domFixer.nodes.childNodes.length);
+    assert.deepEqual(['P', 'P', 'P'], [...domFixer.nodes.childNodes].map(n => n.nodeName));
 
     assert.equal('hello world', domFixer.nodes.children[0].textContent.trim());
     assert.equal('foo bar baz', domFixer.nodes.children[1].textContent.trim());
+    assert.equal('biz buz fuz', domFixer.nodes.children[2].textContent.trim());
   });
 
   test('secureSrc secures the src attributes of the passed in selector', function(assert) {
@@ -116,5 +120,5 @@ module('Unit | Utility | dom-fixer', function() {
 
     assert.dom(domFixer.querySelector('#external')).hasAttribute('target', '_blank');
     assert.dom(domFixer.querySelector('#external')).hasAttribute('rel', 'noopener');
-  })
+  });
 });
