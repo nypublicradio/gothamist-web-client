@@ -19,6 +19,7 @@ export function initialize(/* appInstance */) {
 
 export default {
   name: 'fastboot-fix',
+  before: 'clear-double-boot',
 
   initialize,
 };
