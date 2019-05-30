@@ -103,3 +103,28 @@ $ember-basic-dropdown-content-z-index: 10000;
     margin-right: auto;
   }
 }
+
+// ad layout
+.break-margins {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+}
+.space-filler {
+  margin: 40px 0 32px 0;
+}
+.ad-height-0 {
+  display: none;
+}
+.break-margins.ad-height-50 + .space-filler {
+  height: 50px;
+}
+.break-margins.ad-height-90 + .space-filler {
+  height: 90px;
+}
+.break-margins.ad-height-250 + .space-filler {
+  height: 250px;
+}

@@ -73,9 +73,11 @@
 
     </NyprOArticleHeader>
 
-    <NyprOArticleBody class={{unless model.hasLead 'u-space--zero--top'}} data-test-article-body>
-      {{{model.body}}}
-    </NyprOArticleBody>
+    <AdTagInside @slot="gothamist/interior/midpage/1">
+      <NyprOArticleBody class={{unless model.hasLead 'u-space--zero--top'}} data-test-article-body>
+        {{{model.body}}}
+      </NyprOArticleBody>
+    </AdTagInside>
 
     <div class="l-container--content u-section-spacing">
       <NyprOArticleFooter as |footer|>
@@ -98,6 +100,14 @@
             </p>
           </footer.donate>
         {{/unless}}
+
+        <footer.ad>
+          <AdTagWide
+            @slot="gothamist/interior/midpage/2"
+            @breakMargins={{true}}
+            @showLabel={{true}}
+          />
+        </footer.ad>
 
         {{#if model.allowComments}}
           <footer.comments>

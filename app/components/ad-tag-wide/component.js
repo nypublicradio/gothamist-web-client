@@ -1,0 +1,35 @@
+import Component from '@ember/component';
+
+export default Component.extend({
+  classNames: ['ad-tag-wide'],
+  /**
+    The dfp ad slot path
+
+    @argument slot
+    @type {string}
+  */
+  slot: undefined,
+  /**
+    When true, displays an 'ADVERTISING' label.
+
+    @argument showLabel
+    @type {boolean}
+  */
+  showLabel: false,
+  /**
+    When true adds markup and classes for
+    breaking out of horizontal margins.
+
+    @argument breakMargins
+    @type {boolean}
+  */
+  breakMargins: false,
+  height: 0,
+  actions: {
+    handleSlotRendered(slot) {
+      if (slot && slot.size) {
+        this.set('height', slot.size[1]);
+      }
+    }
+  }
+});

@@ -1,0 +1,23 @@
+<div
+  {{insert-target "inserted-ad"
+    containerSelector=(or @containerSelector ".c-article__body")
+  }}
+>
+  {{yield}}
+</div>
+
+{{!--
+  Ember wormhole doesn't work in fastboot for
+  target elements that don't exist during
+  fastboot time. Since ad insertion requires
+  the DOM, we delay this until after fastboot.
+--}}
+{{#unless this.fastboot.isFastBoot}}
+  {{#ember-wormhole to="inserted-ad"}}
+    <AdTagWide
+      @slot={{@slot}}
+      @breakMargins={{true}}
+      @showLabel={{true}}
+    />
+  {{/ember-wormhole}}
+{{/unless}}
