@@ -1,6 +1,6 @@
 <div
   {{insert-target "inserted-ad"
-    containerSelector=".c-article__body"
+    containerSelector=(or @containerSelector ".c-article__body")
   }}
 >
   {{yield}}
