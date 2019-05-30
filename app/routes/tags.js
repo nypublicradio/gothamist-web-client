@@ -1,3 +1,4 @@
+import DS from 'ember-data';
 import RSVP from 'rsvp';
 
 import Route from '@ember/routing/route';
@@ -44,7 +45,14 @@ export default Route.extend({
       }),
       // HACK
       isWTC: sanitize(tag) === 'wethecommuters',
-    });
+    }).then(results => {
+      if (results.articles.length === 0) {
+        let e = new DS.NotFoundError();
+        e.url = `tags/${results.tag}`;
+        throw e;
+      }
+      return results;
+    })
   },
 
   setupController(controller, model) {
