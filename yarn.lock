@@ -8726,9 +8726,9 @@ node-releases@^1.1.14:
     semver "^5.3.0"
 
 node-releases@^1.1.21:
-  version "1.1.21"
-  resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-1.1.21.tgz#46c86f9adaceae4d63c75d3c2f2e6eee618e55f3"
-  integrity sha512-TwnURTCjc8a+ElJUjmDqU6+12jhli1Q61xOQmdZ7ECZVBZuQpN/1UnembiIHDM1wCcfLvh5wrWXUF5H6ufX64Q==
+  version "1.1.22"
+  resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-1.1.22.tgz#d90cd5adc59ab9b0f377d4f532b09656399c88bf"
+  integrity sha512-O6XpteBuntW1j86mw6LlovBIwTe+sO2+7vi9avQffNeIW4upgnaCVm6xrBWH+KATz7mNNRNNeEpuWB7dT6Cr3w==
   dependencies:
     semver "^5.3.0"
 
@@ -8837,7 +8837,7 @@ nypr-auth@^0.2.4:
 
 nypr-design-system@nypublicradio/nypr-design-system:
   version "0.2.0"
-  resolved "https://codeload.github.com/nypublicradio/nypr-design-system/tar.gz/9ff41c4669f833e962333abde2f0010d290322f0"
+  resolved "https://codeload.github.com/nypublicradio/nypr-design-system/tar.gz/cc2d8c280de02a1afc1c3dab3c50b0df23473542"
   dependencies:
     broccoli-merge-files "^0.8.0"
     ember-auto-import "^1.2.19"
