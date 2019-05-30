@@ -1,5 +1,6 @@
 /* global DISQUS */
 import Component from '@ember/component';
+import { schedule } from '@ember/runloop';
 
 export default Component.extend({
   tagName: '',
@@ -17,9 +18,11 @@ export default Component.extend({
     }
 
     if (typeof DISQUS !== 'undefined') {
-      DISQUS.reset({
-        reload: true,
-        config,
+      schedule('afterRender', function() {
+        DISQUS.reset({
+          reload: true,
+          config,
+        });
       });
     } else if (!document.querySelector('#disqus-lib')) {
       // if `DISQUS` is undefined AND check for `#disqus-lib`. if it exists, there's probably
