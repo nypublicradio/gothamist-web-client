@@ -3,6 +3,7 @@
 <HeadLayout/>
 
 <NyprOHeader
+  class={{if (eq target.currentRouteName 'index') 'c-main-header--emphasis'}}
   @floatLandmark={{headerLandmark}}
   @donateURL={{DONATE_URL}}
   as |header|>
@@ -42,9 +43,7 @@
     </menu.tipButton>
   </header.menu>
 
-  <header.left
-    class={{if header.rules.stackLogo 'c-main-header--emphasis'}}
-    as |left|>
+  <header.left as |left|>
     <left.branding>
       {{#link-to 'index' class=header.rules.logoLinkClass}}
         {{#if header.rules.stackLogo}}
