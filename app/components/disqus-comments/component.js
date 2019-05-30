@@ -7,6 +7,18 @@ export default Component.extend({
   didInsertElement() {
     this._super(...arguments);
 
+    this._renderDisqus();
+  },
+
+
+  didUpdateAttrs() {
+    this._super(...arguments);
+
+    this._renderDisqus();
+  },
+
+  _renderDisqus() {
+
     if (window.block_disqus) {
       return;
     }
@@ -36,5 +48,5 @@ export default Component.extend({
       document.head.appendChild(disqusLib);
     }
 
-  }
+  },
 });
