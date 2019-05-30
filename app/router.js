@@ -21,10 +21,9 @@ Router.map(function() {
   this.route('search');
   this.route('tags', {path: 'tags/:tag'});
   this.route('popular');
+  this.route('staff');
   this.route('sections', {path: 'sections/:section'});
-  this.route('staff', function() {
-    this.route('detail', {path: ':name'});
-  });
+  this.route('author-detail', {path: 'author/:name'});
 
   this.route('contact');
 

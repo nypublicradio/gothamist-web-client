@@ -7,7 +7,7 @@ export default Route.extend({
   titleToken: 'Staff',
 
   beforeModel() {
-    this.header.addRule('staff.index', {
+    this.header.addRule('staff', {
       all: {
         nav: true,
         donate: true,

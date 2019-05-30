@@ -44,6 +44,10 @@ export default function() {
         let category = term.replace('c|', '');
         articles = schema.articles.all();
         articles = articles.filter(a => a.categories[0].basename === category);
+      } else if (term.startsWith('a|')) {
+        // author query
+        let author = term.replace('a|', '');
+        articles = schema.articles.where({author_nickname: author});
       } else {
         // tag queries
         articles = schema.articles.where({tags: [term]});

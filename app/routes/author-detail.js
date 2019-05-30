@@ -5,7 +5,7 @@ import { inject } from '@ember/service';
 
 import fade from 'ember-animated/transitions/fade';
 
-import addCommentCount from '../../utils/add-comment-count';
+import addCommentCount from '../utils/add-comment-count';
 
 
 const { hash } = RSVP;
@@ -18,7 +18,7 @@ export default Route.extend({
   titleToken: model => model.name,
 
   beforeModel() {
-    this.header.addRule('staff.detail', {
+    this.header.addRule('author-detail', {
       all: {
         nav: true,
         donate: true,
@@ -54,7 +54,7 @@ export default Route.extend({
     if (this.fastboot.isFastBoot) {
       return;
     } else {
-      addCommentCount(model.articlees);
+      addCommentCount(model.articles);
 
       controller.set('addComments', results => (addCommentCount(results), results));
     }

@@ -116,7 +116,7 @@ export default DS.Model.extend({
   authors: computed('authorNickname', function() {
     return [{
       name: this.authorNickname,
-      route: ['staff.detail', this.authorNickname],
+      route: ['author-detail', this.authorNickname],
     }]
   }),
 
