@@ -25,7 +25,8 @@ export default Route.extend({
       image: {
         full: model.thumbnail640,
         width: 640,
-      }
+      },
+      ampId: model.platypusId,
     });
   },
 
