@@ -14,7 +14,7 @@ You will need the following things properly installed on your computer.
 
 ## Installation
 
-* `git clone git@github.com:nypubliradio/gothamist-web-client` this repository
+* `git clone git@github.com:nypubliradio/gothamist-web-client.git` this repository
 * `cd gothamist-web-client`
 * `yarn install`
 
