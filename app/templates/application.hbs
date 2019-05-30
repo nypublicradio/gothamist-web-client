@@ -69,10 +69,29 @@
   <header.right as |right|>
     {{#with header.rules.share as |share|}}
       <NyprMShareTools class="c-main-header__share" @label='Share' as |tools|>
-        <tools.share @service='facebook' data-test-facebook-share/>
-        <tools.share @service='twitter' @params={{hash text=share.title}} data-test-twitter-share/>
-        <tools.share @service='reddit' @params={{hash title=share.title}} data-test-reddit-share/>
-        <tools.share @service='email' @params={{hash body=(concat share.title ' - ' share.permalink)}} data-test-email-share/>
+        <tools.share
+          @service='facebook'
+          @utm={{hash medium='social' source='facebook' campaign='shared_facebook'}}
+          data-test-facebook-share
+        />
+        <tools.share
+          @service='twitter'
+          @params={{hash text=share.title via='gothamist'}}
+          @utm={{hash medium='social' source='twitter' campaign='shared_twitter'}}
+          data-test-twitter-share
+        />
+        <tools.share
+          @service='reddit'
+          @params={{hash title=share.title}}
+          @utm={{hash medium='social' source='reddit' campaign='shared_twitter'}}
+          data-test-reddit-share
+        />
+        <tools.share
+          @service='email'
+          @params={{hash body=(concat share.title ' - ' share.permalink)}}
+          @utm={{hash medium='social' source='email' campaign='shared_email'}}
+          data-test-email-share
+        />
       </NyprMShareTools>
     {{/with}}
 
