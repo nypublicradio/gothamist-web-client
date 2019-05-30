@@ -10,9 +10,13 @@
 
   <block.object as |o|>
     {{#unless @hideEyebrow}}
-      <o.eyebrow
-        @route={{array 'sections' @article.section.basename}}
-        @text={{@article.section.label}}/>
+      {{#if @article.isSponsored}}
+        <o.eyebrow @kickerClass="o-kicker--sponsored" @text="Sponsored"/>
+      {{else}}
+        <o.eyebrow
+          @route={{array 'sections' @article.section.basename}}
+          @text={{@article.section.label}}/>
+      {{/if}}
     {{/unless}}
 
     <o.title
