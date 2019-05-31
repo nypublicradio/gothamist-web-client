@@ -73,7 +73,11 @@ export default function() {
     }
     // duplicate keys for `thread:ident` do not get captured by mirage/pretender
     let params = request.url.split('?')[1];
-    let ids = params.split('&thread:ident=').filter(i => parseInt(i));
+    let ids = params
+      .split('&')
+      .filter(param => param.split('=')[0] === 'thread:ident')
+      .map(param => param.split('=')[1]);
+
     return {
       response: ids.map(id => ({posts: faker.random.number(200), identifiers: [id]})),
     }
