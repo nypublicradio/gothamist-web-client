@@ -33,7 +33,7 @@ module('Acceptance | article', function(hooks) {
 
   hooks.afterEach(() => {
     window.block_disqus = false;
-  })
+  });
 
   test('visiting article route', async function(assert) {
     const article = server.create('article', {categories: [{basename: 'food'}]});
