@@ -14,11 +14,14 @@ export const COUNT = 12;
 
 export default Route.extend({
   fastboot: inject(),
+  dataLayer: inject('nypr-metrics/data-layer'),
   header: inject('nypr-o-header'),
 
   titleToken: model => titleize(model.section),
 
   beforeModel() {
+    this.dataLayer.push({template: 'section'});
+
     this.header.addRule('sections', {
       all: {
         nav: true,
