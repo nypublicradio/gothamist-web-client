@@ -9,7 +9,7 @@
   />
 
   <block.object as |o|>
-    {{#unless @hideEyebrow}}
+    {{#unless (or @hideEyebrow (not @article.section.label))}}
       {{#if @article.isSponsored}}
         <o.eyebrow @kickerClass="o-kicker--sponsored" @text="Sponsored"/>
       {{else}}
