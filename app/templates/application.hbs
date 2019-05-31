@@ -88,7 +88,7 @@
         />
         <tools.share
           @service='email'
-          @params={{hash body=(concat share.title ' - ' share.permalink)}}
+          @params={{hash body=(concat share.title ' - {{URL}}')}}
           @utm={{hash medium='social' source='email' campaign='shared_email'}}
           data-test-email-share
         />
