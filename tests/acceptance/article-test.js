@@ -12,6 +12,17 @@ import { inViewport } from 'nypr-design-system/helpers/in-viewport';
 
 import config from 'gothamist-web-client/config/environment';
 
+
+const URL = UTM => {
+  let url = window.location.toString();
+  if (url.includes('?')) {
+    url += `&${encodeURIComponent(UTM)}`;
+  } else {
+    url += `?${encodeURIComponent(UTM)}`;
+  }
+  return url;
+}
+
 module('Acceptance | article', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
@@ -42,13 +53,13 @@ module('Acceptance | article', function(hooks) {
   });
 
   test('tweeting an article', async function() {
-    const URL = window.location.toString();
+    const UTM = 'utm_medium=social&utm_source=twitter&utm_campaign=shared_twitter';
 
     const article = server.create('article');
 
     this.mock(window)
       .expects('open')
-      .withArgs(`${SERVICE_MAP.twitter.shareBase}?text=${article.title}&url=${URL}`);
+      .withArgs(`${SERVICE_MAP.twitter.shareBase}?text=${article.title}&via=gothamist&url=${URL(UTM)}`);
 
     await visit(`/${article.permalink}`);
 
@@ -60,12 +71,12 @@ module('Acceptance | article', function(hooks) {
   });
 
   test('redditing an article', async function() {
-    const URL = window.location.toString();
+    const UTM = 'utm_medium=social&utm_source=reddit&utm_campaign=shared_reddit';
     const article = server.create('article');
 
     this.mock(window)
       .expects('open')
-      .withArgs(`${SERVICE_MAP.reddit.shareBase}?title=${article.title}&url=${URL}`);
+      .withArgs(`${SERVICE_MAP.reddit.shareBase}?title=${article.title}&url=${URL(UTM)}`);
 
     await visit(`/${article.permalink}`);
 
@@ -77,11 +88,12 @@ module('Acceptance | article', function(hooks) {
   });
 
   test('emailing an article', async function() {
+    const UTM = 'utm_medium=social&utm_source=email&utm_campaign=shared_email';
     const article = server.create('article');
 
     this.mock(window)
       .expects('open')
-      .withArgs(`${SERVICE_MAP.email.shareBase}?body=${article.title} - ${article.permalink}`);
+      .withArgs(`${SERVICE_MAP.email.shareBase}?body=${article.title} - ${URL(UTM)}`);
 
     await visit(`/${article.permalink}`);
 
