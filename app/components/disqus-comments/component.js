@@ -20,6 +20,10 @@ export default Component.extend({
   _renderDisqus() {
 
     if (window.block_disqus) {
+      // still need to need to call onReady if it's passed
+      if (this.onReady) {
+        schedule('afterRender', 'onReady');
+      }
       return;
     }
 

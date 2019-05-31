@@ -158,8 +158,8 @@ module('Acceptance | article', function(hooks) {
 
     await click('[data-test-block="1"] [data-test-article-block-meta] a');
 
-    assert.equal(currentURL(), `/foo?to=${config.commentsAnchor}`);
-    assert.ok(inViewport(find(`#${config.commentsAnchor}`)));
+    assert.equal(currentURL(), `/foo?to=${config.commentsAnchor}`, 'comment anchor should be in query string');
+    assert.ok(inViewport(find(`#${config.commentsAnchor}`)), 'comments area should be on screen');
   });
 
   test('donation tout disappears for 24 hours', async function(assert) {
