@@ -7,8 +7,6 @@ import { schedule } from '@ember/runloop';
 import addCommentCount from '../../utils/add-comment-count';
 import config from '../../config/environment';
 
-const { commentsAnchor } = config;
-
 export default Route.extend({
   fastboot: inject(),
   header: inject('nypr-o-header'),
