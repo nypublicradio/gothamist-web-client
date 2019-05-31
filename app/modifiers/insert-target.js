@@ -10,8 +10,14 @@ const headers = ['h1', 'h2', 'h3', 'h4', 'h5']
 const embeds = ['iframe', 'embed', 'video',
                 'twitter-widget', 'center', 'div'];
 // a `div` tag in MT article markup is probably from an embed
-const dontInsertBefore = ['blockquote', ...embeds, ...inline];
-const dontInsertAfter = [...headers, ...embeds, ...inline];
+const dontInsertBefore = ['blockquote', ...inline];
+const dontInsertAfter = [...headers, ...inline];
+const dontInsertBetween = embeds.map(embed => ['p', embed]);
+
+const shouldntInsertBetween = function(current, next) {
+  return dontInsertBetween
+    .some(([first, second]) => current === first && next === second);
+};
 
 const InsertTargetModifier = Modifier.extend({
   /**
@@ -46,15 +52,21 @@ const InsertTargetModifier = Modifier.extend({
     });
     let wordCount = 0;
     let boundary = nodes.find((node, index) => {
-      wordCount += countWords(node);
-
       let currentTag = node.nodeName.toLowerCase();
       let nextNode = nodes[index+1];
       let nextTag =  nextNode && nextNode.nodeName.toLowerCase();
 
+      let wordWeight = countWords(node);
+      // count embeds as at least 50 words.
+      if (wordWeight < 50 && embeds.includes(currentTag)) {
+        wordWeight = 50;
+      }
+      wordCount += wordWeight;
+
       if (wordCount >= wordBoundary
         && !dontInsertAfter.includes(currentTag)
-        && !dontInsertBefore.includes(nextTag)) {
+        && !dontInsertBefore.includes(nextTag)
+        && !shouldntInsertBetween(currentTag, nextTag)) {
         return node;
       }
     })
