@@ -8862,7 +8862,7 @@ nypr-auth@^0.2.4:
 
 nypr-design-system@nypublicradio/nypr-design-system:
   version "0.2.0"
-  resolved "https://codeload.github.com/nypublicradio/nypr-design-system/tar.gz/1402f33e47f7351355f46cdf8cec4b3c1c2e5aed"
+  resolved "https://codeload.github.com/nypublicradio/nypr-design-system/tar.gz/f714f2ed1d2cc1d08dcbb699601ea8cdaca3c73f"
   dependencies:
     broccoli-merge-files "^0.8.0"
     ember-auto-import "^1.2.19"
@@ -8903,7 +8903,7 @@ nypr-metrics@nypublicradio/nypr-metrics:
   version "0.5.4"
   resolved "https://codeload.github.com/nypublicradio/nypr-metrics/tar.gz/b09905f3cfc80597498038c745bd4314865df939"
   dependencies:
-    ember-cli-babel "^7.0.0"
+    ember-cli-babel "^6.6.0"
     ember-get-config "^0.2.2"
 
 oauth-sign@~0.9.0:
