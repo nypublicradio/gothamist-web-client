@@ -16,6 +16,7 @@
           @galleryRoute='article.gallery'
           @commentsUrl={{concat '#' commentsAnchor}}
           @commentCount={{model.commentCount}}
+          data-test-article-meta
           as |meta|>
 
           <meta.byline @authors={{model.authors}} @sponsor={{model.sponsor}}/>

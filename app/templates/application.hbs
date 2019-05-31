@@ -16,7 +16,7 @@
     {{/if}}
   </header.leaderboard>
 
-  <header.menu @donateUrl={{DONATE_URL}} as |menu|>
+  <header.menu @donateUrl={{DONATE_URL}} data-test-side-menu as |menu|>
     <menu.branding>
       {{#link-to 'index'}}
         <NyprASvg @icon='gothamist-logo'/>
