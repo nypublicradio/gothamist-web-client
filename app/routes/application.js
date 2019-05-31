@@ -70,8 +70,8 @@ export default Route.extend({
 
   afterModel() {
     if (this.fastboot.isFastBoot) {
-      let { protocol, host, path } = this.fastboot.request;
-      let url = `${protocol}//${host}${path.replace(/\/$/, '')}`;
+      let { host, path } = this.fastboot.request;
+      let url = `https://${host}${path.replace(/\/$/, '')}`;
 
       this.headData.setProperties({
         url,
