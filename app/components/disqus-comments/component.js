@@ -22,7 +22,7 @@ export default Component.extend({
     if (window.block_disqus) {
       // still need to need to call onReady if it's passed
       if (this.onReady) {
-        schedule('afterRender', 'onReady');
+        schedule('afterRender', this.onReady);
       }
       return;
     }
