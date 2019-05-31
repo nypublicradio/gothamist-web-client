@@ -92,6 +92,9 @@ export default DS.Model.extend({
   moveableTypeId: reads('id'),
 
   breadcrumb: computed('section', function() {
+    if (!this.section.basename) {
+      return;
+    }
     let breadcrumb = [{
       route: ['sections', this.section.basename],
       label: this.section.label

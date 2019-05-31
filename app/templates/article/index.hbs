@@ -3,7 +3,9 @@
   <article class="c-article l-container u-spacing--double">
     <NyprOArticleHeader as |header|>
       <header.top as |top|>
-        <top.breadcrumb @breadcrumbs={{model.breadcrumb}}/>
+        {{#if model.breadcrumb}}
+          <top.breadcrumb @breadcrumbs={{model.breadcrumb}}/>
+        {{/if}}
 
         <top.headline data-test-article-headline>
           {{{model.title}}}
