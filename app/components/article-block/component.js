@@ -41,6 +41,9 @@ export default Component.extend({
   commentsAnchor: config.commentsAnchor,
 
   thumbnail: computed('article', 'thumbnailSize', function() {
+    if (!this.article) {
+      return;
+    }
     let srcS;
     switch(this.thumbnailSize) {
       case '640':
