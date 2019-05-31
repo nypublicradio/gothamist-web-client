@@ -1,4 +1,6 @@
+import uuid from 'uuid/v1';
 import DS from 'ember-data';
+
 import Route from '@ember/routing/route';
 import { inject } from '@ember/service';
 import { schedule } from '@ember/runloop';
@@ -13,6 +15,9 @@ export default Route.extend({
 
   init() {
     this._super(...arguments);
+
+    this.dataLayer.push({sessionID: uuid()});
+
     this.router.on('routeDidChange', () => schedule('afterRender', () => this.dataLayer.sendPageView()));
   },
 
