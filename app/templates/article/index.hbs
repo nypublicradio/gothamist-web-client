@@ -111,7 +111,12 @@
 
         {{#if model.allowComments}}
           <footer.comments>
-            <DisqusComments @id={{commentsAnchor}} @identifier={{model.moveableTypeId}} @permalink={{model.permalink}}/>
+            <DisqusComments
+              @id={{commentsAnchor}}
+              @identifier={{model.moveableTypeId}}
+              @permalink={{model.permalink}}
+              @onReady={{navigateToComments}}
+            />
           </footer.comments>
         {{/if}}
       </NyprOArticleFooter>

@@ -23,10 +23,16 @@ export default Component.extend({
       return;
     }
 
-    let { identifier, permalink } = this;
+    let { identifier, permalink, onReady } = this;
     const config = function() {
       this.page.identifier = identifier;
       this.page.url = permalink;
+
+      if (onReady) {
+        // we're the only ones controlling these callbacks
+        // just replace it on every init
+        this.callbacks.onReady = [onReady];
+      }
     }
 
     if (typeof DISQUS !== 'undefined') {

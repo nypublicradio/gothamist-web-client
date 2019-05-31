@@ -2,6 +2,7 @@ import moment from 'moment';
 
 import Controller from '@ember/controller';
 import { inject } from '@ember/service';
+import { computed } from '@ember/object';
 
 import config from '../../config/environment';
 
@@ -13,6 +14,14 @@ export default Controller.extend({
   cookies: inject(),
 
   commentsAnchor: config.commentsAnchor,
+
+  navigateToComments: computed('to', function() {
+    let { to, commentsAnchor } = this;
+    let goToComments = to === commentsAnchor;
+    if (goToComments && this.model.allowComments) {
+      return () => document.querySelector(`#${commentsAnchor}`).scrollIntoView();
+    }
+  }),
 
   actions: {
     viewGallery() {

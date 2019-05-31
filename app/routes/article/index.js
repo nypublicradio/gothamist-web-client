@@ -66,11 +66,6 @@ export default Route.extend({
       if (typeof twttr !== 'undefined') {
         twttr.widgets.load();
       }
-
-      let goToComments = this.controller.to === commentsAnchor;
-      if (goToComments) {
-        document.querySelector(`#${commentsAnchor}`).scrollIntoView();
-      }
     })
   },
 
