@@ -65,6 +65,10 @@ export default Route.extend({
 
       results.meta = results.river.meta;
       results.river = results.river.filter(article => !results.main.includes(article));
+      // remove featured sponsored post from river
+      if (results.sponsored) {
+        results.river = results.river.filter(article => article !== results.sponsored.firstObject);
+      }
       return results;
     });
   },

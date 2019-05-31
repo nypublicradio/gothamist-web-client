@@ -40,6 +40,7 @@ module('Acceptance | homepage', function(hooks) {
     const TITLE = 'foo';
 
     server.create('article', {
+      id: 'sponsored',
       title: TITLE,
       tags: ['@sponsor'],
       authored_on: moment().subtract(12, 'hours'),
@@ -47,6 +48,7 @@ module('Acceptance | homepage', function(hooks) {
 
     await visit('/');
     assert.dom('[data-test-sponsored-tout] .c-block__title').hasText(TITLE);
+    assert.dom('[data-test-block="sponsored"]').exists({count: 1}, 'should only appear once')
   });
 
   test('sponsored posts older than 24 hours do not appear in sponsored tout', async function(assert) {
