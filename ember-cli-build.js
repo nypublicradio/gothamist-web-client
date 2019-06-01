@@ -13,6 +13,9 @@ module.exports = function(defaults) {
       ],
       sourceMap: true,
     },
+    fingerprint: {
+      exclude: ['png'], // default images
+    }
   });
 
   // Use `app.import` to add additional libraries to the generated
