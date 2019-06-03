@@ -128,3 +128,6 @@ This syntax also accepts query params, but with slightly more plumbing involved:
 />
 ```
 The `link-to` component looks for `isQueyParams` on the final value in the `@params` array, and then uses whatever is at the `values` key to construct query params for the link. It's weird, but it works!
+
+### twitter embeds
+The twitter embed script is included on the index page. It seems to allow for better async handling of rendering embedded tweets.
