@@ -112,7 +112,7 @@ export default Route.extend({
     }, {
       name: 'Mei Lee',
       title: 'Ad Operations Manager',
-      image: '/images/staff/mei-lee.jpg',
+      image: '/images/defaults/no-category/no-category-tile.png',
       bio: '',
       contact: {
         email: 'mlee@gothamist.com',
