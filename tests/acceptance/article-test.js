@@ -39,9 +39,9 @@ module('Acceptance | article', function(hooks) {
     const article = server.create('article', {categories: [{basename: 'food'}]});
     server.createList('article', 5, {terms: ['@main'], categories: [{basename: 'food'}]});
 
-    await visit(`/${article.permalink}`);
+    await visit(`/${article.path}`);
 
-    assert.equal(currentURL(), `/${article.permalink}`);
+    assert.equal(currentURL(), `/${article.path}`);
     assert.dom('[data-test-top-nav]').exists('nav should exist at load');
     assert.dom('[data-test-article-headline]').hasText(article.title);
     assert.dom('[data-test-article-body]').hasText(article.text + ' Advertisement');
@@ -61,7 +61,7 @@ module('Acceptance | article', function(hooks) {
       .expects('open')
       .withArgs(`${SERVICE_MAP.twitter.shareBase}?text=${article.title}&via=gothamist&url=${URL(UTM)}`);
 
-    await visit(`/${article.permalink}`);
+    await visit(`/${article.path}`);
 
     let reset = await scrollPastHeader(this);
 
@@ -78,7 +78,7 @@ module('Acceptance | article', function(hooks) {
       .expects('open')
       .withArgs(`${SERVICE_MAP.reddit.shareBase}?title=${article.title}&url=${URL(UTM)}`);
 
-    await visit(`/${article.permalink}`);
+    await visit(`/${article.path}`);
 
     let reset = await scrollPastHeader(this);
 
@@ -95,7 +95,7 @@ module('Acceptance | article', function(hooks) {
       .expects('open')
       .withArgs(`${SERVICE_MAP.email.shareBase}?body=${article.title} - ${URL(UTM)}`);
 
-    await visit(`/${article.permalink}`);
+    await visit(`/${article.path}`);
 
     let reset = await scrollPastHeader(this);
 
@@ -113,14 +113,14 @@ module('Acceptance | article', function(hooks) {
       }]
     });
 
-    await visit(`/${ARTICLE.permalink}`);
+    await visit(`/${ARTICLE.path}`);
 
     assert.dom('.c-article__meta-group a').hasText(`${EXPECTED} Comments`);
     assert.dom(`#${config.commentsAnchor}`).exists({count: 1});
   });
 
   test('no disqus if comments are not allowed', async function(assert) {
-    server.create('article', {allow_comments: false, permalink: 'foo'});
+    server.create('article', {allow_comments: false, path: 'foo'});
 
     await visit('/foo');
 
@@ -128,10 +128,10 @@ module('Acceptance | article', function(hooks) {
   });
 
   test('breadcrumbs', async function(assert) {
-    server.create('article', {permalink: 'opinion', tags: ['@opinion']});
-    server.create('article', {permalink: 'analysis', tags: ['@analysis']});
-    server.create('article', {permalink: 'sponsor', tags: ['@sponsor']});
-    server.create('article', {permalink: 'wtc', tags: ['we the commuters']});
+    server.create('article', {path: 'opinion', tags: ['@opinion']});
+    server.create('article', {path: 'analysis', tags: ['@analysis']});
+    server.create('article', {path: 'sponsor', tags: ['@sponsor']});
+    server.create('article', {path: 'wtc', tags: ['we the commuters']});
 
     await visit('/opinion');
     assert.dom('.o-breadcrumbs').includesText('Opinion');
@@ -151,7 +151,7 @@ module('Acceptance | article', function(hooks) {
       text: faker.lorem.words(1000),
       tags: ['@main'],
       id: '1',
-      permalink: 'foo',
+      path: 'foo',
     });
 
     await visit('/');
@@ -169,7 +169,7 @@ module('Acceptance | article', function(hooks) {
     const cookieService = this.owner.lookup('service:cookies');
     let cookieSpy = this.spy(cookieService, 'write');
 
-    server.create('article', {permalink: 'foo', id: '1'});
+    server.create('article', {path: 'foo', id: '1'});
 
     await visit('/foo');
 

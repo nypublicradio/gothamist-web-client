@@ -77,7 +77,7 @@ module('Acceptance | analytics', function(hooks) {
 
     await click('[data-test-block="gallery"] a'); // article with a gallery
 
-    assert.deepEqual(spyLayer.push.firstCall.args[0], {
+    assert.deepEqual(spyLayer.push.getCall(1).args[0], {
       articleTags: TAGS.join(','),
       articleAuthors: AUTHOR,
       articleSection: SECTION,

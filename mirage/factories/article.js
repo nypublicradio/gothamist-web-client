@@ -45,11 +45,14 @@ export default Factory.extend({
     return moment(this.authored_on_utc, DATE_FORMAT).add(2, 'h').format(DATE_FORMAT);
   },
   national_title: null,
-  permalink() {
+  path() {
     let slug = faker.lorem.words(3).split(' ').join('_')
     let { authored_on:date } = this;
     date = moment(date, DATE_FORMAT);
     return `${date.format('YYYY')}/${date.format('MM')}/${date.format('DD')}/${slug}.php`;
+  },
+  permalink() {
+    return `http://gothamist.com/${this.path}`;
   },
   platypus_id: () => faker.random.uuid(),
   socialtopics: () => [],

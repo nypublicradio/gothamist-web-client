@@ -22,9 +22,9 @@ module('Acceptance | gallery', function(hooks) {
     article.gallery_captions.splice(0, 5)
     article.gallery_full.splice(0, 5)
 
-    await visit(`/${article.permalink}/gallery`);
+    await visit(`/${article.path}/gallery`);
 
-    assert.equal(currentURL(), `/${article.permalink}/gallery`);
+    assert.equal(currentURL(), `/${article.path}/gallery`);
     assert.dom('[data-test-gallery-slide]').exists({count: 2});
     assert.dom('[data-test-gallery-overlay] [data-test-ad-tag-wide]').exists({count: 0});
   });
@@ -36,9 +36,9 @@ module('Acceptance | gallery', function(hooks) {
     article.gallery_captions.splice(0, 4);
     article.gallery_full.splice(0, 4);
 
-    await visit(`/${article.permalink}/gallery`);
+    await visit(`/${article.path}/gallery`);
 
-    assert.equal(currentURL(), `/${article.permalink}/gallery`);
+    assert.equal(currentURL(), `/${article.path}/gallery`);
     assert.dom('[data-test-gallery-slide]').exists({count: 3});
     assert.dom('[data-test-gallery-overlay] [data-test-ad-tag-wide]').exists({count: 1});
   });
@@ -50,9 +50,9 @@ module('Acceptance | gallery', function(hooks) {
     article.gallery_captions.splice(0, 2)
     article.gallery_full.splice(0, 2)
 
-    await visit(`/${article.permalink}/gallery`);
+    await visit(`/${article.path}/gallery`);
 
-    assert.equal(currentURL(), `/${article.permalink}/gallery`);
+    assert.equal(currentURL(), `/${article.path}/gallery`);
     assert.dom('[data-test-gallery-slide]').exists({count: 5});
     assert.dom('[data-test-gallery-overlay] [data-test-ad-tag-wide]').exists({count: 1});
   });
@@ -65,9 +65,9 @@ module('Acceptance | gallery', function(hooks) {
     article.gallery_captions.splice(0, 1)
     article.gallery_full.splice(0, 1)
 
-    await visit(`/${article.permalink}/gallery`);
+    await visit(`/${article.path}/gallery`);
 
-    assert.equal(currentURL(), `/${article.permalink}/gallery`);
+    assert.equal(currentURL(), `/${article.path}/gallery`);
     assert.dom('[data-test-gallery-slide]').exists({count: 6});
     assert.dom('[data-test-gallery-overlay] [data-test-ad-tag-wide]').exists({count: 2});
   });
@@ -79,9 +79,9 @@ module('Acceptance | gallery', function(hooks) {
     article.gallery_captions.push(...article.gallery_captions);
     article.gallery_full.push(...article.gallery_full);
 
-    await visit(`/${article.permalink}/gallery`);
+    await visit(`/${article.path}/gallery`);
 
-    assert.equal(currentURL(), `/${article.permalink}/gallery`);
+    assert.equal(currentURL(), `/${article.path}/gallery`);
     assert.dom('[data-test-gallery-slide]').exists({count: 14});
     assert.dom('[data-test-gallery-overlay] [data-test-ad-tag-wide]').exists({count: 2});
   });
