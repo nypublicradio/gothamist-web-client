@@ -8,7 +8,7 @@
       <div class="c-search-results__term" data-test-author-heading>{{model.name}}</div>
     </header>
 
-    <hr class="u-border-accent u-hide-until--m">
+    <hr class="u-border-accent u-hide-until--m" aria-hidden="true">
 
   </div>
 
@@ -25,14 +25,14 @@
       </NyprMBlockList>
     </section>
 
-    <hr class="u-border-accent u-hide-until--m">
+    <hr class="u-border-accent u-hide-until--m" aria-hidden="true">
 
     <div class="c-listing__ad">
       <p>Ad here</p>
       <NyprAAdLabel/>
     </div>
 
-    <hr class="u-border-accent u-hide-until--m">
+    <hr class="u-border-accent u-hide-until--m" aria-hidden="true">
 
     <section class="c-listing__section o-section">
       <NyprMBlockList @items={{slice 6 undefined model.articles}} as |article|>
@@ -64,14 +64,14 @@
             </NyprMBlockList>
           </section>
 
-          <hr class="u-border-accent u-hide-until--m">
+          <hr class="u-border-accent u-hide-until--m" aria-hidden="true">
 
           <div class="c-listing__ad">
             <p>Ad here</p>
             <NyprAAdLabel/>
           </div>
 
-          <hr class="u-border-accent u-hide-until--m">
+          <hr class="u-border-accent u-hide-until--m" aria-hidden="true">
 
           <section class="c-listing__section o-section">
             <NyprMBlockList @items={{slice 6 undefined page}} as |article|>

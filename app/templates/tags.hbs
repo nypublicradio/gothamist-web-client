@@ -6,7 +6,7 @@
     </h1>
   </header>
 
-  <hr class="u-border-accent u-hide-until--m">
+  <hr class="u-border-accent u-hide-until--m" aria-hidden="true">
 
   {{#if model.isWTC}}
     <section class="c-listing__section o-section">
@@ -63,14 +63,14 @@
     </section>
   {{/if}}
 
-  <hr class="u-border-accent u-hide-until--m">
+  <hr class="u-border-accent u-hide-until--m" aria-hidden="true">
 
   <div class="c-listing__ad">
     <p>Ad here</p>
     <NyprAAdLabel/>
   </div>
 
-  <hr class="u-border-accent u-hide-until--m">
+  <hr class="u-border-accent u-hide-until--m" aria-hidden="true">
 
   <section class="c-listing__section o-section">
     <NyprMBlockList @items={{slice 6 undefined model.articles}} as |article|>
@@ -103,14 +103,14 @@
           </NyprMBlockList>
         </section>
 
-        <hr class="u-border-accent u-hide-until--m">
+        <hr class="u-border-accent u-hide-until--m" aria-hidden="true">
 
         <div class="c-listing__ad">
           <p>Ad here</p>
           <NyprAAdLabel/>
         </div>
 
-        <hr class="u-border-accent u-hide-until--m">
+        <hr class="u-border-accent u-hide-until--m" aria-hidden="true">
 
         <section class="c-listing__section o-section">
           <NyprMBlockList @items={{slice 6 undefined page}} as |article|>
