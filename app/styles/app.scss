@@ -49,11 +49,20 @@ $ember-basic-dropdown-content-z-index: 10000;
   }
 
   i {
-    display: block;
+    display: flex;
+    align-items: center;
     font-style: normal; // this should be decorated with emphasis
-    margin-top: -32px; // offset embedded <br/>
+    margin-top: -28px; // offset embedded <br/>
     font-family: "Pragati Narrow", Helvetica, sans-serif;
     font-size: 16px;
+
+    &:before {
+      content: url("data:image/svg+xml;charset=utf8,%3Csvg%20class%3D%22arrow-dashed-icon%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2030%2030%22%20fill%3D%22%23f25917%22%3E%3Cpolygon%20points%3D%2218.74%203.12%2029.96%2014%2018.74%2024.88%2018.74%2016.72%2015%2016.72%2015%2011.28%2018.74%2011.28%2018.74%203.12%22%20%2F%3E%20%3Crect%20x%3D%228.2%22%20y%3D%2211.28%22%20width%3D%225.44%22%20height%3D%225.44%22%20%2F%3E%3Crect%20x%3D%224.12%22%20y%3D%2211.28%22%20width%3D%222.72%22%20height%3D%225.44%22%20%2F%3E%3Crect%20x%3D%220.04%22%20y%3D%2211.28%22%20width%3D%222.72%22%20height%3D%225.44%22%20%2F%3E%3C%2Fsvg%3E");
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+      margin-right: 8px;
+    }
   }
 
   a {
