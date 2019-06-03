@@ -8,7 +8,7 @@ export default Route.extend({
 
   model({ any }) {
     return this.store.queryRecord('article', {
-      record: any
+      record: `http://gothamist.com/${any}`,
     }).then(article => article.loadGallery());
   },
 

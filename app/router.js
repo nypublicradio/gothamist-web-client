@@ -13,7 +13,7 @@ const Router = EmberRouter.extend({
 });
 
 Router.map(function() {
-  this.route('404', {path: '*'});
+  this.route('404', {path: '*wildcard'});
 
   this.route('article', {path: '*any'}, function() {
     this.route('gallery');

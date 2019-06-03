@@ -1,6 +1,6 @@
 <NyprMBlock @orientation={{@orientation}} @size={{@size}} data-test-block={{@article.id}} as |block|>
   <block.media
-    @route={{array 'article' @article.permalink}}
+    @route={{array 'article' @article.path}}
     @srcS={{this.thumbnail.srcS}}
     @srcSet={{this.thumbnail.srcSet}}
     @breakM={{this.thumbnailBreakpoint}}
@@ -22,7 +22,7 @@
 
     <o.title
       @h3
-      @route={{array 'article' @article.permalink}}
+      @route={{array 'article' @article.path}}
       @galleryIcon={{@article.hasGallery}}
     >
       {{{@article.title}}}
@@ -39,7 +39,7 @@
         @author={{if showAuthor @article.authorNickname}}
         @timestamp={{if showTimestamp (timestamp @article.publishedMoment)}}
         @commentCount={{if showCommentCount @article.commentCount}}
-        @commentRoute={{array 'article' @article.permalink (hash isQueryParams=true values=(hash to=commentsAnchor))}}
+        @commentRoute={{array 'article' @article.path (hash isQueryParams=true values=(hash to=commentsAnchor))}}
         data-test-article-block-meta
       />
     </o.body>

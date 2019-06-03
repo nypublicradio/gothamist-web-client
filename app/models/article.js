@@ -72,6 +72,9 @@ export default DS.Model.extend({
 
 
   // computed
+  path: computed('permalink', function() {
+    return this.permalink.replace('http://gothamist.com/', '');
+  }),
   publishedMoment: computed('authoredOnUtc', function() {
     return moment.utc(this.authoredOnUtc, 'YYYYMMDDHHmmss');
   }),

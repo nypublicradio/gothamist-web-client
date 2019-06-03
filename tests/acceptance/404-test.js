@@ -24,7 +24,7 @@ module('Acceptance | 404', function(hooks) {
       let {
         record,
       } = request.queryParams;
-      if (record === PERMALINK) {
+      if (record === `http://gothamist.com/${PERMALINK}`) {
         return {entries: []};
       }
       return schema.articles.all();

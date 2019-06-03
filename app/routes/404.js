@@ -13,7 +13,15 @@ export default Route.extend({
 
   titleToken: '404 Error',
 
-  model() {
+  model({ wildcard }) {
+    let match = wildcard.match(/http:\/\/gothamist.com\/(\d{4}\/\d{2}\/\d{2}\/[a-z_-].php)/);
+
+    if (match) {
+      return this.transitionTo('article', match[0]);
+    }
+
+    this.dataLayer.push({template: '404'});
+
     this.header.addRule('404', {
       all: {
         nav: true,
@@ -21,8 +29,6 @@ export default Route.extend({
         donate: true,
       }
     });
-
-    this.dataLayer.push({template: '404'});
 
     return this.store.query('article', {
       index: 'gothamist',
