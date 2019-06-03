@@ -106,15 +106,15 @@ export default DS.Model.extend({
       breadcrumb.push({label: 'Sponsored'});
     }
     if (this.isOpinion) {
-      breadcrumb.push({label: 'Opinion'});
+      breadcrumb.push({label: 'Opinion', route: ['tags', 'opinion']});
     }
     if (this.isAnalysis) {
-      breadcrumb.push({label: 'Analysis'});
+      breadcrumb.push({label: 'Analysis', route: ['tags', 'analysis']});
     }
 
     // HACK
     if (this.tags.includes('we the commuters')) {
-      breadcrumb.push({label: 'We the Commuters'});
+      breadcrumb.push({label: 'We the Commuters', route: ['tags', 'wethecommuters']});
     }
     return breadcrumb;
   }),
