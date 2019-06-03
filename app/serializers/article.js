@@ -10,6 +10,18 @@ export default DS.RESTSerializer.extend({
   modelNameFromPayloadKey: () => 'article',
   keyForAttribute: key => underscore(key),
 
+  normalizeResponse() {
+    let response = this._super(...arguments);
+
+    if (Array.isArray(response.data)) {
+      response.data.forEach(data => stripTwitterEmbeds(data.attributes));
+    } else if (typeof response.data === 'object') {
+      stripTwitterEmbeds(response.data.attributes);
+    }
+
+    return response;
+  },
+
   normalizeQueryRecordResponse(store, articleClass, payload) {
     // GothTopics always returns an array of entries
     // ember wants a single record in response to `queryRecord` calls
@@ -27,3 +39,8 @@ export default DS.RESTSerializer.extend({
     return meta;
   },
 });
+
+const TWITTER_SCRIPT_REGEX = /<script[^>]*(?=src="[^"]*twitter[^"]*")[^>]*><\/script>/g
+function stripTwitterEmbeds(attrs) {
+  attrs.text = attrs.text.replace(TWITTER_SCRIPT_REGEX, '');
+}
