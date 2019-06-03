@@ -191,6 +191,9 @@ module('Acceptance | article', function(hooks) {
     let viewCount = document.cookie.match(new RegExp(`${config.articleViewsCookie}=(\\d)`));
     assert.equal(viewCount[1], '3', 'tracks views');
 
+    await click('[data-test-donate-close]');
+    assert.dom('.c-donate-tout').doesNotExist('can close tout');
+
     reset();
   });
 

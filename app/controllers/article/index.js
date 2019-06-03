@@ -34,7 +34,7 @@ export default Controller.extend({
       let expires = moment().add(24, 'hours').toDate();
       this.cookies.write(config.donateCookie, 1, {expires, path: '/'});
       this.cookies.write(config.articleViewsCookie, 0, {path: '/'});
-      this.set('footerClosed', true);
+      this.set('showTout', false);
     }
   }
 });
