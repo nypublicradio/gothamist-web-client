@@ -13,7 +13,8 @@
     {{!-- No more than 2 inline ads on one page --}}
     {{#if (lt index 6)}}
       <gallery.billboard>
-        <AdTagWide @slot="gothamist/interior/midpage/gallery" />
+        <AdTagWide @slot="gothamist/interior/midpage/gallery"
+        @showLabel={{true}} />
       </gallery.billboard>
     {{/if}}
   {{/if}}

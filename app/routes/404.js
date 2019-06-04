@@ -27,7 +27,10 @@ export default Route.extend({
         nav: true,
         search: true,
         donate: true,
-      }
+      },
+      resting: {
+        leaderboard: true,
+      },
     });
 
     return this.store.query('article', {

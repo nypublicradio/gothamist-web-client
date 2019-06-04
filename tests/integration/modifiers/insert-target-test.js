@@ -63,7 +63,7 @@ module('Integration | Modifier | insert-target', function(hooks) {
     assert.deepEqual(elementList, ['p1','p2','h2','p3','trgt','p4']);
   });
 
-  test('it should not display ads directly above or below social embed or video', async function(assert) {
+  test('it should not display ads directly between a paragraph followed by an embed', async function(assert) {
     await render(hbs`<div {{insert-target 'trgt' wordBoundary=300}}>
       <p id="p1">{{this.oneHundredWords}}</p>
       <p id="p2">{{this.oneHundredWords}}</p>
@@ -74,8 +74,22 @@ module('Integration | Modifier | insert-target', function(hooks) {
     </div>`);
     let elementList = [...this.element.firstChild.children].map(el => el.id);
     assert.dom('div#trgt').exists({count: 1});
-    assert.deepEqual(elementList, ['p1','p2','p3','iframe','p4','trgt','p5']);
+    assert.deepEqual(elementList, ['p1','p2','p3','iframe','trgt','p4','p5']);
   });
+
+
+  test('it should weight embeds as 50 words', async function(assert) {
+    await render(hbs`<div {{insert-target 'trgt' wordBoundary=150}}>
+      <iframe id="iframe1"></iframe>
+      <iframe id="iframe2"></iframe>
+      <iframe id="iframe3"></iframe>
+      <iframe id="iframe4"></iframe>
+    </div>`);
+    let elementList = [...this.element.firstChild.children].map(el => el.id);
+    assert.dom('div#trgt').exists({count: 1});
+    assert.deepEqual(elementList, ['iframe1','iframe2','iframe3','trgt','iframe4']);
+  });
+
 
   test('it should handle bare text nodes part 1', async function(assert) {
     await render(hbs`<div {{insert-target 'trgt' wordBoundary=300}}>
@@ -127,18 +141,16 @@ module('Integration | Modifier | insert-target', function(hooks) {
   });
 
   test('it should insert at the end if all else fails', async function(assert) {
-    await render(hbs`<div {{insert-target 'trgt' wordBoundary=300}}>
+    await render(hbs`<div {{insert-target 'trgt' wordBoundary=100}}>
+      <h1 id="h1">{{this.oneHundredWords}}</h1>
+      <h2 id="h2">{{this.oneHundredWords}}</h2>
+      <h3 id="h3">{{this.oneHundredWords}}</h3>
+      <h4 id="h4">{{this.oneHundredWords}}</h4>
       <p id="p1">{{this.oneHundredWords}}</p>
-      <iframe id="iframe"></iframe>
-      <p id="p2">{{this.oneHundredWords}}</p>
-      <iframe id="iframe"></iframe>
-      <p id="p3">{{this.oneHundredWords}}</p>
-      <iframe id="iframe"></iframe>
-      <p id="p4">{{this.oneHundredWords}}</p>
       <iframe id="iframe"></iframe>
     </div>`);
     let elementList = [...this.element.firstChild.children].map(el => el.id);
     assert.dom('div#trgt').exists({count: 1});
-    assert.deepEqual(elementList, ['p1','iframe','p2','iframe','p3','iframe','p4','iframe','trgt']);
+    assert.deepEqual(elementList, ['h1','h2','h3','h4','p1','iframe','trgt']);
   });
 });

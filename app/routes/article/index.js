@@ -27,6 +27,7 @@ export default Route.extend({
         search: true,
       },
       resting: {
+        leaderboard: true,
         nav: true,
       },
       floating: {
