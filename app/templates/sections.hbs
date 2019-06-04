@@ -71,6 +71,7 @@
     as |more|>
     <AnimatedContainer class="u-section-spacing" @onInitialRender={{true}}>
       {{#each more.pages as |page|}}
+        <AriaLoadMessage @message="More Results Loaded" />
         <section class="c-listing__section o-section">
           <NyprMBlockList @items={{slice 0 6 page}} as |article|>
             <ArticleBlock
