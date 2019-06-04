@@ -23,7 +23,10 @@ export default Route.extend({
         nav: true,
         donate: true,
         search: true,
-      }
+      },
+      resting: {
+        leaderboard: true,
+      },
     });
   },
 

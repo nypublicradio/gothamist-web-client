@@ -28,6 +28,9 @@ export default Route.extend({
         donate: true,
         search: true,
       },
+      resting: {
+        leaderboard: true,
+      },
     });
   },
 
