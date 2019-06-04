@@ -10,7 +10,7 @@ export default Route.extend({
   beforeModel() {
     this.dataLayer.push({template: 'flatpage'});
 
-    this.header.addRule('staff.index', {
+    this.header.addRule('contact', {
       all: {
         nav: true,
         donate: true,
