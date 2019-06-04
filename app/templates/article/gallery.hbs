@@ -12,7 +12,7 @@
   {{#if (eq (mod index 3) 2)}}
     {{!-- No more than 2 inline ads on one page --}}
     {{#if (lt index 6)}}
-      <gallery.billboard @hideLabel={{true}}>
+      <gallery.billboard>
         <AdTagWide @slot="gothamist/interior/midpage/gallery"
         @showLabel={{true}} />
       </gallery.billboard>
