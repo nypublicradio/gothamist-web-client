@@ -91,6 +91,7 @@ export default Route.extend({
   actions: {
     willTransition() {
       this.dataLayer.clearForType('article');
+      return true;
     }
   }
 });
