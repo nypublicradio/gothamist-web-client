@@ -49,6 +49,7 @@ export default Route.extend({
   actions: {
     didTransition() {
       schedule('afterRender', () => this.dataLayer.send404());
+      return true;
     }
   }
 });
