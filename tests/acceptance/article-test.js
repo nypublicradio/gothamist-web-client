@@ -167,9 +167,9 @@ module('Acceptance | article', function(hooks) {
   });
 
   test('donation tout only appears after visiting 3 articles', async function(assert) {
-    server.create('article', {permalink: 'foo'});
-    server.create('article', {permalink: 'bar'});
-    server.create('article', {permalink: 'baz'});
+    server.create('article', {path: 'foo'});
+    server.create('article', {path: 'bar'});
+    server.create('article', {path: 'baz'});
 
     await visit('/foo');
     await scrollPastTarget(this, '.c-article__footer');
@@ -201,8 +201,8 @@ module('Acceptance | article', function(hooks) {
     const cookieService = this.owner.lookup('service:cookies');
     let cookieSpy = this.spy(cookieService, 'write');
 
-    server.create('article', {permalink: 'foo'});
-    server.create('article', {permalink: 'bar'});
+    server.create('article', {path: 'foo'});
+    server.create('article', {path: 'bar'});
 
     await visit('/foo');
     await visit('/bar');
