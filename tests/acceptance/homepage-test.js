@@ -43,7 +43,7 @@ module('Acceptance | homepage', function(hooks) {
       id: 'sponsored',
       title: TITLE,
       tags: ['@sponsor'],
-      authored_on: moment().subtract(12, 'hours'),
+      authored_on_utc: moment().subtract(12, 'hours'),
     });
 
     await visit('/');
@@ -55,7 +55,7 @@ module('Acceptance | homepage', function(hooks) {
 
     server.create('article', {
       tags: ['@sponsor'],
-      authored_on: moment().subtract(36, 'hours'),
+      authored_on_utc: moment().subtract(36, 'hours'),
     });
 
     await visit('/');
