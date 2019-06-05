@@ -119,7 +119,6 @@ export default Route.extend({
       bio: 'Mei is a native New Yorker who joined Gothamist as an intern back in 2008 when the lunch options were basically Front Street Pizza and Grimaldi’s. She has lived in Queens and currently resides in Brooklyn, but is an equal opportunity consumer when it comes to the location of a delicious meal. Mei does not self-identify as a morning person and didn’t mean to greet you with a blank stare at 9 AM the other morning.',
       contact: {
         email: 'mlee@gothamist.com',
-        twitter: ''
       }
     }]
   }
