@@ -131,3 +131,12 @@ The `link-to` component looks for `isQueyParams` on the final value in the `@par
 
 ### twitter embeds
 The twitter embed script is included on the index page. It seems to allow for better async handling of rendering embedded tweets.
+
+### pattern lab
+Pattern lab styles are built by the pattern lab repo at [https://github.com/nypublicradio/pattern-lab]. When a new release is cut, the CSS is compiled and shipped to prod infra for the gothamist web client.
+
+The `pattern-lab-styles` in repo addon controls the path to the styles included in the index file.
+
+- When deploying, the path is root-relative
+- When in development, the path is absolute to SouthLeft's staging server
+- When `LOCAL_STYLES` is set in `.env`, the path is to a local pattern lab server, set to point to `localhost:8020`
