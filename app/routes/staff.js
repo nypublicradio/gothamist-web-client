@@ -80,7 +80,7 @@ export default Route.extend({
       name: 'Elizabeth Kim',
       title: 'Senior Editor',
       image: '/images/staff/elizabeth-kim.jpg',
-      bio: '',
+      bio: 'Elizabeth Kim has worked at Gothamist since January 2019. She covers housing, zoning, development, and other real estate issues, including the city’s rat epidemic. Prior to Gothamist, she was a senior editor at The Real Deal and a reporter at The Stamford Advocate. Born and raised in Queens, Elizabeth spent her youth riding the No. 7 train to Manhattan. She now lives in Yorkville with her husband and two sons. She enjoys dancing, exploring the city, and talking to strangers.',
       contact: {
         email: 'ekim@gothamist.com',
         twitter: 'lizkimtweets',
@@ -98,7 +98,7 @@ export default Route.extend({
       name: 'Jake Offenhartz',
       title: 'Reporter',
       image: '/images/staff/jake-offenhartz.jpg',
-      bio: '',
+      bio: 'Jake Offenhartz has been at Gothamist since 2017, covering all things transit, policing, local politics, and the occasional bagel scandal. Born in New York City, he was banished to the suburbs at a young age after supposedly befriending a large rat in Riverside Park. He made it back to the city, thankfully, and now lives in Bushwick with a mutt named Nancy. His position on rodent friendships has since evolved.',
       contact: {
         email: 'joffenhartz@gothamist.com',
         twitter: 'jangelooff'
@@ -115,8 +115,8 @@ export default Route.extend({
     }, {
       name: 'Mei Lee',
       title: 'Ad Operations Manager',
-      image: '/images/defaults/no-category/no-category-tile.png',
-      bio: '',
+      image: '/images/staff/mei-lee.jpg',
+      bio: 'Mei is a native New Yorker who joined Gothamist as an intern back in 2008 when the lunch options were basically Front Street Pizza and Grimaldi’s. She has lived in Queens and currently resides in Brooklyn, but is an equal opportunity consumer when it comes to the location of a delicious meal. Mei does not self-identify as a morning person and didn’t mean to greet you with a blank stare at 9 AM the other morning.',
       contact: {
         email: 'mlee@gothamist.com',
         twitter: ''
