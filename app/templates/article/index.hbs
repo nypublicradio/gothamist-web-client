@@ -92,7 +92,7 @@
           <p><strong>Do you know the scoop?</strong> &nbsp; {{#if model.allowComments}}<a href="#{{commentsAnchor}}">Comment</a> below or {{/if}}<a href="mailto:tips@gothamist.com" target="_blank" rel="noopener">Send us a Tip</a></p>
         </footer.contact>
 
-        {{#unless footerClosed}}
+        {{#if showTout}}
           <footer.donate
             @close={{action 'closeDonation'}}
             @linkText='Donate Now'
@@ -102,7 +102,7 @@
               Gothamist is non-profit local news. We rely on reader support. We need YOU so we can keep telling New York stories.
             </p>
           </footer.donate>
-        {{/unless}}
+        {{/if}}
 
         <footer.ad>
           <AdTagWide

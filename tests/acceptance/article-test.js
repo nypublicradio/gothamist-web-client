@@ -28,10 +28,14 @@ module('Acceptance | article', function(hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(() => {
+    document.cookie = `${config.donateCookie}=; expires=${moment().subtract(1, 'day')}; path=/`;
+    document.cookie = `${config.articleViewsCookie}=; expires=${moment().subtract(1, 'day')}; path=/`;
     window.block_disqus = true;
   });
 
   hooks.afterEach(() => {
+    document.cookie = `${config.donateCookie}=; expires=${moment().subtract(1, 'day')}; path=/`;
+    document.cookie = `${config.articleViewsCookie}=; expires=${moment().subtract(1, 'day')}; path=/`;
     window.block_disqus = false;
   });
 
@@ -162,15 +166,46 @@ module('Acceptance | article', function(hooks) {
     assert.ok(inViewport(find(`#${config.commentsAnchor}`)), 'comments area should be on screen');
   });
 
-  test('donation tout disappears for 24 hours', async function(assert) {
-    // clear the cookie
-    document.cookie = `${config.donateCookie}=1; expires=${moment().subtract(1, 'day')}`;
+  test('donation tout only appears after visiting 3 articles', async function(assert) {
+    server.create('article', {path: 'foo'});
+    server.create('article', {path: 'bar'});
+    server.create('article', {path: 'baz'});
 
+    await visit('/foo');
+    await scrollPastTarget(this, '.c-article__footer');
+
+    assert.equal(currentURL(), '/foo');
+    assert.dom('.c-donate-tout').doesNotExist('not active on first article');
+
+    await visit('/bar');
+    await scrollPastTarget(this, '.c-article__footer');
+
+    assert.equal(currentURL(), '/bar');
+    assert.dom('.c-donate-tout').doesNotExist('not active on second article');
+
+    await visit('/baz');
+    let reset = await scrollPastTarget(this, '.c-article__footer', () => find('.c-donate-tout.is-active'));
+
+    assert.equal(currentURL(), '/baz');
+
+    let viewCount = document.cookie.match(new RegExp(`${config.articleViewsCookie}=(\\d)`));
+    assert.equal(viewCount[1], '3', 'tracks views');
+
+    await click('[data-test-donate-close]');
+    assert.dom('.c-donate-tout').doesNotExist('can close tout');
+
+    reset();
+  });
+
+  test('donation tout disappears for 24 hours', async function(assert) {
     const cookieService = this.owner.lookup('service:cookies');
     let cookieSpy = this.spy(cookieService, 'write');
 
-    server.create('article', {path: 'foo', id: '1'});
+    server.create('article', {path: 'foo'});
+    server.create('article', {path: 'bar'});
 
+    await visit('/foo');
+    await visit('/bar');
     await visit('/foo');
 
     assert.equal(currentURL(), '/foo');
@@ -180,12 +215,11 @@ module('Acceptance | article', function(hooks) {
     await click('[data-test-donate-close]');
 
     assert.ok(document.cookie.match(config.donateCookie), 'cookie is set');
-    let { expires } = cookieSpy.firstCall.args[2];
+    let { expires } = cookieSpy.getCall(3).args[2];
     assert.equal(moment().add(24, 'hours').date(), moment(expires).date(), 'cookie is set to expire tomorrow');
+    let viewCount = document.cookie.match(new RegExp(`${config.articleViewsCookie}=(\\d)`));
+    assert.equal(viewCount[1], '0', 'tracked views should reset when closed');
 
     reset();
-
-    // clear the cookie
-    document.cookie = `${config.donateCookie}=1; expires=${moment().subtract(1, 'day')}`;
   });
 });
