@@ -27,10 +27,8 @@ export default Route.extend({
       const from = get(transition, 'from.name')
       const to = get(transition, 'to.name')
       if (from === 'article.gallery' && to === 'article.gallery') {
-        console.log('SLIDE VIEW');
         schedule('afterRender', () => this.dataLayer.push('event', 'Gallery Slide View'));
       } else {
-        console.log('PAGE VIEW');
         schedule('afterRender', () => this.dataLayer.sendPageView());
       }
     });
