@@ -26,9 +26,11 @@ export default Route.extend({
     this.router.on('routeDidChange', (transition) => {
       const from = get(transition, 'from.name')
       const to = get(transition, 'to.name')
-      if (from === to === 'article.gallery') {
+      if (from === 'article.gallery' && to === 'article.gallery') {
+        console.log('SLIDE VIEW');
         schedule('afterRender', () => this.dataLayer.push('event', 'Gallery Slide View'));
       } else {
+        console.log('PAGE VIEW');
         schedule('afterRender', () => this.dataLayer.sendPageView());
       }
     });
