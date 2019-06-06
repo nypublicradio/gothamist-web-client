@@ -22,7 +22,13 @@ export default Route.extend({
     this.router.on('routeWillChange', () => this.dataLayer.push({previousPath: this.router.currentURL}));
 
     // synthetic page view for analytics
-    this.router.on('routeDidChange', () => schedule('afterRender', () => this.dataLayer.sendPageView()));
+    this.router.on('routeDidChange', (transition) => {
+      if (transition.to === transition.from === 'article.gallery') {
+        schedule('afterRender', () => this.dataLayer.push('event', 'Gallery Slide View'));
+      } else {
+        schedule('afterRender', () => this.dataLayer.sendPageView());
+      }
+    });
   },
 
   title(tokens) {
