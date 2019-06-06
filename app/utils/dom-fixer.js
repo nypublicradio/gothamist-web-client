@@ -170,6 +170,10 @@ export default class DomFixer {
     })
   }
 
+  removeHTML(string) {
+    return string.replace(/(<([^>]+)>)/ig,"");
+  }
+
   /**
     Finds all anchor links within current DOM tree and updates them to open in a new window if they point to a different domain.
 

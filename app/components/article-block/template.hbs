@@ -5,8 +5,9 @@
     @srcSet={{this.thumbnail.srcSet}}
     @breakM={{this.thumbnailBreakpoint}}
     @srcM={{this.thumbnail.srcM}}
-    @alt={{@article.leadImageCaption}}
+    @alt={{@article.leadImageAlt}}
     @ratio={{@ratio}}
+    @ariaLabel={{unless @article.leadImageAlt @article.title}}
   />
 
   <block.object as |o|>
