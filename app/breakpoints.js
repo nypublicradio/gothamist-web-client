@@ -10,7 +10,7 @@ export default {
   lessThanXsmall: `(max-width: ${xsmall - 1}px)`,
   xSmallAndUp: `(min-width: ${xsmall}px)`,
   smallAndUp: `(min-width: ${small}px)`,
-  mediumAndUp: `(min-width: ${medium}px)`,
+  mediumAndUp: `(min-width: ${medium + 1}px)`,
   largeAndUp: `(min-width: ${large}px)`,
   xLargeAndUp: `(min-width: ${xlarge}px)`,
   xxLargeAndUp: `(min-width: ${xxlarge}px)`,
