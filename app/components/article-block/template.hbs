@@ -5,7 +5,7 @@
     @srcSet={{this.thumbnail.srcSet}}
     @breakM={{this.thumbnailBreakpoint}}
     @srcM={{this.thumbnail.srcM}}
-    @alt={{@article.leadImageAlt}}
+    @alt={{or @article.leadImageAlt ""}}
     @ratio={{@ratio}}
     @ariaLabel={{unless @article.leadImageAlt @article.title}}
   />
