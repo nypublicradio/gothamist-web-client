@@ -144,7 +144,7 @@
     @callback={{action riverCallback}}
     @total={{model.meta.total}}
     as |more|>
-    <AnimatedContainer @onInitialRender={{true}}>
+    <AnimatedContainer @onInitialRender={{true}} class="u-spacing--quad">
       {{#each more.pages as |page|}}
         <AriaLoadMessage @message="More Results Loaded" />
         {{#animated-each page use=transition initialInsertion=true as |set|}}
