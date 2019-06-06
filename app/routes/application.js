@@ -2,6 +2,7 @@ import uuid from 'uuid/v1';
 import DS from 'ember-data';
 
 import Route from '@ember/routing/route';
+import { get } from '@ember/object';
 import { inject } from '@ember/service';
 import { schedule } from '@ember/runloop';
 import { doTargetingForPath, clearTargetingForPath } from 'nypr-ads';
@@ -23,7 +24,9 @@ export default Route.extend({
 
     // synthetic page view for analytics
     this.router.on('routeDidChange', (transition) => {
-      if (transition.to === transition.from === 'article.gallery') {
+      const from = get(transition, 'from.name')
+      const to = get(transition, 'to.name')
+      if (from === to === 'article.gallery') {
         schedule('afterRender', () => this.dataLayer.push('event', 'Gallery Slide View'));
       } else {
         schedule('afterRender', () => this.dataLayer.sendPageView());
