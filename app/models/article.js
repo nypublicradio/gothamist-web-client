@@ -144,6 +144,7 @@ export default DS.Model.extend({
   leadImage:        reads('_parsedLegacyContent.leadImage'),
   leadImageCaption: reads('_parsedLegacyContent.caption'),
   leadImageCredit:  reads('_parsedLegacyContent.credit'),
+  leadImageAlt:     reads('_parsedLegacyContent.alt'),
 
   displayTags: computed('tags', function() {
     let tags = this.tags || [];
@@ -203,7 +204,7 @@ export default DS.Model.extend({
     // mutates passed in nodes
     let leadImage = this._extractLeadImage(domFixer.nodes);
 
-    // extract caption and credit
+    // extract caption and credit and alt
     if (leadImage) {
       let img = leadImage.querySelector('img');
       parsed.leadImage = img ? img.src : '';
@@ -211,6 +212,7 @@ export default DS.Model.extend({
       let [, caption, credit] = this._getImageMeta(leadImage);
       parsed.caption = caption ? caption.trim() : 'Image from Gothamist';
       parsed.credit = credit ? credit.trim() : '';
+      parsed.alt = caption? domFixer.removeHTML(parsed.caption) : "";
     }
 
     parsed.nodes = domFixer.nodes;
