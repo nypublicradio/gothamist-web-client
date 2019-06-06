@@ -113,6 +113,11 @@ $ember-basic-dropdown-content-z-index: 10000;
   }
 }
 
+// margin for ads when columns collapse
+.c-home__sections .c-block-group__col1 {
+  margin-bottom: 24px;
+}
+
 // ad layout
 .break-margins {
   position: absolute;
