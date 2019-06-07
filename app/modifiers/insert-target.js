@@ -42,8 +42,31 @@ const InsertTargetModifier = Modifier.extend({
 
     @param  {String[]} [classNames=[]] A list of CSS classes
     to apply to the inserted div.
+
+    @param {String} [contentsId='0'] When this string changes
+    the div is removed and reinserted.
   */
-  didInsertElement([id], {wordBoundary=150, containerSelector, classNames=[]}) {
+  didInsertElement([id], {wordBoundary=150, containerSelector, classNames=[], contentsId='0'}) {
+    this.contentsId = contentsId;
+    this._insertDiv(id, {wordBoundary, containerSelector, classNames});
+  },
+
+  didReceiveArguments([id], {wordBoundary=150, containerSelector, classNames=[], contentsId='0'}) {
+    if(contentsId !== this.contentsId) {
+      this.contentsId = contentsId;
+      if (this.target && this.target.parentNode) {
+        this.target.parentNode.removeChild(this.target);
+      }
+      this._insertDiv(id, {wordBoundary, containerSelector, classNames});
+    }
+
+    if (classNames && this.target) {
+      this.target.className = '';
+      this.target.classList.add(...classNames);
+    }
+  },
+
+  _insertDiv(id, {wordBoundary, containerSelector, classNames}) {
     let container = document.querySelector(containerSelector) || this.element;
     let nodes = [...container.childNodes].filter(node => {
       // ignore whitespace only text and P nodes.
@@ -70,20 +93,14 @@ const InsertTargetModifier = Modifier.extend({
         return node;
       }
     })
-    let target = this.target = document.createElement('div');
+    let target = document.createElement('div');
+    this.target = target;
     target.id = id;
     target.classList.add(...classNames)
     if (boundary && boundary.nextSibling) {
       container.insertBefore(target, boundary.nextSibling);
     } else {
       container.appendChild(target);
-    }
-  },
-
-  didReceiveArguments(_,{classNames}) {
-    if (classNames) {
-      this.target.className = '';
-      this.target.classList.add(...classNames);
     }
   }
 });
