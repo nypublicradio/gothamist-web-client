@@ -140,17 +140,26 @@ module('Integration | Modifier | insert-target', function(hooks) {
     assert.deepEqual(elementList, ['p1','p2','trgt']);
   });
 
-  test('it should insert at the end if all else fails', async function(assert) {
-    await render(hbs`<div {{insert-target 'trgt' wordBoundary=100}}>
-      <h1 id="h1">{{this.oneHundredWords}}</h1>
-      <h2 id="h2">{{this.oneHundredWords}}</h2>
-      <h3 id="h3">{{this.oneHundredWords}}</h3>
-      <h4 id="h4">{{this.oneHundredWords}}</h4>
+  test('it should reinsert when the contentsId changes', async function(assert) {
+    this.set('id','foo');
+    await render(hbs`<div id="container" {{insert-target 'trgt' wordBoundary=300 contentsId=id}}>
       <p id="p1">{{this.oneHundredWords}}</p>
-      <iframe id="iframe"></iframe>
+      <p id="p2">{{this.oneHundredWords}}</p>
+      <p id="p3">{{this.oneHundredWords}}</p>
+      <p id="p4">{{this.oneHundredWords}}</p>
     </div>`);
     let elementList = [...this.element.firstChild.children].map(el => el.id);
     assert.dom('div#trgt').exists({count: 1});
-    assert.deepEqual(elementList, ['h1','h2','h3','h4','p1','iframe','trgt']);
+    assert.deepEqual(elementList, ['p1','p2','p3','trgt','p4']);
+
+    this.element.querySelector('#container').innerHTML =
+      `<p id="p5">${this.oneHundredWords}</p>` +
+      `<p id="p6">${this.oneHundredWords}</p>` +
+      `<p id="p7">${this.oneHundredWords}</p>` +
+      `<p id="p8">${this.oneHundredWords}</p>`;
+    this.set('id','bar');
+    elementList = [...this.element.firstChild.children].map(el => el.id);
+    assert.dom('div#trgt').exists({count: 1});
+    assert.deepEqual(elementList, ['p5','p6','p7','trgt','p8']);
   });
 });
