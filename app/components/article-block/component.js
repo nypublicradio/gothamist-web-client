@@ -6,7 +6,7 @@ import { medium } from '../../breakpoints';
 import { makeHttps } from '../../helpers/make-https';
 
 
-const PATH = '/images/defaults';
+const PATH = '/static-images/defaults';
 export const FALLBACK_THUMBNAIL = {
   food: {
     srcS: `${PATH}/food/food-sq.png`,
