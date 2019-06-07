@@ -23,7 +23,7 @@ module('Integration | Component | ad-tag-inside', function(hooks) {
     `);
 
     assert.dom('.c-article__body #inserted-ad .ad-tag-wide').exists()
-    assert.dom('[id^=ad_]').exists()
+    assert.dom('[data-test-inserted-ad]').exists()
   });
 
   test('it renders in the specified container', async function(assert) {
@@ -36,7 +36,26 @@ module('Integration | Component | ad-tag-inside', function(hooks) {
     `);
 
     assert.dom('.special-div #inserted-ad .ad-tag-wide').exists()
-    assert.dom('[id^=ad_]').exists()
+    assert.dom('[data-test-inserted-ad]').exists()
   });
 
+  test('it still has an ad after updating the contents', async function(assert) {
+    this.set('id','foo');
+    await render(hbs`
+      {{#ad-tag-inside contentsId=id}}
+        <div class='c-article__body'>
+          template block text
+        </div>
+      {{/ad-tag-inside}}
+    `);
+
+    assert.dom('.c-article__body #inserted-ad .ad-tag-wide').exists()
+    assert.dom('[data-test-inserted-ad]').exists()
+
+    this.element.querySelector('.c-article__body').innerHTML = `completely new article`;
+    this.set('id', 'bar');
+
+    assert.dom('.c-article__body #inserted-ad .ad-tag-wide').exists()
+    assert.dom('[data-test-inserted-ad]').exists()
+  });
 });
