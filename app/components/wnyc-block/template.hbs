@@ -1,6 +1,6 @@
 <NyprMBlock @orientation={{@orientation}} @size={{@size}} as |block|>
   <block.media
-    @url={{@story.url}}
+    @url={{concat @story.url '?utm_medium=partnersite&utm_source=gothamist&utm_campaign=homepagepromo'}}
     @srcS={{make-https this.thumbnail}}
     @alt={{@story.image-main.caption}}
   />
@@ -8,7 +8,7 @@
   <block.object as |o|>
     <o.title
       @h3
-      @url={{@story.url}}
+      @url={{concat @story.url '?utm_medium=partnersite&utm_source=gothamist&utm_campaign=homepagepromo'}}
     >
       {{@story.title}}
     </o.title>
