@@ -52,8 +52,13 @@ export default DS.Model.extend({
     }
 
     if (this.galleryDropbox) {
-      let gallery = await this.store.findRecord('gallery', this.entrytopics[0])
-      this.set('gallery', gallery);
+      try {
+        let gallery = await this.store.findRecord('gallery', this.entrytopics[0])
+        this.set('gallery', gallery);
+      } catch(_e) {
+        this.set('hasGallery', false);
+        return this;
+      }
     } else {
       let slides = [];
       for (let i = 0; i < this.galleryFull.length; i++) {

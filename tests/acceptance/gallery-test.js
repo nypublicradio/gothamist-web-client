@@ -1,7 +1,10 @@
 import { module, test } from 'qunit';
-import { visit, currentURL } from '@ember/test-helpers';
+import { visit, currentURL, click } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { Response } from 'ember-cli-mirage';
+
+import config from 'gothamist-web-client/config/environment';
 
 module('Acceptance | gallery', function(hooks) {
   setupApplicationTest(hooks);
@@ -84,5 +87,16 @@ module('Acceptance | gallery', function(hooks) {
     assert.equal(currentURL(), `/${article.path}/gallery`);
     assert.dom('[data-test-gallery-slide]').exists({count: 14});
     assert.dom('[data-test-gallery-overlay] [data-test-ad-tag-wide]').exists({count: 2});
+  });
+
+  test('navigating to a gallery that returns a 500 should still load the article', async function(assert) {
+    server.create('article', 'platypusGallery', {path: 'foo', id: '1'});
+    server.get(`${config.apiServer}/platypus/api/gallery/:gallery`, new Response(500));
+
+    await visit('/');
+
+    await click('[data-test-block="1"] a');
+
+    assert.equal(currentURL(), '/foo');
   });
 });
