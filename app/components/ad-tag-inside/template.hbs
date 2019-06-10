@@ -1,8 +1,9 @@
 <div
-  {{insert-target "inserted-ad"
+  {{insert-target (or @contentsId "inserted-ad")
     containerSelector=(or @containerSelector ".c-article__body")
+    contentsId=@contentsId
   }}
-  data-test-inserted-ad
+  data-test-inserted-ad-wrapper
 >
   {{yield}}
 </div>
@@ -14,11 +15,12 @@
   the DOM, we delay this until after fastboot.
 --}}
 {{#unless this.fastboot.isFastBoot}}
-  {{#ember-wormhole to="inserted-ad"}}
+  {{#ember-wormhole to=(or @contentsId "inserted-ad")}}
     <AdTagWide
       @slot={{@slot}}
       @breakMargins={{true}}
       @showLabel={{true}}
+      data-test-inserted-ad
     />
   {{/ember-wormhole}}
 {{/unless}}

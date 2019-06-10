@@ -52,11 +52,9 @@ const InsertTargetModifier = Modifier.extend({
   },
 
   didReceiveArguments([id], {wordBoundary=150, containerSelector, classNames=[], contentsId='0'}) {
-    if(contentsId !== this.contentsId) {
-      this.contentsId = contentsId;
-      if (this.target && this.target.parentNode) {
-        this.target.parentNode.removeChild(this.target);
-      }
+    if (this.target && !this.target.parentNode) {
+    //   this.target.parentNode.removeChild(this.target);
+    // }
       this._insertDiv(id, {wordBoundary, containerSelector, classNames});
     }
 

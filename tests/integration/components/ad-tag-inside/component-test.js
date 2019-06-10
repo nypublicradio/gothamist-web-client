@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 
@@ -22,8 +22,8 @@ module('Integration | Component | ad-tag-inside', function(hooks) {
       {{/ad-tag-inside}}
     `);
 
-    assert.dom('.c-article__body #inserted-ad .ad-tag-wide').exists()
-    assert.dom('[data-test-inserted-ad]').exists()
+    assert.dom('[data-test-inserted-ad-wrapper]').exists()
+    assert.dom('.c-article__body #inserted-ad [data-test-inserted-ad]').exists()
   });
 
   test('it renders in the specified container', async function(assert) {
@@ -35,6 +35,7 @@ module('Integration | Component | ad-tag-inside', function(hooks) {
       {{/ad-tag-inside}}
     `);
 
+    assert.dom('[data-test-inserted-ad-wrapper]').exists()
     assert.dom('.special-div #inserted-ad .ad-tag-wide').exists()
     assert.dom('[data-test-inserted-ad]').exists()
   });
@@ -49,13 +50,16 @@ module('Integration | Component | ad-tag-inside', function(hooks) {
       {{/ad-tag-inside}}
     `);
 
-    assert.dom('.c-article__body #inserted-ad .ad-tag-wide').exists()
-    assert.dom('[data-test-inserted-ad]').exists()
+    assert.dom('[data-test-inserted-ad-wrapper]').exists()
+    assert.dom('.c-article__body #foo').exists()
+    assert.dom('.c-article__body #foo [data-test-inserted-ad]').exists()
 
-    this.element.querySelector('.c-article__body').innerHTML = `completely new article`;
+    // this.element.querySelector('.c-article__body').innerHTML = `completely new article`;
     this.set('id', 'bar');
 
-    assert.dom('.c-article__body #inserted-ad .ad-tag-wide').exists()
-    assert.dom('[data-test-inserted-ad]').exists()
+    await settled();
+
+    assert.dom('.c-article__body #bar').exists()
+    assert.dom('.c-article__body #bar [data-test-inserted-ad]').exists()
   });
 });
