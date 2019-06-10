@@ -26,4 +26,9 @@
     (array 970 90)
     (array 970 250)
   }}
-/>
+as |ad|>
+  {{ad.tag}}
+  {{#unless ad.isEmpty}}
+    <NyprAAdLabel/>
+  {{/unless}}
+</DfpAd>
