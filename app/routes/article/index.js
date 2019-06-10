@@ -65,10 +65,11 @@ export default Route.extend({
         instgrm.Embeds.process();
       }
 
-      // twitter widgets will fail to load if the user has an ad blocker running
-      // this should be init'd by a script on the index page so it always loads
+      // load twitter widgets manually after twitter callback has run
+      // twitter scripts are stripped from gothamist payload responses to allow
+      // for more reliable rendering
       if (typeof twttr !== 'undefined') {
-        twttr.widgets.load();
+        twttr.ready(t => t.widgets.load());
       }
     })
   },
