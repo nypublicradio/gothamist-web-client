@@ -137,11 +137,11 @@ export default DS.Model.extend({
   }),
   isOpinion: computed('tags', function() {
     let tags = this.tags || [];
-    return tags.includes('@opinion');
+    return tags.includes('@opinion') || tags.includes('opinion');
   }),
   isAnalysis: computed('tags', function() {
     let tags = this.tags || [];
-    return tags.includes('@analysis');
+    return tags.includes('@analysis') || tags.includes('analysis');
   }),
 
   hasLead:          or('leadImage', 'hasGallery'),
