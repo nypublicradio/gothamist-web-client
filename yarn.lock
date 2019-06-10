@@ -8864,9 +8864,10 @@ nypr-auth@^0.2.4:
     ember-get-config "^0.2.2"
     ember-simple-auth "^1.7.0"
 
-nypr-design-system@nypublicradio/nypr-design-system:
-  version "0.2.0"
-  resolved "https://codeload.github.com/nypublicradio/nypr-design-system/tar.gz/7f814593ddadc6a926f85aa669f1f17801577233"
+nypr-design-system@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/nypr-design-system/-/nypr-design-system-1.0.0.tgz#35c09fc5ec3e44eb0bd87b722c654f4622aee2bc"
+  integrity sha512-eDbopDpV0K4gqa6SGgtZ64MkIMveTxnfqNUJWsjJA8//s2/yDfyFLaooYiHsWD9jBqP4kxWatV2urSFaGyD/rA==
   dependencies:
     broccoli-merge-files "^0.8.0"
     ember-auto-import "^1.2.19"
@@ -8903,11 +8904,12 @@ nypr-fastboot@^0.7.0:
     morgan "^1.9.1"
     obj-extend "^0.1.0"
 
-nypr-metrics@nypublicradio/nypr-metrics:
-  version "0.5.4"
-  resolved "https://codeload.github.com/nypublicradio/nypr-metrics/tar.gz/b09905f3cfc80597498038c745bd4314865df939"
+nypr-metrics@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/nypr-metrics/-/nypr-metrics-0.6.0.tgz#8549d8abbdb6867b9c314192e3874946be5ead96"
+  integrity sha512-9ZCYVisi5sFbLPF5JZ7D8rzlrsOx3oqEHR41tkWeweHuAk5BFQt2adcEtYyOQ9MILa9wqW+fIPeatnGME/eKKw==
   dependencies:
-    ember-cli-babel "^6.6.0"
+    ember-cli-babel "^7.0.0"
     ember-get-config "^0.2.2"
 
 oauth-sign@~0.9.0:
