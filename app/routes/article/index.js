@@ -56,22 +56,6 @@ export default Route.extend({
     } else if (model.allowComments){
       addCommentCount(model);
     }
-
-    schedule('afterRender', () => {
-      // instagram embeds need a manual push after rehydration
-      // ember will re-render a fastboot DOM tree,
-      // but the IG embed script will only operate once
-      if (typeof instgrm !== 'undefined') {
-        instgrm.Embeds.process();
-      }
-
-      // load twitter widgets manually after twitter callback has run
-      // twitter scripts are stripped from gothamist payload responses to allow
-      // for more reliable rendering
-      if (typeof twttr !== 'undefined') {
-        twttr.ready(t => t.widgets.load());
-      }
-    })
   },
 
   setupController(controller) {
@@ -92,6 +76,24 @@ export default Route.extend({
   actions: {
     willTransition() {
       this.dataLayer.clearForType('article');
+      return true;
+    },
+    didTransition() {
+      schedule('afterRender', () => {
+        // instagram embeds need a manual push after rehydration
+        // ember will re-render a fastboot DOM tree,
+        // but the IG embed script will only operate once
+        if (typeof instgrm !== 'undefined') {
+          instgrm.Embeds.process();
+        }
+
+        // load twitter widgets manually after twitter callback has run
+        // twitter scripts are stripped from gothamist payload responses to allow
+        // for more reliable rendering
+        if (typeof twttr !== 'undefined') {
+          twttr.ready(t => t.widgets.load());
+        }
+      });
       return true;
     }
   }
