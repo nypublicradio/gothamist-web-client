@@ -48,7 +48,7 @@ module('Acceptance | article', function(hooks) {
     assert.equal(currentURL(), `/${article.path}`);
     assert.dom('[data-test-top-nav]').exists('nav should exist at load');
     assert.dom('[data-test-article-headline]').hasText(article.title);
-    assert.dom('[data-test-article-body]').hasText(article.text + ' Advertisement');
+    assert.dom('[data-test-article-body]').hasText(article.text);
     assert.dom('[data-test-article-body] #inserted-ad').exists({count: 1})
 
     // recirc
