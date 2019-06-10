@@ -66,13 +66,13 @@ templates:
             TAG=${CIRCLE_TAG:-demo}
             source ~/.venv/bin/activate
             nyprsetuptools DockerDeploy \
-              --cpu=256 \
+              --cpu=512 \
               --ecr-repository=gothamist-client \
               --ecs-cluster=fastboot \
               --environment=$ENV \
               --execution-role=gothamist-client-$ENV \
               --fargate \
-              --memory-reservation=512 \
+              --memory-reservation=1024 \
               --ports=80 \
               --tag=$TAG \
               --task-role=gothamist-client-$ENV \
