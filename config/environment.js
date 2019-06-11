@@ -3,6 +3,15 @@
 module.exports = function(environment) {
   let ENV = {
     modulePrefix: 'gothamist-web-client',
+    'ember-metrics': {
+      includeAdapters: ['chartbeat']
+    },
+    metrics: {
+      chartbeat: {
+        id: 16246,
+        domain: 'gothamist.com'
+      },
+    },
     environment,
     rootURL: '/',
     locationType: 'auto',

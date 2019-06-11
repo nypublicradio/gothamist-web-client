@@ -8,6 +8,7 @@ import config from '../config/environment';
 export default Route.extend({
   cookies: inject(),
   headData: inject(),
+  metrics: inject(),
 
   model({ any }) {
     if (!this.cookies.exists(config.donateCookie)) {
@@ -46,6 +47,14 @@ export default Route.extend({
       },
       ampId: model.platypusId,
     });
+
+    this.set('metrics.context.pageData', {
+      sections: model.section.label,
+      authors: model.authors,
+      title: model.title,
+      path: window.path,
+    })
+
   },
 
   actions: {
