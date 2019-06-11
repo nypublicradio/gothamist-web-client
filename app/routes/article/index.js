@@ -67,10 +67,8 @@ export default Route.extend({
     controller.set('showTout', showTout);
   },
 
-  resetController(controller, isExiting) {
-    if (isExiting) {
-      controller.set('to', null);
-    }
+  resetController(controller) {
+    controller.set('to', null);
   },
 
   actions: {

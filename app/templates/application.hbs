@@ -45,7 +45,7 @@
 
   <header.left as |left|>
     <left.branding>
-      {{#link-to 'index' class=header.rules.logoLinkClass}}
+      {{#link-to 'index' class=header.rules.logoLinkClass data-test-header-logo=true}}
         {{#if header.rules.stackLogo}}
           <NyprASvg @icon='gothamist-logo--stacked'/>
         {{else}}

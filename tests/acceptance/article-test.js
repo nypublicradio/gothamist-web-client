@@ -157,6 +157,12 @@ module('Acceptance | article', function(hooks) {
       id: '1',
       path: 'foo',
     });
+    server.create('article', {
+      text: faker.lorem.words(1000),
+      tags: ['@main'],
+      id: '2',
+      path: 'bar',
+    });
 
     await visit('/');
 
@@ -164,6 +170,12 @@ module('Acceptance | article', function(hooks) {
 
     assert.equal(currentURL(), `/foo?to=${config.commentsAnchor}`, 'comment anchor should be in query string');
     assert.ok(inViewport(find(`#${config.commentsAnchor}`)), 'comments area should be on screen');
+
+    await click('[data-test-header-logo]');
+    await click('[data-test-block="2"] [data-test-block-title] a');
+
+    assert.equal(currentURL(), '/bar');
+    assert.notOk(inViewport(find(`#${config.commentsAnchor}`)), 'comments area should not be on screen');
   });
 
   test('donation tout only appears after visiting 3 articles', async function(assert) {
