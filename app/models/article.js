@@ -120,6 +120,9 @@ export default DS.Model.extend({
   hasMain: computed('tags', function() {
     return this.tags.includes('@main');
   }),
+  hasVideo: computed('tags', function() {
+    return this.tags.includes('@video');
+  }),
   moveableTypeId: reads('id'),
 
   breadcrumb: computed('section', function() {

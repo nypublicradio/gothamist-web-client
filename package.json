@@ -81,7 +81,7 @@
     "memory-scroll": "^0.9.1",
     "nypr-ads": "^1.1.1",
     "nypr-auth": "^0.2.4",
-    "nypr-design-system": "^1.0.0",
+    "nypr-design-system": "nypublicradio/nypr-design-system#brian/ds-357",
     "nypr-metrics": "^0.6.0",
     "qunit-dom": "^0.8.0",
     "sass": "^1.17.0",
