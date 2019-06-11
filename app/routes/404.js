@@ -14,7 +14,7 @@ export default Route.extend({
   titleToken: '404 Error',
 
   model({ wildcard }) {
-    let match = wildcard.match(/http:\/\/gothamist.com\/(\d{4}\/\d{2}\/\d{2}\/[a-z_-].php)/);
+    let match = wildcard.match(/http:\/\/gothamist.com\/(\d{4}\/\d{2}\/\d{2}\/[a-z_-]+.php)/);
 
     if (match) {
       return this.transitionTo('article', match[0]);
