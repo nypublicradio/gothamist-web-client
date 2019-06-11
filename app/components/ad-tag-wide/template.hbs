@@ -1,7 +1,6 @@
 <DfpAd
   @slot={{@slot}}
   @target={{@target}}
-  @slotRenderEndedAction={{action 'handleSlotRendered'}}
   @mapping={{array
     (array 0
       (array
@@ -36,7 +35,7 @@
   }}
   data-test-ad-tag-wide
 as |ad|>
-  <div class="{{if @breakMargins "break-margins"}}">
+  <div class={{if @breakMargins "break-margins"}}>
     <div class="flex-wrapper">
       {{ad.tag}}
       {{#if (and @showLabel (not ad.isEmpty))}}
@@ -44,7 +43,7 @@ as |ad|>
       {{/if}}
     </div>
   </div>
-  {{#if @breakMargins}}
-    <div class="space-filler {{concat "height-" ad.height}}"></div>
+  {{#if (and @breakMargins (not ad.isEmpty))}}
+    <div class="space-filler" style="height: {{ad.height}}px"></div>
   {{/if}}
 </DfpAd>
