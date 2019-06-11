@@ -10,13 +10,13 @@
       @h3
       @url={{concat @story.url '?utm_medium=partnersite&utm_source=gothamist&utm_campaign=homepagepromo'}}
     >
-      {{@story.title}}
+      {{{@story.title}}}
     </o.title>
 
     <o.body as |body|>
       {{#unless @hideExcerpt}}
         <body.text>
-          {{@story.tease}}
+          {{{@story.tease}}}
         </body.text>
       {{/unless}}
 
