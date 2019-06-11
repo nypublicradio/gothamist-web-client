@@ -10,6 +10,7 @@ import {
   DOUBLE_BREAKS,
   BAD_ARTICLE,
   BAD_ARTICLE_2,
+  LINKED_LEAD_IMAGE,
 } from '../fixtures/article-fixtures';
 
 
@@ -55,7 +56,16 @@ module('Unit | Model | article', function(hooks) {
 
     assert.equal(model.leadImageCaption, 'Joseph Jordan a.k.a Eric Striker');
     assert.equal(model.leadImageCredit, 'Courtesy of the Southern Poverty Law Center');
-  })
+  });
+
+  test('linked lead images', function(assert) {
+    let store = this.owner.lookup('service:store');
+    let model = store.createRecord('article', {text: LINKED_LEAD_IMAGE});
+
+    let link = LINKED_LEAD_IMAGE.match(/<a href="([^"]+)"/);
+
+    assert.equal(model.leadImageLink, link[1]);
+  });
 
   test('external links', function(assert) {
     const URL = window.location.toString();

@@ -153,6 +153,7 @@ export default DS.Model.extend({
   leadImageCaption: reads('_parsedLegacyContent.caption'),
   leadImageCredit:  reads('_parsedLegacyContent.credit'),
   leadImageAlt:     reads('_parsedLegacyContent.alt'),
+  leadImageLink:    reads('_parsedLegacyContent.leadImageLink'),
 
   displayTags: computed('tags', function() {
     let tags = this.tags || [];
@@ -210,12 +211,13 @@ export default DS.Model.extend({
 
     // remove duplicate lead image
     // mutates passed in nodes
-    let leadImage = this._extractLeadImage(domFixer.nodes);
+    let [leadImage, leadImageLink] = this._extractLeadImage(domFixer.nodes);
 
     // extract caption and credit and alt
     if (leadImage) {
       let img = leadImage.querySelector('img');
       parsed.leadImage = img ? img.src : '';
+      parsed.leadImageLink = leadImageLink;
 
       let [, caption, credit] = this._getImageMeta(leadImage);
       parsed.caption = caption ? caption.trim() : 'Image from Gothamist';
@@ -229,7 +231,7 @@ export default DS.Model.extend({
 
   _extractLeadImage(nodes) {
     if (!nodes.firstElementChild) {
-      return;
+      return [];
     }
     // the fist element will contain this MT tag if there's an image
     let imageWrapper = nodes.firstElementChild.querySelector('.mt-enclosure-image');
@@ -241,7 +243,17 @@ export default DS.Model.extend({
 
       // this image will be the same as `thumbnail640`, which is displayed as the lead image
       // remove it from this node collection so it isn't rendered twice
-      return imageWrapper.parentNode.removeChild(imageWrapper);
+      if (imageWrapper.parentElement && imageWrapper.parentElement.nodeName === 'A') {
+        let link = imageWrapper.parentElement.href;
+        return [
+          imageWrapper.parentNode.removeChild(imageWrapper),
+          link,
+        ];
+      } else {
+        return [ imageWrapper.parentNode.removeChild(imageWrapper) ];
+      }
+    } else {
+      return [];
     }
   },
 

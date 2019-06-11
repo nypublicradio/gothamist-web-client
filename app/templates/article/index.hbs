@@ -59,12 +59,23 @@
               @goToSlide={{action 'goToSlide'}}
             />
           {{else if model.leadImage}}
-            <NyprMFigure
-              class="c-lead"
-              @srcS={{model.leadImage}}
-              @caption={{model.leadImageCaption}}
-              @credit={{model.leadImageCredit}}
-            />
+            {{#if model.leadImageLink}}
+              <a href={{model.leadImageLink}} target="_blank" rel="noopener">
+                <NyprMFigure
+                  class="c-lead"
+                  @srcS={{model.leadImage}}
+                  @caption={{model.leadImageCaption}}
+                  @credit={{model.leadImageCredit}}
+                />
+              </a>
+            {{else}}
+              <NyprMFigure
+                class="c-lead"
+                @srcS={{model.leadImage}}
+                @caption={{model.leadImageCaption}}
+                @credit={{model.leadImageCredit}}
+              />
+            {{/if}}
           {{/if}}
         </lead.center>
 

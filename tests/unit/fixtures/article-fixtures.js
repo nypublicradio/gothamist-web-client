@@ -91,3 +91,27 @@ export const CAPTION_WITH_LINK = `
   </span>
 </p>
 `;
+
+export const LINKED_LEAD_IMAGE = `
+<p>
+  <a href="https://www.facebook.com/Wickedthemusical/posts/10156182509346053">
+    <span class="mt-enclosure mt-enclosure-image" style="display: inline;">
+      <img alt="640x426_full_ArticleLaunch.png" src="http://gothamist.com/attachments/mei/640x426_full_ArticleLaunch.png" width="640" height="426" class="image-none" />
+    </span>
+  </a>
+</p>
+<p>
+  During Pride&#8217;s month-long celebration and beyond, EVERYONE deserves the chance to fly. So what better way is there to celebrate than at Broadway&#8217;s thrillifying WICKED?
+</p>
+<p>
+  Here&#8217;s your chance: comment on WICKED&#8217;s Pride <a href="https://www.instagram.com/p/ByknWzzFpAG/">Instagram </a>or <a href="https://twitter.com/WICKED_Musical/status/1138445829881180166">Twitter</a> posts using the hashtag #WickedProud, and share how WICKED has made you proud to be the best person in all of Oz: yourself! You&#8217;ll automatically be entered to win a pair of tickets to the show*, and a backstage meet-and-greet with members of the cast. Plus, 30 additional winners will receive a limited edition signed Wicked15 album, featuring Ariana Grande, Pentatonix, and more!
+</p>
+<p>
+  Ready to defy gravity? Enter now through June 25, 2019, 6pm ET for your chance to win.
+</p>
+<p>
+  <br />
+  <em><small>*Open to US residents 18 and over. Terms and conditions.<a href="https://wickedthemusical.com/wp-content/uploads/2019/06/WICKED_WickedProudSweepstakes_RulesRegulations_2019.pdf">here</a>.<br /></small></em>
+  <br />
+</p>
+`;
