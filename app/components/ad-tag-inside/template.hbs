@@ -2,7 +2,7 @@
   {{insert-target (or @contentsId "inserted-ad")
     containerSelector=(or @containerSelector ".c-article__body")
     contentsId=@contentsId
-    afterInsert=(action (action 'handleInsert'))
+    afterInsert=(action 'handleInsert')
   }}
   data-test-inserted-ad-wrapper
 >
@@ -21,7 +21,7 @@
       @slot={{@slot}}
       @breakMargins={{true}}
       @showLabel={{true}}
-      @slotRenderEndedAction={{action (action 'handleSlotRenderEnded')}}
+      @slotRenderEndedAction={{action 'handleSlotRenderEnded'}}
       data-test-inserted-ad
     />
   {{/ember-wormhole}}

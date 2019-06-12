@@ -51,8 +51,8 @@ const InsertTargetModifier = Modifier.extend({
   */
   didInsertElement([id='inserted-target'], {wordBoundary=150, containerSelector, classNames=[], afterInsert, contentsId='0'}) {
     this._insertDiv(id, {wordBoundary, containerSelector, classNames});
-    if (afterInsert && this.target ) {
-      afterInsert(this.target );
+    if (afterInsert && this.target) {
+      afterInsert(this.target);
     }
     this.contentsId = contentsId
   },
@@ -99,15 +99,15 @@ const InsertTargetModifier = Modifier.extend({
       }
     })
     let target = this.target || document.createElement('div');
-    this.target = target;
     target.id = id;
-    this.target.className = '';
+    target.className = '';
     target.classList.add(...classNames)
     if (boundary && boundary.nextSibling) {
       container.insertBefore(target, boundary.nextSibling);
     } else {
       container.appendChild(target);
     }
+    this.target = target;
     return target;
   }
 });

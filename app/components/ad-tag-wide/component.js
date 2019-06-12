@@ -36,8 +36,8 @@ export default Component.extend({
       if (slot && slot.size) {
         this.set('height', slot.size[1]);
       }
-      if (this.get('slotRenderEndedAction')) {
-        this.get('slotRenderEndedAction')(slot);
+      if (this.slotRenderEndedAction) {
+        this.slotRenderEndedAction(slot);
       }
     }
   }
