@@ -1,7 +1,7 @@
 /* global googletag */
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { run } from '@ember/runloop';
+import { next } from '@ember/runloop';
 
 export default Component.extend({
   tagName: '',
@@ -11,7 +11,7 @@ export default Component.extend({
     handleInsert(insertedTarget) {
       this.set('wormholeDestination', insertedTarget);
       if (this.ad && typeof(googletag) !== "undefined") {
-        run(() => {
+        next(() => {
           googletag.pubads().refresh([this.ad]);
         })
       }
