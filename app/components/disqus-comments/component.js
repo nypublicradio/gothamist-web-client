@@ -36,6 +36,9 @@ export default Component.extend({
         // we're the only ones controlling these callbacks
         // just replace it on every init
         this.callbacks.onReady = [onReady];
+      } else {
+        // it's preserved between renders so wipe it out
+        this.callbacks.onReady = [];
       }
     }
 
