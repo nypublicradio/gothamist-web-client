@@ -10,7 +10,7 @@ export default Component.extend({
   actions: {
     handleInsert(insertedTarget) {
       this.set('wormholeDestination', insertedTarget);
-      if (this.ad && typeof(googletag) !== "undefined") {
+      if (this.ad && typeof googletag !== "undefined") {
         next(() => {
           googletag.pubads().refresh([this.ad]);
         })
