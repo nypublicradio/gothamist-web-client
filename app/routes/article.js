@@ -9,6 +9,7 @@ export default Route.extend({
   cookies: inject(),
   headData: inject(),
   metrics: inject(),
+  fastboot: inject(),
 
   model({ any }) {
     if (!this.cookies.exists(config.donateCookie)) {
