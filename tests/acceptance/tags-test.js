@@ -17,7 +17,7 @@ module('Acceptance | tags', function(hooks) {
     assert.equal(currentURL(), '/tags/dogs%20and%20cats');
 
     assert.dom('[data-test-block]').exists({count: COUNT});
-    assert.dom('[data-test-tag-heading]').hasText('Dogs And Cats');
+    assert.dom('[data-test-tag-heading]').hasText('Articles tagged Dogs And Cats');
 
     await click('[data-test-more-results]');
 
