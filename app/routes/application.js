@@ -88,7 +88,6 @@ export default Route.extend({
       let { host, path } = this.fastboot.request;
       let url = `https://${host}${path.replace(/\/$/, '')}`;
 
-      this.headData.set({});
       this.headData.setProperties({
         url,
       });
