@@ -31,6 +31,8 @@ module('Acceptance | article', function(hooks) {
     document.cookie = `${config.donateCookie}=; expires=${moment().subtract(1, 'day')}; path=/`;
     document.cookie = `${config.articleViewsCookie}=; expires=${moment().subtract(1, 'day')}; path=/`;
     window.block_disqus = true;
+    window.block_disqus = true;
+    window.pSUPERFLY = {virtualPage: () => true};
   });
 
   hooks.afterEach(() => {
@@ -233,5 +235,30 @@ module('Acceptance | article', function(hooks) {
     assert.equal(viewCount[1], '0', 'tracked views should reset when closed');
 
     reset();
+  });
+
+  test('chartbeat virtualPage is called', async function(assert) {
+    const article = server.create('article', {
+      categories: [{basename: 'food'}],
+    });
+
+    const spy = this.spy(window.pSUPERFLY, 'virtualPage');
+
+    await visit(`/${article.path}`);
+
+    const spycall = spy.getCall(0)
+
+    assert.deepEqual(Object.keys(spycall.args[0]), [
+      "sections",
+      "authors",
+      "path",
+      "title"
+    ]);
+    assert.deepEqual(spycall.args[0], {
+      sections: `Gothamist,${article.categories[0].basename},Gothamist ${article.categories[0].basename}`,
+      authors: article.author_nickname,
+      path: article.path,
+      title: article.title
+    })
   });
 });

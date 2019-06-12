@@ -9,6 +9,10 @@ module('Acceptance | 404', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
+  hooks.beforeEach(() => {
+    window.pSUPERFLY = {virtualPage: () => true};
+  });
+
   test('404 page', async function(assert) {
     server.createList('article', 4);
     await visit('/nope');

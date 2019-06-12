@@ -51,10 +51,10 @@ export default Route.extend({
 
     if (!this.fastboot.isFastBoot) {
       this.set('metrics.context.pageData', {
-        sections: model.section.label,
+        sections: model.section.label || model.section.basename,
         authors: model.authors,
         title: model.title,
-        path: window.path,
+        path: window.path || model.path,
       })
     }
 
