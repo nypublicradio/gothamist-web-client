@@ -8865,10 +8865,10 @@ nypr-auth@^0.2.4:
     ember-get-config "^0.2.2"
     ember-simple-auth "^1.7.0"
 
-nypr-design-system@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/nypr-design-system/-/nypr-design-system-1.0.3.tgz#4d2f25f4a96ac6e55ac165d9a7fcdeb556671db2"
-  integrity sha512-H8q4RzyLhPHSmFl7e4hpP1lDVVTqWhITwcCK+4XhVFY3GYKCJx7+akYYAwIAjNjPg2Cjv39zyABbZV5mjJSV6Q==
+nypr-design-system@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/nypr-design-system/-/nypr-design-system-1.0.4.tgz#daa97255c5d1f144a9e5b94cc4bc933791a246d4"
+  integrity sha512-5srQf02CcIz+nFPpJIMtLmQJbW07buw/s1fJf+Se1zQOQLn5rEvnqq2Xg0PmXZKs8NqO2ohF/yb3m1OBESp0jA==
   dependencies:
     broccoli-merge-files "^0.8.0"
     ember-auto-import "^1.2.19"
