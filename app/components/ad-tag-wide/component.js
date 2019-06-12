@@ -27,8 +27,8 @@ export default Component.extend({
   /**
     Called when the dfp-ad finishes rendering
 
-    @argument handleSlotRenderEnded
-    @type {Function}
+    @argument slotRenderEndedAction
+    @type {function}
   */
   height: 0,
   actions: {
