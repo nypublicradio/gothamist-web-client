@@ -7,12 +7,7 @@ const derivedSection = section => {
   return `Gothamist,${s},Gothamist ${s}`;
 };
 
-const derivedAuthors = authors => {
-  if (authors && authors.length > 0) {
-    return authors.map(a => a.name).join(",");
-  }
-  return "";
-};
+const derivedAuthors = (authors = []) => authors.map(a => a.name).join(",");
 
 export default BaseAdapter.extend({
   toStringExtension() {
