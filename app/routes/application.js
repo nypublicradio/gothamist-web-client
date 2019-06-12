@@ -145,8 +145,6 @@ export default Route.extend({
     didTransition() {
       doTargetingForPath();
       if (typeof FastBoot === 'undefined') {
-        window.scrollTo(0, 0);
-
         this.metrics.trackPage()
       }
     },
