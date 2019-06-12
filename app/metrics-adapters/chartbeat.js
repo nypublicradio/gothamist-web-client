@@ -49,12 +49,14 @@ export default BaseAdapter.extend({
   trackPage(args) {
     let data = args.pageData || {};
 
-    pSUPERFLY.virtualPage({
-      sections: derivedSection(data.sections),
-      authors: derivedAuthors(data.authors),
-      path: data.path,
-      title: data.title
-    });
+    if (window && window.pSUPERFLY && window.pSUPERFLY.virtualPage) {
+      pSUPERFLY.virtualPage({
+        sections: derivedSection(data.sections),
+        authors: derivedAuthors(data.authors),
+        path: data.path,
+        title: data.title
+      });
+    }
   },
 
   willDestroy() {
