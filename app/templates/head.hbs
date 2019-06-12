@@ -27,8 +27,8 @@
 
 <meta property="og:url" content={{model.url}}>
 
-<meta property="og:title" content={{{model.title}}}>
-<meta name="twitter:title" content={{{model.title}}}>
+<meta property="og:title" content={{{or model.ogTitle model.title}}}>
+<meta name="twitter:title" content={{{or model.ogTitle model.title}}}>
 
 <meta property="og:description" content={{model.metaDescription}}>
 <meta name="twitter:description" content={{model.metaDescription}}>

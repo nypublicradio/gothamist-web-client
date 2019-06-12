@@ -20,7 +20,7 @@ export default Route.extend({
   fastboot: inject(),
   dataLayer: inject('nypr-metrics/data-layer'),
 
-  titleToken: 'Gothamist: New York City Local News, Food, Arts & Events',
+  title: () => 'Gothamist: New York City Local News, Food, Arts & Events',
 
   beforeModel() {
     this.dataLayer.push({template: 'homepage'});
