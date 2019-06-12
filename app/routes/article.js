@@ -48,12 +48,14 @@ export default Route.extend({
       ampId: model.platypusId,
     });
 
-    this.set('metrics.context.pageData', {
-      sections: model.section.label,
-      authors: model.authors,
-      title: model.title,
-      path: window.path,
-    })
+    if (!this.fastboot.isFastBoot) {
+      this.set('metrics.context.pageData', {
+        sections: model.section.label,
+        authors: model.authors,
+        title: model.title,
+        path: window.path,
+      })
+    }
 
   },
 
