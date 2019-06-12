@@ -35,7 +35,6 @@ export default Route.extend({
     this.headData.setProperties({
       metaDescription: model.excerptPretty,
       ogType: 'article',
-      ogTitle: model.title, // don't include " - Gothamist" like in <title> tag
       publishedTime: model.publishedMoment.tz('America/New_York').format(),
       modifiedTime: model.modifiedMoment.tz('America/New_York').format(),
       section: model.section.label,
