@@ -2,7 +2,11 @@
 <div class="c-listing__sections u-section-spacing l-container l-container--14col l-wrap">
   <header class="c-tag-listing__header u-trigger-floating-header">
     <h1 class="c-tag-listing__heading u-font--secondary" data-test-tag-heading>
-      {{if model.isWTC 'We the Commuters' model.title}}
+      {{#if model.isWTC}}
+        We the Commuters 
+      {{else}}
+        <span class="is-vishidden">Articles tagged </span> {{model.title}}
+      {{/if}}
     </h1>
   </header>
 
@@ -92,6 +96,7 @@
     as |more|>
     <AnimatedContainer class="u-section-spacing" @onInitialRender={{true}}>
       {{#each more.pages as |page|}}
+        <AriaLoadMessage @message="More Results Loaded" />
         <section class="c-listing__section o-section">
           <NyprMBlockList @items={{slice 0 6 page}} as |article|>
             <ArticleBlock
@@ -131,6 +136,7 @@
           data-test-more-results
           class="o-button--c-quaternary o-button--extra"
           @onclick={{perform more.queryMore}}
+          aria-label="Click to load more results"
         >
           {{if more.queryMore.isRunning 'Loading...' 'More Results'}}
         </NyprAButton>

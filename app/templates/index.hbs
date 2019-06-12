@@ -165,6 +165,7 @@
           disabled={{more.queryMore.isRunning}}
           class="o-button--c-quaternary o-button--extra"
           @onclick={{perform more.queryMore}}
+          aria-label="Click to load more results"
         >
           {{if more.queryMore.isRunning 'Loading...' 'More Results'}}
         </NyprAButton>
