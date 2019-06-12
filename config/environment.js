@@ -8,7 +8,7 @@ module.exports = function(environment) {
     },
     metrics: {
       chartbeat: {
-        id: 16246,
+        id: process.env.CHARTBEAT_ID,
         domain: 'gothamist.com'
       },
     },
