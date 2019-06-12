@@ -2,6 +2,7 @@
   {{insert-target (or @contentsId "inserted-ad")
     containerSelector=(or @containerSelector ".c-article__body")
     contentsId=@contentsId
+    afterInsert=(action (action 'handleInsert'))
   }}
   data-test-inserted-ad-wrapper
 >
@@ -14,13 +15,14 @@
   fastboot time. Since ad insertion requires
   the DOM, we delay this until after fastboot.
 --}}
-{{#unless this.fastboot.isFastBoot}}
-  {{#ember-wormhole to=(or @contentsId "inserted-ad")}}
+{{#if (and this.wormholeDestination (not this.fastboot.isFastBoot))}}
+  {{#ember-wormhole destinationElement=this.wormholeDestination}}
     <AdTagWide
       @slot={{@slot}}
       @breakMargins={{true}}
       @showLabel={{true}}
+      @slotRenderEndedAction={{action (action 'handleSlotRenderEnded')}}
       data-test-inserted-ad
     />
   {{/ember-wormhole}}
-{{/unless}}
+{{/if}}

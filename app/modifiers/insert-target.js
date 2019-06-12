@@ -43,25 +43,32 @@ const InsertTargetModifier = Modifier.extend({
     @param  {String[]} [classNames=[]] A list of CSS classes
     to apply to the inserted div.
 
-    @param {String} [contentsId='0'] When this string changes
+    @param {String} [contentsId='0'] Whenever this string changes
     the div is removed and reinserted.
+
+    @param  {Function} [afterInsert] A callback that fires each time
+    the div is inserted successfully.
   */
-  didInsertElement([id], {wordBoundary=150, containerSelector, classNames=[], contentsId='0'}) {
-    this.contentsId = contentsId;
+  didInsertElement([id='inserted-target'], {wordBoundary=150, containerSelector, classNames=[], afterInsert, contentsId='0'}) {
     this._insertDiv(id, {wordBoundary, containerSelector, classNames});
+    if (afterInsert && this.target ) {
+      afterInsert(this.target );
+    }
+    this.contentsId = contentsId
   },
 
-  didReceiveArguments([id], {wordBoundary=150, containerSelector, classNames=[], contentsId='0'}) {
-    if (this.target && !this.target.parentNode) {
-    //   this.target.parentNode.removeChild(this.target);
-    // }
-      this._insertDiv(id, {wordBoundary, containerSelector, classNames});
+  didReceiveArguments([id='inserted-target'], {wordBoundary=150, containerSelector, classNames=[], afterInsert, contentsId='0'}) {
+    this._insertDiv(id, {wordBoundary, containerSelector, classNames});
+    if (afterInsert && this.target && contentsId !== this.contentsId) {
+      afterInsert(this.target);
     }
 
     if (classNames && this.target) {
       this.target.className = '';
       this.target.classList.add(...classNames);
     }
+
+    this.contentsId = contentsId;
   },
 
   _insertDiv(id, {wordBoundary, containerSelector, classNames}) {
@@ -91,15 +98,17 @@ const InsertTargetModifier = Modifier.extend({
         return node;
       }
     })
-    let target = document.createElement('div');
+    let target = this.target || document.createElement('div');
     this.target = target;
     target.id = id;
+    this.target.className = '';
     target.classList.add(...classNames)
     if (boundary && boundary.nextSibling) {
       container.insertBefore(target, boundary.nextSibling);
     } else {
       container.appendChild(target);
     }
+    return target;
   }
 });
 

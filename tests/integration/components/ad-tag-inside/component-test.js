@@ -54,7 +54,7 @@ module('Integration | Component | ad-tag-inside', function(hooks) {
     assert.dom('.c-article__body #foo').exists()
     assert.dom('.c-article__body #foo [data-test-inserted-ad]').exists()
 
-    // this.element.querySelector('.c-article__body').innerHTML = `completely new article`;
+    this.element.querySelector('.c-article__body').innerHTML = `completely new article`;
     this.set('id', 'bar');
 
     await settled();
