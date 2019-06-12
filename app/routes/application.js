@@ -6,12 +6,14 @@ import { get } from '@ember/object';
 import { inject } from '@ember/service';
 import { schedule } from '@ember/runloop';
 import { doTargetingForPath, clearTargetingForPath } from 'nypr-ads';
+import config from '../config/environment';
 
 export default Route.extend({
   router: inject(),
   fastboot: inject(),
   headData: inject(),
   session: inject(),
+  metrics: inject(),
   dataLayer: inject('nypr-metrics/data-layer'),
 
   init() {
@@ -90,6 +92,22 @@ export default Route.extend({
         url,
       });
     }
+
+    const metrics = this.metrics;
+
+    // Lazy-load chartbeat
+    if (!this.fastboot.isFastBoot) {
+      metrics.activateAdapters([
+        {
+          name: 'chartbeat',
+          environments: ['all'],
+          config: {
+            ...config.metrics.chartbeat,
+          }
+        }
+      ]);
+    }
+
   },
 
   actions: {
@@ -128,11 +146,14 @@ export default Route.extend({
       doTargetingForPath();
       if (typeof FastBoot === 'undefined') {
         window.scrollTo(0, 0);
+
+        this.metrics.trackPage()
       }
     },
 
     willTransition() {
       clearTargetingForPath();
+      this.set('metrics.context.pageData', {});
     }
   }
 });

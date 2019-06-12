@@ -8,6 +8,8 @@ import config from '../config/environment';
 export default Route.extend({
   cookies: inject(),
   headData: inject(),
+  metrics: inject(),
+  fastboot: inject(),
 
   model({ any }) {
     if (!this.cookies.exists(config.donateCookie)) {
@@ -46,6 +48,16 @@ export default Route.extend({
       },
       ampId: model.platypusId,
     });
+
+    if (!this.fastboot.isFastBoot) {
+      this.set('metrics.context.pageData', {
+        sections: model.section.label || model.section.basename,
+        authors: model.authors,
+        title: model.title,
+        path: window.path || model.path,
+      })
+    }
+
   },
 
   actions: {
