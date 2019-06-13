@@ -237,15 +237,20 @@ module('Acceptance | article', function(hooks) {
     reset();
   });
 
-  test('chartbeat virtualPage is called', async function(assert) {
+  test('chartbeat virtualPage is called only once', async function(assert) {
     const article = server.create('article', {
       categories: [{basename: 'food'}],
     });
 
     const spy = this.spy(window.pSUPERFLY, 'virtualPage');
 
+    await visit('/');
+
+    await click('[data-test-block="1"] a'); // first article
+
     await visit(`/${article.path}`);
 
+    assert.ok(spy.calledOnce, 'should skip the first call because chartbeat triggers a pageview onload of the JS library');
     const spycall = spy.getCall(0)
 
     assert.deepEqual(Object.keys(spycall.args[0]), [

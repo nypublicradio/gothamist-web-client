@@ -47,6 +47,12 @@ export default BaseAdapter.extend({
   },
 
   trackPage(args) {
+    // chartbeat fires a pageview when the JS library loads
+    // so we skip our first call in order to prevent duplicate pageview reporting
+    if (!this._calledOnce) {
+      this._calledOnce = true;
+      return;
+    }
     let data = args.pageData || {};
 
     if (window && window.pSUPERFLY && window.pSUPERFLY.virtualPage) {
