@@ -27,7 +27,8 @@ module('Acceptance | gallery', function(hooks) {
 
     await visit(`/${article.path}/gallery`);
 
-    assert.equal(currentURL(), `/${article.path}/gallery`);
+    // do a match to guard against non-determinism with ?image query string
+    assert.ok(currentURL().match(`/${article.path}/gallery`), 'path should include gallery');
     assert.dom('[data-test-gallery-slide]').exists({count: 2});
     assert.dom('[data-test-gallery-overlay] [data-test-ad-tag-wide]').exists({count: 0});
   });
