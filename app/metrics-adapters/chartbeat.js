@@ -60,7 +60,7 @@ export default BaseAdapter.extend({
         sections: derivedSection(data.sections),
         authors: derivedAuthors(data.authors),
         path: data.path,
-        title: data.title
+        title: document.title, // use whatever is in the title tag so we're in sync with ember-document-title
       });
     }
   },
