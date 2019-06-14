@@ -31,7 +31,7 @@ export default Route.extend({
       floating: {
         close: this.closeGallery.bind(this),
         share: true,
-        progressBar: true,
+        progressTarget: true,
         logoLinkClass: 'is-hiding-letters',
       }
     })
