@@ -16,7 +16,7 @@ export default BaseAdapter.extend({
 
   init() {
     const config = get(this, "config") || {};
-    const { id, domain, section } = config;
+    const { id, domain, sections, authors } = config;
 
     if (canUseDOM) {
       /* eslint-disable */
@@ -29,9 +29,9 @@ export default BaseAdapter.extend({
         _sf_async_config.uid = id;
         _sf_async_config.flickerControl = false;
         _sf_async_config.useCanonical = true;
-        _sf_async_config.sections = derivedSection(section);
+        _sf_async_config.sections = derivedSection(sections);
         _sf_async_config.useCanonicalDomain = true;
-        _sf_async_config.authors = "";
+        _sf_async_config.authors = derivedAuthors(authors);
 
         function loadChartbeat() {
           var e = document.createElement("script");
