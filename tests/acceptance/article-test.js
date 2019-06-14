@@ -269,4 +269,19 @@ module('Acceptance | article', function(hooks) {
       title: document.title,
     })
   });
+
+  test('chartbeat is initialized with article metadata on direct navigation', async function(assert) {
+    const SECTION = 'news';
+    const AUTHOR = 'Foo Bar';
+    server.create('article', {
+      categories: [{basename: SECTION}],
+      author_nickname: AUTHOR,
+      path: 'foo',
+    });
+
+    await visit('/foo');
+
+    assert.equal(window._sf_async_config.sections, "Gothamist,news,Gothamist news", 'should set section to article section');
+    assert.equal(window._sf_async_config.authors, "Foo Bar", 'should set author to article author');
+  });
 });
