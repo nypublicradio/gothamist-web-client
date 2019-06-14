@@ -51,7 +51,7 @@ module('Acceptance | article', function(hooks) {
     assert.dom('[data-test-top-nav]').exists('nav should exist at load');
     assert.dom('[data-test-article-headline]').hasText(article.title);
     assert.dom('[data-test-article-body]').hasText(article.text);
-    assert.dom('[data-test-article-body] #inserted-ad').exists({count: 1})
+    assert.dom('[data-test-article-body] [data-test-inserted-ad]').exists({count: 1})
 
     // recirc
     assert.dom('[data-test-recirc-popular] .c-block').exists({count: 3});

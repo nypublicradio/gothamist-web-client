@@ -42,8 +42,36 @@ const InsertTargetModifier = Modifier.extend({
 
     @param  {String[]} [classNames=[]] A list of CSS classes
     to apply to the inserted div.
+
+    @param {String} [contentsId='0'] Whenever this string changes
+    the div is removed and reinserted.
+
+    @param  {Function} [afterInsert] A callback that fires each time
+    the div is inserted successfully.
   */
-  didInsertElement([id], {wordBoundary=150, containerSelector, classNames=[]}) {
+  didInsertElement([id='inserted-target'], {wordBoundary=150, containerSelector, classNames=[], afterInsert, contentsId='0'}) {
+    this._insertDiv(id, {wordBoundary, containerSelector, classNames});
+    if (afterInsert && this.target) {
+      afterInsert(this.target);
+    }
+    this.contentsId = contentsId
+  },
+
+  didReceiveArguments([id='inserted-target'], {wordBoundary=150, containerSelector, classNames=[], afterInsert, contentsId='0'}) {
+    this._insertDiv(id, {wordBoundary, containerSelector, classNames});
+    if (afterInsert && this.target && contentsId !== this.contentsId) {
+      afterInsert(this.target);
+    }
+
+    if (classNames && this.target) {
+      this.target.className = '';
+      this.target.classList.add(...classNames);
+    }
+
+    this.contentsId = contentsId;
+  },
+
+  _insertDiv(id, {wordBoundary, containerSelector, classNames}) {
     let container = document.querySelector(containerSelector) || this.element;
     let nodes = [...container.childNodes].filter(node => {
       // ignore whitespace only text and P nodes.
@@ -70,21 +98,17 @@ const InsertTargetModifier = Modifier.extend({
         return node;
       }
     })
-    let target = this.target = document.createElement('div');
+    let target = this.target || document.createElement('div');
     target.id = id;
+    target.className = '';
     target.classList.add(...classNames)
     if (boundary && boundary.nextSibling) {
       container.insertBefore(target, boundary.nextSibling);
     } else {
       container.appendChild(target);
     }
-  },
-
-  didReceiveArguments(_,{classNames}) {
-    if (classNames) {
-      this.target.className = '';
-      this.target.classList.add(...classNames);
-    }
+    this.target = target;
+    return target;
   }
 });
 

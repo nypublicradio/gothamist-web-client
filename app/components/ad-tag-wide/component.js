@@ -24,11 +24,20 @@ export default Component.extend({
     @type {boolean}
   */
   breakMargins: false,
+  /**
+    Called when the dfp-ad finishes rendering
+
+    @argument slotRenderEndedAction
+    @type {function}
+  */
   height: 0,
   actions: {
     handleSlotRendered(slot) {
       if (slot && slot.size) {
         this.set('height', slot.size[1]);
+      }
+      if (this.slotRenderEndedAction) {
+        this.slotRenderEndedAction(slot);
       }
     }
   }
