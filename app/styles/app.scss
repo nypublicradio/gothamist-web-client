@@ -85,6 +85,10 @@ $ember-basic-dropdown-content-z-index: 10000;
 // white background peeks through on quick scrolls
 .gallery {
   background-color: #333;
+
+  .c-main {
+    position: relative; // reset positioning context around transformed gallery overlay
+  }
 }
 
 .is-hiding-letters .gothamist-logo-icon .letters {
