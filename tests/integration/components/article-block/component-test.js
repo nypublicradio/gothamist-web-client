@@ -3,7 +3,8 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-import { FALLBACK_THUMBNAIL, imgixURI } from 'gothamist-web-client/components/article-block/component';
+import { FALLBACK_THUMBNAIL } from 'gothamist-web-client/components/article-block/component';
+import { imgixUri } from 'gothamist-web-client/helpers/imgix-uri';
 
 module('Integration | Component | article-block', function(hooks) {
   setupRenderingTest(hooks);
@@ -33,7 +34,7 @@ module('Integration | Component | article-block', function(hooks) {
         @hideExcerpt={{true}}
       />
     `);
-    assert.dom('.c-block__media img').hasAttribute('src', imgixURI('/big.jpeg', 640, 300), 'generates thumbnail using `imgixURI` function');
+    assert.dom('.c-block__media img').hasAttribute('src', imgixUri('/big.jpeg', {w: 640, h: 300}), 'generates thumbnail using `imgix-uri` function');
     assert.dom('.c-block__media source').exists('creates a source element when medium thumbnail sizes are provided')
     assert.dom('.c-block__dek').doesNotExist('respects the @hideExcerpt argument');
   });
