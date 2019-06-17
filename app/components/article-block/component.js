@@ -39,6 +39,13 @@ export default Component.extend({
 
   commentsAnchor: config.commentsAnchor,
 
+  init() {
+    this._super(...arguments);
+    if (!this.thumbnailSize) {
+      this.thumbnailSize = [];
+    }
+  },
+
   thumbnail: computed('article', 'thumbnailSize', function() {
     if (!this.article) {
       return;
