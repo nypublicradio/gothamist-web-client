@@ -7,6 +7,9 @@ import { reads, or } from '@ember/object/computed';
 import { makeHttps } from '../helpers/make-https';
 import DomFixer from '../utils/dom-fixer';
 
+
+const GOTH_HOST_REGEX = /(https?:\/\/.*gothamist\.com)/;
+
 export default DS.Model.extend({
   allowComments: DS.attr('boolean'),
   authorId: DS.attr('number'),
@@ -77,6 +80,21 @@ export default DS.Model.extend({
 
 
   // computed
+  thumbnailPath: computed('{thumbnail640,thumbnail300,thumbnail105,thumbnail60}', function() {
+    let thumbnail;
+    if (this.thumbnail640) {
+      thumbnail = this.thumbnail640;
+    } else if (this.thumbnail300) {
+      thumbnail = this.thumbnail300;
+    } else if (this.thumbnail105) {
+      thumbnail = this.thumbnail105;
+    } else if (this.thumbnail60) {
+      thumbnail = this.thumbnail60;
+    } else {
+      return;
+    }
+    return thumbnail.replace(GOTH_HOST_REGEX, '');
+  }),
   path: computed('permalink', function() {
     return this.permalink.replace('http://gothamist.com/', '');
   }),
