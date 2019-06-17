@@ -5,7 +5,6 @@ import config from '../config/environment';
 const DEFAULTS = {
   fit: 'crop',
   q: 75,
-  fm: 'webp',
 };
 
 export function imgixUri(path, ops = {}) {
