@@ -90,6 +90,7 @@ export default Route.extend({
 
       this.headData.setProperties({
         url,
+        apiServer: config.apiServer,
       });
     }
 
