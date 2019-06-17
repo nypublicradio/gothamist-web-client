@@ -3,7 +3,7 @@ import { computed } from '@ember/object';
 
 import config from '../../config/environment';
 import { medium } from '../../breakpoints';
-import { makeHttps } from '../../helpers/make-https';
+import { imgixUri } from '../../helpers/imgix-uri';
 
 
 const PATH = '/static-images/defaults';
@@ -28,7 +28,6 @@ export const FALLBACK_THUMBNAIL = {
     srcSet: `${PATH}/no-category/no-category-sq@2x.png 2x, ${PATH}/no-category/no-category-sq@3x.png 3x`,
     srcM: `${PATH}/no-category/no-category-tile.png 1x, ${PATH}/no-category/no-category-tile@2x.png 2x, ${PATH}/no-category/no-category-tile@3x.png 3x`
   },
-
 };
 
 export default Component.extend({
@@ -44,24 +43,30 @@ export default Component.extend({
     if (!this.article) {
       return;
     }
-    let srcS;
-    switch(this.thumbnailSize) {
-      case '640':
-        srcS = this.article.thumbnail640;
-        break;
-      case '105':
-        srcS = this.article.thumbnail105;
-        break;
-      default:
-        srcS = this.article.thumbnail300;
-    }
+    let path = this.article.thumbnailPath;
+    let [ w, h ] = this.thumbnailSize;
 
-    if (!srcS) {
+    if (path) {
+      let sizes = {
+        srcS: `${imgixUri(path, {w, h})}`,
+        srcSet: `${imgixUri(path, {w, h, dpr: 1})} 1x,
+        ${imgixUri(path, {w, h, dpr: 2})} 2x,
+        ${imgixUri(path, {w, h, dpr: 3})} 3x`,
+      };
+
+      if (this.mediumThumbnailSize) {
+        let [ w, h ] = this.mediumThumbnailSize;
+
+        sizes.srcM = `${imgixUri(path, {w, h, dpr: 1})} 1x,
+        ${imgixUri(path, {w, h, dpr: 2})} 2x,
+        ${imgixUri(path, {w, h, dpr: 3})} 3x`;
+      }
+
+      return sizes;
+    } else if (!path) {
       // fallback image
       let section = this.article.section || {};
       return FALLBACK_THUMBNAIL[section.basename];
-    } else {
-      return { srcS: makeHttps([ srcS ]) };
     }
   }),
 
