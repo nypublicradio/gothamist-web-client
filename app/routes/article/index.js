@@ -35,7 +35,7 @@ export default Route.extend({
       },
       floating: {
         headline: model.title,
-        progressBar: true,
+        progressTarget: '.c-article__body',
         logoLinkClass: 'u-hide-until--m',
         share: {
           title: model.title,
