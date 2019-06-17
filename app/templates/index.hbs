@@ -49,11 +49,13 @@
     <NyprONewsletterTout
       @endpoint={{WTC_ENDPOINT}}
       @params={{WTC_PARAMS}}
+      @ariaTitle="We the Commuters"
       @img={{hash
         src='/static-images/wtc.png'
-        alt='newsletter image'
+        alt=''
       }}
       as |tout|>
+
       <tout.heading>
         {{#link-to 'tags' 'wethecommuters'}}
           We the Commuters: Comprehensive Coverage of Transportation in our Region from WNYC, Gothamist and More.
