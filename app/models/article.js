@@ -4,8 +4,8 @@ import DS from 'ember-data';
 import { computed } from '@ember/object';
 import { reads, or } from '@ember/object/computed';
 
-import { makeHttps } from '../helpers/make-https';
 import DomFixer from '../utils/dom-fixer';
+import { imgixUri } from '../helpers/imgix-uri';
 
 
 const GOTH_HOST_REGEX = /(https?:\/\/.*gothamist\.com)/;
@@ -232,6 +232,7 @@ export default DS.Model.extend({
     if (leadImage) {
       let img = leadImage.querySelector('img');
       parsed.leadImage = img ? img.src : '';
+      parsed.leadImage = imgixUri(parsed.leadImage.replace(GOTH_HOST_REGEX, ''), {w: 640, q: 90});
       parsed.leadImageLink = leadImageLink;
 
       let [, caption, credit] = this._getImageMeta(leadImage);
