@@ -65,9 +65,11 @@ export default DS.Model.extend({
     } else {
       let slides = [];
       for (let i = 0; i < this.galleryFull.length; i++) {
+        let path = this.galleryFull[i].replace(GOTH_HOST_REGEX, '');
         slides.push({
-          full: makeHttps([this.galleryFull[i]]),
-          thumb: makeHttps([this.galleryArray[i]]),
+          thumb: imgixUri(path, {w: 106, h: 106}),
+          preview: imgixUri(path, {w: 625, h: 416, q: 90}),
+          full: imgixUri(path, {w: 1200, q: 90}),
           caption: this.galleryCaptions[i],
           credit: this.galleryCredit[i],
         });
