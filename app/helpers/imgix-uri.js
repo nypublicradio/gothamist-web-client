@@ -3,8 +3,10 @@ import { helper } from '@ember/component/helper';
 import config from '../config/environment';
 
 const DEFAULTS = {
+  crop: 'faces',
   fit: 'crop',
-  q: 75,
+  auto: 'compress,format', // content negotiation
+  fm: 'jpg',
 };
 
 export function imgixUri(path, ops = {}) {
