@@ -34,7 +34,7 @@ module('Integration | Component | article-block', function(hooks) {
         @hideExcerpt={{true}}
       />
     `);
-    assert.dom('.c-block__media img').hasAttribute('src', imgixUri('/big.jpeg', {w: 640, h: 300}), 'generates thumbnail using `imgix-uri` function');
+    assert.dom('.c-block__media img').hasAttribute('src', imgixUri('/big.jpeg', {w: 640, h: 300, dpr: 1}), 'generates thumbnail using `imgix-uri` function');
     assert.dom('.c-block__media source').exists('creates a source element when medium thumbnail sizes are provided')
     assert.dom('.c-block__dek').doesNotExist('respects the @hideExcerpt argument');
   });
