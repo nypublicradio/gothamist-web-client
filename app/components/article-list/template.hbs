@@ -4,7 +4,7 @@
       <ArticleBlock
         @article={{article}}
         @orientation={{if article.hasMain 'v' 'h'}}
-        @thumbnailSize={{if article.hasMain '640' '300'}}
+        @thumbnailSize={{if article.hasMain (array 640 0) (array 100 100)}}
       />
     </NyprMBlockList>
   </blg.col1>

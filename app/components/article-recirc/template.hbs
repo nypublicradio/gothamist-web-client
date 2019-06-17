@@ -10,7 +10,7 @@
           @hideEyebrow={{true}}
           @article={{article}}
           @orientation='h'
-          @thumbnailSize='300'
+          @thumbnailSize={{array 100 100}}
           @hideExcerpt={{true}}
           @showAuthor={{true}}
           @showTimestamp={{false}}
@@ -28,7 +28,8 @@
         @hideEyebrow={{true}}
         @article={{featured.firstObject}}
         @orientation='v'
-        @thumbnailSize='640'
+        @thumbnailSize={{array 600 430}}
+        @mediumThumbnailSize={{array 378 252}}
         @showAuthor={{true}}
         @showTimestamp={{false}}
       />
