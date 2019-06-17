@@ -55,7 +55,10 @@ export default Component.extend({
 
     if (path) {
       let sizes = {
-        srcS: `${imgixUri(path, {w, h})}`,
+        srcS: `${imgixUri(path, {w, h, dpr: 1})}`,
+        srcSet: `${imgixUri(path, {w, h, dpr: 1})} 1x,
+        ${imgixUri(path, {w, h, dpr: 2})} 2x,
+        ${imgixUri(path, {w, h, dpr: 3})} 3x`,
       };
 
       if (this.mediumThumbnailSize) {
