@@ -5,5 +5,8 @@ module.exports = {
   rules: {
     quotes: false,
     'no-triple-curlies': false,
+    'no-inline-styles': {
+      allowDynamicStyles: true,
+    },
   }
 };
