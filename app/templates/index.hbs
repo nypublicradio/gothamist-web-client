@@ -26,7 +26,7 @@
           @article={{item}}
           @orientation='h'
           @size='s'
-          @thumbnailSize={{array 100 100}}
+          @thumbnailSize={{array 100 100 true}}
           @mediumThumbnailSize={{array 150 150}}
           @hideExcerpt={{true}}
         />
@@ -38,7 +38,7 @@
   {{#if model.sponsored}}
     <div class="l-container l-container--16col">
       <NyprOSponsoredTout @heading="Sponsored" data-test-sponsored-tout>
-        <ArticleBlock @article={{model.sponsored.firstObject}} @thumbnailSize={{array 328 219}}/>
+        <ArticleBlock @article={{model.sponsored.firstObject}} @thumbnailSize={{array 328 219 true}}/>
       </NyprOSponsoredTout>
     </div>
   {{/if}}
