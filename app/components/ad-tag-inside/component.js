@@ -6,7 +6,7 @@ import { next } from '@ember/runloop';
 export default Component.extend({
   tagName: '',
   fastboot: service(),
-  wormholeTarget: "",
+  wormholeDestination: "",
   actions: {
     handleInsert(insertedTarget) {
       this.set('wormholeDestination', insertedTarget);
