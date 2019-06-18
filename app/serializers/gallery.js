@@ -26,6 +26,9 @@ export default DS.RESTSerializer.extend({
         height: (RESIZED_WIDTH / RATIO),
         caption: item.caption,
         credit: payload.gallery.photographer,
+        thumbSrcSet: `${imgixUri(path, {w: 106, h: 106, dpr: 1, domain: 'platypus'})} 1x,
+        ${imgixUri(path, {w: 106, h: 106, dpr: 2, domain: 'platypus'})} 2x,
+        ${imgixUri(path, {w: 106, h: 106, dpr: 3, domain: 'platypus'})} 3x`,
       });
     });
     return {data: gallery};

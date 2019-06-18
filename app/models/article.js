@@ -72,6 +72,9 @@ export default DS.Model.extend({
           full: imgixUri(path, {w: 1200, q: 90}),
           caption: this.galleryCaptions[i],
           credit: this.galleryCredit[i],
+          thumbSrcSet: `${imgixUri(path, {w: 106, h: 106, dpr: 1})} 1x,
+          ${imgixUri(path, {w: 106, h: 106, dpr: 2})} 2x,
+          ${imgixUri(path, {w: 106, h: 106, dpr: 3})} 3x`,
         });
       }
       this.set('gallery', {slides});
