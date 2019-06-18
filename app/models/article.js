@@ -70,7 +70,7 @@ export default DS.Model.extend({
           thumb: imgixUri(path, {w: 106, h: 106}),
           preview: imgixUri(path, {w: 625, h: 416, q: 90}),
           full: imgixUri(path, {w: 1200, q: 90}),
-          caption: this.galleryCaptions[i],
+          caption: DomFixer.removeHTML(this.galleryCaptions[i]),
           credit: this.galleryCredit[i],
           thumbSrcSet: `${imgixUri(path, {w: 106, h: 106, dpr: 1})} 1x,
           ${imgixUri(path, {w: 106, h: 106, dpr: 2})} 2x,
@@ -243,7 +243,7 @@ export default DS.Model.extend({
       let [, caption, credit] = this._getImageMeta(leadImage);
       parsed.caption = caption ? caption.trim() : 'Image from Gothamist';
       parsed.credit = credit ? credit.trim() : '';
-      parsed.alt = caption? domFixer.removeHTML(parsed.caption) : "";
+      parsed.alt = caption? DomFixer.removeHTML(parsed.caption) : "";
     }
 
     parsed.nodes = domFixer.nodes;
