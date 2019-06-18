@@ -51,20 +51,29 @@ export default Component.extend({
       return;
     }
     let path = this.article.thumbnailPath;
-    let [ w, h ] = this.thumbnailSize;
+    let [ w, h, highDpi ] = this.thumbnailSize;
 
     if (path) {
       let sizes = {
-        srcS: `${imgixUri(path, {w, h, dpr: 1})}`,
-        srcSet: `${imgixUri(path, {w, h, dpr: 1})} 1x,
-        ${imgixUri(path, {w, h, dpr: 2})} 2x,
-        ${imgixUri(path, {w, h, dpr: 3})} 3x`,
+        srcS: `${imgixUri(path, {w, h})}`,
       };
 
-      if (this.mediumThumbnailSize) {
-        let [ w, h ] = this.mediumThumbnailSize;
+      if (highDpi) {
+        sizes.srcSet = `${imgixUri(path, {w, h, dpr: 1})} 1x,
+          ${imgixUri(path, {w, h, dpr: 2})} 2x,
+          ${imgixUri(path, {w, h, dpr: 3})} 3x`;
+      }
 
-        sizes.srcM = `${imgixUri(path, {w, h})}`;
+      if (this.mediumThumbnailSize) {
+        let [ w, h, highDpi ] = this.mediumThumbnailSize;
+
+        if (highDpi) {
+          sizes.srcM = `${imgixUri(path, {w, h, dpr: 1})} 1x,
+          ${imgixUri(path, {w, h, dpr: 2})} 2x,
+          ${imgixUri(path, {w, h, dpr: 3})} 3x`;
+        } else {
+          sizes.srcM = `${imgixUri(path, {w, h})}`;
+        }
       }
 
       return sizes;
