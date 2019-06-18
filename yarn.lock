@@ -8913,11 +8913,12 @@ nypr-auth@^0.2.4:
     ember-get-config "^0.2.2"
     ember-simple-auth "^1.7.0"
 
-nypr-design-system@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/nypr-design-system/-/nypr-design-system-1.0.7.tgz#12b85727a388746087d1c12746eede010ddaa379"
-  integrity sha512-aGAH2beJHdscISdX1PDkTASRk5W48P/JjeivAYIfo+nK5HGHez6PSnBTKcAtcMgVrYfmI41fJ0yC+iaKSBOboQ==
+nypr-design-system@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/nypr-design-system/-/nypr-design-system-1.0.8.tgz#074fa5c988426da6cfd0a66766c4e136d5caa267"
+  integrity sha512-/3AuuL1BXEjRVlaM1/Ib/icT5vjP1GLe9YSNf1teqpNfj8N/uqYX9R8A8BhKIhzqlfrSg45tO5LaCeYkQ6wnzg==
   dependencies:
+    "@babel/core" "^7.0.0"
     broccoli-merge-files "^0.8.0"
     ember-auto-import "^1.2.19"
     ember-basic-dropdown "^1.1.2"
