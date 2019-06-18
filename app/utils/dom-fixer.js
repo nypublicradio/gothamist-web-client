@@ -10,10 +10,10 @@ export default class DomFixer {
     if (typeof rawText === 'undefined') {
       throw new Error("Must provide a string when initializing");
     }
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(rawText, 'text/html');
+    const range = document.createRange();
+    const nodes = range.createContextualFragment(rawText);
 
-    this.nodes = doc.body;
+    this.nodes = nodes;
   }
 
   querySelector(selector) {

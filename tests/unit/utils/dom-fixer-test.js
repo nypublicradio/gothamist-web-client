@@ -27,9 +27,9 @@ module('Unit | Utility | dom-fixer', function() {
     `;
     let domFixer = new DomFixer(HTML);
 
-    assert.equal(4, domFixer.nodes.childNodes.length, 'should be 4 nodes in the parsed output');
-    assert.deepEqual(['P', '#text', 'P', '#text'], [...domFixer.nodes.childNodes].map(n => n.nodeName));
-    assert.deepEqual(['hello', '', 'world', ''], [...domFixer.nodes.childNodes].map(n => n.textContent.trim()));
+    assert.equal(5, domFixer.nodes.childNodes.length, 'should be 5 nodes in the parsed output');
+    assert.deepEqual(['#text', 'P', '#text', 'P', '#text'], [...domFixer.nodes.childNodes].map(n => n.nodeName));
+    assert.deepEqual(['', 'hello', '', 'world', ''], [...domFixer.nodes.childNodes].map(n => n.textContent.trim()));
 
     domFixer.removeEmptyNodes();
 
