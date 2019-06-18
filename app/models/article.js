@@ -96,6 +96,7 @@ export default DS.Model.extend({
     } else if (this.thumbnail60) {
       thumbnail = this.thumbnail60;
     } else {
+      // no thumbnail for this article
       return;
     }
     return thumbnail.replace(GOTH_HOST_REGEX, '');
@@ -236,8 +237,7 @@ export default DS.Model.extend({
     // extract caption and credit and alt
     if (leadImage) {
       let img = leadImage.querySelector('img');
-      parsed.leadImage = img ? img.src : '';
-      parsed.leadImage = imgixUri(parsed.leadImage.replace(GOTH_HOST_REGEX, ''), {w: 640, q: 90});
+      parsed.leadImage = img ? imgixUri(img.src.replace(GOTH_HOST_REGEX, ''), {w: 640, q: 90}) : '';
       parsed.leadImageLink = leadImageLink;
 
       let [, caption, credit] = this._getImageMeta(leadImage);
