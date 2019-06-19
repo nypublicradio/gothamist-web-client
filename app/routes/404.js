@@ -49,6 +49,9 @@ export default Route.extend({
   actions: {
     didTransition() {
       schedule('afterRender', () => this.dataLayer.send404());
+      if (!this.fastboot.isFastBoot) {
+        window.scrollTo(0, 0);
+      }
       return true;
     }
   }

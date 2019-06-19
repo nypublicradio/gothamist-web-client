@@ -78,6 +78,7 @@
     "eslint-plugin-ember": "^5.2.0",
     "include-media": "^1.4.9",
     "loader.js": "^4.7.0",
+    "memory-scroll": "^0.9.1",
     "nypr-ads": "^1.1.1",
     "nypr-auth": "^0.2.4",
     "nypr-design-system": "^1.0.8",
