@@ -14,7 +14,7 @@ module('Unit | Utility | dom-fixer', function() {
     const HTML = '<p>hello <strong>world</strong></p>';
     let domFixer = new DomFixer(HTML);
 
-    assert.ok(domFixer.nodes instanceof HTMLBodyElement, 'makes a document body out of some text');
+    assert.ok(domFixer.nodes instanceof DocumentFragment, 'makes a document fragment out of some text');
     assert.equal(domFixer.nodes.firstElementChild.outerHTML, HTML);
 
     assert.deepEqual(domFixer.querySelector('p'), domFixer.nodes.querySelector('p'), 'calling querySelector on the instance is the same as calling it on the nodes');
