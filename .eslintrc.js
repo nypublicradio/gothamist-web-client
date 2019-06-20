@@ -4,6 +4,7 @@ module.exports = {
     google: true,
     DISQUS: true,
     instgrm: true,
+    percySnapshot: true,
   },
   root: true,
   parserOptions: {

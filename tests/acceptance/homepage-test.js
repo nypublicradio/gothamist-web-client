@@ -14,6 +14,8 @@ module('Acceptance | homepage', function(hooks) {
   setupMirage(hooks);
 
   test('visiting homepage', async function(assert) {
+    percySnapshot(assert);
+
     server.createList('article', 10, {
       tags: ['@main']
     });
