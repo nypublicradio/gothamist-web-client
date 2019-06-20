@@ -8915,10 +8915,9 @@ nypr-auth@^0.2.4:
     ember-get-config "^0.2.2"
     ember-simple-auth "^1.7.0"
 
-nypr-design-system@^1.1.6:
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/nypr-design-system/-/nypr-design-system-1.1.6.tgz#4a888a24a78ff73f9f8cb7b2b485421e461fea2d"
-  integrity sha512-WgPx4YbVdIFtI0YLJQTq6AU5tZlLj+ZFEq8zDdPgHpC+62itz9iplBXl/vwE3p6sFaHxlk95XkoQkxOOiALYvg==
+nypr-design-system@nypublicradio/nypr-design-system#brian/breaking-news:
+  version "1.0.8"
+  resolved "https://codeload.github.com/nypublicradio/nypr-design-system/tar.gz/57b3f45a2f098f0b5f1b4688c4ce23c2d354d535"
   dependencies:
     "@babel/core" "^7.0.0"
     broccoli-merge-files "^0.8.0"
