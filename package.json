@@ -101,6 +101,7 @@
   "ember-addon": {
     "paths": [
       "lib/google-custom-search",
+      "lib/meta-refresh",
       "lib/pattern-lab-styles"
     ]
   }

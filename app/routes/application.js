@@ -33,8 +33,6 @@ export default Route.extend({
       } else {
         schedule('afterRender', () => this.dataLayer.sendPageView());
       }
-
-      this.headData.set('refresh', to === 'index' && config.environment === 'production');
     });
   },
 
