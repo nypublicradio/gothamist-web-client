@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { percySnapshot } from 'ember-percy';
 
 import { module, test } from 'qunit';
 import { visit, currentURL, click, findAll } from '@ember/test-helpers';
