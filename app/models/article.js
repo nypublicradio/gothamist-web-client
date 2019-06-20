@@ -4,8 +4,11 @@ import DS from 'ember-data';
 import { computed } from '@ember/object';
 import { reads, or } from '@ember/object/computed';
 
-import { makeHttps } from '../helpers/make-https';
 import DomFixer from '../utils/dom-fixer';
+import { imgixUri } from '../helpers/imgix-uri';
+
+
+const GOTH_HOST_REGEX = /(https?:\/\/.*gothamist\.com)/;
 
 export default DS.Model.extend({
   allowComments: DS.attr('boolean'),
@@ -62,11 +65,16 @@ export default DS.Model.extend({
     } else {
       let slides = [];
       for (let i = 0; i < this.galleryFull.length; i++) {
+        let path = this.galleryFull[i].replace(GOTH_HOST_REGEX, '');
         slides.push({
-          full: makeHttps([this.galleryFull[i]]),
-          thumb: makeHttps([this.galleryArray[i]]),
-          caption: this.galleryCaptions[i],
+          thumb: imgixUri(path, {w: 106, h: 106}),
+          preview: imgixUri(path, {w: 625, h: 416, q: 90}),
+          full: imgixUri(path, {w: 1200, q: 90}),
+          caption: DomFixer.removeHTML(this.galleryCaptions[i]),
           credit: this.galleryCredit[i],
+          thumbSrcSet: `${imgixUri(path, {w: 106, h: 106, dpr: 1})} 1x,
+          ${imgixUri(path, {w: 106, h: 106, dpr: 2})} 2x,
+          ${imgixUri(path, {w: 106, h: 106, dpr: 3})} 3x`,
         });
       }
       this.set('gallery', {slides});
@@ -77,6 +85,22 @@ export default DS.Model.extend({
 
 
   // computed
+  thumbnailPath: computed('{thumbnail640,thumbnail300,thumbnail105,thumbnail60}', function() {
+    let thumbnail;
+    if (this.thumbnail640) {
+      thumbnail = this.thumbnail640;
+    } else if (this.thumbnail300) {
+      thumbnail = this.thumbnail300;
+    } else if (this.thumbnail105) {
+      thumbnail = this.thumbnail105;
+    } else if (this.thumbnail60) {
+      thumbnail = this.thumbnail60;
+    } else {
+      // no thumbnail for this article
+      return;
+    }
+    return thumbnail.replace(GOTH_HOST_REGEX, '');
+  }),
   path: computed('permalink', function() {
     return this.permalink.replace('http://gothamist.com/', '');
   }),
@@ -213,13 +237,13 @@ export default DS.Model.extend({
     // extract caption and credit and alt
     if (leadImage) {
       let img = leadImage.querySelector('img');
-      parsed.leadImage = img ? img.src : '';
+      parsed.leadImage = img ? imgixUri(img.src.replace(GOTH_HOST_REGEX, ''), {w: 640, q: 90}) : '';
       parsed.leadImageLink = leadImageLink;
 
       let [, caption, credit] = this._getImageMeta(leadImage);
       parsed.caption = caption ? caption.trim() : 'Image from Gothamist';
       parsed.credit = credit ? credit.trim() : '';
-      parsed.alt = caption? domFixer.removeHTML(parsed.caption) : "";
+      parsed.alt = caption? DomFixer.removeHTML(parsed.caption) : "";
     }
 
     parsed.nodes = domFixer.nodes;

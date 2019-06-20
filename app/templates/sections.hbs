@@ -11,9 +11,8 @@
       <ArticleBlock
         @article={{object-at 0 model.articles}}
         @orientation='v'
-        @thumbnailSize='640'
+        @thumbnailSize={{array 800 533}}
         @hideEyebrow={{true}}
-        @ratio='3x2'
       />
     </blg.col1>
 
@@ -21,9 +20,8 @@
       <ArticleBlock
         @article={{object-at 1 model.articles}}
         @orientation='v'
-        @thumbnailSize='640'
+        @thumbnailSize={{array 800 533}}
         @hideEyebrow={{true}}
-        @ratio='3x2'
       />
     </blg.col2>
   </NyprOBlockListGroup>
@@ -36,7 +34,8 @@
         @article={{article}}
         @orientation='h'
         @size='l'
-        @thumbnailSize='300'
+        @thumbnailSize={{array 100 100 true}}
+        @mediumThumbnailSize={{array 360 240}}
         @hideEyebrow={{true}}
       />
     </NyprMBlockList>
@@ -56,7 +55,8 @@
         @article={{article}}
         @orientation='h'
         @size='l'
-        @thumbnailSize='300'
+        @thumbnailSize={{array 100 100 true}}
+        @mediumThumbnailSize={{array 360 240}}
         @hideEyebrow={{true}}
       />
     </NyprMBlockList>
@@ -78,7 +78,8 @@
               @article={{article}}
               @orientation='h'
               @size='l'
-              @thumbnailSize='300'
+              @thumbnailSize={{array 100 100 true}}
+              @mediumThumbnailSize={{array 360 240}}
               @hideEyebrow={{true}}
             />
           </NyprMBlockList>
@@ -98,7 +99,8 @@
               @article={{article}}
               @orientation='h'
               @size='l'
-              @thumbnailSize='300'
+              @thumbnailSize={{array 100 100 true}}
+              @mediumThumbnailSize={{array 360 240}}
               @hideEyebrow={{true}}
             />
           </NyprMBlockList>

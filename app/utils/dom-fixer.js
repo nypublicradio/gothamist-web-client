@@ -170,7 +170,7 @@ export default class DomFixer {
     })
   }
 
-  removeHTML(string) {
+  static removeHTML(string) {
     return string.replace(/(<([^>]+)>)/ig,"");
   }
 

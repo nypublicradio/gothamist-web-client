@@ -60,6 +60,8 @@ module.exports = function(environment) {
     commentsAnchor:     'comments',
     donateCookie:       'goth_donateToutClosed',
     articleViewsCookie: 'goth_articleViews',
+    imgixHost:          'https://gothamist.imgix.net',
+    imgixPlatypusHost:  'https://gothamist-platypus.imgix.net',
 
     // for nypr-auth
     etagAPI: process.env.BROWSER_ID_ENDPOINT,

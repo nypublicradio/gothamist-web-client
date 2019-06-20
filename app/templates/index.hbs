@@ -16,7 +16,7 @@
 
     <fbl.featured>
       {{#with model.main.firstObject as |article|}}
-        <ArticleBlock @article={{article}} @thumbnailSize='640'/>
+        <ArticleBlock @article={{article}} @thumbnailSize={{array 800 533}}/>
       {{/with}}
     </fbl.featured>
 
@@ -26,7 +26,8 @@
           @article={{item}}
           @orientation='h'
           @size='s'
-          @thumbnailSize='300'
+          @thumbnailSize={{array 100 100 true}}
+          @mediumThumbnailSize={{array 150 150}}
           @hideExcerpt={{true}}
         />
       </NyprMBlockList>
@@ -37,7 +38,7 @@
   {{#if model.sponsored}}
     <div class="l-container l-container--16col">
       <NyprOSponsoredTout @heading="Sponsored" data-test-sponsored-tout>
-        <ArticleBlock @article={{model.sponsored.firstObject}} @thumbnailSize='640'/>
+        <ArticleBlock @article={{model.sponsored.firstObject}} @thumbnailSize={{array 328 219 true}}/>
       </NyprOSponsoredTout>
     </div>
   {{/if}}
