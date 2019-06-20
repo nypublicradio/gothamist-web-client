@@ -8921,8 +8921,8 @@ nypr-auth@^0.2.4:
     ember-simple-auth "^1.7.0"
 
 nypr-design-system@nypublicradio/nypr-design-system#master:
-  version "1.0.9"
-  resolved "https://codeload.github.com/nypublicradio/nypr-design-system/tar.gz/b3a946e72ad55c82ad8807d0b9d2eb7f757782b1"
+  version "1.0.8"
+  resolved "https://codeload.github.com/nypublicradio/nypr-design-system/tar.gz/9d4c8b96d15c1596b55c7b2abb1c311431f9aa4f"
   dependencies:
     "@babel/core" "^7.0.0"
     broccoli-merge-files "^0.8.0"
