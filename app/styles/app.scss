@@ -92,7 +92,9 @@ $ember-basic-dropdown-content-z-index: 10000;
 }
 
 .is-hiding-letters .gothamist-logo-icon .letters {
-  display: none;
+  @media only screen and (max-width: 768px) {
+    display: none;
+  }
 }
 
 // improve side menu scrolling
