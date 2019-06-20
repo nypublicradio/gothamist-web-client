@@ -237,15 +237,20 @@ module('Acceptance | article', function(hooks) {
     reset();
   });
 
-  test('chartbeat virtualPage is called', async function(assert) {
+  test('chartbeat virtualPage is called only once', async function(assert) {
     const article = server.create('article', {
       categories: [{basename: 'food'}],
     });
 
     const spy = this.spy(window.pSUPERFLY, 'virtualPage');
 
+    await visit('/');
+
+    await click('[data-test-block="1"] a'); // first article
+
     await visit(`/${article.path}`);
 
+    assert.ok(spy.calledOnce, 'should skip the first call because chartbeat triggers a pageview onload of the JS library');
     const spycall = spy.getCall(0)
 
     assert.deepEqual(Object.keys(spycall.args[0]), [
@@ -258,7 +263,25 @@ module('Acceptance | article', function(hooks) {
       sections: `Gothamist,${article.categories[0].basename},Gothamist ${article.categories[0].basename}`,
       authors: article.author_nickname,
       path: article.path,
-      title: article.title
+
+      // chartbeat will use the <title> tag on initial load, so we need to use it manually so things stay in sync
+      // the document title is in sync with ember-cli-document-title
+      title: document.title,
     })
+  });
+
+  test('chartbeat is initialized with article metadata on direct navigation', async function(assert) {
+    const SECTION = 'news';
+    const AUTHOR = 'Foo Bar';
+    server.create('article', {
+      categories: [{basename: SECTION}],
+      author_nickname: AUTHOR,
+      path: 'foo',
+    });
+
+    await visit('/foo');
+
+    assert.equal(window._sf_async_config.sections, "Gothamist,news,Gothamist news", 'should set section to article section');
+    assert.equal(window._sf_async_config.authors, "Foo Bar", 'should set author to article author');
   });
 });

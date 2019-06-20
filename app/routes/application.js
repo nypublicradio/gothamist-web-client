@@ -83,7 +83,7 @@ export default Route.extend({
     }
   },
 
-  afterModel() {
+  afterModel(_model, transition) {
     if (this.fastboot.isFastBoot) {
       let { host, path } = this.fastboot.request;
       let url = `https://${host}${path.replace(/\/$/, '')}`;
@@ -97,15 +97,18 @@ export default Route.extend({
 
     // Lazy-load chartbeat
     if (!this.fastboot.isFastBoot) {
-      metrics.activateAdapters([
-        {
-          name: 'chartbeat',
-          environments: ['all'],
-          config: {
-            ...config.metrics.chartbeat,
+      transition.finally(() => {
+        metrics.activateAdapters([
+          {
+            name: 'chartbeat',
+            environments: ['all'],
+            config: {
+              ...config.metrics.chartbeat,
+              ...metrics.context.pageData,
+            }
           }
-        }
-      ]);
+        ]);
+      });
     }
 
   },
