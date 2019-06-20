@@ -14,7 +14,7 @@ export default Route.extend({
   header: inject('nypr-o-header'),
   dataLayer: inject('nypr-metrics/data-layer'),
 
-  image: or('fastboot.request.queryParams.image', 'queryParams.image'),
+  image: or('fastboot.request.queryParams.image', 'controller.image'),
 
   titleToken: model => model.title,
 
@@ -37,7 +37,9 @@ export default Route.extend({
     })
   },
 
-  afterModel(model) {
+  setupController(controller, model) {
+    this._super(...arguments);
+
     this.headData.setProperties({
       gallery: model.gallery.slides,
     });
@@ -59,5 +61,13 @@ export default Route.extend({
 
   closeGallery() {
     this.transitionTo('article.index');
+  },
+
+  actions: {
+    didTransition() {
+      if (!this.fastboot.isFastBoot && !this.image) {
+        window.scrollTo(0, 0);
+      }
+    }
   }
 });
