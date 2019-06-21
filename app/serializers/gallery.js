@@ -2,7 +2,7 @@ import DS from 'ember-data';
 
 import { imgixUri } from '../helpers/imgix-uri';
 
-const GOTH_HOST_REGEX = /(https?:\/\/.*gothamist\.com)/;
+const GOTH_HOST_REGEX = /(https?:\/\/.*(gothamist|cloudfront)\.(com|net))/;
 
 
 export default DS.RESTSerializer.extend({
