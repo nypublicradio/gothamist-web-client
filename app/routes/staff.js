@@ -29,6 +29,7 @@ export default Route.extend({
         twitter: 'jenchung',
         email: 'jen@gothamist.com',
       },
+      articles: true,
     }, {
       name: 'Jake Dobkin',
       title: 'Publisher and co-founder',
@@ -40,6 +41,7 @@ export default Route.extend({
         facebook: 'jakedobkin',
         email: 'jake@gothamist.com',
       },
+      articles: true,
     }, {
       name: 'John Del Signore',
       title: 'Editor-in-chief',
@@ -49,6 +51,7 @@ export default Route.extend({
         email: 'johnd@gothamist.com',
         twitter: 'johndelsignore',
       },
+      articles: true,
     }, {
       name: 'Jen Carlson',
       title: 'Editorial Director',
@@ -58,6 +61,7 @@ export default Route.extend({
         email: 'jencarlson@gothamist.com',
         twitter: 'jenist',
       },
+      articles: true,
     }, {
       name: 'Ben Yakas',
       title: 'Arts & Culture Editor',
@@ -67,6 +71,7 @@ export default Route.extend({
         email: 'benyakas@gothamist.com',
         twitter: 'yenbakas',
       },
+      articles: true,
     }, {
       name: 'Christopher Robbins',
       title: 'City Editor',
@@ -76,6 +81,7 @@ export default Route.extend({
         email: 'chris@gothamist.com',
         twitter: 'christrobbins',
       },
+      articles: true,
     }, {
       name: 'Elizabeth Kim',
       title: 'Senior Editor',
@@ -84,7 +90,8 @@ export default Route.extend({
       contact: {
         email: 'ekim@gothamist.com',
         twitter: 'lizkimtweets',
-      }
+      },
+      articles: true,
     }, {
       name: 'Paula Mejía',
       title: 'Reporter',
@@ -93,7 +100,8 @@ export default Route.extend({
       contact: {
         email: 'pmejia@gothamist.com',
         twitter: 'tenaciouspm',
-      }
+      },
+      articles: true,
     }, {
       name: 'Jake Offenhartz',
       title: 'Reporter',
@@ -102,7 +110,8 @@ export default Route.extend({
       contact: {
         email: 'joffenhartz@gothamist.com',
         twitter: 'jangelooff'
-      }
+      },
+      articles: true,
     }, {
       name: 'Tom Stern',
       title: 'Senior Account Executive, Digital Sales',
@@ -119,7 +128,7 @@ export default Route.extend({
       bio: 'Mei is a native New Yorker who joined Gothamist as an intern back in 2008 when the lunch options were basically Front Street Pizza and Grimaldi’s. She has lived in Queens and currently resides in Brooklyn, but is an equal opportunity consumer when it comes to the location of a delicious meal. Mei does not self-identify as a morning person and didn’t mean to greet you with a blank stare at 9 AM the other morning.',
       contact: {
         email: 'mlee@gothamist.com',
-      }
+      },
     }]
   }
 });
