@@ -6,9 +6,8 @@ import { reads, or } from '@ember/object/computed';
 
 import DomFixer from '../utils/dom-fixer';
 import { imgixUri } from '../helpers/imgix-uri';
+import { GOTH_HOST_REGEX } from '../serializers/gallery';
 
-
-const GOTH_HOST_REGEX = /(https?:\/\/.*gothamist\.com)/;
 
 export default DS.Model.extend({
   allowComments: DS.attr('boolean'),
