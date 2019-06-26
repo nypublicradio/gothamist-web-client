@@ -47,6 +47,7 @@ export default Route.extend({
   model() {
     return hash({
       sponsored: this.getSponsoredPost(),
+      sponsoredMain: this.getSponsoredMain(),
       main: this.store.query('article', {
         index: 'gothamist',
         term: '@main',
@@ -70,6 +71,10 @@ export default Route.extend({
       if (results.sponsored) {
         results.river = results.river.filter(article => article !== results.sponsored);
       }
+      // splice in sponsored main to main stories set
+      if (results.sponsoredMain) {
+        results.main.replace(MAIN_COUNT - 1, 1, [results.sponsoredMain]);
+      }
       return results;
     });
   },
@@ -87,6 +92,24 @@ export default Route.extend({
       return;
     }
     if (moment().diff(post.publishedMoment, 'hours') <= 24) {
+      return post;
+    }
+  },
+
+  // fetch the most recent sponsored *main* post
+  // filter if it's not between 24 and 48 hours old
+  async getSponsoredMain() {
+    let { firstObject:post } = await this.store.query('article', {
+      index: 'gothamist',
+      term: ['@sponsor', '@main'],
+      count: 1,
+    });
+
+    if (!post) {
+      return;
+    }
+    const ageInHours = moment().diff(post.publishedMoment, 'hours');
+    if (ageInHours >= 24 && ageInHours <= 48) {
       return post;
     }
   },
