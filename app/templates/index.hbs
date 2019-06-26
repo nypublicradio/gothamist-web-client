@@ -6,6 +6,30 @@
 
 <div class="c-home__sections u-section-spacing--wide l-container l-container--xl l-wrap u-trigger-floating-header">
 
+  {{#if (and (is-same-or-before '2019-06-30' precision='day') showPledgeAsk)}}
+    <NyprMBoxBanner @close={{action 'hideBannerFor24'}} as |banner|>
+
+      <banner.title>
+        Support Gothamist by June 30th!
+      </banner.title>
+
+      <banner.body as |body|>
+        <body.dek>
+          <p>
+            The end of our budget year is approaching. Support Gothamist and local news in New York today, and your donation will help us reach our goal. We’re counting on you!
+          </p>
+        </body.dek>
+
+        <body.cta>
+          <NyprAButton @url="https://pledge3.wnyc.org/donate/gothamist/onestep/?utm_medium=partnersite&utm_source=gothamist&utm_campaign=prodmktgbanner">
+            Donate Now
+          </NyprAButton>
+        </body.cta>
+      </banner.body>
+
+    </NyprMBoxBanner>
+  {{/if}}
+
   <NyprOFeaturedBlockList data-test-featured-block-list as |fbl|>
     <fbl.heading>
       <span class="c-featured-blocks__heading-icon o-icon u-icon--s u-path-fill--quaternary">
