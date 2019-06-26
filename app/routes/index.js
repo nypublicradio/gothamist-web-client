@@ -68,7 +68,7 @@ export default Route.extend({
       results.river = results.river.filter(article => !results.main.includes(article));
       // remove featured sponsored post from river
       if (results.sponsored) {
-        results.river = results.river.filter(article => article !== results.sponsored.firstObject);
+        results.river = results.river.filter(article => article !== results.sponsored);
       }
       return results;
     });
@@ -77,19 +77,19 @@ export default Route.extend({
   // fetch the most recent sponsor post
   // filter it out if it's older than 24 hours
   async getSponsoredPost() {
-    let post = await this.store.query('article', {
+    let { firstObject:post } = await this.store.query('article', {
       index: 'gothamist',
       term: '@sponsor',
       count: 1,
     });
 
-    if (!post.firstObject) {
+    if (!post) {
       return;
     }
-    if (moment().diff(post.firstObject.publishedMoment, 'hours') <= 24) {
+    if (moment().diff(post.publishedMoment, 'hours') <= 24) {
       return post;
     }
-  }
+  },
 });
 
 async function getWnycStories() {
