@@ -58,6 +58,7 @@ export default Route.extend({
       }),
       wnyc: getWnycStories(),
     }).then(results => {
+      results.main = results.main.slice();
       if (!this.fastboot.isFastBoot) {
         addCommentCount(results.river);
         addCommentCount(results.main);
