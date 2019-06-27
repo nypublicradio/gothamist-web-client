@@ -47,6 +47,7 @@ export default Route.extend({
   model() {
     return hash({
       sponsored: this.getSponsoredPost(),
+      sponsoredMain: this.getSponsoredMain(),
       main: this.store.query('article', {
         index: 'gothamist',
         term: '@main',
@@ -58,6 +59,7 @@ export default Route.extend({
       }),
       wnyc: getWnycStories(),
     }).then(results => {
+      results.main = results.main.slice();
       if (!this.fastboot.isFastBoot) {
         addCommentCount(results.river);
         addCommentCount(results.main);
@@ -67,7 +69,11 @@ export default Route.extend({
       results.river = results.river.filter(article => !results.main.includes(article));
       // remove featured sponsored post from river
       if (results.sponsored) {
-        results.river = results.river.filter(article => article !== results.sponsored.firstObject);
+        results.river = results.river.filter(article => article !== results.sponsored);
+      }
+      // splice in sponsored main to main stories set
+      if (results.sponsoredMain) {
+        results.main.replace(MAIN_COUNT - 1, 1, [results.sponsoredMain]);
       }
       return results;
     });
@@ -76,19 +82,37 @@ export default Route.extend({
   // fetch the most recent sponsor post
   // filter it out if it's older than 24 hours
   async getSponsoredPost() {
-    let post = await this.store.query('article', {
+    let { firstObject:post } = await this.store.query('article', {
       index: 'gothamist',
       term: '@sponsor',
       count: 1,
     });
 
-    if (!post.firstObject) {
+    if (!post) {
       return;
     }
-    if (moment().diff(post.firstObject.publishedMoment, 'hours') <= 24) {
+    if (moment().diff(post.publishedMoment, 'hours') <= 24) {
       return post;
     }
-  }
+  },
+
+  // fetch the most recent sponsored *main* post
+  // filter if it's not between 24 and 48 hours old
+  async getSponsoredMain() {
+    let { firstObject:post } = await this.store.query('article', {
+      index: 'gothamist',
+      term: ['@sponsor', '@main'],
+      count: 1,
+    });
+
+    if (!post) {
+      return;
+    }
+    const ageInHours = moment().diff(post.publishedMoment, 'hours');
+    if (ageInHours >= 24 && ageInHours <= 48) {
+      return post;
+    }
+  },
 });
 
 async function getWnycStories() {

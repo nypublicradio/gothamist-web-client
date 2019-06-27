@@ -62,6 +62,27 @@ module('Acceptance | homepage', function(hooks) {
     assert.dom('[data-test-sponsored-tout]').doesNotExist();
   });
 
+  test('sponsored posts tagged @main and between 24 and 48 hours old appear in featured area', async function(assert) {
+    server.create('article', {
+      id: 'sponsored-main',
+      tags: ['@sponsor', '@main'],
+      authored_on_utc: moment().subtract(36, 'hours'),
+    });
+
+    server.create('article', {
+      id: 'sponsored',
+      tags: ['@sponsor'],
+      authored_on_utc: moment().subtract(12, 'hours'),
+    });
+
+    server.createList('article', 10, {tags: ['@main']});
+
+    await visit('/');
+    assert.dom('[data-test-featured-block-list] [data-test-block-list-item="2"] [data-test-block="sponsored-main"]').exists('sponsored post is in the featured list in the 3rd position');
+
+    assert.dom('[data-test-sponsored-tout] .c-block__title').exists('regular sponsored post should also appear too');
+  });
+
   test('articles get updated with commentCount', async function(assert) {
     server.createList('article', 10, {
       tags: ['@main']
