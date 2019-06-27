@@ -23,7 +23,9 @@
     <o.title
       @h3
       @route={{array 'article' @article.path}}
-      @galleryIcon={{@article.hasGallery}}
+      @hasGallery={{@article.hasGallery}}
+      @hasVideo={{@article.hasVideo}}
+      @hasAudio={{@article.hasAudio}}
     >
       {{{@article.title}}}
     </o.title>
