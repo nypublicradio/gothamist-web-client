@@ -155,7 +155,7 @@ export default Route.extend({
     didTransition() {
       doTargetingForPath();
       if (typeof FastBoot === 'undefined') {
-        this.metrics.trackPage()
+        schedule('afterRender', () => this.metrics.trackPage());
       }
     },
 
