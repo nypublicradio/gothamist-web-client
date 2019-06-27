@@ -1,4 +1,5 @@
 import { get } from "@ember/object";
+import { schedule } from '@ember/runloop';
 import BaseAdapter from "ember-metrics/metrics-adapters/base";
 import canUseDOM from "ember-metrics/utils/can-use-dom";
 
@@ -50,11 +51,13 @@ export default BaseAdapter.extend({
     let data = args.pageData || {};
 
     if (window && window.pSUPERFLY && window.pSUPERFLY.virtualPage) {
-      pSUPERFLY.virtualPage({
-        sections: derivedSection(data.sections),
-        authors: derivedAuthors(data.authors),
-        path: data.path,
-        title: document.title, // use whatever is in the title tag so we're in sync with ember-document-title
+      schedule('afterRender', () => {
+        pSUPERFLY.virtualPage({
+          sections: derivedSection(data.sections),
+          authors: derivedAuthors(data.authors),
+          path: data.path,
+          title: document.title, // use whatever is in the title tag so we're in sync with ember-document-title
+        });
       });
     }
   },
