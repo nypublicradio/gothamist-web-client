@@ -139,7 +139,7 @@ jobs:
           path: /tmp/qa-builds
 
   deploy-static-wagtail:
-    envrionment:
+    environment:
       ENV: WAGTAIL
     <<: *deploy_static
 
