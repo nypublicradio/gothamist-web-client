@@ -128,7 +128,7 @@ jobs:
       - deploy:
           name: Deploying QA Build
           command: |
-            env | sed -n "s/^DEMO_//p" > .env
+            env | sed -n "s/^WAGTAIL_//p" > .env
             npx ember deploy qa:$CIRCLE_BRANCH --verbose --activate
       - run:
           name: Make QA artifact
