@@ -1,3 +1,4 @@
+export const CMS_TIMESTAMP_FORMAT = 'YYYY-MM-DDTHH:mm:ss.SSSSSS[Z]';
 export const DATE_FORMAT = 'YYYYMMDDhhmmss';
 
 export const PLATYPUS_GALLERY = {
