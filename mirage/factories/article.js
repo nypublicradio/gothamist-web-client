@@ -1,93 +1,81 @@
 import moment from 'moment';
-import { Factory, faker, trait } from 'ember-cli-mirage';
+import { Factory, faker/*, trait*/ } from 'ember-cli-mirage';
 
 import {
-  DATE_FORMAT,
-  PLATYPUS_GALLERY,
-  MT_GALLERY,
+  CMS_TIMESTAMP_FORMAT
 } from './consts';
 
 export default Factory.extend({
-  allow_comments: true,
-  author_id: () => faker.random.number({min: 500000, max: 550000}),
-  author_name: () => faker.internet.userName(),
-  author_nickname: () => faker.name.findName(),
-  authored_on: () => moment(faker.date.recent()).format(DATE_FORMAT),
-  authored_on_utc() {
-    return moment(this.authored_on, DATE_FORMAT).utc().format(DATE_FORMAT);
-  },
-  blog_id: 1,
-  categories: faker.list.random([{
-    basename: 'news',
-    label: 'News',
-  }], [{
-    basename: 'arts',
-    label: 'Arts & Entertainment',
-  }], [{
-    basename: 'food',
-    label: 'Food',
+  body: () => ([
+    {
+      type: 'paragraph',
+      value: `<p>${faker.lorem.paragraphs(4).split("\n ").join('</p><p>')}</p>`,
+      id: faker.random.uuid(),
+    }
+  ]),
 
-  }]),
-  comment_count: 0,
-  entrytopics: () => [],
-  excerpt_full: () => faker.lorem.paragraph(7),
-  excerpt() {
-    return this.excerpt_full.slice(0, 220) + '...';
-  },
-  excerpt_pretty: () => faker.lorem.sentence(20),
-  excerpt_sponsor: null,
-  has_gallery: false,
-  has_map: false,
-  modified_on() {
-    return moment(this.authored_on, DATE_FORMAT).add(2, 'h').format(DATE_FORMAT);
-  },
-  modified_on_utc() {
-    return moment(this.authored_on_utc, DATE_FORMAT).add(2, 'h').format(DATE_FORMAT);
-  },
-  national_title: null,
-  path() {
-    let slug = faker.lorem.words(3).split(' ').join('_')
-    let { authored_on:date } = this;
-    date = moment(date, DATE_FORMAT);
-    return `${date.format('YYYY')}/${date.format('MM')}/${date.format('DD')}/${slug}.php`;
-  },
-  permalink() {
-    return `http://gothamist.com/${this.path}`;
-  },
-  platypus_id: () => faker.random.uuid(),
-  socialtopics: () => [],
-  tags: () => [],
+  description: faker.lorem.sentences(3),
 
-  text: () => faker.lorem.paragraphs(5),
-  text_more: null,
+  disable_comments: false,
 
-  thumbnail_60: () => faker.image.imageUrl(60, 60, 'food', true, true),
-  thumbnail_105: () => faker.image.imageUrl(105, 105, 'food', true, true),
-  thumbnail_300: () => faker.image.imageUrl(300, 300, 'food', true, true),
-  thumbnail_640: () => faker.image.imageUrl(640, 480, 'food', true, true),
+  lead_asset: () => ([
+    {
+      type: 'lead_image',
+      value: {
+        image: 1283,
+        caption: faker.lorem.words(5),
+      },
+      id: faker.random.uuid(),
+    }
+  ]),
+
+  listing_title: '',
+  listing_summary: '',
+  listing_image: null,
+
+  meta: () => ({
+    first_published_at: moment.utc(faker.date.recent()).format(CMS_TIMESTAMP_FORMAT),
+    type: 'news.ArticlePage',
+    detail_url: '',
+    html_url: '',
+    slug: faker.lorem.words(3).split(' ').join('-'),
+    show_in_menus: false,
+    seo_title: '',
+    search_description: '',
+  }),
+
+  publication_date: moment.utc(faker.date.recent()).format(CMS_TIMESTAMP_FORMAT),
+
+  updated_date: null,
+
+  related_authors: () => ([
+    {
+      id: 46,
+      first_name: faker.name.firstName(),
+      last_name: faker.name.lastName(),
+      job_title: faker.name.jobTitle(),
+      biography: "",
+      website: "",
+      email: "",
+    }
+  ]),
+  related_contributing_organizations: () => ([]),
+  related_sponsors: () => ([]),
+  related_links: () => ([]),
+
+  sensitive_content: false,
+
+  show_as_feature: false,
+
+  show_on_index_listing: true,
+
+  sponsored_content: false,
+
+  social_image: null,
+  social_title: '',
+  social_text: '',
+
+  tags: () => ([]),
+
   title: () => faker.random.words(6),
-
-  // TRAITS
-
-  sponsored: trait({
-    author_name: 'Sponsor',
-    author_nickname: 'Sponsor',
-    excerpt: () => faker.lorem.sentence() + ' [sponsor]',
-    excerpt_full: () => faker.lorem.sentence() + ' [sponsor]',
-    excerpt_sponsor: "<div id=\"sponsor-left\"><div class=\"sponsor-title\"><a href=\"http://gothamist.com/2019/02/05/escape_to_a_winter_happy_hour_at_ea_1.php\">Escape To A Winter Happy Hour At Eataly's SERRA ALPINA On The Roof</a></div><div class=\"sponsor-content\">\r\n<br><br><em>This post is brought to you by our sponsor, Eataly.</em></div></div><div id=\"sponsor-right\"><a href=\"http://gothamist.com/2019/02/05/escape_to_a_winter_happy_hour_at_ea_1.php\"><img src=\"http://gothamist.com/attachments/mei/Gothamist_Serra-Alpina_640x250_spon.jpg\"></a></div>",
-    tags: [
-      '@sponsor',
-    ]
-  }),
-
-  mtGallery: trait(MT_GALLERY),
-
-  platypusGallery: trait(PLATYPUS_GALLERY),
-
-  wrappedGallery: trait({
-    ...PLATYPUS_GALLERY,
-    gallery_position: 'default_gallery_template',
-    text: () => faker.lorem.paragraphs(1),
-    text_more: () => faker.lorem.paragraphs(5),
-  }),
 });
