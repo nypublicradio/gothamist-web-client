@@ -16,11 +16,11 @@ import config from 'gothamist-web-client/config/environment';
 const URL = UTM => {
   let url = window.location.toString();
   if (url.includes('?')) {
-    url += `&${encodeURIComponent(UTM)}`;
+    url += `&${UTM}`;
   } else {
-    url += `?${encodeURIComponent(UTM)}`;
+    url += `?${UTM}`;
   }
-  return url;
+  return encodeURIComponent(url);
 }
 
 module('Acceptance | article', function(hooks) {
