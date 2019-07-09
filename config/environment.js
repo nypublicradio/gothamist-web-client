@@ -50,6 +50,7 @@ module.exports = function(environment) {
     },
 
     // ENDPOINTS
+    cmsServer: process.env.CMS_SERVER,
     apiServer: process.env.API_SERVER,
     disqusAPI: process.env.DISQUS_API,
     disqusKey: process.env.DISQUS_PUBLIC_KEY,
