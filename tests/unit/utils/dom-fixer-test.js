@@ -38,6 +38,19 @@ module('Unit | Utility | dom-fixer', function() {
     assert.deepEqual(['hello', 'world'], [...domFixer.nodes.childNodes].map(n => n.textContent.trim()));
   });
 
+  test('removeEmptyNodes preserves whitespace between anchor links', function(assert) {
+    const HTML = `
+      <p>
+        Hello <a href>world</a> <a href>foo</a> bar.
+      </p>
+    `;
+
+    let domFixer = new DomFixer(HTML);
+    domFixer.removeEmptyNodes();
+
+    assert.equal(domFixer.nodes.textContent.trim(), "Hello world foo bar.");
+  });
+
   test('rescueOrphans moves text nodes into a <p/>', function(assert) {
     const HTML = `<p>hello</p>
       foo bar baz<br>

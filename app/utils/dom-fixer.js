@@ -221,7 +221,7 @@ const ORPHAN_NODES = ['SPAN', 'A', 'BR', '#text', 'B', 'I', 'EM', 'STRONG'];
 const getWhiteWalker = root =>
   document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
     acceptNode: node =>
-      node.textContent.trim() === '' ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP,
+      node.textContent.trim() === '' && !betweenTwoNodes(node) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP,
   });
 
 /**
@@ -235,3 +235,31 @@ const getOrphanWalker = root =>
   document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
     acceptNode: node => [...root.childNodes].includes(node),
   });
+
+/**
+  Returns `true` if the given node is between two nodes (not ferns)
+
+  @function betweenTwoNodes
+  @param node {Node}
+  @return isBetween {Boolean}
+*/
+const betweenTwoNodes = node => {
+  let prev = node.previousSibling ? node.previousSibling.nodeName : '';
+  let next = node.nextSibling ? node.nextSibling.nodeName : '';
+
+  if (!prev || !next) {
+    // first or last node, ok to call false
+    return false;
+  }
+
+  return SAFE_NODES.includes(prev) && SAFE_NODES.includes(next);
+}
+
+/**
+  Any empty text node found between any of the nodes in this list will be preserved by the WhiteWalker.
+
+  @const SAFE_NODES
+  @type {Array}
+*/
+const SAFE_NODES = ['A', 'EM'];
+
