@@ -24,6 +24,10 @@ templates:
             env | sed -n "s/^${ENV}_//p" >> .env
             npx ember deploy "$(echo $ENV | awk '{print tolower($0)}')" --verbose
 
+  filter_wagtail: &filter_wagtail
+    filters:
+      branches:
+        only: wagtail
 
   filter_demo: &filter_demo
     filters:
@@ -63,7 +67,7 @@ templates:
       - deploy:
           name: Deploy Fastboot
           command: |
-            TAG=${CIRCLE_TAG:-demo}
+            TAG=${TAG:-$CIRCLE_TAG}
             source ~/.venv/bin/activate
             nyprsetuptools DockerDeploy \
               --cpu=1024 \
@@ -134,6 +138,17 @@ jobs:
       - store_artifacts:
           path: /tmp/qa-builds
 
+  deploy-static-wagtail:
+    envrionment:
+      ENV: WAGTAIL
+    <<: *deploy_static
+
+  deploy-fastboot-wagtail:
+    environment:
+      ENV: wagtail
+      TAG: wagtail
+    <<: *deploy_fastboot
+
   deploy-static-demo:
     environment:
       ENV: DEMO
@@ -142,6 +157,7 @@ jobs:
   deploy-fastboot-demo:
     environment:
       ENV: demo
+      TAG: demo
     <<: *deploy_fastboot
 
   deploy-static-prod:
@@ -161,7 +177,7 @@ workflows:
       - build-static:
           filters:
             branches:
-              ignore: /master|[A-Za-z-_]+/[A-Za-z-_\d]+/
+              ignore: /master|wagtail|[A-Za-z-_]+/[A-Za-z-_\d]+/
       - test-static:
           requires:
             - build-static
@@ -174,6 +190,23 @@ workflows:
           requires:
             - build-static
       - deploy-static-qa:
+          requires:
+            - test-static
+
+  deploy-wagtail:
+    jobs:
+      - build-static:
+          <<: *filter_wagtail
+      - test-static:
+          <<: *filter_wagtail
+          requires:
+            - build-static
+      - deploy-static-wagtail:
+          <<: *filter_wagtail
+          requires:
+            - test-static
+      - deploy-fastboot-wagtail:
+          <<: *filter_wagtail
           requires:
             - test-static
 

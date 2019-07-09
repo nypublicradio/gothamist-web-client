@@ -3,7 +3,8 @@
 
 const VALID_DEPLOY_TARGETS = [
   'demo',
-  'prod'
+  'prod',
+  'wagtail',
 ];
 
 module.exports = function(deployTarget) {
