@@ -68,11 +68,12 @@ templates:
           name: Deploy Fastboot
           command: |
             TAG=${TAG:-$CIRCLE_TAG}
+            CLUSTER=$ENV && [[ $ENV == "wagtail" ]] && CLUSTER="demo"
             source ~/.venv/bin/activate
             nyprsetuptools DockerDeploy \
               --cpu=1024 \
               --ecr-repository=gothamist-client \
-              --ecs-cluster=fastboot \
+              --cluster-override=fastboot-$CLUSTER \
               --environment=$ENV \
               --execution-role=gothamist-client-$ENV \
               --fargate \
