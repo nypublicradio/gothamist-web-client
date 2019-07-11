@@ -1,10 +1,10 @@
 import moment from 'moment';
 import { faker } from 'ember-cli-mirage';
-import { module } from 'qunit';
+import { module, skip } from 'qunit';
 import { visit, currentURL, click, find } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import test from 'ember-sinon-qunit/test-support/test';
+// import test from 'ember-sinon-qunit/test-support/test';
 
 import { scrollPastHeader, scrollPastTarget } from 'nypr-design-system/test-support';
 import { SERVICE_MAP } from 'nypr-design-system/components/nypr-m-share-tools';
@@ -41,7 +41,7 @@ module('Acceptance | article', function(hooks) {
     window.block_disqus = false;
   });
 
-  test('visiting article route', async function(assert) {
+  skip('visiting article route', async function(assert) {
     const article = server.create('article', {categories: [{basename: 'food'}]});
     server.createList('article', 5, {terms: ['@main'], categories: [{basename: 'food'}]});
 
@@ -58,7 +58,7 @@ module('Acceptance | article', function(hooks) {
     assert.dom('[data-test-recirc-featured] .c-block').exists({count: 1});
   });
 
-  test('tweeting an article', async function() {
+  skip('tweeting an article', async function() {
     const UTM = 'utm_medium=social&utm_source=twitter&utm_campaign=shared_twitter';
 
     const article = server.create('article');
@@ -76,7 +76,7 @@ module('Acceptance | article', function(hooks) {
     reset();
   });
 
-  test('redditing an article', async function() {
+  skip('redditing an article', async function() {
     const UTM = 'utm_medium=social&utm_source=reddit&utm_campaign=shared_reddit';
     const article = server.create('article');
 
@@ -93,7 +93,7 @@ module('Acceptance | article', function(hooks) {
     reset();
   });
 
-  test('emailing an article', async function() {
+  skip('emailing an article', async function() {
     const UTM = 'utm_medium=social&utm_source=email&utm_campaign=shared_email';
     const article = server.create('article');
 
@@ -110,7 +110,7 @@ module('Acceptance | article', function(hooks) {
     reset();
   });
 
-  test('comment counts', async function(assert) {
+  skip('comment counts', async function(assert) {
     const ARTICLE = server.create('article');
     const EXPECTED = 100;
     server.get(`${config.disqusAPI}/threads/set.json`, {
@@ -125,7 +125,7 @@ module('Acceptance | article', function(hooks) {
     assert.dom(`#${config.commentsAnchor}`).exists({count: 1});
   });
 
-  test('no disqus if comments are not allowed', async function(assert) {
+  skip('no disqus if comments are not allowed', async function(assert) {
     server.create('article', {allow_comments: false, path: 'foo'});
 
     await visit('/foo');
@@ -133,7 +133,7 @@ module('Acceptance | article', function(hooks) {
     assert.dom(`#${config.commentsAnchor}`).doesNotExist();
   });
 
-  test('breadcrumbs', async function(assert) {
+  skip('breadcrumbs', async function(assert) {
     server.create('article', {path: 'opinion', tags: ['@opinion']});
     server.create('article', {path: 'analysis', tags: ['@analysis']});
     server.create('article', {path: 'sponsor', tags: ['@sponsor']});
@@ -152,7 +152,7 @@ module('Acceptance | article', function(hooks) {
     assert.dom('.o-breadcrumbs').includesText('We the Commuters');
   });
 
-  test('navigating to comments section', async function(assert) {
+  skip('navigating to comments section', async function(assert) {
     server.create('article', {
       text: faker.lorem.words(1000),
       tags: ['@main'],
@@ -180,7 +180,7 @@ module('Acceptance | article', function(hooks) {
     assert.notOk(inViewport(find(`#${config.commentsAnchor}`)), 'comments area should not be on screen');
   });
 
-  test('donation tout only appears after visiting 3 articles', async function(assert) {
+  skip('donation tout only appears after visiting 3 articles', async function(assert) {
     server.create('article', {path: 'foo'});
     server.create('article', {path: 'bar'});
     server.create('article', {path: 'baz'});
@@ -211,7 +211,7 @@ module('Acceptance | article', function(hooks) {
     reset();
   });
 
-  test('donation tout disappears for 24 hours', async function(assert) {
+  skip('donation tout disappears for 24 hours', async function(assert) {
     const cookieService = this.owner.lookup('service:cookies');
     let cookieSpy = this.spy(cookieService, 'write');
 
@@ -237,7 +237,7 @@ module('Acceptance | article', function(hooks) {
     reset();
   });
 
-  test('chartbeat virtualPage is called with correct args correct number of times', async function(assert) {
+  skip('chartbeat virtualPage is called with correct args correct number of times', async function(assert) {
     const article = server.create('article', {
       categories: [{basename: 'food'}],
     });
@@ -291,7 +291,7 @@ module('Acceptance | article', function(hooks) {
     });
   });
 
-  test('chartbeat is initialized with article metadata on direct navigation', async function(assert) {
+  skip('chartbeat is initialized with article metadata on direct navigation', async function(assert) {
     const SECTION = 'news';
     const AUTHOR = 'Foo Bar';
     server.create('article', {
@@ -306,7 +306,7 @@ module('Acceptance | article', function(hooks) {
     assert.equal(window._sf_async_config.authors, "Foo Bar", 'should set author to article author');
   });
 
-  test('chartbeat virtualReferrer is updated on transition', async function(assert) {
+  skip('chartbeat virtualReferrer is updated on transition', async function(assert) {
     const spy = this.spy(window.pSUPERFLY, 'virtualPage');
 
     // first article
