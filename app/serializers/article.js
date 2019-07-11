@@ -5,6 +5,17 @@ export default DS.RESTSerializer.extend({
   modelNameFromPayloadKey: () => 'article',
   keyForAttribute: key => underscore(key),
 
+  normalize() {
+    let data = this._super(...arguments);
+
+    // the server defines this as an array
+    // but it'll always be a single POJO
+    // pull out the first index for easier reference in the app
+    data.lead_asset = data.lead_asset ? data.lead_asset[0] : null;
+
+    return data;
+  },
+
   normalizeQueryRecordResponse(store, articleClass, payload) {
     // Wagtail returns an array of objects for REST query
     // ember wants a single record in response to `queryRecord` calls
