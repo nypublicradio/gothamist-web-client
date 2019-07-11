@@ -54,6 +54,7 @@ export default Route.extend({
       this.set('metrics.context.pageData', {
         sections: model.section.label || model.section.basename,
         authors: model.authors,
+        path: `/${model.path}`,
       });
     }
 

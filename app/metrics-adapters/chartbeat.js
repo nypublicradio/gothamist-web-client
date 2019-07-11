@@ -55,7 +55,7 @@ export default BaseAdapter.extend({
         pSUPERFLY.virtualPage({
           sections: derivedSection(data.sections),
           authors: derivedAuthors(data.authors),
-          path: `${location.host}${location.pathname}${location.search}`, // pull it from the location bar to mimic chartbeat
+          path: data.path || location.pathname, // pull it from the location bar to mimic chartbeat
           title: document.title, // use whatever is in the title tag so we're in sync with ember-document-title
         });
       });
