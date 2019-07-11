@@ -45,9 +45,9 @@ export default Route.extend({
       tag,
       title: titleize(tag),
       articles: this.store.query('article', {
-        index: 'gothamist',
-        term: tag,
-        count: COUNT,
+        tags: tag,
+        show_on_index_listing: true,
+        limit: COUNT,
       }),
       // HACK
       isWTC: sanitize(tag) === 'wethecommuters',
@@ -65,10 +65,8 @@ export default Route.extend({
     this._super(...arguments);
     controller.setProperties({
       query: {
-        index: 'gothamist',
-        term: model.tag,
-        count: COUNT,
-        page: 2,
+        tags: model.tag,
+        limit: COUNT,
       },
       transition: fade,
       wtcEndpoint: `${config.apiServer}/opt-in/v1/subscribe/mailchimp`,
