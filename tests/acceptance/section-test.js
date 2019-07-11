@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, skip /* test */ } from 'qunit';
 import { visit, currentURL, click, findAll } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
@@ -10,7 +10,7 @@ module('Acceptance | section', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
-  test('visiting section page', async function(assert) {
+  skip('visiting section page', async function(assert) {
     server.createList('article', COUNT * 5, {categories: [{basename: 'news'}]});
     await visit('/sections/news');
 
@@ -24,7 +24,7 @@ module('Acceptance | section', function(hooks) {
     assert.dom('[data-test-block]').exists({count: COUNT * 2}, 'Clicking "read more" brings in another set of results equal to the amount of COUNT');
   });
 
-  test('section lists get updated with commentCount', async function(assert) {
+  skip('section lists get updated with commentCount', async function(assert) {
     server.createList('article', COUNT * 5, {tags: ['c|news']});
     const EXPECTED = server.schema.articles.all()
       .models.map((a, i) => ({posts: Math.ceil(Math.random() * i + 1), identifiers: [a.id]}));
