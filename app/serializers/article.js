@@ -25,7 +25,7 @@ export default DS.RESTSerializer.extend({
 
   extractMeta(store, articleClass, payload) {
     let meta = {
-      total: payload.total_entries,
+      total: payload.meta.total_count,
       count: Array.isArray(payload.items) ? payload.items.length : 1,
     }
     delete payload.meta;
