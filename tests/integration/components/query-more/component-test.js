@@ -120,6 +120,36 @@ module('Integration | Component | query-more', function(hooks) {
     assert.equal(QUERY.page, 2);
   });
 
+  test('if `offset` and `limit` query params are passed, it will be incremented accordingly afterwards', async function(assert) {
+    const MODEL = 'foo';
+    const QUERY = {
+      limit: 5,
+    };
+
+    this.setProperties({
+      MODEL,
+      QUERY,
+    });
+    const store = this.owner.lookup('service:store');
+
+    // first query always has an offset
+    this.mock(store)
+      .expects('query')
+      .withArgs(MODEL, {limit: 5, offset: 5})
+      .resolves({});
+
+    await render(hbs`
+      <QueryMore @model={{MODEL}} @query={{QUERY}} as |more|>
+        <button onclick={{perform more.queryMore}} id="query-more">click</button>
+      </QueryMore>
+    `);
+
+    await click('#query-more');
+
+    // component updates passed in object for the next request
+    assert.equal(QUERY.offset, 10);
+  });
+
   test('it adds to the existing result set', async function(assert) {
     const EXPECTED = ['foo', 'bar', 'baz', 'qux'];
     const store = this.owner.lookup('service:store');

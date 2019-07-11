@@ -19,12 +19,18 @@ export default Component.extend({
     if (!this.totalKey) {
       this.set('totalKey', DEFAULT_TOTAL_KEY);
     }
+
+    this._specifyOffset();
+  },
+
+  didUpdateAttrs() {
+    this._specifyOffset();
   },
 
   /**
     Key to use to look up total result size on the store response's `meta` object.
 
-    @argumeemnt totalKey
+    @argument totalKey
     @type {String}
     @defult 'count'
   */
@@ -72,7 +78,11 @@ export default Component.extend({
     this.set('total', get(results, `meta.${this.totalKey}`));
 
     if (this.page) {
+      // if using pages, increment page counter
       this.incrementProperty('page');
+    } else if (this.limit) {
+      // if using limit/offset, increment offset counter
+      this.incrementProperty('offset', this.limit);
     }
 
     if (typeof this.callback === 'function') {
@@ -92,15 +102,32 @@ export default Component.extend({
   page: alias('query.page'),
 
   /**
+    Alias to a limit param passed as part of the query
+
+    @computed limit
+    @type {Number}
+  */
+  limit: alias('query.limit'),
+
+  /**
+    Alias to offset param to get set on the passed in query.
+    Used to track page position in limit/offset scenarios
+
+    @computed offset
+    @type {Number}
+  */
+  offset: alias('query.offset'),
+
+  /**
     Reflects if there are more results on the server.
 
     @accessor isFinished
     @type {Boolean}
   */
-  isFinished: computed('pages.[]', 'total', 'query.count', function() {
-    let pageSize = this.query && this.query.count;
+  isFinished: computed('pages.[]', 'total', 'query.{count,limit}', function() {
+    let pageSize = this.query && (this.query.count || this.query.limit);
     if (!pageSize) {
-      console.warn('`count` must be provided to the query in order to calculate `hasMore`'); // eslint-disable-line
+      console.warn('`count` or `limit` must be provided to the query in order to calculate `hasMore`'); // eslint-disable-line
       return;
     }
 
@@ -108,4 +135,17 @@ export default Component.extend({
     // is there at least one more page remaining on the server?
     return retrievedResults + pageSize > this.total;
   }),
+
+  /**
+    Prep offset param to track page position
+    First request should be offset by passed in limit
+
+    @method _specifyOffset
+    @private
+  */
+  _specifyOffset() {
+    if (this.limit) {
+      this.set('offset', this.limit);
+    }
+  },
 });
