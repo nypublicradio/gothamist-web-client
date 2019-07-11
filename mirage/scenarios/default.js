@@ -5,11 +5,10 @@ export default function(server) {
     This data will not be loaded in your tests.
   */
 
-  server.create('article', 'mtGallery', {permalink: 'foo'});
   server.createList('article', 5, {
-    tags: ['@main']
+    show_as_feature: true,
   });
-  server.create('article', {tags: ['@sponsored']});
+  server.create('article', {sponsored_content: true});
   server.createList('article', 50);
 
   server.create('wnyc-story', {id: 'gothamist-wnyc-crossposting'});
