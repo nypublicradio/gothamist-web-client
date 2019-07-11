@@ -4,10 +4,24 @@ import config from '../config/environment';
 
 export default function() {
 
+  this.urlPrefix = config.cmsServer;
 
+  this.get('/api/v2/pages', (schema, request) => {
+    let {
+      tags,
+      limit,
+      offset = 0,
+    } = request.queryParams;
 
+    // coerce
+    offset = Number(offset);
+    limit = Number(limit);
 
+    if (tags) {
+      return schema.articles.where({tags}).slice(offset, (offset + 1 * limit));
+    }
 
+  });
 
   this.urlPrefix = config.apiServer;
 
