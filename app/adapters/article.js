@@ -2,6 +2,12 @@ import DS from 'ember-data';
 import AdapterFetch from 'ember-fetch/mixins/adapter-fetch';
 import config from '../config/environment';
 
+
+export const DEFAULT_QUERY_PARAMS = {
+  type: 'news.ArticlePage',
+  fields: '*',
+}
+
 export default DS.RESTAdapter.extend(AdapterFetch, {
   host: config.cmsServer,
   namespace: 'api/v2',
@@ -13,8 +19,6 @@ export default DS.RESTAdapter.extend(AdapterFetch, {
 
   queryRecord(store, type, query = {}) {
     query.limit = 1;
-    query.type = 'news.ArticlePages';
-    query.fields = '*';
     return this._super(...arguments).then(response => {
       if (response.items.length === 0) {
         throw new DS.NotFoundError();
@@ -26,7 +30,7 @@ export default DS.RESTAdapter.extend(AdapterFetch, {
   ajaxOptions(url, type, options) {
     if (type === 'GET' && options.data) {
       // query request
-      let query = options.data;
+      let query = {...DEFAULT_QUERY_PARAMS, ...options.data};
       options.data = {};
 
       // construct query params according to wagtail spec
