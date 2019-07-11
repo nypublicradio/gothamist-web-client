@@ -262,7 +262,7 @@ module('Acceptance | article', function(hooks) {
     assert.deepEqual(spycall.args[0], {
       sections: `Gothamist,${article.categories[0].basename},Gothamist ${article.categories[0].basename}`,
       authors: article.author_nickname,
-      path: `${location.host}${location.pathname}${location.search}`,
+      path: `/${article.path}`,
 
       // chartbeat will use the <title> tag on initial load, so we need to use it manually so things stay in sync
       // the document title is in sync with ember-cli-document-title
