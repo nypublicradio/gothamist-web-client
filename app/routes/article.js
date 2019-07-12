@@ -52,6 +52,8 @@ export default Route.extend({
 
     if (!this.fastboot.isFastBoot) {
       this.set('metrics.context.pageData', {
+        // merge with existing value, which is the previous URL set in the application route
+        ...this.metrics.context.pageData,
         sections: model.section.label || model.section.basename,
         authors: model.authors,
         path: `/${model.path}`,

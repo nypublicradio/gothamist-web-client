@@ -57,6 +57,7 @@ export default BaseAdapter.extend({
           authors: derivedAuthors(data.authors),
           path: data.path || location.pathname, // pull it from the location bar to mimic chartbeat
           title: document.title, // use whatever is in the title tag so we're in sync with ember-document-title
+          virtualReferrer: data.referrer,
         });
       });
     }
