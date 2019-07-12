@@ -237,7 +237,7 @@ module('Acceptance | article', function(hooks) {
     reset();
   });
 
-  test('chartbeat virtualPage is called only once', async function(assert) {
+  test('chartbeat virtualPage is called with correct args correct number of times', async function(assert) {
     const article = server.create('article', {
       categories: [{basename: 'food'}],
     });
@@ -248,26 +248,47 @@ module('Acceptance | article', function(hooks) {
 
     await click('[data-test-block="1"] a'); // first article
 
-    await visit(`/${article.path}`);
+    await click('[data-test-header-logo]'); // back to homepage
 
-    assert.ok(spy.calledOnce, 'should skip the first call because chartbeat triggers a pageview onload of the JS library');
-    const spycall = spy.getCall(0)
+    assert.ok(spy.calledTwice, 'should skip the first call because chartbeat triggers a pageview onload of the JS library');
+    const firstCall = spy.getCall(0).args[0];
+    const secondCall = spy.getCall(1).args[0]
 
-    assert.deepEqual(Object.keys(spycall.args[0]), [
+    assert.deepEqual(Object.keys(firstCall), [
       "sections",
       "authors",
       "path",
-      "title"
+      "title",
+      "virtualReferrer",
     ]);
-    assert.deepEqual(spycall.args[0], {
+    assert.deepEqual(firstCall, {
       sections: `Gothamist,${article.categories[0].basename},Gothamist ${article.categories[0].basename}`,
       authors: article.author_nickname,
       path: `/${article.path}`,
+      virtualReferrer: '/',
 
       // chartbeat will use the <title> tag on initial load, so we need to use it manually so things stay in sync
       // the document title is in sync with ember-cli-document-title
       title: document.title,
-    })
+    });
+
+    assert.deepEqual(Object.keys(secondCall), [
+      "sections",
+      "authors",
+      "path",
+      "title",
+      "virtualReferrer",
+    ]);
+    assert.deepEqual(secondCall, {
+      sections: 'Gothamist,Home,Gothamist Home',
+      authors: '',
+      path: location.pathname,
+      virtualReferrer: `/${article.path}`,
+
+      // chartbeat will use the <title> tag on initial load, so we need to use it manually so things stay in sync
+      // the document title is in sync with ember-cli-document-title
+      title: document.title,
+    });
   });
 
   test('chartbeat is initialized with article metadata on direct navigation', async function(assert) {
@@ -283,5 +304,34 @@ module('Acceptance | article', function(hooks) {
 
     assert.equal(window._sf_async_config.sections, "Gothamist,news,Gothamist news", 'should set section to article section');
     assert.equal(window._sf_async_config.authors, "Foo Bar", 'should set author to article author');
+  });
+
+  test('chartbeat virtualReferrer is updated on transition', async function(assert) {
+    const spy = this.spy(window.pSUPERFLY, 'virtualPage');
+
+    // first article
+    server.create('article', {
+      path: 'foo',
+      categories: [{basename: 'food'}]
+    });
+    // final article
+    server.create('article', {
+      path: 'bar',
+      terms: ['@main'],
+      categories: [{basename: 'food'}]
+    });
+
+    await visit('/');
+
+    await click('[data-test-block="1"] a');
+
+    assert.equal(currentURL(), '/foo');
+
+    await click('[data-test-recirc-popular] .c-block a');
+
+    assert.equal(currentURL(), '/bar');
+
+    assert.equal(spy.firstCall.args[0].virtualReferrer, '/');
+    assert.equal(spy.secondCall.args[0].virtualReferrer, '/foo');
   });
 });
