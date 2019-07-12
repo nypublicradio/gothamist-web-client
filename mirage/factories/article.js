@@ -29,6 +29,8 @@ export default Factory.extend({
     }
   ]),
 
+  legacy_id: () => faker.random.number(80000),
+
   listing_title: '',
   listing_summary: '',
   listing_image: null,
