@@ -38,8 +38,8 @@ export default Route.extend({
       metaDescription: model.excerptPretty,
       ogType: 'article',
       ogTitle: model.title, // don't include " - Gothamist" like in <title> tag
-      publishedTime: model.publishedMoment.tz('America/New_York').format(),
-      modifiedTime: model.modifiedMoment.tz('America/New_York').format(),
+      publishedTime: model.publishedMoment.format(),
+      modifiedTime: model.modifiedMoment.format(),
       section: model.section.label,
       tags: model.displayTags,
       authors: model.authors,
