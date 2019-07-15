@@ -5,6 +5,8 @@ import {
   CMS_TIMESTAMP_FORMAT
 } from './consts';
 
+const slug = () => faker.lorem.words(3).split(' ').join('-');
+
 export default Factory.extend({
   body: () => ([
     {
@@ -39,8 +41,8 @@ export default Factory.extend({
     first_published_at: moment.utc(faker.date.recent()).format(CMS_TIMESTAMP_FORMAT),
     type: 'news.ArticlePage',
     detail_url: '',
-    html_url: '',
-    slug: faker.lorem.words(3).split(' ').join('-'),
+    html_url: `${faker.random.arrayElement(['news', 'food', 'arts'])}/${slug()}`, // used to derive path for now
+    slug: slug(),
     show_in_menus: false,
     seo_title: '',
     search_description: '',
