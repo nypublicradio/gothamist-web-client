@@ -7,7 +7,7 @@ export const TIMESTAMP_FORMAT = 'MMM D, YYYY h:mm a';
 export const TIMESTAMP_FORMAT_NO_YEAR = 'MMM D, h:mm a';
 
 export function timestamp([ timestamp ], { format } = {}) {
-  timestamp = moment(timestamp, format);
+  timestamp = moment(timestamp, format).tz(moment.defaultZone.name);
   let now = moment();
   let minutes = now.diff(timestamp, 'minutes')
   let hours = now.diff(timestamp, 'hours');
