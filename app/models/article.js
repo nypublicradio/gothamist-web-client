@@ -11,7 +11,7 @@ export const LEAD_AUDIO   = 'lead_audio';
 export const LEAD_IMAGE   = 'lead_image';
 
 export default DS.Model.extend({
-  body:        DS.attr('string'),
+  body:        DS.attr(),
   description: DS.attr('string'),
 
   disableComments: DS.attr('boolean'),
