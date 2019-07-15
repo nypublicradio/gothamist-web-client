@@ -8,6 +8,9 @@ export default DS.Transform.extend({
     if (ops.utc) {
       date.utc();
     }
+    if (ops.timezoneOverride) {
+      date.tz(moment.defaultZone.name);
+    }
     return date;
   },
 

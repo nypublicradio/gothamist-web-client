@@ -27,7 +27,7 @@ export default DS.Model.extend({
   meta: DS.attr(),
 
   publicationDate: DS.attr('moment', {
-    utc: true,
+    timezoneOverride: true,
   }),
 
   relatedAuthors:                   DS.attr({defaultValue: () => []}),
@@ -47,7 +47,7 @@ export default DS.Model.extend({
 
   tags:        DS.attr({defaultValue: () => []}),
   title:       DS.attr('string', {defaultValue: ''}),
-  updatedDate: DS.attr('moment', {utc: true}),
+  updatedDate: DS.attr('moment', {timezoneOverride: true}),
 
   // computed
   path: computed('meta.html_url', function() {
@@ -56,7 +56,7 @@ export default DS.Model.extend({
     }
   }),
   publishedMoment: computed('meta.first_published_at', 'publicationDate', function() {
-    return this.publicationDate.isValid() ? this.publicationDate : moment.utc(this.meta.first_published_at);
+    return this.publicationDate.isValid() ? this.publicationDate : moment.tz(this.meta.first_published_at, moment.defaultZone.name);
   }),
   modifiedMoment: reads('updatedDate'),
 
