@@ -56,7 +56,7 @@ export default DS.Model.extend({
     }
   }),
   publishedMoment: computed('meta.first_published_at', 'publicationDate', function() {
-    return this.publicationDate || moment.utc(this.meta.first_published_at);
+    return this.publicationDate.isValid() ? this.publicationDate : moment.utc(this.meta.first_published_at);
   }),
   modifiedMoment: reads('updatedDate'),
 
