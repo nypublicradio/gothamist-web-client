@@ -51,8 +51,9 @@ export default DS.Model.extend({
 
   // computed
   path: computed('meta.html_url', function() {
-    let [, path] = this.meta.html_url.split('/', 1);
-    return path;
+    if (typeof this.meta.html_url === 'string') {
+      return this.meta.html_url.replace(/https?:\/\/[^/]+\//, '');
+    }
   }),
   publishedMoment: computed('meta.first_published_at', 'publicationDate', function() {
     return this.publicationDate || moment.utc(this.meta.first_published_at);
