@@ -136,7 +136,7 @@ jobs:
           name: Make QA artifact
           command: |
             mkdir /tmp/qa-builds
-            echo "<a href=\"https://$QA_HOST?build=$CIRCLE_BRANCH\">https://$QA_HOST?build=$CIRCLE_BRANCH</a>" > /tmp/qa-builds/$CIRCLE_SHA1.html
+            echo "<a href=\"https://$WAGTAIL_QA_HOST?build=$CIRCLE_BRANCH\">https://$WAGTAIL_QA_HOST?build=$CIRCLE_BRANCH</a>" > /tmp/qa-builds/$CIRCLE_SHA1.html
 
       - store_artifacts:
           path: /tmp/qa-builds
