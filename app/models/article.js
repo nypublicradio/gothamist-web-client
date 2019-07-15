@@ -121,6 +121,14 @@ export default DS.Model.extend({
     return this.tags.includes('@analysis') || this.tags.includes('analysis');
   }),
 
+  thumbnail: computed('leadImage', 'listingImage', function() {
+    if (this.listingImage) {
+      return {id: this.listingImage.id};
+    } else if (this.leadImage){
+      return {id: this.leadImage.image};
+    }
+  }),
+
   hasLead: bool('leadAsset'),
 
   leadImage: computed('leadAsset', function() {
