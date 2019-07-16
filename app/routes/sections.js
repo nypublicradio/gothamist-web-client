@@ -5,7 +5,6 @@ import { inject } from '@ember/service';
 
 import fade from 'ember-animated/transitions/fade';
 
-import { titleize } from '../helpers/titleize';
 import addCommentCount from '../utils/add-comment-count';
 
 
@@ -17,7 +16,7 @@ export default Route.extend({
   dataLayer: inject('nypr-metrics/data-layer'),
   header: inject('nypr-o-header'),
 
-  titleToken: model => titleize(model.section),
+  titleToken: model => model.section.title,
 
   beforeModel() {
     this.dataLayer.push({template: 'section'});
