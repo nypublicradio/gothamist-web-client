@@ -1,4 +1,4 @@
-import { module, skip /* test */ } from 'qunit';
+import { module, test } from 'qunit';
 import { visit, currentURL, click, findAll } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
@@ -10,11 +10,17 @@ module('Acceptance | section', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
-  skip('visiting section page', async function(assert) {
-    server.createList('article', COUNT * 5, {categories: [{basename: 'news'}]});
-    await visit('/sections/news');
+  test('visiting section page', async function(assert) {
+    server.create('index-page', {
+      // this is the key we'll look for in the `find?html_path` request
+      // mirage doesn't support nested keys for `where` lookups
+      html_path: 'news',
+      title: 'News',
+    });
 
-    assert.equal(currentURL(), '/sections/news');
+    await visit('/news');
+
+    assert.equal(currentURL(), '/news');
 
     assert.dom('[data-test-block]').exists({count: COUNT});
     assert.dom('[data-test-section-heading]').hasText('News');
@@ -24,14 +30,21 @@ module('Acceptance | section', function(hooks) {
     assert.dom('[data-test-block]').exists({count: COUNT * 2}, 'Clicking "read more" brings in another set of results equal to the amount of COUNT');
   });
 
-  skip('section lists get updated with commentCount', async function(assert) {
-    server.createList('article', COUNT * 5, {tags: ['c|news']});
-    const EXPECTED = server.schema.articles.all()
+  test('section lists get updated with commentCount', async function(assert) {
+    server.create('index-page', {
+      id: '1',
+      // this is the key we'll look for in the `find?html_path` request
+      // mirage doesn't support nested keys for `where` lookups
+      html_path: 'news',
+      title: 'News',
+    });
+
+    const EXPECTED = server.schema.articles.where({indexPageId: '1'})
       .models.map((a, i) => ({posts: Math.ceil(Math.random() * i + 1), identifiers: [a.id]}));
 
     server.get(`${config.disqusAPI}/threads/set.json`, {response: EXPECTED});
 
-    await visit('/sections/news');
+    await visit('/news');
 
     await click('[data-test-more-results]');
 
