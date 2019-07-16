@@ -14,6 +14,7 @@ const Router = EmberRouter.extend({
 
 Router.map(function() {
   this.route('404', {path: '*wildcard'});
+  this.route('500', {path: '*other-error'});
 
   this.route('article', {path: '*any'}, function() {
     this.route('gallery');
@@ -26,8 +27,6 @@ Router.map(function() {
   this.route('author-detail', {path: 'author/:name'});
 
   this.route('contact');
-
-  this.route('500', {path: 'server-error'});
 });
 
 export default Router;
