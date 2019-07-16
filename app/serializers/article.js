@@ -1,9 +1,8 @@
-import DS from 'ember-data';
-import { underscore } from '@ember/string';
+import ApplicationSerializer from './application';
 
-export default DS.RESTSerializer.extend({
+
+export default ApplicationSerializer.extend({
   modelNameFromPayloadKey: () => 'article',
-  keyForAttribute: key => underscore(key),
 
   normalize() {
     let data = this._super(...arguments);
