@@ -66,6 +66,7 @@ export default Route.extend({
     controller.setProperties({
       query: {
         tags: model.tag,
+        show_on_index_listing: true,
         limit: COUNT,
       },
       transition: fade,
