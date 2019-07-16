@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { Factory, faker, /*, trait*/ } from 'ember-cli-mirage';
+import { Factory, faker, trait } from 'ember-cli-mirage';
 
 import {
   CMS_TIMESTAMP_FORMAT,
@@ -81,4 +81,8 @@ export default Factory.extend({
   tags: () => ([]),
 
   title: () => faker.random.words(6),
+
+  now: trait({
+    publication_date: moment.utc().format(CMS_TIMESTAMP_FORMAT),
+  }),
 });

@@ -56,4 +56,29 @@ module('Acceptance | section', function(hooks) {
       assert.dom(block.querySelector('.c-block-meta__comments')).includesText(String(posts));
     });
   });
+
+  test('two most recent showAsFeature articles are in top spots', async function(assert) {
+    const TITLE_1 = 'Featured 1';
+    const TITLE_2 = 'Featured 2';
+
+    const NEWS = server.create('index-page', {html_path: 'news'});
+    server.create('article', 'now', {id: 'foo', title: TITLE_1, show_as_feature: true, indexPage: NEWS});
+    server.create('article', 'now', {id: 'bar', title: TITLE_2, show_as_feature: true, indexPage: NEWS});
+    // ensure the featured articles aren't just the newest
+    server.create('article', 'now', {indexPage: NEWS});
+
+    await visit('/news');
+
+    // mirage sorts articles by publication_date
+    // most recently create article will appear in the number 1 spot, i.e. TITLE_2
+    assert.dom('[data-test-section-featured] [data-test-col1] [data-test-block-title]').hasText(TITLE_2);
+    assert.dom('[data-test-section-featured] [data-test-col2] [data-test-block-title]').hasText(TITLE_1);
+
+    // load in all generated articles
+    await click('[data-test-more-results]');
+    // await click('[data-test-more-results]');
+
+    assert.dom('[data-test-section-river] [data-test-block="foo"]').doesNotExist('featured articles should be filtered out of the river');
+    assert.dom('[data-test-section-river] [data-test-block="bar"]').doesNotExist('featured articles should be filtered out of the river');
+  });
 });
