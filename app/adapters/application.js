@@ -41,7 +41,6 @@ export default DS.RESTAdapter.extend(AdapterFetch, {
       });
       url += `?${qp.join('&')}`;
     }
-    console.log({url, options});
     return this._super(url, type, options);
   },
 
