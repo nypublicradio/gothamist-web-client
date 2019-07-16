@@ -27,6 +27,11 @@ export default function() {
     if (tags) {
       return schema.articles.where({tags}).slice(offset, (offset + 1 * limit));
     }
+  });
+
+  // general purpose find endpoint
+  // look at every defined model and see if there's a matching html_path
+  this.get('/api/v2/pages/find', (schema, request) => {
 
   });
 
