@@ -14,7 +14,7 @@ export default function() {
       offset = 0,
       fields,
       type,
-      descendent_of,
+      descendant_of,
     } = request.queryParams;
 
     if (!fields && !type) {
@@ -25,11 +25,15 @@ export default function() {
     offset = Number(offset);
     limit = Number(limit);
 
-    if (tags) {
-      return schema.articles.where({tags}).slice(offset, (offset + 1 * limit));
+    const START = offset;
+    const END = (offset + 1 * limit);
 
-    if (descendent_of) {
-      return schema.articles.where({indexPageId: descendent_of}).slice(START, END);
+    if (tags) {
+      return schema.articles.where({tags}).slice(START, END);
+    }
+
+    if (descendant_of) {
+      return schema.articles.where({indexPageId: descendant_of}).slice(START, END);
     }
   });
 
