@@ -7,23 +7,27 @@
 
 <div class="c-listing__sections u-section-spacing l-container l-container--14col l-wrap" data-test-section-featured>
   <NyprOBlockListGroup @layoutType='two-up' as |blg|>
-    <blg.col1 data-test-col1>
-      <ArticleBlock
-        @article={{object-at 0 model.featured}}
-        @orientation='v'
-        @thumbnailSize={{array 800 533}}
-        @hideEyebrow={{true}}
-      />
-    </blg.col1>
+    {{#with (object-at 0 model.featured) as |article|}}
+      <blg.col1 data-test-col1>
+        <ArticleBlock
+          @article={{article}}
+          @orientation='v'
+          @thumbnailSize={{array 800 533}}
+          @hideEyebrow={{true}}
+        />
+      </blg.col1>
+    {{/with}}
 
-    <blg.col2 data-test-col2>
-      <ArticleBlock
-        @article={{object-at 1 model.featured}}
-        @orientation='v'
-        @thumbnailSize={{array 800 533}}
-        @hideEyebrow={{true}}
-      />
-    </blg.col2>
+    {{#with (object-at 1 model.featured) as |article|}}
+      <blg.col2 data-test-col2>
+        <ArticleBlock
+          @article={{article}}
+          @orientation='v'
+          @thumbnailSize={{array 800 533}}
+          @hideEyebrow={{true}}
+        />
+      </blg.col2>
+    {{/with}}
   </NyprOBlockListGroup>
 
   <hr class="u-border-accent u-hide-until--m" aria-hidden="true">
