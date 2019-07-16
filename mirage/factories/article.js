@@ -1,11 +1,10 @@
 import moment from 'moment';
-import { Factory, faker/*, trait*/ } from 'ember-cli-mirage';
+import { Factory, faker, /*, trait*/ } from 'ember-cli-mirage';
 
 import {
-  CMS_TIMESTAMP_FORMAT
+  CMS_TIMESTAMP_FORMAT,
+  slug,
 } from './consts';
-
-const slug = () => faker.lorem.words(3).split(' ').join('-');
 
 export default Factory.extend({
   body: () => ([
