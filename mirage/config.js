@@ -1,6 +1,7 @@
-import { faker } from 'ember-cli-mirage';
+import { Response, faker } from 'ember-cli-mirage';
 
 import config from '../config/environment';
+
 
 export default function() {
 
@@ -11,7 +12,13 @@ export default function() {
       tags,
       limit,
       offset = 0,
+      fields,
+      type,
     } = request.queryParams;
+
+    if (!fields && !type) {
+      return new Response(400, {}, {detail: ["fields and type are required"]});
+    }
 
     // coerce
     offset = Number(offset);
