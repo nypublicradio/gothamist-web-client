@@ -71,7 +71,7 @@ export default Route.extend({
     if (this.fastboot.isFastBoot) {
       return;
     } else {
-      addCommentCount(model.articles);
+      addCommentCount(model.river);
 
       controller.set('addComments', results => (addCommentCount(results), results));
     }
