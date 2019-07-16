@@ -35,15 +35,19 @@ export default Route.extend({
   },
 
   model({ section }) {
-    return hash({
-      section,
-      title: titleize(section),
-      articles: this.store.query('article', {
-        index: 'gothamist',
-        term: `c|${section}`,
-        count: COUNT,
-      })
-    });
+    return  this.store.queryRecord('page', {
+      html_path: section,
+    }).then(section => {
+      return hash({
+        section,
+        title: section.title,
+        articles: this.store.query('article', {
+          descendant_of: section.id,
+          show_on_index_listing: true,
+          limit: COUNT,
+        })
+      });
+    })
   },
 
   setupController(controller, model) {
