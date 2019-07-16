@@ -130,33 +130,33 @@ export default Route.extend({
 
   actions: {
     error(e, transition) {
+      console.error(e); // eslint-disable-line
+      // extract required arguments for urlFor:
+
+      // The dot-separated, fully-qualified name of the route, like "article.index"
+      let targetRoute = transition.targetName;
+      // all the RouteInfos for the intended route
+      let routes = transition.routeInfos;
+      // gather up the path params in their correct order
+      let params = routes.map(route =>
+        route.paramNames.map(key => route.params[key])  // `paramNames` is each param in order
+                                                        // specified in router.js
+      ).reduce((params, vals) => params.concat(vals), []); // flatten
+
+      let path = this.router.urlFor(targetRoute, ...params);
+      // strip the leading slash
+      path = path.replace(/^\//, '');
+
       if (e instanceof DS.NotFoundError) {
         if (this.fastboot.isFastBoot) {
           this.set('fastboot.response.statusCode', 404);
         }
-
-        // extract required arguments for urlFor:
-
-        // The dot-separated, fully-qualified name of the route, like "article.index"
-        let targetRoute = transition.targetName;
-        // all the RouteInfos for the intended route
-        let routes = transition.routeInfos;
-        // gather up the path params in their correct order
-        let params = routes.map(route =>
-          route.paramNames.map(key => route.params[key])  // `paramNames` is each param in order
-                                                          // specified in router.js
-        ).reduce((params, vals) => params.concat(vals), []); // flatten
-
-        let path = this.router.urlFor(targetRoute, ...params);
-        // strip the leading slash
-        path = path.replace(/^\//, '');
-
         this.transitionTo('404', path);
       } else if (this.fastboot.isFastBoot) {
         this.set('fastboot.response.statusCode', 500);
         this.transitionTo('500');
       } else {
-        throw e;
+        this.transitionTo('500', path);
       }
     },
 
