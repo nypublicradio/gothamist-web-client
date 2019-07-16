@@ -6,6 +6,8 @@ export default ApplicationSerializer.extend({
   serialize(object/*, request*/) {
     let json = ApplicationSerializer.prototype.serialize.apply(this, arguments);
 
+    delete json.indexPage; // mirage only
+
     return {
       ...json,
       meta: {
