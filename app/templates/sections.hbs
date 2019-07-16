@@ -5,9 +5,9 @@
   </h1>
 </header>
 
-<div class="c-listing__sections u-section-spacing l-container l-container--14col l-wrap">
+<div class="c-listing__sections u-section-spacing l-container l-container--14col l-wrap" data-test-section-featured>
   <NyprOBlockListGroup @layoutType='two-up' as |blg|>
-    <blg.col1>
+    <blg.col1 data-test-col1>
       <ArticleBlock
         @article={{object-at 0 model.articles}}
         @orientation='v'
@@ -16,7 +16,7 @@
       />
     </blg.col1>
 
-    <blg.col2>
+    <blg.col2 data-test-col2>
       <ArticleBlock
         @article={{object-at 1 model.articles}}
         @orientation='v'
@@ -28,8 +28,8 @@
 
   <hr class="u-border-accent u-hide-until--m" aria-hidden="true">
 
-  <section class="c-listing__section o-section">
     <NyprMBlockList @items={{slice 2 6 model.articles}} as |article|>
+  <section class="c-listing__section o-section" data-test-section-river>
       <ArticleBlock
         @article={{article}}
         @orientation='h'
@@ -49,8 +49,8 @@
 
   <hr class="u-border-accent u-hide-until--m" aria-hidden="true">
 
-  <section class="c-listing__section o-section">
     <NyprMBlockList @items={{slice 6 undefined model.articles}} as |article|>
+  <section class="c-listing__section o-section" data-test-section-river>
       <ArticleBlock
         @article={{article}}
         @orientation='h'
@@ -72,7 +72,7 @@
     <AnimatedContainer class="u-section-spacing" @onInitialRender={{true}}>
       {{#each more.pages as |page|}}
         <AriaLoadMessage @message="More Results Loaded" />
-        <section class="c-listing__section o-section">
+        <section class="c-listing__section o-section" data-test-section-river>
           <NyprMBlockList @items={{slice 0 6 page}} as |article|>
             <ArticleBlock
               @article={{article}}
@@ -93,7 +93,7 @@
 
         <hr class="u-border-accent u-hide-until--m" aria-hidden="true">
 
-        <section class="c-listing__section o-section">
+        <section class="c-listing__section o-section" data-test-section-river>
           <NyprMBlockList @items={{slice 6 undefined page}} as |article|>
             <ArticleBlock
               @article={{article}}
