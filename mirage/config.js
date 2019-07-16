@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { Response, faker } from 'ember-cli-mirage';
 
 import config from '../config/environment';
@@ -43,7 +44,10 @@ export default function() {
       }
     }
 
-    return schema.articles.where(QUERY).slice(START, END);
+    return schema.articles
+      .where(QUERY)
+      .sort((a, b) => moment(a.publication_date).isAfter(b) ? -1 : 1)
+      .slice(START, END);
   });
 
   // general purpose find endpoint
