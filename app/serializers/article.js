@@ -16,7 +16,7 @@ export default DS.RESTSerializer.extend({
     return data;
   },
 
-  normalizeQueryRecordResponse(store, articleClass, payload) {
+  normalizeQueryRecordResponse(_store, _modelClass, payload) {
     // Wagtail returns an array of objects for REST query
     // ember wants a single record in response to `queryRecord` calls
     payload.items = payload.items[0];
