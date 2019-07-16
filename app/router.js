@@ -23,7 +23,7 @@ Router.map(function() {
   this.route('tags', {path: 'tags/:tag'});
   this.route('popular');
   this.route('staff');
-  this.route('sections', {path: 'sections/:section'});
+  this.route('sections', {path: ':section'});
   this.route('author-detail', {path: 'author/:name'});
 
   this.route('contact');
