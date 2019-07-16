@@ -1,6 +1,7 @@
 import DS from 'ember-data';
-import AdapterFetch from 'ember-fetch/mixins/adapter-fetch';
-import config from '../config/environment';
+
+// use application adapter b/c page adapter implements a non-standard findRecord
+import ApplicationAdapter from './application';
 
 
 export const DEFAULT_QUERY_PARAMS = {
@@ -8,16 +9,10 @@ export const DEFAULT_QUERY_PARAMS = {
   fields: '*',
 }
 
-export default DS.RESTAdapter.extend(AdapterFetch, {
-  host: config.cmsServer,
-  namespace: 'api/v2',
-  pathForType: () => 'pages',
+export default ApplicationAdapter.extend({
+  DEFAULT_QUERY_PARAMS,
 
-  buildURL() {
-    return `${this._super(...arguments)}/`;
-  },
-
-  queryRecord(store, type, query = {}) {
+  queryRecord(_store, _type, query = {}) {
     query.limit = 1;
     return this._super(...arguments).then(response => {
       if (response.items.length === 0) {
@@ -27,26 +22,4 @@ export default DS.RESTAdapter.extend(AdapterFetch, {
     });
   },
 
-  ajaxOptions(url, type, options) {
-    if (type === 'GET' && options.data) {
-      // query request
-      let query = {...DEFAULT_QUERY_PARAMS, ...options.data};
-      options.data = {};
-
-      // construct query params according to wagtail spec
-      // multiple keys are unconventional; added as comma-separatec raw key names
-      // instead of with the usual `[]`
-      // e.g. tags=food,news
-      var qp = Object.keys(query).map(key => {
-        if (Array.isArray(query[key])) {
-          let vals = query[key].map(encodeURIComponent).join(',');
-          return `${key}=${vals}`;
-        } else {
-          return `${key}=${encodeURIComponent(query[key])}`;
-        }
-      });
-      url += `?${qp.join('&')}`;
-    }
-    return this._super(url, type, options);
-  }
 });
