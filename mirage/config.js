@@ -3,18 +3,22 @@ import { Response, faker } from 'ember-cli-mirage';
 import config from '../config/environment';
 
 
+const QUERY_MAP = {
+  descendant_of: 'indexPageId',
+};
+
+const PARAMS_TO_SKIP = ['fields', 'type', 'limit', 'offset'];
+
 export default function() {
 
   this.urlPrefix = config.cmsServer;
 
   this.get('/api/v2/pages', (schema, request) => {
     let {
-      tags,
       limit,
       offset = 0,
       fields,
       type,
-      descendant_of,
     } = request.queryParams;
 
     if (!fields && !type) {
@@ -28,13 +32,18 @@ export default function() {
     const START = offset;
     const END = (offset + 1 * limit);
 
-    if (tags) {
-      return schema.articles.where({tags}).slice(START, END);
+    // construct a query object for the `where` method
+    const QUERY = {}
+    for (let param in request.queryParams) {
+      // skip certain params
+      if (!PARAMS_TO_SKIP.includes(param)) {
+        // some query param keys translate to a different mirage attr key
+        let prop = QUERY_MAP[param] || param;
+        QUERY[prop] = request.queryParams[param];
+      }
     }
 
-    if (descendant_of) {
-      return schema.articles.where({indexPageId: descendant_of}).slice(START, END);
-    }
+    return schema.articles.where(QUERY).slice(START, END);
   });
 
   // general purpose find endpoint
