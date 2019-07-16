@@ -37,16 +37,23 @@ export default Route.extend({
     return  this.store.queryRecord('page', {
       html_path: section,
     }).then(section => {
+      const QUERY = {
+        descendant_of: section.id,
+        show_on_index_listing: true,
+        limit: COUNT,
+      };
+
       return hash({
         section,
         title: section.title,
-        articles: this.store.query('article', {
-          descendant_of: section.id,
-          show_on_index_listing: true,
-          limit: COUNT,
+        river: this.store.query('article', QUERY),
+        featured: this.store.query('article', {
+          ...QUERY,
+          show_as_feature: true,
+          limit: 2,
         })
       });
-    })
+    });
   },
 
   setupController(controller, model) {
