@@ -55,17 +55,4 @@ module('Unit | Adapter | article', function(hooks) {
     await adapter.query(store, store.modelFor('article'), {});
     assert.ok('no error thrown');
   });
-
-  test('ajaxOptions forms query parameters according to Wagtail requirements', function(assert) {
-    let adapter = this.owner.lookup('adapter:article');
-
-    const URL = 'http://example.com';
-    let queryParams = {
-      foo: 'bar',
-      biz: ['qux', 'cats & dogs'],
-    };
-
-    let options = adapter.ajaxOptions(URL, 'GET', {data: queryParams});
-    assert.ok(options.url.match('&biz=qux,cats%20%26%20dogs'), 'array params are joined by a comma');
-  })
 });
