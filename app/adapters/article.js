@@ -7,6 +7,7 @@ import ApplicationAdapter from './application';
 export const DEFAULT_QUERY_PARAMS = {
   type: 'news.ArticlePage',
   fields: '*',
+  order: '-publication_date',
 }
 
 export default ApplicationAdapter.extend({
