@@ -8,7 +8,7 @@ const QUERY_MAP = {
   descendant_of: 'indexPageId',
 };
 
-const PARAMS_TO_SKIP = ['fields', 'type', 'limit', 'offset'];
+const PARAMS_TO_SKIP = ['fields', 'type', 'limit', 'offset', 'order'];
 
 export default function() {
 
@@ -20,6 +20,7 @@ export default function() {
       offset = 0,
       fields,
       type,
+      order = '',
     } = request.queryParams;
 
     if (!fields && !type) {
@@ -44,10 +45,21 @@ export default function() {
       }
     }
 
-    return schema.articles
-      .where(QUERY)
-      .sort((a, b) => moment(a.publication_date).isAfter(b) ? -1 : 1)
-      .slice(START, END);
+    let articles = schema.articles.where(QUERY);
+
+    if (order.match('publication_date')) {
+      let sortFn;
+
+      if (order[0] === '-') {
+        // descending
+        sortFn = (a, b) => moment(a.publication_date).isAfter(b) ? -1 : 1;
+      } else {
+        sortFn = (a, b) => moment(a.publication_date).isBefore(b) ? -1 : 1;
+      }
+      articles = articles.sort(sortFn)
+    }
+
+    return articles.slice(START, END);
   });
 
   // general purpose find endpoint
