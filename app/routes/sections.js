@@ -55,10 +55,9 @@ export default Route.extend({
 
     controller.setProperties({
       query: {
-        index: 'gothamist',
-        term: `c|${model.section}`,
-        count: COUNT,
-        page: 2,
+        descendant_of: model.section.id,
+        show_on_index_listing: true,
+        limit: COUNT,
       },
       transition: fade,
     });
