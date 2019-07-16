@@ -14,6 +14,7 @@ export default function() {
       offset = 0,
       fields,
       type,
+      descendent_of,
     } = request.queryParams;
 
     if (!fields && !type) {
@@ -26,6 +27,9 @@ export default function() {
 
     if (tags) {
       return schema.articles.where({tags}).slice(offset, (offset + 1 * limit));
+
+    if (descendent_of) {
+      return schema.articles.where({indexPageId: descendent_of}).slice(START, END);
     }
   });
 
