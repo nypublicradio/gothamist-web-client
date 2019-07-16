@@ -28,8 +28,8 @@
 
   <hr class="u-border-accent u-hide-until--m" aria-hidden="true">
 
-    <NyprMBlockList @items={{slice 2 6 model.articles}} as |article|>
   <section class="c-listing__section o-section" data-test-section-river>
+    <NyprMBlockList @items={{slice 0 4 this.filteredRiver}} as |article|>
       <ArticleBlock
         @article={{article}}
         @orientation='h'
@@ -49,8 +49,8 @@
 
   <hr class="u-border-accent u-hide-until--m" aria-hidden="true">
 
-    <NyprMBlockList @items={{slice 6 undefined model.articles}} as |article|>
   <section class="c-listing__section o-section" data-test-section-river>
+    <NyprMBlockList @items={{slice 4 undefined this.filteredRiver}} as |article|>
       <ArticleBlock
         @article={{article}}
         @orientation='h'
