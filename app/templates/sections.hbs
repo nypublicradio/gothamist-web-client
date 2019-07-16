@@ -9,7 +9,7 @@
   <NyprOBlockListGroup @layoutType='two-up' as |blg|>
     <blg.col1 data-test-col1>
       <ArticleBlock
-        @article={{object-at 0 model.articles}}
+        @article={{object-at 0 model.featured}}
         @orientation='v'
         @thumbnailSize={{array 800 533}}
         @hideEyebrow={{true}}
@@ -18,7 +18,7 @@
 
     <blg.col2 data-test-col2>
       <ArticleBlock
-        @article={{object-at 1 model.articles}}
+        @article={{object-at 1 model.featured}}
         @orientation='v'
         @thumbnailSize={{array 800 533}}
         @hideEyebrow={{true}}
