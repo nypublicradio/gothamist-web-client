@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { or } from '@ember/object/computed';
 
 import getWagtailUrl from 'ember-wagtail-images/utils/get-wagtail-url';
 
@@ -89,6 +90,14 @@ export default Component.extend({
     @type {String}
   */
   commentsAnchor: config.commentsAnchor,
+
+  /**
+    Derived summary that respects `listingSummary` override.
+
+    @accessor summary
+    @type {String}
+  */
+  summary: or('article.{listingSummary,description}'),
 
   /**
     Hide the "eyebrow", i.e. section name, by passing a truthy value. Default: `false`.
@@ -185,7 +194,7 @@ export default Component.extend({
       return;
     }
 
-    let { thumbnail } = this.article;
+    let thumbnail = this.article.listingImage || this.article.thumbnail;
 
     if (!thumbnail) {
       // fallback image
@@ -222,4 +231,12 @@ export default Component.extend({
       return sizes;
     }
   }),
+
+  /**
+    Derived title that respects `listingTitle` override.
+
+    @accessor title
+    @type {String}
+  */
+  title: or('article.{listingTitle,title}'),
 });
