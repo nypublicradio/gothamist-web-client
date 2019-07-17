@@ -19,7 +19,7 @@ module('Acceptance | gallery', function(hooks) {
   })
 
   skip('gallery should contain 2 slides and 0 ads', async function(assert) {
-    const article = server.create('article', 'mtGallery', {categories: [{basename: 'food'}]});
+    const article = server.create('article', 'mtGallery', {_section: 'food'});
     // 7 articles - 5 = 2
     article.gallery_array.splice(0, 5)
     article.gallery_captions.splice(0, 5)
@@ -34,7 +34,7 @@ module('Acceptance | gallery', function(hooks) {
   });
 
   skip('gallery should contain 3 slides and 1 ad', async function(assert) {
-    const article = server.create('article', 'mtGallery', {categories: [{basename: 'food'}]});
+    const article = server.create('article', 'mtGallery', {_section: 'food'});
     // 7 articles - 4 = 3
     article.gallery_array.splice(0, 4);
     article.gallery_captions.splice(0, 4);
@@ -48,7 +48,7 @@ module('Acceptance | gallery', function(hooks) {
   });
 
   skip('gallery should contain 5 slides and 1 ads', async function(assert) {
-    const article = server.create('article', 'mtGallery', {categories: [{basename: 'food'}]});
+    const article = server.create('article', 'mtGallery', {_section: 'food'});
     // 7 articles - 2 = 6
     article.gallery_array.splice(0, 2)
     article.gallery_captions.splice(0, 2)
@@ -63,7 +63,7 @@ module('Acceptance | gallery', function(hooks) {
 
 
   skip('gallery should contain 6 slides and 2 ads', async function(assert) {
-    const article = server.create('article', 'mtGallery', {categories: [{basename: 'food'}]});
+    const article = server.create('article', 'mtGallery', {_section: 'food'});
     // 7 articles - 1 = 6
     article.gallery_array.splice(0, 1)
     article.gallery_captions.splice(0, 1)
@@ -77,7 +77,7 @@ module('Acceptance | gallery', function(hooks) {
   });
 
   skip('gallery should contain 14 slides and still only 2 ads', async function(assert) {
-    const article = server.create('article', 'mtGallery', {categories: [{basename: 'food'}]});
+    const article = server.create('article', 'mtGallery', {_section: 'food'});
     // 7 articles + 7 = 14
     article.gallery_array.push(...article.gallery_array);
     article.gallery_captions.push(...article.gallery_captions);

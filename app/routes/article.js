@@ -40,7 +40,7 @@ export default Route.extend({
       ogTitle: model.title, // don't include " - Gothamist" like in <title> tag
       publishedTime: model.publishedMoment.format(),
       modifiedTime: model.modifiedMoment.format(),
-      section: model.section.label,
+      section: model.section.title,
       tags: model.displayTags,
       authors: model.authors,
       image: {
@@ -54,7 +54,7 @@ export default Route.extend({
       this.set('metrics.context.pageData', {
         // merge with existing value, which is the previous URL set in the application route
         ...this.metrics.context.pageData,
-        sections: model.section.label || model.section.basename,
+        sections: model.section.title || model.section.slug,
         authors: model.authors,
         path: `/${model.path}`,
       });

@@ -80,12 +80,12 @@ export default Page.extend({
 
   breadcrumb: computed('section', function() {
     return;
-    // if (!this.section.basename) {
+    // if (!this.section.slug) {
     //   return;
     // }
     // let breadcrumb = [{
-    //   route: ['sections', this.section.basename],
-    //   label: this.section.label
+    //   route: ['sections', this.section.slug],
+    //   label: this.section.title
     // }];
     // if (this.isSponsored) {
     //   breadcrumb.push({label: 'Sponsored'});
@@ -152,6 +152,6 @@ export default Page.extend({
       .map(tag => tag.replace(/^@/,''));
   }),
   adBindings: computed(function() {
-    return ['internalTags:tags','section.basename:Category'];
+    return ['internalTags:tags','section.slug:Category'];
   }),
 });
