@@ -11,6 +11,7 @@ import { SERVICE_MAP } from 'nypr-design-system/components/nypr-m-share-tools';
 import { inViewport } from 'nypr-design-system/helpers/in-viewport';
 
 import config from 'gothamist-web-client/config/environment';
+import { ANCESTRY } from '../unit/fixtures/article-fixtures';
 
 
 const URL = UTM => {
@@ -42,8 +43,8 @@ module('Acceptance | article', function(hooks) {
   });
 
   skip('visiting article route', async function(assert) {
-    const article = server.create('article', {categories: [{basename: 'food'}]});
-    server.createList('article', 5, {terms: ['@main'], categories: [{basename: 'food'}]});
+    const article = server.create('article', {_section: 'food'});
+    server.createList('article', 5, {terms: ['@main'], _section: 'food'});
 
     await visit(`/${article.path}`);
 
@@ -239,7 +240,7 @@ module('Acceptance | article', function(hooks) {
 
   skip('chartbeat virtualPage is called with correct args correct number of times', async function(assert) {
     const article = server.create('article', {
-      categories: [{basename: 'food'}],
+      ancestry: ANCESTRY,
     });
 
     const spy = this.spy(window.pSUPERFLY, 'virtualPage');
@@ -262,7 +263,7 @@ module('Acceptance | article', function(hooks) {
       "virtualReferrer",
     ]);
     assert.deepEqual(firstCall, {
-      sections: `Gothamist,${article.categories[0].basename},Gothamist ${article.categories[0].basename}`,
+      sections: `Gothamist,News,Gothamist News`,
       authors: article.author_nickname,
       path: `/${article.path}`,
       virtualReferrer: '/',
@@ -295,7 +296,7 @@ module('Acceptance | article', function(hooks) {
     const SECTION = 'news';
     const AUTHOR = 'Foo Bar';
     server.create('article', {
-      categories: [{basename: SECTION}],
+      _section: SECTION,
       author_nickname: AUTHOR,
       path: 'foo',
     });
@@ -312,13 +313,13 @@ module('Acceptance | article', function(hooks) {
     // first article
     server.create('article', {
       path: 'foo',
-      categories: [{basename: 'food'}]
+      _section: 'food',
     });
     // final article
     server.create('article', {
       path: 'bar',
       terms: ['@main'],
-      categories: [{basename: 'food'}]
+      _section: 'food',
     });
 
     await visit('/');

@@ -7,6 +7,7 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import * as uuid from 'uuid/v1';
 
 import config from 'gothamist-web-client/config/environment';
+import { ANCESTRY } from '../unit/fixtures/article-fixtures';
 
 
 module('Acceptance | analytics', function(hooks) {
@@ -39,10 +40,7 @@ module('Acceptance | analytics', function(hooks) {
       id: 'gallery',
       author_nickname: AUTHOR,
       authored_on_utc: '20190101120000',
-      categories: [{
-        basename: 'news',
-        label: SECTION
-      }],
+      ancestry: ANCESTRY,
       tags: TAGS,
       title: TITLE,
     });
