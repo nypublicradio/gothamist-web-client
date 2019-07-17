@@ -75,7 +75,7 @@ export default Component.extend({
       path String
       publishedMoment Moment
       relatedAuthors Array[Object<first_name String, last_name String, slug String>]
-      section Object<label String, basename String>
+      section Object<title String, slug String>
       thumbnail Object<id String>
       title String
     ```
@@ -199,7 +199,7 @@ export default Component.extend({
     if (!thumbnail) {
       // fallback image
       let section = this.article.section || {};
-      return FALLBACK_THUMBNAIL[section.basename];
+      return FALLBACK_THUMBNAIL[section.slug];
     }
 
     if (thumbnail) {
