@@ -3,7 +3,7 @@
     {{#if this.popular}}
       <NyprMBlockList
         class="u-spacing--and-half"
-        @heading={{concat 'Popular in ' @article.section.label}}
+        @heading={{concat 'Popular in ' @article.section.title}}
         @items={{slice 0 3 this.popular}}
         as |article|>
         <ArticleBlock
@@ -21,7 +21,7 @@
 
   <blg.col2 class="c-recirc-tout__col2" data-test-recirc-featured>
     <h2 class="o-section__heading o-bg-text-accent">
-      Featured in {{@article.section.label}}
+      Featured in {{@article.section.title}}
     </h2>
     {{#if this.featured}}
       <ArticleBlock
