@@ -15,12 +15,17 @@ module('Integration | Component | article-block', function(hooks) {
   test('it renders', async function(assert) {
     const recent = moment().subtract(1, 'day');
     const IMAGE_ID = 100;
+    const SECTION = 'News';
     const GOTHAMIST_ITEM = {
       title: 'Article Title',
       description: 'Summary of the article',
       publishedMoment: recent,
       thumbnail: {
         id: IMAGE_ID,
+      },
+      section: {
+        slug: 'news',
+        title: SECTION,
       }
     };
 
@@ -41,6 +46,8 @@ module('Integration | Component | article-block', function(hooks) {
 
     assert.dom('[data-test-timestamp]').hasText(recent.format(TIMESTAMP_FORMAT_NO_YEAR));
 
+    assert.dom('[data-test-section-label]').hasText(SECTION);
+
     await render(hbs`
       <ArticleBlock
         @article={{item}}
@@ -58,7 +65,7 @@ module('Integration | Component | article-block', function(hooks) {
     const GOTHAMIST_ITEM = {
       title: 'Article Title',
       description: 'Summary of the article',
-      section: {label: 'News', basename: 'news'},
+      section: {title: 'News', slug: 'news'},
     };
 
     this.set('item', GOTHAMIST_ITEM);
@@ -68,21 +75,21 @@ module('Integration | Component | article-block', function(hooks) {
     assert.dom('.c-block__media img').hasAttribute('srcset', FALLBACK_THUMBNAIL.news.srcSet, 'uses fallback based on section: news');
     assert.dom('.c-block__media source').hasAttribute('srcset', FALLBACK_THUMBNAIL.news.srcM, 'uses fallback based on section: news');
 
-    this.set('item.section.basename', 'food');
+    this.set('item.section.slug', 'food');
     await render(hbs`<ArticleBlock @article={{item}} />`);
 
     assert.dom('.c-block__media img').hasAttribute('src', FALLBACK_THUMBNAIL.food.srcS, 'uses fallback based on section: food');
     assert.dom('.c-block__media img').hasAttribute('srcset', FALLBACK_THUMBNAIL.food.srcSet, 'uses fallback based on section: food');
     assert.dom('.c-block__media source').hasAttribute('srcset', FALLBACK_THUMBNAIL.food.srcM, 'uses fallback based on section: food');
 
-    this.set('item.section.basename', 'arts & entertainment');
+    this.set('item.section.slug', 'arts & entertainment');
     await render(hbs`<ArticleBlock @article={{item}} />`);
 
     assert.dom('.c-block__media img').hasAttribute('src', FALLBACK_THUMBNAIL['arts & entertainment'].srcS, 'uses fallback based on section: arts');
     assert.dom('.c-block__media img').hasAttribute('srcset', FALLBACK_THUMBNAIL['arts & entertainment'].srcSet, 'uses fallback based on section: arts');
     assert.dom('.c-block__media source').hasAttribute('srcset', FALLBACK_THUMBNAIL['arts & entertainment'].srcM, 'uses fallback based on section: arts');
 
-    this.set('item.section.basename', undefined);
+    this.set('item.section.slug', undefined);
     await render(hbs`<ArticleBlock @article={{item}} />`);
 
     assert.dom('.c-block__media img').hasAttribute('src', FALLBACK_THUMBNAIL[undefined].srcS, 'no category src');
