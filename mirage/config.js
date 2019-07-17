@@ -1,32 +1,34 @@
-import { faker } from 'ember-cli-mirage';
+import { Response, faker } from 'ember-cli-mirage';
 
 import config from '../config/environment';
 
+
 export default function() {
 
-  // These comments are here to help you get started. Feel free to delete them.
+  this.urlPrefix = config.cmsServer;
 
-  /*
-    Config (with defaults).
+  this.get('/api/v2/pages', (schema, request) => {
+    let {
+      tags,
+      limit,
+      offset = 0,
+      fields,
+      type,
+    } = request.queryParams;
 
-    Note: these only affect routes defined *after* them!
-  */
+    if (!fields && !type) {
+      return new Response(400, {}, {detail: ["fields and type are required"]});
+    }
 
-  // this.urlPrefix = '';    // make this `http://localhost:8080`, for example, if your API is on a different server
-  // this.namespace = '';    // make this `/api`, for example, if your API is namespaced
-  // this.timing = 400;      // delay for each request, automatically set to 0 during testing
+    // coerce
+    offset = Number(offset);
+    limit = Number(limit);
 
-  /*
-    Shorthand cheatsheet:
+    if (tags) {
+      return schema.articles.where({tags}).slice(offset, (offset + 1 * limit));
+    }
 
-    this.get('/posts');
-    this.post('/posts');
-    this.get('/posts/:id');
-    this.put('/posts/:id'); // or this.patch
-    this.del('/posts/:id');
-
-    http://www.ember-cli-mirage.com/docs/v0.4.x/shorthands/
-  */
+  });
 
   this.urlPrefix = config.apiServer;
 

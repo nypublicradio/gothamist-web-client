@@ -2,45 +2,33 @@ import DS from 'ember-data';
 import { underscore } from '@ember/string';
 
 export default DS.RESTSerializer.extend({
-  attrs: {
-    thumbnail640: 'thumbnail_640',
-    thumbnail105: 'thumbnail_105',
-    thumbnail300: 'thumbnail_300',
-  },
   modelNameFromPayloadKey: () => 'article',
   keyForAttribute: key => underscore(key),
 
-  normalizeResponse() {
-    let response = this._super(...arguments);
+  normalize() {
+    let data = this._super(...arguments);
 
-    if (Array.isArray(response.data)) {
-      response.data.forEach(data => stripTwitterEmbeds(data.attributes));
-    } else if (typeof response.data === 'object') {
-      stripTwitterEmbeds(response.data.attributes);
-    }
+    // the server defines this as an array
+    // but it'll always be a single POJO
+    // pull out the first index for easier reference in the app
+    data.lead_asset = data.lead_asset ? data.lead_asset[0] : null;
 
-    return response;
+    return data;
   },
 
-  normalizeQueryRecordResponse(store, articleClass, payload) {
-    // GothTopics always returns an array of entries
+  normalizeQueryRecordResponse(_store, _modelClass, payload) {
+    // Wagtail returns an array of objects for REST query
     // ember wants a single record in response to `queryRecord` calls
-    payload.entries = payload.entries[0];
+    payload.items = payload.items[0];
     return this._super(...arguments);
   },
 
   extractMeta(store, articleClass, payload) {
     let meta = {
-      total: payload.total_entries,
-      count: payload.listed_entries,
+      total: payload.meta.total_count,
+      count: Array.isArray(payload.items) ? payload.items.length : 1,
     }
-    delete payload.total_entries;
-    delete payload.listed_entries;
+    delete payload.meta;
     return meta;
   },
 });
-
-const TWITTER_SCRIPT_REGEX = /<script[^>]*(?=src="[^"]*twitter[^"]*")[^>]*><\/script>/g
-function stripTwitterEmbeds(attrs) {
-  attrs.text = attrs.text.replace(TWITTER_SCRIPT_REGEX, '');
-}
