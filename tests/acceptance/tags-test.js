@@ -11,13 +11,14 @@ module('Acceptance | tags', function(hooks) {
   setupMirage(hooks);
 
   test('visiting /tags', async function(assert) {
-    server.createList('article', COUNT * 5, {tags: ['dogs and cats']});
+    server.createList('article', COUNT * 5, {tags: ['dogs and cats'], _section: 'food'});
     await visit('/tags/dogs%20and%20cats');
 
     assert.equal(currentURL(), '/tags/dogs%20and%20cats');
 
     assert.dom('[data-test-block]').exists({count: COUNT});
     assert.dom('[data-test-tag-heading]').hasText('Dogs And Cats');
+    assert.dom('[data-test-section-label]').hasText('Food', 'section label is populated');
 
     await click('[data-test-more-results]');
 
