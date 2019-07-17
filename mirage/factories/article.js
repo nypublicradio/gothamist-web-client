@@ -4,9 +4,50 @@ import { Factory, faker, trait } from 'ember-cli-mirage';
 import {
   CMS_TIMESTAMP_FORMAT,
   slug,
+  section,
 } from './consts';
 
+
 export default Factory.extend({
+  ancestry() {
+    return [{
+      id: faker.random.number(100, 300),
+      meta: {
+        type: 'news.ArticleIndex',
+        detail_url: 'http://localhost/api/v2/pages/12/',
+        html_url: 'http://localhost/news/articles/',
+      },
+      title: 'Articles',
+      slug: 'articles',
+    }, {
+      id: faker.random.number(300, 500),
+      meta: {
+        type: 'standardpages.IndexPage',
+        detail_url: 'http://localhost/api/v2/pages/8/',
+        html_url: 'http://localhost/news/',
+      },
+      title: this._section[0].toUpperCase() + this._section.slice(1),
+      slug: this._section,
+    }, {
+      id: faker.random.number(500, 700),
+      meta: {
+        type: 'home.HomePage',
+        detail_url: 'http://localhost/api/v2/pages/3/',
+        html_url: 'http://localhost/',
+      },
+      title: 'Home',
+      slug: 'home',
+    }, {
+      id: 1,
+      meta: {
+        type: 'wagtailcore.Page',
+        detail_url: 'http://localhost/api/v2/pages/1/',
+        html_url: null,
+      },
+      title: 'Root',
+      slug: 'root',
+    }];
+  },
   body: () => ([
     {
       type: 'paragraph',
@@ -30,7 +71,7 @@ export default Factory.extend({
     }
   ]),
 
-  legacy_id: () => faker.random.number(80000),
+  legacy_id: () => faker.random.number(50000, 80000),
 
   listing_title: '',
   listing_summary: '',
@@ -85,4 +126,7 @@ export default Factory.extend({
   now: trait({
     publication_date: moment.utc().format(CMS_TIMESTAMP_FORMAT),
   }),
+
+  // mirage-only attrs
+  _section: section(),
 });

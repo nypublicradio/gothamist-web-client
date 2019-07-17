@@ -8,6 +8,8 @@ export default ApplicationSerializer.extend({
 
     delete json.indexPage; // mirage only
 
+    delete json._section;
+
     return {
       ...json,
       meta: {
