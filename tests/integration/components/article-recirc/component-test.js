@@ -10,7 +10,7 @@ import hbs from 'htmlbars-inline-precompile';
 const ARTICLE = {
   id: 100,
   section: {
-    basename: 'foo',
+    slug: 'foo',
   }
 };
 
