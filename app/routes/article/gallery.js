@@ -68,6 +68,7 @@ export default Route.extend({
       if (!this.fastboot.isFastBoot && !this.image) {
         window.scrollTo(0, 0);
       }
+      return true;
     }
   }
 });
