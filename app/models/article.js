@@ -6,12 +6,15 @@ import { computed } from '@ember/object';
 import { reads, bool } from '@ember/object/computed';
 
 
+export const SECTION_PAGE_TYPE = 'standardpages.IndexPage';
+
 export const LEAD_GALLERY = 'lead_gallery';
 export const LEAD_VIDEO   = 'lead_video';
 export const LEAD_AUDIO   = 'lead_audio';
 export const LEAD_IMAGE   = 'lead_image';
 
 export default Page.extend({
+  ancestry:    DS.attr(),
   body:        DS.attr(),
   description: DS.attr('string'),
 
@@ -46,9 +49,20 @@ export default Page.extend({
   }),
   modifiedMoment: reads('updatedDate'),
 
-  section: computed('categories', function() {
-    // TBD implemented
-    return '';
+  section: computed('ancestry', function() {
+    if (!this.ancestry || !this.ancestry.length) {
+      return {};
+    }
+    const NEAREST_SECTION = this.ancestry.findBy('meta.type', SECTION_PAGE_TYPE);
+
+    if (NEAREST_SECTION) {
+      return {
+        title: NEAREST_SECTION.title,
+        slug: NEAREST_SECTION.slug,
+      };
+    } else {
+      return {};
+    }
   }),
 
   hasMain: reads('showAsFeature'),
