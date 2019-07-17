@@ -1,3 +1,41 @@
+export const ANCESTRY = [{
+  "id": 12,
+  "meta": {
+    "type": "news.ArticleIndex",
+    "detail_url": "http://localhost/api/v2/pages/12/",
+    "html_url": "http://localhost/news/articles/"
+  },
+  "title": "Articles",
+  "slug": "articles"
+}, {
+  "id": 8,
+  "meta": {
+    "type": "standardpages.IndexPage",
+    "detail_url": "http://localhost/api/v2/pages/8/",
+    "html_url": "http://localhost/news/"
+  },
+  "title": "News",
+  "slug": "news"
+}, {
+  "id": 3,
+  "meta": {
+    "type": "home.HomePage",
+    "detail_url": "http://localhost/api/v2/pages/3/",
+    "html_url": "http://localhost/"
+  },
+  "title": "Home",
+  "slug": "home"
+}, {
+  "id": 1,
+  "meta": {
+    "type": "wagtailcore.Page",
+    "detail_url": "http://localhost/api/v2/pages/1/",
+    "html_url": null
+  },
+  "title": "Root",
+  "slug": "root"
+}];
+
 export const DOUBLE_BREAKS = `
   <p>
     Massaria commonly affects London Plane trees. A<a href="http://www.londontreereports-surveys.co.uk/Fungus/Massaria-Disease-of-Plane.html"> tree consultant explains</a>, "The disease always attacks the upper side of the branch and is difficult to spot from the ground for this reason. In the early stages a long pink brown strip can be seen, followed by brown and then a black strip with spores." A major cause of massaria is drought stress.
