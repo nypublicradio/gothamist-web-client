@@ -89,4 +89,39 @@ module('Integration | Component | article-block', function(hooks) {
     assert.dom('.c-block__media img').hasAttribute('srcset', FALLBACK_THUMBNAIL[undefined].srcSet, 'no category srcset');
     assert.dom('.c-block__media source').hasAttribute('srcset', FALLBACK_THUMBNAIL[undefined].srcM, 'no category medium src');
   });
+
+  test('it respects listing overrides', async function(assert) {
+    const OVERRIDE_IMAGE_ID = 500;
+    const OVERRIDE_DESCRIPTION = 'different summary';
+    const OVERRIDE_TITLE = 'different title';
+    const IMAGE_ID = 100;
+
+    const EXPECTED_URL = `${config.APP.wagtailImages.imagePath}/${OVERRIDE_IMAGE_ID}/fill-640x300/`;
+
+    const GOTHAMIST_ITEM = {
+      title: 'Article Title',
+      description: 'Summary of the article',
+      thumbnail: {
+        id: IMAGE_ID,
+      },
+
+      listingTitle: OVERRIDE_TITLE,
+      listingSummary: OVERRIDE_DESCRIPTION,
+      listingImage: {
+        id: OVERRIDE_IMAGE_ID,
+      },
+    };
+
+    this.set('item', GOTHAMIST_ITEM);
+    await render(hbs`
+      <ArticleBlock
+        @article={{item}}
+        @thumbnailSize={{array 640 300}}
+      />
+    `);
+
+    assert.dom('.c-block__media img').hasAttribute('src', EXPECTED_URL, 'thumbnail should use `listingImage` id');
+    assert.dom('.c-block__title').hasText(GOTHAMIST_ITEM.listingTitle, 'should use `listingTitle`');
+    assert.dom('.c-block__dek').hasText(GOTHAMIST_ITEM.listingSummary, 'should use `listingSummary`');
+  });
 });
