@@ -42,7 +42,10 @@ export default Factory.extend({
   afterCreate(page, server) {
     if (!page.descendants.length) {
       page.update({
-        descendants: server.createList('article', COUNT * 2, {indexPage: page}),
+        descendants: server.createList('article', COUNT * 2, {
+          indexPage: page,
+          _section: page.meta.slug
+        }),
       });
     }
   }
