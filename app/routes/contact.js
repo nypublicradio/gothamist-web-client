@@ -2,6 +2,7 @@ import Route from '@ember/routing/route';
 import { inject } from '@ember/service';
 
 export default Route.extend({
+  fastboot: inject(),
   header: inject('nypr-o-header'),
   dataLayer: inject('nypr-metrics/data-layer'),
 
@@ -21,5 +22,14 @@ export default Route.extend({
       },
     });
   },
+
+  actions: {
+    didTransition() {
+      if (!this.fastboot.isFastBoot) {
+        window.scrollTo(0, 0);
+      }
+      return true;
+    }
+  }
 
 });
