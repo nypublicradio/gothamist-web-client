@@ -3,11 +3,7 @@ import RSVP from 'rsvp';
 import Route from '@ember/routing/route';
 import { inject } from '@ember/service';
 
-import fade from 'ember-animated/transitions/fade';
-
-import { titleize } from '../helpers/titleize';
 import addCommentCount from '../utils/add-comment-count';
-
 
 const { hash } = RSVP;
 export const COUNT = 12;
@@ -17,7 +13,7 @@ export default Route.extend({
   dataLayer: inject('nypr-metrics/data-layer'),
   header: inject('nypr-o-header'),
 
-  titleToken: model => titleize(model.section),
+  titleToken: model => model.section.title,
 
   beforeModel() {
     this.dataLayer.push({template: 'section'});
@@ -35,37 +31,35 @@ export default Route.extend({
   },
 
   model({ section }) {
-    return hash({
-      section,
-      title: titleize(section),
-      articles: this.store.query('article', {
-        index: 'gothamist',
-        term: `c|${section}`,
-        count: COUNT,
-      })
+    return  this.store.queryRecord('page', {
+      html_path: section,
+    }).then(section => {
+      const QUERY = {
+        descendant_of: section.id,
+        show_on_index_listing: true,
+        limit: COUNT,
+      };
+
+      return hash({
+        section,
+        title: section.title,
+        river: this.store.query('article', QUERY),
+        featured: this.store.query('article', {
+          ...QUERY,
+          show_as_feature: true,
+          limit: 2,
+        })
+      });
     });
   },
 
-  setupController(controller, model) {
-    this._super(...arguments);
-
-    controller.setProperties({
-      query: {
-        index: 'gothamist',
-        term: `c|${model.section}`,
-        count: COUNT,
-        page: 2,
-      },
-      transition: fade,
-    });
-
+  afterModel(model) {
     if (this.fastboot.isFastBoot) {
       return;
-    } else {
-      addCommentCount(model.articles);
-
-      controller.set('addComments', results => (addCommentCount(results), results));
     }
+
+    addCommentCount(model.river);
+    addCommentCount(model.featured);
   },
 
   actions: {

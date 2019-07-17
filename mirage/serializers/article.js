@@ -1,12 +1,12 @@
-import { Serializer } from 'ember-cli-mirage';
-import { underscore } from '@ember/string';
+import ApplicationSerializer from './application';
 
-export default Serializer.extend({
+export default ApplicationSerializer.extend({
   keyForCollection: () => 'items',
-  keyForAttribute: attr => underscore(attr),
 
   serialize(object/*, request*/) {
-    let json = Serializer.prototype.serialize.apply(this, arguments);
+    let json = ApplicationSerializer.prototype.serialize.apply(this, arguments);
+
+    delete json.indexPage; // mirage only
 
     return {
       ...json,

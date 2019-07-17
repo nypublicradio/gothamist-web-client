@@ -1,4 +1,4 @@
-import { module, skip /* test */ } from 'qunit';
+import { module, test } from 'qunit';
 import { visit, currentURL, click, findAll } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
@@ -10,11 +10,17 @@ module('Acceptance | section', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
-  skip('visiting section page', async function(assert) {
-    server.createList('article', COUNT * 5, {categories: [{basename: 'news'}]});
-    await visit('/sections/news');
+  test('visiting section page', async function(assert) {
+    server.create('index-page', {
+      // this is the key we'll look for in the `find?html_path` request
+      // mirage doesn't support nested keys for `where` lookups
+      html_path: 'news',
+      title: 'News',
+    });
 
-    assert.equal(currentURL(), '/sections/news');
+    await visit('/news');
+
+    assert.equal(currentURL(), '/news');
 
     assert.dom('[data-test-block]').exists({count: COUNT});
     assert.dom('[data-test-section-heading]').hasText('News');
@@ -24,14 +30,21 @@ module('Acceptance | section', function(hooks) {
     assert.dom('[data-test-block]').exists({count: COUNT * 2}, 'Clicking "read more" brings in another set of results equal to the amount of COUNT');
   });
 
-  skip('section lists get updated with commentCount', async function(assert) {
-    server.createList('article', COUNT * 5, {tags: ['c|news']});
-    const EXPECTED = server.schema.articles.all()
+  test('section lists get updated with commentCount', async function(assert) {
+    server.create('index-page', {
+      id: '1',
+      // this is the key we'll look for in the `find?html_path` request
+      // mirage doesn't support nested keys for `where` lookups
+      html_path: 'news',
+      title: 'News',
+    });
+
+    const EXPECTED = server.schema.articles.where({indexPageId: '1'})
       .models.map((a, i) => ({posts: Math.ceil(Math.random() * i + 1), identifiers: [a.id]}));
 
     server.get(`${config.disqusAPI}/threads/set.json`, {response: EXPECTED});
 
-    await visit('/sections/news');
+    await visit('/news');
 
     await click('[data-test-more-results]');
 
@@ -42,5 +55,30 @@ module('Acceptance | section', function(hooks) {
       assert.ok(block.querySelector('.c-block-meta__comments'), 'comments are rendered');
       assert.dom(block.querySelector('.c-block-meta__comments')).includesText(String(posts));
     });
+  });
+
+  test('two most recent showAsFeature articles are in top spots', async function(assert) {
+    const TITLE_1 = 'Featured 1';
+    const TITLE_2 = 'Featured 2';
+
+    const NEWS = server.create('index-page', {html_path: 'news'});
+    server.create('article', 'now', {id: 'foo', title: TITLE_1, show_as_feature: true, indexPage: NEWS});
+    server.create('article', 'now', {id: 'bar', title: TITLE_2, show_as_feature: true, indexPage: NEWS});
+    // ensure the featured articles aren't just the newest
+    server.create('article', 'now', {indexPage: NEWS});
+
+    await visit('/news');
+
+    // mirage sorts articles by publication_date
+    // most recently create article will appear in the number 1 spot, i.e. TITLE_2
+    assert.dom('[data-test-section-featured] [data-test-col1] [data-test-block-title]').hasText(TITLE_2);
+    assert.dom('[data-test-section-featured] [data-test-col2] [data-test-block-title]').hasText(TITLE_1);
+
+    // load in all generated articles
+    await click('[data-test-more-results]');
+    // await click('[data-test-more-results]');
+
+    assert.dom('[data-test-section-river] [data-test-block="foo"]').doesNotExist('featured articles should be filtered out of the river');
+    assert.dom('[data-test-section-river] [data-test-block="bar"]').doesNotExist('featured articles should be filtered out of the river');
   });
 });

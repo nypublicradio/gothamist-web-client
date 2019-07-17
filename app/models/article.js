@@ -1,6 +1,7 @@
 import moment from 'moment';
 
 import DS from 'ember-data';
+import Page from './page';
 import { computed } from '@ember/object';
 import { reads, bool } from '@ember/object/computed';
 
@@ -10,7 +11,7 @@ export const LEAD_VIDEO   = 'lead_video';
 export const LEAD_AUDIO   = 'lead_audio';
 export const LEAD_IMAGE   = 'lead_image';
 
-export default DS.Model.extend({
+export default Page.extend({
   body:        DS.attr(),
   description: DS.attr('string'),
 
@@ -19,10 +20,6 @@ export default DS.Model.extend({
   leadAsset:      DS.attr(),
 
   legacyId:       DS.attr('string'),
-
-  listingImage:   DS.attr(),
-  listingSummary: DS.attr('string'),
-  listingTitle:   DS.attr('string'),
 
   meta: DS.attr(),
 
@@ -37,24 +34,13 @@ export default DS.Model.extend({
 
   sensitiveContent:   DS.attr('boolean'),
   showAsFeature:      DS.attr('boolean'),
-  showOnIndexListing: DS.attr('boolean'),
-
-  socialImage: DS.attr(),
-  socialText:  DS.attr('string'),
-  socialTitle: DS.attr('string'),
 
   sponsoredContent: DS.attr('boolean'),
 
   tags:        DS.attr({defaultValue: () => []}),
-  title:       DS.attr('string', {defaultValue: ''}),
   updatedDate: DS.attr('moment', {timezoneOverride: true}),
 
   // computed
-  path: computed('meta.html_url', function() {
-    if (typeof this.meta.html_url === 'string') {
-      return this.meta.html_url.replace(/https?:\/\/[^/]+\//, '');
-    }
-  }),
   publishedMoment: computed('meta.first_published_at', 'publicationDate', function() {
     return this.publicationDate.isValid() ? this.publicationDate : moment.tz(this.meta.first_published_at, moment.defaultZone.name);
   }),

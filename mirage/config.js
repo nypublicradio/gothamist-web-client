@@ -1,7 +1,14 @@
+import moment from 'moment';
 import { Response, faker } from 'ember-cli-mirage';
 
 import config from '../config/environment';
 
+
+const QUERY_MAP = {
+  descendant_of: 'indexPageId',
+};
+
+const PARAMS_TO_SKIP = ['fields', 'type', 'limit', 'offset', 'order'];
 
 export default function() {
 
@@ -9,11 +16,11 @@ export default function() {
 
   this.get('/api/v2/pages', (schema, request) => {
     let {
-      tags,
       limit,
       offset = 0,
       fields,
       type,
+      order = '',
     } = request.queryParams;
 
     if (!fields && !type) {
@@ -24,10 +31,52 @@ export default function() {
     offset = Number(offset);
     limit = Number(limit);
 
-    if (tags) {
-      return schema.articles.where({tags}).slice(offset, (offset + 1 * limit));
+    const START = offset;
+    const END = (offset + 1 * limit);
+
+    // construct a query object for the `where` method
+    const QUERY = {}
+    for (let param in request.queryParams) {
+      // skip certain params
+      if (!PARAMS_TO_SKIP.includes(param)) {
+        // some query param keys translate to a different mirage attr key
+        let prop = QUERY_MAP[param] || param;
+        QUERY[prop] = request.queryParams[param];
+      }
     }
 
+    let articles = schema.articles.where(QUERY);
+
+    if (order.match('publication_date')) {
+      let sortFn;
+
+      if (order[0] === '-') {
+        // descending
+        sortFn = (a, b) => moment(a.publication_date).isAfter(b) ? -1 : 1;
+      } else {
+        sortFn = (a, b) => moment(a.publication_date).isBefore(b) ? -1 : 1;
+      }
+      articles = articles.sort(sortFn)
+    }
+
+    return articles.slice(START, END);
+  });
+
+  // general purpose find endpoint
+  // look at every defined model and see if there's a matching html_path
+  this.get('/api/v2/pages/find', (schema, request) => {
+    const collectionNames = schema.db._collections.mapBy('name').filter(n => n !== 'consts');
+    let { html_path } = request.queryParams;
+
+    for (let i = 0; i < collectionNames.length; i++) {
+      let collection = collectionNames[i];
+      let found = schema[collection].where({ html_path });
+      if (found.models.length) {
+        return found;
+      }
+    }
+
+    return new Response(404);
   });
 
   this.urlPrefix = config.apiServer;
