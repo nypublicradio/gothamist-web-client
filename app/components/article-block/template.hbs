@@ -6,7 +6,7 @@
     @breakM={{this.thumbnailBreakpoint}}
     @srcM={{this.thumbnail.srcM}}
     @alt=""
-    @ariaLabel={{@article.title}}
+    @ariaLabel={{this.title}}
   />
 
   <block.object as |o|>
@@ -27,13 +27,13 @@
       @hasVideo={{@article.hasVideo}}
       @hasAudio={{@article.hasAudio}}
     >
-      {{{@article.title}}}
+      {{{this.title}}}
     </o.title>
 
     <o.body as |body|>
       {{#unless @hideExcerpt}}
         <body.text>
-          {{{@article.description}}}
+          {{{this.summary}}}
         </body.text>
       {{/unless}}
 
