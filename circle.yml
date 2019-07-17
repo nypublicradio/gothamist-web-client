@@ -43,6 +43,7 @@ templates:
     filters:
       branches:
         only: /[A-Za-z-_]+/[A-Za-z-_\d]+/
+        ignore: /dependabot.*/
 
   deploy_fastboot: &deploy_fastboot
     docker:
