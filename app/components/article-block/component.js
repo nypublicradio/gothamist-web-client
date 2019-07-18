@@ -32,7 +32,7 @@ export const FALLBACK_THUMBNAIL = {
     srcSet: `${PATH}/news/news-sq@2x.png 2x, ${PATH}/news/news-sq@3x.png 3x`,
     srcM: `${PATH}/news/news-tile.png 1x, ${PATH}/news/news-tile@2x.png 2x, ${PATH}/news/news-tile@3x.png 3x`
   },
-  'arts & entertainment': {
+  'arts-entertainment': {
     srcS: `${PATH}/arts/arts-sq.png`,
     srcSet: `${PATH}/arts/arts-sq@2x.png 2x, ${PATH}/arts/arts-sq@3x.png 3x`,
     srcM: `${PATH}/arts/arts-tile.png 1x, ${PATH}/arts/arts-tile@2x.png 2x, ${PATH}/arts/arts-tile@3x.png 3x`

@@ -62,7 +62,7 @@ export default Route.extend({
         route: ['sections', 'news'],
         text: 'News',
       }, {
-        route: ['sections', 'arts & entertainment'],
+        route: ['sections', 'arts-entertainment'],
         text: 'Arts & Entertainment',
       }, {
         route: ['sections', 'food'],
