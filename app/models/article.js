@@ -132,8 +132,17 @@ export default Page.extend({
   hasLead: bool('leadAsset'),
 
   leadImage: computed('leadAsset', function() {
-    if (this.leadAsset && this.leadAsset.type === LEAD_IMAGE) {
-      return this.leadAsset.value;
+    if (!this.leadAsset) {
+      return;
+    }
+    switch(this.leadAsset.type) {
+      case LEAD_IMAGE:
+        return this.leadAsset.value;
+      case LEAD_AUDIO:
+      case LEAD_VIDEO:
+        return {
+          image: this.leadAsset.value.default_image
+        };
     }
   }),
   leadImageCaption: reads('leadImage.caption'),
