@@ -4,15 +4,13 @@ import ApplicationSerializer from './application';
 export default ApplicationSerializer.extend({
   modelNameFromPayloadKey: () => 'article',
 
-  normalize() {
-    let data = this._super(...arguments);
-
+  normalize(ArticleClass, payload) {
     // the server defines this as an array
     // but it'll always be a single POJO
     // pull out the first index for easier reference in the app
-    data.lead_asset = data.lead_asset ? data.lead_asset[0] : null;
+    payload.lead_asset = payload.lead_asset ? payload.lead_asset[0] : null;
 
-    return data;
+    return this._super(ArticleClass, payload);
   },
 
   normalizeQueryRecordResponse(_store, _modelClass, payload) {
