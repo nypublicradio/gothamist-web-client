@@ -21,4 +21,16 @@ module('Unit | Serializer | article', function(hooks) {
     assert.ok(serializedRecord);
   });
 
+  test('it converts lead_asset to an object', function(assert) {
+    let store = this.owner.lookup('service:store');
+    let ArticleClass = store.modelFor('article');
+    let serializer = store.serializerFor('article');
+
+    const EXPECTED = 'lead asset value';
+
+    let normalized = serializer.normalize(ArticleClass, {lead_asset: [EXPECTED]});
+
+    assert.deepEqual(normalized.data.attributes.leadAsset, EXPECTED);
+  })
+
 });
