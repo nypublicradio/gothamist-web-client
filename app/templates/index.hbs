@@ -3,32 +3,37 @@
 <DoTargeting key='Template' value='Homepage' />
 
 <h1 class="is-vishidden" aria-hidden="true">Gothamist: New York City Local News, Food, Arts & Events</h1>
-
 <div class="c-home__sections u-section-spacing--wide l-container l-container--xl l-wrap u-trigger-floating-header">
 
-  {{#if (and (is-same-or-before '2019-06-30' precision='day') showPledgeAsk)}}
-    <NyprMBoxBanner @close={{action 'hideBannerFor24'}} as |banner|>
+  {{#each model.systemMessages.productBanners as |productBanner|}}
+    {{#if (and
+      (not topProductBannerDismissed)
+      (not (cookie-exists productBanner.cookieId))
+      (eq productBanner.location 'TOP')
+    )}}
+      <NyprMBoxBanner @close={{action 'hideBannerForHours' productBanner.cookieId productBanner.frequency productBanner.location}} as |banner|>
 
-      <banner.title>
-        Support Gothamist by June 30th!
-      </banner.title>
+        <banner.title>
+          {{{productBanner.title}}}
+        </banner.title>
 
-      <banner.body as |body|>
-        <body.dek>
-          <p>
-            The end of our budget year is approaching. Support Gothamist and local news in New York today, and your donation will help us reach our goal. We’re counting on you!
-          </p>
-        </body.dek>
+        <banner.body as |body|>
+          <body.dek>
+            {{{productBanner.description}}}
+          </body.dek>
 
-        <body.cta>
-          <NyprAButton @url="https://pledge3.wnyc.org/donate/gothamist/onestep/?utm_medium=partnersite&utm_source=gothamist&utm_campaign=prodmktgbanner">
-            Donate Now
-          </NyprAButton>
-        </body.cta>
-      </banner.body>
+          {{#if productBanner.buttonText}}
+            <body.cta>
+              <NyprAButton @url={{productBanner.buttonLink}}>
+                {{productBanner.buttonText}}
+              </NyprAButton>
+            </body.cta>
+          {{/if}}
+        </banner.body>
 
-    </NyprMBoxBanner>
-  {{/if}}
+      </NyprMBoxBanner>
+    {{/if}}
+  {{/each}}
 
   <NyprOFeaturedBlockList data-test-featured-block-list as |fbl|>
     <fbl.heading>

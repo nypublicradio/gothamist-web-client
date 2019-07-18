@@ -1,5 +1,6 @@
 import moment from 'moment';
 import { Response, faker } from 'ember-cli-mirage';
+import { capitalize } from '@ember/string';
 
 import config from '../config/environment';
 
@@ -102,6 +103,30 @@ export default function() {
     }
 
     return found;
+  });
+
+  this.get('/api/v2/system_messages/1/', function() {
+    return {
+      id: 1,
+      meta: {
+        type : "utils.SystemMessagesSettings",
+        detail_url: `http://localhost/api/v2/system_messages/1/`
+      },
+      product_banners: [
+        {
+          "type": "product_banner",
+          "id": faker.random.uuid(),
+          "value": {
+            "title": capitalize(faker.lorem.words()),
+            "description": `<p>${faker.lorem.sentence(5)}</p>`,
+            "button_text": capitalize(faker.lorem.words()),
+            "button_link": faker.internet.url(),
+            "frequency": 8,
+            "location": "TOP"
+          }
+        }
+      ]
+    }
   });
 
   this.urlPrefix = config.apiServer;
