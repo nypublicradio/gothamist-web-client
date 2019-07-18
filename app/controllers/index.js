@@ -15,7 +15,6 @@ import {
 
 const WTC_ENDPOINT = `${config.apiServer}/opt-in/v1/subscribe/mailchimp`;
 const WTC_PARAMS = {list: config.wtcNewsletter};
-const HIDE_PLEDGE_COOKIE = 'goth_hidePledgeAsk';
 
 export default Controller.extend({
   GROUP_SIZE,
@@ -23,8 +22,6 @@ export default Controller.extend({
 
   WTC_ENDPOINT,
   WTC_PARAMS,
-
-  showPledgeAsk: true,
 
   cookies: service(),
 
@@ -38,11 +35,6 @@ export default Controller.extend({
       limit: TOTAL_COUNT,
       show_on_index_listing: true,
     });
-
-    let hideAsk = this.cookies.exists(HIDE_PLEDGE_COOKIE);
-    if (hideAsk) {
-      this.set('showPledgeAsk', false);
-    }
   },
 
   transition: fade,
@@ -65,10 +57,12 @@ export default Controller.extend({
   },
 
   actions: {
-    hideBannerFor24() {
-      let expires = moment().add(24, 'hours').toDate();
-      this.cookies.write(HIDE_PLEDGE_COOKIE, 1, {expires, path: '/'});
-      this.set('showPledgeAsk', false);
+    hideBannerForHours(cookie, hours, location) {
+      let expires = moment().add(hours, 'hours').toDate();
+      this.cookies.write(cookie, 1, {expires, path: '/'});
+      if (location === "TOP") {
+        this.set('topProductBannerDismissed', true);
+      }
     }
   }
 });

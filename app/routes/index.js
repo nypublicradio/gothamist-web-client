@@ -57,6 +57,7 @@ export default Route.extend({
         show_on_index_listing: true,
         limit: TOTAL_COUNT,
       }),
+      systemMessages: this.store.findRecord('system-messages', config.siteId),
       wnyc: getWnycStories(),
     }).then(results => {
       results.main = results.main.slice();
