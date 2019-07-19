@@ -52,9 +52,9 @@ export default function() {
 
       if (order[0] === '-') {
         // descending
-        sortFn = (a, b) => moment(a.publication_date).isAfter(b) ? -1 : 1;
+        sortFn = (a, b) => moment(a.publication_date).isAfter(b.publication_date) ? -1 : 1;
       } else {
-        sortFn = (a, b) => moment(a.publication_date).isBefore(b) ? -1 : 1;
+        sortFn = (a, b) => moment(a.publication_date).isBefore(b.publication_date) ? -1 : 1;
       }
       articles = articles.sort(sortFn)
     }
