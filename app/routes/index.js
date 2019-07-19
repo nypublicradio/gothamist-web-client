@@ -9,7 +9,7 @@ import config from '../config/environment';
 import addCommentCount from '../utils/add-comment-count';
 
 
-const BASE_COUNT = 28;
+const BASE_COUNT = 16;
 export const MAIN_COUNT = 4;
 export const TOTAL_COUNT = BASE_COUNT + MAIN_COUNT;
 export const GROUP_SIZE = 7;
@@ -50,13 +50,12 @@ export default Route.extend({
       sponsoredMain: this.getSponsoredMain(),
       breaking: this.getBreakingNews(),
       main: this.store.query('article', {
-        index: 'gothamist',
-        term: '@main',
-        count: MAIN_COUNT,
+        show_as_feature: true,
+        limit: MAIN_COUNT,
       }),
       river: this.store.query('article', {
-        index: 'gothamist',
-        count: TOTAL_COUNT,
+        show_on_index_listing: true,
+        limit: TOTAL_COUNT,
       }),
       wnyc: getWnycStories(),
     }).then(results => {
@@ -84,9 +83,8 @@ export default Route.extend({
   // filter it out if it's older than 24 hours
   async getSponsoredPost() {
     let { firstObject:post } = await this.store.query('article', {
-      index: 'gothamist',
-      term: '@sponsor',
-      count: 1,
+      sponsored_content: true,
+      limit: 1,
     });
 
     if (!post) {
@@ -101,9 +99,9 @@ export default Route.extend({
   // filter if it's not between 24 and 48 hours old
   async getSponsoredMain() {
     let { firstObject:post } = await this.store.query('article', {
-      index: 'gothamist',
-      term: ['@sponsor', '@main'],
-      count: 1,
+      sponsored_content: true,
+      show_as_feature: true,
+      limit: 1,
     });
 
     if (!post) {
