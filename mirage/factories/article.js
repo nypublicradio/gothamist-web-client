@@ -88,7 +88,7 @@ export default Factory.extend({
     search_description: '',
   }),
 
-  publication_date: moment.utc(faker.date.recent()).format(CMS_TIMESTAMP_FORMAT),
+  publication_date: () => moment.utc(faker.date.recent()).format(CMS_TIMESTAMP_FORMAT),
 
   updated_date: null,
 
