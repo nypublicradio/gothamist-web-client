@@ -8,13 +8,15 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { TOTAL_COUNT } from 'gothamist-web-client/routes/index';
 import config from 'gothamist-web-client/config/environment';
 
+import { CMS_TIMESTAMP_FORMAT } from '../../mirage/factories/consts';
+
 
 module('Acceptance | homepage', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
   test('visiting homepage', async function(assert) {
-    server.createList('article', 10, {
+    server.createList('article', 10, 'now', {
       show_as_feature: true,
     });
     server.createList('article', TOTAL_COUNT * 2);
@@ -42,8 +44,8 @@ module('Acceptance | homepage', function(hooks) {
     server.create('article', {
       id: 'sponsored',
       title: TITLE,
-      tags: ['@sponsor'],
-      authored_on_utc: moment().subtract(12, 'hours'),
+      sponsored_content: true,
+      publication_date: moment.utc().subtract(12, 'hours').format(CMS_TIMESTAMP_FORMAT),
     });
 
     await visit('/');
@@ -54,8 +56,8 @@ module('Acceptance | homepage', function(hooks) {
   test('sponsored posts older than 24 hours do not appear in sponsored tout', async function(assert) {
 
     server.create('article', {
-      tags: ['@sponsor'],
-      authored_on_utc: moment().subtract(36, 'hours'),
+      sponsored_content: true,
+      publication_date: moment.utc().subtract(36, 'hours').format(CMS_TIMESTAMP_FORMAT),
     });
 
     await visit('/');
@@ -65,17 +67,18 @@ module('Acceptance | homepage', function(hooks) {
   test('sponsored posts tagged @main and between 24 and 48 hours old appear in featured area', async function(assert) {
     server.create('article', {
       id: 'sponsored-main',
-      tags: ['@sponsor', '@main'],
-      authored_on_utc: moment().subtract(36, 'hours'),
+      show_as_feature: true,
+      sponsored_content: true,
+      publication_date: moment.utc().subtract(36, 'hours').format(CMS_TIMESTAMP_FORMAT),
     });
 
     server.create('article', {
       id: 'sponsored',
-      tags: ['@sponsor'],
-      authored_on_utc: moment().subtract(12, 'hours'),
+      sponsored_content: true,
+      publication_date: moment.utc().subtract(12, 'hours').format(CMS_TIMESTAMP_FORMAT),
     });
 
-    server.createList('article', 10, {tags: ['@main']});
+    server.createList('article', 10, {show_as_feature: true});
 
     await visit('/');
     assert.dom('[data-test-featured-block-list] [data-test-block-list-item="2"] [data-test-block="sponsored-main"]').exists('sponsored post is in the featured list in the 3rd position');
@@ -85,7 +88,7 @@ module('Acceptance | homepage', function(hooks) {
 
   test('articles get updated with commentCount', async function(assert) {
     server.createList('article', 10, {
-      tags: ['@main']
+      show_as_feature: true,
     });
     server.createList('article', TOTAL_COUNT * 2);
     const EXPECTED = server.schema.articles.all()
