@@ -35,9 +35,8 @@ export default Controller.extend({
     const { TOTAL_COUNT } = this;
 
     this.set('riverQuery', {
-      index: 'gothamist',
-      count: TOTAL_COUNT,
-      page: 2,
+      limit: TOTAL_COUNT,
+      show_on_index_listing: true,
     });
 
     let hideAsk = this.cookies.exists(HIDE_PLEDGE_COOKIE);
