@@ -145,7 +145,7 @@ export default Route.extend({
 
       let path = this.router.urlFor(targetRoute, ...params);
       // strip the leading slash
-      path = path.replace(/^\//, '');
+      path = path === '/' ? path : path.replace(/^\//, '');
 
       if (e instanceof DS.NotFoundError) {
         if (this.fastboot.isFastBoot) {
