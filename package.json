@@ -104,7 +104,6 @@
   },
   "ember-addon": {
     "paths": [
-      "lib/google-custom-search",
       "lib/pattern-lab-styles"
     ]
   }
