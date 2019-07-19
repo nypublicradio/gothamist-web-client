@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 import { module, test } from 'qunit';
 import { visit, currentURL, click, findAll } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
@@ -5,6 +7,8 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 import config from 'gothamist-web-client/config/environment';
 import { COUNT } from 'gothamist-web-client/routes/sections';
+
+import { CMS_TIMESTAMP_FORMAT } from '../../mirage/factories/consts';
 
 module('Acceptance | section', function(hooks) {
   setupApplicationTest(hooks);
@@ -62,15 +66,27 @@ module('Acceptance | section', function(hooks) {
     const TITLE_2 = 'Featured 2';
 
     const NEWS = server.create('index-page', {html_path: 'news'});
-    server.create('article', 'now', {id: 'foo', title: TITLE_1, show_as_feature: true, indexPage: NEWS});
-    server.create('article', 'now', {id: 'bar', title: TITLE_2, show_as_feature: true, indexPage: NEWS});
+    server.create('article', {
+      id: 'foo',
+      title: TITLE_1,
+      show_as_feature: true,
+      indexPage: NEWS,
+      publication_date: moment.utc().subtract(2, 'minute').format(CMS_TIMESTAMP_FORMAT),
+    });
+    server.create('article', {
+      id: 'bar',
+      title: TITLE_2,
+      show_as_feature: true,
+      indexPage: NEWS,
+      publication_date: moment.utc().subtract(1, 'minute').format(CMS_TIMESTAMP_FORMAT),
+    });
     // ensure the featured articles aren't just the newest
     server.create('article', 'now', {indexPage: NEWS});
 
     await visit('/news');
 
     // mirage sorts articles by publication_date
-    // most recently create article will appear in the number 1 spot, i.e. TITLE_2
+    // most recently created article will appear in the number 1 spot, i.e. TITLE_2
     assert.dom('[data-test-section-featured] [data-test-col1] [data-test-block-title]').hasText(TITLE_2);
     assert.dom('[data-test-section-featured] [data-test-col2] [data-test-block-title]').hasText(TITLE_1);
 
