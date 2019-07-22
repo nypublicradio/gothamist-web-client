@@ -1,4 +1,5 @@
 import Controller from '@ember/controller';
+import { filter } from '@ember/object/computed';
 
 export default Controller.extend({
   queryParams: ['q'],
@@ -7,6 +8,10 @@ export default Controller.extend({
     this._super(...arguments);
     this.set('results', []);
   },
+
+  articles: filter('results', function(result) {
+    return result.constructor.modelName === 'article';
+  }),
 
   actions: {
     search(q) {
