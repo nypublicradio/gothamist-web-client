@@ -84,7 +84,16 @@ export default function() {
     return found || new Response(404);
   });
 
-    return new Response(404);
+  // elasticsearch endpoint
+  this.get('/api/v2/search/', function(schema, { queryParams: { q } }) {
+    let found = searchAllCollections({ description: q }, schema);
+    found = this.serialize(found);
+    found.items = found.items.map(item => ({
+      result: item,
+      content_type_id: 5,
+      score: 1.2345,
+    }));
+    return found;
   });
 
   this.urlPrefix = config.apiServer;
