@@ -7,7 +7,11 @@
       <div class="c-search-results__result-number u-font--secondary-style u-font--secondary">Results for:</div>
 
       <div class="c-search-results__term">
-        {{input value=q enter=(action 'search' q)}}
+        {{input
+          value=q
+          enter=(action 'search' q)
+          data-test-search-input=true
+        }}
       </div>
     </header>
 
