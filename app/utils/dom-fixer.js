@@ -94,9 +94,25 @@ export default class DomFixer {
       throw new Error('Empty nodes must be removed before paragraphs can be split.');
     }
 
-    function splitGraf(graf) {
+    root.childNodes.forEach(child => {
+      if (child.nodeName !== 'P') {
+        return;
+      }
+      const TARGET_GRAF = child;
 
-      // get all the pairs of line breaks
+      // start with the current paragraph
+      // recursively split it at any pair of line breaks found
+      const SPLIT_GRAFS = splitGraf(TARGET_GRAF);
+
+      // if there's only 1 graf, nothing was split, so nothing to replace
+      if (SPLIT_GRAFS.length > 1) {
+        SPLIT_GRAFS.forEach(p => root.insertBefore(p, TARGET_GRAF));
+        root.removeChild(TARGET_GRAF);
+      }
+    });
+
+    function splitGraf(graf) {
+      // get the first pair of line breaks
       // filter out any breaks preceded by a `#text` node
       // `br + br` will match on <br> foo <br>
       const BREAKS = [
@@ -137,23 +153,6 @@ export default class DomFixer {
       // send the rest of the captured nodes down the recursive path
       return [CLEANED_GRAF].concat(splitGraf(THE_REST));
     }
-
-    root.childNodes.forEach(child => {
-      if (child.nodeName !== 'P') {
-        return;
-      }
-      const TARGET_GRAF = child;
-
-      // start with the current paragraph
-      // recursively split it at any pair of line breaks found
-      const SPLIT_GRAFS = splitGraf(TARGET_GRAF);
-
-      // if there's only 1 graf, nothing was split, so nothing to replace
-      if (SPLIT_GRAFS.length > 1) {
-        SPLIT_GRAFS.forEach(p => root.insertBefore(p, TARGET_GRAF));
-        root.removeChild(TARGET_GRAF);
-      }
-    });
   }
 
   /**
@@ -262,4 +261,3 @@ const betweenTwoNodes = node => {
   @type {Array}
 */
 const SAFE_NODES = ['A', 'EM'];
-
