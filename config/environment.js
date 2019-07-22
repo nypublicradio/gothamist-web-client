@@ -111,6 +111,7 @@ module.exports = function(environment) {
     ENV.APP.autoboot = false;
 
     // for mirage endpoints
+    ENV.cmsServer = 'https://cms.demo.nypr.digital';
     ENV.apiServer = 'https://api.demo.nypr.digital';
     ENV.disqusAPI = 'https://disqus.com';
     ENV.disqusKey = 'disqus-key';
