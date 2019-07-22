@@ -71,7 +71,7 @@ module('Unit | Utility | dom-fixer', function() {
   });
 
   test('unbreakParagraphs splits a paragraph with double line breaks into multiple paragraphs', function(assert) {
-    assert.expect(8);
+    assert.expect(10);
     const HTML = `<p>
       hello world
       <br>
@@ -80,27 +80,37 @@ module('Unit | Utility | dom-fixer', function() {
       <br>
       <br>
       biz buz fuz
+    </p><p>
+      fizz
+      <br>
+      <br>
+      foooz
     </p>`;
     let domFixer = new DomFixer(HTML);
 
-    assert.equal(1, domFixer.nodes.childNodes.length);
-    assert.equal('P', domFixer.nodes.firstElementChild.nodeName);
+    assert.equal(domFixer.nodes.childNodes.length, 2, 'should start with two child nodes');
+    assert.equal(domFixer.nodes.firstElementChild.nodeName, 'P');
 
     try {
       domFixer.unbreakParagraphs();
     } catch(e) {
-      assert.equal("Empty nodes must be removed before paragraphs can be split.", e.message);
+      assert.equal(e.message, "Empty nodes must be removed before paragraphs can be split.");
     }
 
     domFixer.removeEmptyNodes();
     domFixer.unbreakParagraphs();
 
-    assert.equal(3, domFixer.nodes.childNodes.length);
-    assert.deepEqual(['P', 'P', 'P'], [...domFixer.nodes.childNodes].map(n => n.nodeName));
+    assert.equal(5, domFixer.nodes.childNodes.length);
+    assert.deepEqual(
+      [...domFixer.nodes.childNodes].map(n => n.nodeName),
+      ['P', 'P', 'P', 'P', 'P']
+    );
 
-    assert.equal('hello world', domFixer.nodes.children[0].textContent.trim());
-    assert.equal('foo bar baz', domFixer.nodes.children[1].textContent.trim());
-    assert.equal('biz buz fuz', domFixer.nodes.children[2].textContent.trim());
+    assert.equal(domFixer.nodes.children[0].textContent.trim(), 'hello world');
+    assert.equal(domFixer.nodes.children[1].textContent.trim(), 'foo bar baz');
+    assert.equal(domFixer.nodes.children[2].textContent.trim(), 'biz buz fuz');
+    assert.equal(domFixer.nodes.children[3].textContent.trim(), 'fizz');
+    assert.equal(domFixer.nodes.children[4].textContent.trim(), 'foooz');
   });
 
   test('secureSrc secures the src attributes of the passed in selector', function(assert) {
@@ -110,6 +120,7 @@ module('Unit | Utility | dom-fixer', function() {
 
       <iframe src="http://gothaimst.com" />
       <iframe src="http://google.com" />
+      <iframe src="https://google.com" />
     `;
     let domFixer = new DomFixer(HTML);
 
