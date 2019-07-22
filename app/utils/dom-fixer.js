@@ -94,7 +94,7 @@ export default class DomFixer {
       throw new Error('Empty nodes must be removed before paragraphs can be split.');
     }
 
-    root.childNodes.forEach(child => {
+    Array.from(root.childNodes).slice().forEach(child => {
       if (child.nodeName !== 'P') {
         return;
       }
