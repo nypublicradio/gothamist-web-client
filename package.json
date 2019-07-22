@@ -20,6 +20,8 @@
   "devDependencies": {
     "@ember/optional-features": "^0.6.3",
     "@types/ember": "^3.0.27",
+    "aws-sdk": "^2.496.0",
+    "better-sqlite3": "^5.4.1",
     "broccoli-asset-rev": "^2.7.0",
     "ember-animated": "^0.5.3",
     "ember-auto-import": "^1.2.20",
@@ -93,8 +95,6 @@
   },
   "dependencies": {
     "abortcontroller-polyfill": "^1.2.4",
-    "aws-sdk": "^2.496.0",
-    "better-sqlite3": "^5.4.1",
     "dotenv": "^6.2.0",
     "nypr-fastboot": "^0.7.0"
   },
