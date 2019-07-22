@@ -1,22 +1,24 @@
 <DoTargeting key='Template' value='Search Results' />
-<div class="u-spacing--double c-search-results">
+<div class="u-spacing--quad c-search-results">
 
-  <div class="l-wrap l-container l-container--14col u-spacing">
-    <header class="c-search-results__header c-search-results__header--no-border u-spacing">
+  <div class="l-container l-container--14col l-wrap">
+    <header class="c-search-results__header u-spacing">
       <h1 class="is-vishidden">Search Results</h1>
-      <div class="c-search-results__result-number u-font--secondary-style u-font--secondary">Results for:</div>
-
-      <div class="c-search-results__term">
-        {{input
-          value=q
-          enter=(action 'search' q)
-          data-test-search-input=true
-        }}
+      <div class="c-search-results__result-number u-font--secondary-style u-font--secondary">
+        {{#if this.articles.length}}
+          <strong>{{this.articles.length}}</strong>
+          {{if (eq this.articles.length 1) 'Result' 'Results'}} for:
+        {{/if}}
       </div>
+
+      <NyprMInlineSearch
+        @formClass="c-search-results__form"
+        @query={{q}}
+        @search={{perform search}}
+        data-test-search-form
+      />
+
     </header>
-
-    <hr class="u-border-accent u-hide-until--m" aria-hidden="true">
-
   </div>
 
   <div class="c-listing__sections u-section-spacing l-container l-container--14col l-wrap">
