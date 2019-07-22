@@ -11,7 +11,7 @@
       (not (cookie-exists productBanner.cookieId))
       (eq productBanner.location 'TOP')
     )}}
-      <NyprMBoxBanner @close={{action 'hideBannerForHours' productBanner.cookieId productBanner.frequency productBanner.location}} as |banner|>
+      <NyprMBoxBanner data-test-top-product-banner @close={{action 'hideBannerForHours' productBanner.cookieId productBanner.frequency productBanner.location}} as |banner|>
 
         <banner.title>
           {{{productBanner.title}}}
