@@ -4,6 +4,7 @@ import { computed } from '@ember/object';
 import { reads, bool } from '@ember/object/computed';
 
 
+export const WAGTAIL_MODEL_TYPE = 'news.ArticlePage';
 export const SECTION_PAGE_TYPE = 'standardpages.IndexPage';
 
 export const LEAD_GALLERY = 'lead_gallery';
