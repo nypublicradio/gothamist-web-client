@@ -93,6 +93,8 @@
   },
   "dependencies": {
     "abortcontroller-polyfill": "^1.2.4",
+    "aws-sdk": "^2.496.0",
+    "better-sqlite3": "^5.4.1",
     "dotenv": "^6.2.0",
     "nypr-fastboot": "^0.7.0"
   },
