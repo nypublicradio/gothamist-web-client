@@ -165,7 +165,7 @@ export default class DomFixer {
   secureSrc(selector) {
     this.querySelectorAll(selector).forEach(node => {
       if (node.src) {
-        node.src = node.src.replace(/^http?:/, 'https:');
+        node.src = node.src.replace(/^https?:/, 'https:');
       }
     })
   }
