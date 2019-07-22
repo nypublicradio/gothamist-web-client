@@ -4,6 +4,7 @@ import { inject } from '@ember/service';
 export default Route.extend({
   dataLayer: inject('nypr-metrics/data-layer'),
   header: inject('nypr-o-header'),
+  fastboot: inject(),
 
   titleToken: 'Search Results',
 
@@ -23,8 +24,9 @@ export default Route.extend({
   },
 
   model({ q }) {
-    if (q) {
-      this.controllerFor('search').send('search', q);
+    if (q && !this.fastboot.isFastBoot) {
+      // delay rendering until client
+      this.controllerFor('search').search.perform(q);
     }
   }
 });
