@@ -10,6 +10,18 @@ const QUERY_MAP = {
 
 const PARAMS_TO_SKIP = ['fields', 'type', 'limit', 'offset', 'order'];
 
+const searchAllCollections = (query, schema) => {
+  const collectionNames = schema.db._collections.mapBy('name').filter(n => n !== 'consts');
+
+  for (let i = 0; i < collectionNames.length; i++) {
+    let collection = collectionNames[i];
+    let found = schema[collection].where({...query});
+    if (found.models.length) {
+      return found;
+    }
+  }
+};
+
 export default function() {
 
   this.urlPrefix = config.cmsServer;
@@ -65,16 +77,12 @@ export default function() {
   // general purpose find endpoint
   // look at every defined model and see if there's a matching html_path
   this.get('/api/v2/pages/find', (schema, request) => {
-    const collectionNames = schema.db._collections.mapBy('name').filter(n => n !== 'consts');
     let { html_path } = request.queryParams;
 
-    for (let i = 0; i < collectionNames.length; i++) {
-      let collection = collectionNames[i];
-      let found = schema[collection].where({ html_path });
-      if (found.models.length) {
-        return found;
-      }
-    }
+    let found = searchAllCollections({ html_path }, schema);
+
+    return found || new Response(404);
+  });
 
     return new Response(404);
   });
