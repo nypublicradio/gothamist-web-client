@@ -1,5 +1,10 @@
 import { module, test } from 'qunit';
-import { visit, currentURL, fillIn, triggerKeyEvent } from '@ember/test-helpers';
+import {
+  visit,
+  currentURL,
+  fillIn,
+  click,
+} from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
@@ -19,8 +24,8 @@ module('Acceptance | search', function(hooks) {
 
     await visit('/search');
 
-    await fillIn('[data-test-search-input]', 'foo');
-    await triggerKeyEvent('[data-test-search-input]', 'keyup', 'Enter');
+    await fillIn('.c-search-results__form input', 'foo');
+    await click('.c-search-results__form [data-test-inline-search-submit]');
 
     assert.dom('[data-test-block]').exists({count: 10});
   })
