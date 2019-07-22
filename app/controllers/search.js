@@ -1,5 +1,6 @@
 import Controller from '@ember/controller';
 import { filter } from '@ember/object/computed';
+import { task } from 'ember-concurrency';
 
 export default Controller.extend({
   queryParams: ['q'],
@@ -13,9 +14,9 @@ export default Controller.extend({
     return result.constructor.modelName === 'article';
   }),
 
-  actions: {
-    search(q) {
-      this.store.query('page', {q}).then(results => this.set('results', results));
-    }
-  }
+  search: task(function *(q) {
+    let results = yield this.store.query('page', {q});
+
+    this.set('results', results);
+  }),
 });
