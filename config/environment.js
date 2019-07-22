@@ -62,6 +62,7 @@ module.exports = function(environment) {
     commentsAnchor:     'comments',
     donateCookie:       'goth_donateToutClosed',
     articleViewsCookie: 'goth_articleViews',
+    productBannerCookiePrefix: 'gothamist_product_banner_',
     imgixHost:          'https://gothamist.imgix.net',
     imgixPlatypusHost:  'https://gothamist-platypus.imgix.net',
     siteId:             1, //id for system_messages, sitewidecomponents, etc.
