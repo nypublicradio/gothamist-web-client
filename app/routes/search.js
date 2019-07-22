@@ -20,5 +20,11 @@ export default Route.extend({
         leaderboard: true,
       },
     });
+  },
+
+  model({ q }) {
+    if (q) {
+      this.controllerFor('search').send('search', q);
+    }
   }
 });
