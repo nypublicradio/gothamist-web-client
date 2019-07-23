@@ -1,3 +1,9 @@
+const { JSDOM } = require("jsdom");
+
+const DOM = new JSDOM('', {url: 'https://gothamist.com'});
+const { window, window: { document } } = DOM;
+const { NodeFilter } = window;
+
 /**
   Encapsulates some common DOM repairs
 
@@ -10,8 +16,7 @@ class DomFixer {
     if (typeof rawText === 'undefined') {
       throw new Error("Must provide a string when initializing");
     }
-    const range = document.createRange();
-    const nodes = range.createContextualFragment(rawText);
+    const nodes = JSDOM.fragment(rawText); // returns a DocumentFragment
 
     this.nodes = nodes;
   }
@@ -94,17 +99,36 @@ class DomFixer {
       throw new Error('Empty nodes must be removed before paragraphs can be split.');
     }
 
-    function splitGraf(graf) {
+    Array.from(root.childNodes).slice().forEach(child => {
+      if (child.nodeName !== 'P') {
+        return;
+      }
+      const TARGET_GRAF = child;
 
-      // get all the pairs of line breaks
+      // start with the current paragraph
+      // recursively split it at any pair of line breaks found
+      const SPLIT_GRAFS = splitGraf(TARGET_GRAF);
+
+      // if there's only 1 graf, nothing was split, so nothing to replace
+      if (SPLIT_GRAFS.length > 1) {
+        SPLIT_GRAFS.forEach(p => root.insertBefore(p, TARGET_GRAF));
+        root.removeChild(TARGET_GRAF);
+      }
+    });
+
+    function splitGraf(graf) {
+      // get the first pair of line breaks
       // filter out any breaks preceded by a `#text` node
       // `br + br` will match on <br> foo <br>
       const BREAKS = [
         graf.querySelector('br + br')
       ].filter(Boolean) // remove null values
-      .filter(br => br.previousSibling.nodeName === 'BR') // make sure there aren't any text nodes in between
-      .map(br => ([br.previousSibling, br])) // grab the previous break
-      .reduce((breaks, br) => breaks.concat(br), []); // flatten
+      // make sure there aren't any text nodes in between
+      .filter(br => br.previousSibling.nodeName === 'BR')
+      // grab the previous break in order to make a paired set
+      .map(br => ([br.previousSibling, br]))
+      // flatten into an array of two-element arrays
+      .reduce((breaks, br) => breaks.concat(br), []);
 
       // recursion ended, return given graf, prepped for concatenation
       if (BREAKS.length === 0) {
@@ -121,6 +145,8 @@ class DomFixer {
       // get all the nodes leading up to first break, wrap them in a p tag
       for (let i = 0; i < whereIsBreak1; i++) {
         let node = graf.childNodes[i];
+        // clean new lines that accompany the line breaks
+        node.textContent = node.textContent.replace('\n', '');
         // append a clone so the `childNodes` we're iterating over isn't mutated
         CLEANED_GRAF.appendChild(node.cloneNode(DEEP_CLONE));
       }
@@ -129,6 +155,8 @@ class DomFixer {
       // this will be the new `graf` in the next recursive call
       for (let i = whereIsBreak2 + 1; i < graf.childNodes.length; i ++) {
         let node = graf.childNodes[i];
+        // clean new lines that accompany the line breaks
+        node.textContent = node.textContent.replace('\n', '');
         // append a clone so the `childNodes` NodeList isn't mutated
         THE_REST.appendChild(node.cloneNode(DEEP_CLONE));
       }
@@ -138,22 +166,6 @@ class DomFixer {
       return [CLEANED_GRAF].concat(splitGraf(THE_REST));
     }
 
-    root.childNodes.forEach(child => {
-      if (child.nodeName !== 'P') {
-        return;
-      }
-      const TARGET_GRAF = child;
-
-      // start with the current paragraph
-      // recursively split it at any pair of line breaks found
-      const SPLIT_GRAFS = splitGraf(TARGET_GRAF);
-
-      // if there's only 1 graf, nothing was split, so nothing to replace
-      if (SPLIT_GRAFS.length > 1) {
-        SPLIT_GRAFS.forEach(p => root.insertBefore(p, TARGET_GRAF));
-        root.removeChild(TARGET_GRAF);
-      }
-    });
   }
 
   /**
@@ -165,7 +177,7 @@ class DomFixer {
   secureSrc(selector) {
     this.querySelectorAll(selector).forEach(node => {
       if (node.src) {
-        node.src = node.src.replace(/^http?:/, 'https:');
+        node.src = node.src.replace(/^https?:/, 'https:');
       }
     })
   }
@@ -263,6 +275,32 @@ const betweenTwoNodes = node => {
 */
 const SAFE_NODES = ['A', 'EM'];
 
+const clean = fixer => {
+  // get rid of the empty nodes
+  fixer.removeEmptyNodes();
+
+  // links to other domains open in a new window
+  fixer.externalizeAnchors();
+
+  // make sure iframes are https
+  fixer.secureSrc('iframe');
+
+  // make sure images are https
+  fixer.secureSrc('img');
+
+  // fix up the body text too
+  // wrap raw text nodes in a paragraph
+  fixer.rescueOrphans();
+  // split any paragraphs that contain double line breaks
+  fixer.unbreakParagraphs();
+
+  // make sure blockquotes aren't wrapping raw text
+  fixer.rescueOrphans('blockquote');
+
+  return fixer;
+}
+
 module.exports = {
   DomFixer,
-}
+  clean,
+};
