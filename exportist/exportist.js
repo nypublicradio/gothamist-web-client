@@ -65,9 +65,15 @@ const readDB = () => {
     LIMIT 10;
   `).all();
 
-    row = db.prepare(`SELECT original_id as id, title as title, blob as blob FROM entries WHERE original_id == ?`).get(id.id)
-    console.log("Processing article:\t" + row.id + "\t" + row.title)
   for (let id of ids) {
+    let row = db.prepare(`
+      SELECT original_id as id, title as title, blob as blob
+      FROM entries
+      WHERE original_id == ?
+    `).get(id.id);
+
+    console.log(`Processing article:\t${row.id}\t${row.title}`);
+
     db.transaction(() => {
       db.prepare(`UPDATE entries SET blob = @blob WHERE original_id == @id`).run({ blob: "{updated: 'yes'}", id: row.id})
     })();
