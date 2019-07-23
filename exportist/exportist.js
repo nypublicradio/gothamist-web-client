@@ -65,7 +65,6 @@ const readDB = () => {
     SELECT original_id as id
     FROM entries
     ORDER BY authored_on DESC
-    LIMIT 10;
   `).all();
 
   for (let id of ids) {
@@ -78,7 +77,7 @@ const readDB = () => {
     console.log(`Processing article:\t${row.id}\t${row.title}`);
 
     const articleJSON = JSON.parse(row.blob);
-    
+
     const domFixer = new DomFixer(articleJSON.text);
     clean(domFixer);
 
