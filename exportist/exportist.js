@@ -1,7 +1,9 @@
 const sqlite3 = require('better-sqlite3');
 const AWS = require('aws-sdk');
 const fs = require('fs');
- 
+
+const { DomFixer, clean } = require('./lib/dom-fixer');
+
 var bucket = 'nypr-cms-demo';
 var key = 'gothamist-1k.db';
 var uploadKey = 'gothamist-1k-fixed.db';
@@ -73,6 +75,16 @@ const readDB = () => {
     `).get(id.id);
 
     console.log(`Processing article:\t${row.id}\t${row.title}`);
+
+    const articleJSON = JSON.parse(row.blob);
+    
+    const domFixer = new DomFixer(articleJSON.text);
+    clean(domFixer);
+
+    const HTML = Array.from(domFixer.nodes.childNodes).map(node => node.outerHTML);
+    articleJSON.text = HTML.join('');
+
+    const ARTICLE_BLOB = JSON.stringify(articleJSON);
 
     db.transaction(() => {
       db.prepare(`UPDATE entries SET blob = @blob WHERE original_id == @id`).run({ blob: "{updated: 'yes'}", id: row.id})
