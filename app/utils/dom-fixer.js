@@ -137,6 +137,8 @@ export default class DomFixer {
       // get all the nodes leading up to first break, wrap them in a p tag
       for (let i = 0; i < whereIsBreak1; i++) {
         let node = graf.childNodes[i];
+        // clean new lines that accompany the line breaks
+        node.textContent = node.textContent.replace('\n', '');
         // append a clone so the `childNodes` we're iterating over isn't mutated
         CLEANED_GRAF.appendChild(node.cloneNode(DEEP_CLONE));
       }
@@ -145,6 +147,8 @@ export default class DomFixer {
       // this will be the new `graf` in the next recursive call
       for (let i = whereIsBreak2 + 1; i < graf.childNodes.length; i ++) {
         let node = graf.childNodes[i];
+        // clean new lines that accompany the line breaks
+        node.textContent = node.textContent.replace('\n', '');
         // append a clone so the `childNodes` NodeList isn't mutated
         THE_REST.appendChild(node.cloneNode(DEEP_CLONE));
       }
