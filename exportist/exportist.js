@@ -87,7 +87,14 @@ const readDB = () => {
     const ARTICLE_BLOB = JSON.stringify(articleJSON);
 
     db.transaction(() => {
-      db.prepare(`UPDATE entries SET blob = @blob WHERE original_id == @id`).run({ blob: "{updated: 'yes'}", id: row.id})
+      db.prepare(`
+        UPDATE entries
+        SET blob = @blob
+        WHERE original_id == @id
+      `).run({
+        blob: ARTICLE_BLOB,
+        id: row.id
+      });
     })();
   }
   return;
