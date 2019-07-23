@@ -81,4 +81,4 @@ const readDB = () => {
   return;
 }
 
-s3Download(bucket, key).then(readDB).then(s3Upload(bucket, uploadKey, key));
+s3Download(bucket, key).then(readDB).then(() => s3Upload(bucket, uploadKey, key));
