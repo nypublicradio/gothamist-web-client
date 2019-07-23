@@ -58,11 +58,16 @@ const readDB = () => {
   let db = new sqlite3(key);
 
   //Update each entry in the database
-  var ids = db.prepare(`SELECT original_id as id FROM entries ORDER BY authored_on DESC LIMIT 1;`).all();
+  var ids = db.prepare(`
+    SELECT original_id as id
+    FROM entries
+    ORDER BY authored_on DESC
+    LIMIT 10;
+  `).all();
 
-  for (id of ids) {
     row = db.prepare(`SELECT original_id as id, title as title, blob as blob FROM entries WHERE original_id == ?`).get(id.id)
     console.log("Processing article:\t" + row.id + "\t" + row.title)
+  for (let id of ids) {
     db.transaction(() => {
       db.prepare(`UPDATE entries SET blob = @blob WHERE original_id == @id`).run({ blob: "{updated: 'yes'}", id: row.id})
     })();
