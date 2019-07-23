@@ -49,7 +49,6 @@ const s3Upload = (bucketName, keyName, fileName) => {
     s3.upload(params, (err, data) => {
       if (err) throw err;
       console.log(`File uploaded successfully at ${data.Location}`)
-      fs.unlinkSync(fileName);
     })
   });
 };
