@@ -43,8 +43,9 @@ const s3Upload = (bucketName, keyName, fileName) => {
     let params = {
       Bucket: bucketName,
       Key: keyName,
-      Body: JSON.stringify(data, null, 2)
-    }; 
+      Body: JSON.stringify(data, null, 2),
+      ACL: 'public-read',
+    };
     s3.upload(params, (err, data) => {
       if (err) throw err;
       console.log(`File uploaded successfully at ${data.Location}`)
