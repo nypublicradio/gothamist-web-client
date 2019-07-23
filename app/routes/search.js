@@ -25,7 +25,7 @@ export default Route.extend({
 
   model({ q }) {
     if (q && !this.fastboot.isFastBoot) {
-      // delay rendering until client
+      // delay rendering until client to avoid a nasty double render
       this.controllerFor('search').search.perform(q);
     }
   }
