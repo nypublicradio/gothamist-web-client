@@ -48,6 +48,7 @@ const s3Upload = (bucketName, keyName, fileName) => {
       Body: JSON.stringify(data, null, 2),
       ACL: 'public-read',
     };
+    console.log('uploading to S3');
     s3.upload(params, (err, data) => {
       if (err) throw err;
       console.log(`File uploaded successfully at ${data.Location}`)
@@ -97,6 +98,8 @@ const readDB = () => {
       });
     })();
   }
+
+  console.log('finished processing');
 }
 
 s3Download(bucket, key).then(readDB).then(() => s3Upload(bucket, uploadKey, key));
