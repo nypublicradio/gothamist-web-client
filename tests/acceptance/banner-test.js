@@ -12,7 +12,8 @@ module('Acceptance | banner', function(hooks) {
   hooks.beforeEach(() => {
     //clear cookie
     document.cookie = `${config.productBannerCookiePrefix}12345=; expires=${moment().subtract(1, 'day')}; path=/`;
-    //setup test banner
+    server.create('system-message');
+    // setup test banner
     server.get(`${config.cmsServer}/api/v2/system_messages/1/`, function() {
       return {
         id: 1,
