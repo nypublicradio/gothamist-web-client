@@ -44,6 +44,8 @@ module('Acceptance | banner', function(hooks) {
 
     assert.dom('[data-test-top-product-banner]').exists();
     assert.dom('[data-test-top-product-banner] .o-box-banner__title').includesText("Test Title");
+    assert.dom('[data-test-top-product-banner] .o-box-banner__dek').includesText("Test Description");
+    assert.dom('[data-test-top-product-banner] .o-box-banner__cta').includesText("Test Description");
   });
 
   test('can dismiss top product banner', async function(assert) {
