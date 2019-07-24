@@ -9,7 +9,7 @@ import config from '../config/environment';
 import addCommentCount from '../utils/add-comment-count';
 
 
-const BASE_COUNT = 16;
+const BASE_COUNT = 28;
 export const MAIN_COUNT = 4;
 export const TOTAL_COUNT = BASE_COUNT + MAIN_COUNT;
 export const GROUP_SIZE = 7;
