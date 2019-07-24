@@ -177,7 +177,6 @@
         <AriaLoadMessage @message="More Results Loaded" />
         {{#animated-each page use=transition initialInsertion=true as |set|}}
           <div class="l-container l-container--14col">
-
             <ArticleList @articles={{set}} @ad='gothamist/index/midpage/repeating' />
           </div>
         {{/animated-each}}
