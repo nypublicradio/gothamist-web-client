@@ -42,10 +42,11 @@ const s3Upload = (bucketName, keyName, fileName) => {
 
   fs.readFile(fileName, (err, data) => {
     if (err) throw err;
+    let buffer = new Buffer.from(data, 'binary');
     let params = {
       Bucket: bucketName,
       Key: keyName,
-      Body: JSON.stringify(data, null, 2),
+      Body: buffer,
       ACL: 'public-read',
     };
     console.log('uploading to S3');
@@ -54,6 +55,8 @@ const s3Upload = (bucketName, keyName, fileName) => {
       console.log(`File uploaded successfully at ${data.Location}`)
     })
   });
+
+  fs.unlinkSync(fileName);
 };
 
 const readDB = () => {
