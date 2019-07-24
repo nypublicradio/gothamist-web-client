@@ -103,8 +103,6 @@ export default function() {
     return found;
   });
 
-  this.logging = true;
-
   this.get('/api/v2/system_messages/:id/');
 
   this.urlPrefix = config.apiServer;
