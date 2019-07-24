@@ -1,8 +1,8 @@
 import DS from 'ember-data';
-import {
-  fragmentArray,
-} from 'ember-data-model-fragments/attributes';
+import { filterBy, reads } from '@ember/object/computed';
 
 export default DS.Model.extend({
-  productBanners: fragmentArray('product-banner')
+  productBanners: DS.hasMany('product-banner'),
+  topProductBanners: filterBy('productBanners', 'location', 'TOP'),
+  topProductBanner: reads('topProductBanners.firstObject'),
 });

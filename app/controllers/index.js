@@ -12,7 +12,6 @@ import {
   TOTAL_COUNT,
 } from '../routes/index';
 
-
 const WTC_ENDPOINT = `${config.apiServer}/opt-in/v1/subscribe/mailchimp`;
 const WTC_PARAMS = {list: config.wtcNewsletter};
 
@@ -57,12 +56,10 @@ export default Controller.extend({
   },
 
   actions: {
-    hideBannerForHours(cookie, hours, location) {
-      let expires = moment().add(hours, 'hours').toDate();
-      this.cookies.write(cookie, 1, {expires, path: '/'});
-      if (location === "TOP") {
-        this.set('topProductBannerDismissed', true);
-      }
+    hideBanner(productBanner) {
+      let expires = moment().add(productBanner.frequency, 'hours').toDate();
+      this.cookies.write(productBanner.cookieId, 1, {expires, path: '/'});
+      productBanner.set('isDismissed', true);
     }
   }
 });
