@@ -98,45 +98,6 @@ export default function() {
 
   this.urlPrefix = config.apiServer;
 
-  this.get('/topics/search', function(schema, request) {
-    let {
-      term,
-      record,
-      count,
-      page = 1,
-    } = qpExtract(request.url);
-    if (term) {
-      if (!Array.isArray(term)) {
-        term = [term];
-      }
-      let articles;
-
-      let category = term.find(t => t.startsWith('c|'));
-      let author = term.find(t => t.startsWith('a|'));
-      if (category) {
-        // section/category query
-        category = category.replace('c|', '');
-        articles = schema.articles.all();
-        articles = articles.filter(a => a.categories[0].basename === category);
-      } else if (author) {
-        // author query
-        author = author.replace('a|', '');
-        articles = schema.articles.where({author_nickname: author});
-      } else {
-        // tag queries
-        articles = schema.articles.where({tags: term});
-      }
-      return articles.slice((page - 1) * count, page * count);
-    }
-
-    if (record) {
-      return schema.articles.where({ permalink: record });
-    }
-
-    const allArticles = schema.articles.all();
-    return allArticles.slice((page - 1) * count, page * count);
-  });
-
   this.get('/api/v3/buckets/:id', 'wnyc-story');
 
   this.urlPrefix = config.disqusAPI;
@@ -159,22 +120,4 @@ export default function() {
 
   this.urlPrefix = config.etagAPI;
   this.get('/', {});
-}
-
-function qpExtract(url) {
-  return url
-    .split('?')[1]
-    .split('&')
-    .map(p => ([p.split('=')[0], decodeURIComponent(p.split('=')[1])]))
-    .reduce((params, [key, val]) => {
-      if (params[key] && Array.isArray(params[key])) {
-        params[key].push(val);
-      } else if (params[key]) {
-        params[key] = [params[key]];
-        params[key].push(val);
-      } else {
-        params[key] = val;
-      }
-      return params;
-    }, {});
 }
