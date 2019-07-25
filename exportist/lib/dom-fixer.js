@@ -275,7 +275,7 @@ const betweenTwoNodes = node => {
 */
 const SAFE_NODES = ['A', 'EM'];
 
-const clean = fixer => {
+function clean(fixer) {
   // get rid of the empty nodes
   fixer.removeEmptyNodes();
 
