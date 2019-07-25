@@ -101,7 +101,7 @@
         </footer.tags>
 
         <footer.contact>
-          <p><strong>Do you know the scoop?</strong> &nbsp; {{#if model.allowComments}}<a href="#{{commentsAnchor}}">Comment</a> below or {{/if}}<a href="mailto:tips@gothamist.com" target="_blank" rel="noopener">Send us a Tip</a></p>
+          <p><strong>Do you know the scoop?</strong> &nbsp; {{#unless model.disableComments}}<a href="#{{commentsAnchor}}">Comment</a> below or {{/unless}}<a href="mailto:tips@gothamist.com" target="_blank" rel="noopener">Send us a Tip</a></p>
         </footer.contact>
 
         {{#if showTout}}
@@ -124,7 +124,7 @@
           />
         </footer.ad>
 
-        {{#if model.allowComments}}
+        {{#unless model.disableComments}}
           <footer.comments>
             <DisqusComments
               @id={{commentsAnchor}}
@@ -133,7 +133,7 @@
               @onReady={{navigateToComments}}
             />
           </footer.comments>
-        {{/if}}
+        {{/unless}}
       </NyprOArticleFooter>
     </div>
 
