@@ -1,17 +1,6 @@
 import ApplicationSerializer from './application';
 import DS from 'ember-data';
-import { camelize } from '@ember/string';
-
-const normalizeProductBanner = function(banner) {
-  return {
-    id: banner.id,
-    type: 'product-banner',
-    // move 'values' to 'attributes' and camelize keys
-    attributes: {...Object.fromEntries(
-      Object.entries(banner.value).map(([k, v]) => [camelize(k), v])
-    )}
-  }
-};
+import { blockToJSONAPI } from '../utils/wagtail-api';
 
 export default ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
   attrs: {
@@ -31,7 +20,7 @@ export default ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
           }
         }
       },
-      included: payload.product_banners.map(normalizeProductBanner)
+      included: payload.product_banners.map(blockToJSONAPI)
     };
   }
 });
