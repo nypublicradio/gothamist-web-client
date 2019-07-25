@@ -67,4 +67,13 @@ module('Acceptance | search', function(hooks) {
     assert.equal(currentURL(), '/search?q=foo');
     assert.dom('[data-test-block]').exists({count: 5});
   });
+
+  test('no results', async function(assert) {
+    await visit('/search');
+
+    await fillIn('.c-search-results__form input', 'foo');
+    await click('.c-search-results__form [data-test-inline-search-submit]');
+
+    assert.dom('[data-test-search-results]').hasText('No Results');
+  });
 });
