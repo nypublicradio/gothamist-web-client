@@ -55,8 +55,8 @@ module('Acceptance | article', function(hooks) {
     assert.dom('[data-test-article-body] [data-test-inserted-ad]').exists({count: 1})
 
     // recirc
-    assert.dom('[data-test-recirc-popular] .c-block').exists({count: 3});
-    assert.dom('[data-test-recirc-featured] .c-block').exists({count: 1});
+    // assert.dom('[data-test-recirc-popular] .c-block').exists({count: 3});
+    // assert.dom('[data-test-recirc-featured] .c-block').exists({count: 1});
   });
 
   skip('tweeting an article', async function() {
