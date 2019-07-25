@@ -5,6 +5,7 @@ export default Factory.extend({
   id() {
     return faker.random.uuid();
   },
+  "type": "product-banner",
   title() {
     return capitalize(faker.lorem.words());
   },
