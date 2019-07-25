@@ -26,7 +26,7 @@
     <div class="u-spacing--quad">
       {{#if this.search.isRunning}}
         <p class="u-align--center u-font--l">Searching...</p>
-      {{else}}
+      {{else if this.articles}}
         <section class="c-listing__section o-section" data-test-search-results>
           <NyprMBlockList @items={{this.articles}} as |article|>
             <ArticleBlock
@@ -38,6 +38,8 @@
             />
           </NyprMBlockList>
         </section>
+      {{else}}
+        <p class="u-align--center u-font--l">No Results</p>
       {{/if}}
     </div>
 
