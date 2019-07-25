@@ -8,6 +8,12 @@ export default Route.extend({
 
   titleToken: 'Search Results',
 
+  queryParams: {
+    q: {
+      refreshModel: true,
+    },
+  },
+
   beforeModel() {
     this.dataLayer.push({template: 'search'});
 
