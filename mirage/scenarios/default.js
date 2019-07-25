@@ -5,6 +5,7 @@ export default function(server) {
     This data will not be loaded in your tests.
   */
 
+  server.create('system-message');
   server.createList('article', 5, {
     show_as_feature: true,
   });
