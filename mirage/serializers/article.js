@@ -9,6 +9,7 @@ export default ApplicationSerializer.extend({
     delete json.indexPage; // mirage only
 
     delete json._section;
+    delete json.html_path;
 
     return {
       ...json,

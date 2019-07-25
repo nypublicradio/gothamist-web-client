@@ -59,7 +59,7 @@ module('Acceptance | article', function(hooks) {
     // assert.dom('[data-test-recirc-featured] .c-block').exists({count: 1});
   });
 
-  skip('tweeting an article', async function() {
+  test('tweeting an article', async function() {
     const UTM = 'utm_medium=social&utm_source=twitter&utm_campaign=shared_twitter';
 
     const article = server.create('article');
@@ -68,7 +68,7 @@ module('Acceptance | article', function(hooks) {
       .expects('open')
       .withArgs(`${SERVICE_MAP.twitter.shareBase}?text=${article.title}&via=gothamist&url=${URL(UTM)}`);
 
-    await visit(`/${article.path}`);
+    await visit(`/${article.html_path}`);
 
     let reset = await scrollPastHeader(this);
 
@@ -85,7 +85,7 @@ module('Acceptance | article', function(hooks) {
       .expects('open')
       .withArgs(`${SERVICE_MAP.reddit.shareBase}?title=${article.title}&url=${URL(UTM)}`);
 
-    await visit(`/${article.path}`);
+    await visit(`/${article.html_path}`);
 
     let reset = await scrollPastHeader(this);
 
@@ -102,7 +102,7 @@ module('Acceptance | article', function(hooks) {
       .expects('open')
       .withArgs(`${SERVICE_MAP.email.shareBase}?body=${article.title} - ${URL(UTM)}`);
 
-    await visit(`/${article.path}`);
+    await visit(`/${article.html_path}`);
 
     let reset = await scrollPastHeader(this);
 
