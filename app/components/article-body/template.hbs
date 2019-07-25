@@ -1,0 +1,3 @@
+{{#each @blocks as |block|}}
+  {{component (concat 'article-body/' block.type) value=block.value}}
+{{/each}}
