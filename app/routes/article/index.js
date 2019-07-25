@@ -18,7 +18,7 @@ export default Route.extend({
 
   isFastBoot: reads('fastboot.isFastBoot'),
 
-  titleToken: model => model.title.replace(/(<([^>]+)>)/ig, ''),
+  titleToken: model => model.title,
 
   afterModel(model) {
     this.dataLayer.setForType('article', model);
