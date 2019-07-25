@@ -130,4 +130,7 @@ export default Factory.extend({
 
   // mirage-only attrs
   _section: section(),
+  html_path() {
+    return this.meta.html_url;
+  }
 });
