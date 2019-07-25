@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import { module, skip /* test */ } from 'qunit';
+import { module, test } from 'qunit';
 import { visit, currentURL, click, findAll } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
@@ -8,14 +8,16 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { TOTAL_COUNT } from 'gothamist-web-client/routes/index';
 import config from 'gothamist-web-client/config/environment';
 
+import { CMS_TIMESTAMP_FORMAT } from '../../mirage/factories/consts';
+
 
 module('Acceptance | homepage', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
-  skip('visiting homepage', async function(assert) {
-    server.createList('article', 10, {
-      tags: ['@main']
+  test('visiting homepage', async function(assert) {
+    server.createList('article', 10, 'now', {
+      show_as_feature: true,
     });
     server.createList('article', TOTAL_COUNT * 2);
 
@@ -28,7 +30,7 @@ module('Acceptance | homepage', function(hooks) {
     assert.dom('[data-test-featured-block-list] [data-test-block]').exists();
     assert.dom('[data-test-block]').exists({count: TOTAL_COUNT});
 
-    const mainArticleInRiver = server.schema.articles.where({tags:['@main']}).slice(-1).models[0];
+    const mainArticleInRiver = server.schema.articles.where({show_as_feature: true}).slice(-1).models[0];
     assert.dom(`[data-test-block="${mainArticleInRiver.id}"]`).doesNotHaveClass('c-block--horizontal', 'articles in the "river" tagged main should not have a "--horizontal" modifier class');
 
     await click('[data-test-more-results]');
@@ -36,14 +38,14 @@ module('Acceptance | homepage', function(hooks) {
     assert.dom('[data-test-block]').exists({count: TOTAL_COUNT * 2}, 'Clicking "read more" brings in another set of results equal to the amount of TOTAL_COUNT');
   });
 
-  skip('sponsored posts younger than 24 hours appear in sponsored tout', async function(assert) {
+  test('sponsored posts younger than 24 hours appear in sponsored tout', async function(assert) {
     const TITLE = 'foo';
 
     server.create('article', {
       id: 'sponsored',
       title: TITLE,
-      tags: ['@sponsor'],
-      authored_on_utc: moment().subtract(12, 'hours'),
+      sponsored_content: true,
+      publication_date: moment.utc().subtract(12, 'hours').format(CMS_TIMESTAMP_FORMAT),
     });
 
     await visit('/');
@@ -51,31 +53,32 @@ module('Acceptance | homepage', function(hooks) {
     assert.dom('[data-test-block="sponsored"]').exists({count: 1}, 'should only appear once')
   });
 
-  skip('sponsored posts older than 24 hours do not appear in sponsored tout', async function(assert) {
+  test('sponsored posts older than 24 hours do not appear in sponsored tout', async function(assert) {
 
     server.create('article', {
-      tags: ['@sponsor'],
-      authored_on_utc: moment().subtract(36, 'hours'),
+      sponsored_content: true,
+      publication_date: moment.utc().subtract(36, 'hours').format(CMS_TIMESTAMP_FORMAT),
     });
 
     await visit('/');
     assert.dom('[data-test-sponsored-tout]').doesNotExist();
   });
 
-  skip('sponsored posts tagged @main and between 24 and 48 hours old appear in featured area', async function(assert) {
+  test('sponsored posts tagged @main and between 24 and 48 hours old appear in featured area', async function(assert) {
     server.create('article', {
       id: 'sponsored-main',
-      tags: ['@sponsor', '@main'],
-      authored_on_utc: moment().subtract(36, 'hours'),
+      show_as_feature: true,
+      sponsored_content: true,
+      publication_date: moment.utc().subtract(36, 'hours').format(CMS_TIMESTAMP_FORMAT),
     });
 
     server.create('article', {
       id: 'sponsored',
-      tags: ['@sponsor'],
-      authored_on_utc: moment().subtract(12, 'hours'),
+      sponsored_content: true,
+      publication_date: moment.utc().subtract(12, 'hours').format(CMS_TIMESTAMP_FORMAT),
     });
 
-    server.createList('article', 10, {tags: ['@main']});
+    server.createList('article', 10, {show_as_feature: true});
 
     await visit('/');
     assert.dom('[data-test-featured-block-list] [data-test-block-list-item="2"] [data-test-block="sponsored-main"]').exists('sponsored post is in the featured list in the 3rd position');
@@ -83,9 +86,9 @@ module('Acceptance | homepage', function(hooks) {
     assert.dom('[data-test-sponsored-tout] .c-block__title').exists('regular sponsored post should also appear too');
   });
 
-  skip('articles get updated with commentCount', async function(assert) {
+  test('articles get updated with commentCount', async function(assert) {
     server.createList('article', 10, {
-      tags: ['@main']
+      show_as_feature: true,
     });
     server.createList('article', TOTAL_COUNT * 2);
     const EXPECTED = server.schema.articles.all()
