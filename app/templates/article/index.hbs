@@ -90,7 +90,7 @@
 
     <AdTagInside @slot="gothamist/interior/midpage/1" @contentsId={{model.moveableTypeId}}>
       <NyprOArticleBody class={{unless model.hasLead 'u-space--zero--top'}} data-test-article-body>
-        {{{model.body}}}
+        <ArticleBody @blocks={{model.body}} />
       </NyprOArticleBody>
     </AdTagInside>
 
