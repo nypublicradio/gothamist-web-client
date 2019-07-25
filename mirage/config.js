@@ -88,11 +88,19 @@ export default function() {
   this.get('/api/v2/search/', function(schema, { queryParams: { q } }) {
     let found = searchAllCollections({ description: q }, schema);
     found = this.serialize(found);
-    found.items = found.items.map(item => ({
-      result: item,
-      content_type_id: 5,
-      score: 1.2345,
-    }));
+    if (found) {
+      found.items = found.items.map(item => ({
+        result: item,
+        content_type_id: 5,
+        score: 1.2345,
+      }));
+    } else {
+      found = {
+        items: [],
+        meta: { total_count: 0 }
+      };
+    }
+
     return found;
   });
 
