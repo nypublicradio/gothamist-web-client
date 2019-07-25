@@ -49,11 +49,11 @@ export default Route.extend({
     });
 
     // save the comment API call for the client
-    if (this.isFastBoot) {
+    if (this.isFastBoot || model.disableComments) {
       return;
-    } else if (model.allowComments){
-      addCommentCount(model);
     }
+
+    addCommentCount(model);
   },
 
   setupController(controller) {
