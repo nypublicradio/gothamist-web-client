@@ -36,7 +36,7 @@ export default Route.extend({
   afterModel(model) {
 
     this.headData.setProperties({
-      metaDescription: model.excerptPretty,
+      metaDescription: model.description,
       ogType: 'article',
       ogTitle: model.title, // don't include " - Gothamist" like in <title> tag
       publishedTime: model.publishedMoment.format(),
@@ -45,10 +45,8 @@ export default Route.extend({
       tags: model.displayTags,
       authors: model.authors,
       image: {
-        full: model.thumbnail640,
-        width: 640,
+        full: wagtailImageUrl([model.leadImage, 640, 0, 'width'], {}),
       },
-      ampId: model.platypusId,
     });
 
     if (!this.fastboot.isFastBoot) {
