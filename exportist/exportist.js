@@ -2,7 +2,12 @@ const sqlite3 = require('better-sqlite3');
 const AWS = require('aws-sdk');
 const fs = require('fs');
 
-const { DomFixer, clean } = require('./lib/dom-fixer');
+const {
+  DomFixer,
+  clean,
+  extractLeadImage,
+  extractImageMeta,
+} = require('./lib/dom-fixer');
 
 var bucket = 'nypr-cms-demo';
 var key = 'gothamist-1k.db';
@@ -83,6 +88,30 @@ const readDB = () => {
 
     const domFixer = new DomFixer(articleJSON.text);
     clean(domFixer);
+
+    // remove duplicate lead image
+    // mutates passed in nodes
+    let [leadImage] = extractLeadImage(domFixer.nodes);
+
+    // extract caption and credit and alt
+    if (leadImage) {
+      let img = leadImage.querySelector('img');
+
+      let src = img ? img.src : '';
+
+      let [, caption, credit] = extractImageMeta(leadImage);
+      caption = caption ? caption.trim() : '';
+      credit = credit ? credit.trim() : '';
+
+      let alt = caption ? DomFixer.removeHTML(caption) : "";
+
+      articleJSON.leadImage = {
+        src,
+        caption,
+        credit,
+        alt
+      };
+    }
 
     const HTML = Array.from(domFixer.nodes.childNodes).map(node => node.outerHTML);
     articleJSON.text = HTML.join('');
