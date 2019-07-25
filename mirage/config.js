@@ -22,7 +22,6 @@ const searchAllCollections = (query, schema) => {
 };
 
 export default function() {
-
   this.urlPrefix = config.cmsServer;
 
   this.get('/api/v2/pages', (schema, request) => {
