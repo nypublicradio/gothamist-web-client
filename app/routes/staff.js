@@ -94,16 +94,6 @@ export default Route.extend({
       },
       articles: true,
     }, {
-      name: 'Paula Mejía',
-      title: 'Reporter',
-      image: '/static-images/staff/paula-mejia.jpg',
-      bio: "Paula Mejía was born in New York City to Colombian immigrants and grew up in Houston, Texas. Before covering culture, arts, activism, subway blobs, swamps, and other ephemera at Gothamist, she was an editor at Atlas Obscura and for NPR Music's Turning the Tables series. Her work has also appeared in The New Yorker, The New York Times, and The Paris Review. Paula has a master's from George Washington University, rarely turns down a chance to do karaoke, and knows the \"correct\" way to pronounce Houston Street...but that doesn't mean she likes it.",
-      contact: {
-        email: 'pmejia@gothamist.com',
-        twitter: 'tenaciouspm',
-      },
-      articles: true,
-    }, {
       name: 'Jake Offenhartz',
       title: 'Reporter',
       image: '/static-images/staff/jake-offenhartz.jpg',
