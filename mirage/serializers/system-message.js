@@ -1,4 +1,5 @@
 import ApplicationSerializer from './application';
+import { mirageModelToBlock } from '../../utils/wagtail-api';
 
 export default ApplicationSerializer.extend({
   include() {
@@ -12,18 +13,7 @@ export default ApplicationSerializer.extend({
         "type": "utils.SystemMessagesSettings",
         "detail_url": "http://localhost/api/v2/system_messages/1/"
       },
-      product_banners: json.productBanners.map(banner => {
-        let bannerResponse = {
-          id: banner.id,
-          type: 'product_banner',
-          value: {}
-        }
-        delete banner.id;
-        Object.keys(banner).forEach(key => {
-          bannerResponse.value[key] = banner[key]
-        });
-        return bannerResponse;
-      })
+      product_banners: json.productBanners.map(mirageModelToBlock)
     };
     return response;
   }
