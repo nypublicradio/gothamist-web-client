@@ -32,7 +32,6 @@ module('Acceptance | article', function(hooks) {
     document.cookie = `${config.donateCookie}=; expires=${moment().subtract(1, 'day')}; path=/`;
     document.cookie = `${config.articleViewsCookie}=; expires=${moment().subtract(1, 'day')}; path=/`;
     window.block_disqus = true;
-    window.block_disqus = true;
     window.pSUPERFLY = {virtualPage: () => true};
   });
 
