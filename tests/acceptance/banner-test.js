@@ -12,30 +12,14 @@ module('Acceptance | banner', function(hooks) {
   hooks.beforeEach(() => {
     //clear cookie
     document.cookie = `${config.productBannerCookiePrefix}12345=; expires=${moment().subtract(1, 'day')}; path=/`;
+    // create banner;
     server.create('system-message');
-    // setup test banner
-    server.get(`${config.cmsServer}/api/v2/system_messages/1/`, function() {
-      return {
-        id: 1,
-        meta: {
-          type : "utils.SystemMessagesSettings",
-          detail_url: `http://localhost/api/v2/system_messages/1/`
-        },
-        product_banners: [
-          {
-            "type": "product_banner",
-            "id": "12345",
-            "value": {
-              "title": "Test Title",
-              "description": "<p>Test Description</p>",
-              "button_text": "Test Button",
-              "button_link": "http://example.com",
-              "frequency": 8,
-              "location": "TOP"
-            }
-          }
-        ]
-      }
+    server.create('product-banner', {
+      "id": "12345",
+      "title": "Test Title",
+      "description": "<p>Test Description</p>",
+      "button_text": "Test Button",
+      "button_link": "http://example.com",
     });
   });
 
