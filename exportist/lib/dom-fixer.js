@@ -300,7 +300,51 @@ const clean = fixer => {
   return fixer;
 }
 
+function extractLeadImage(nodes) {
+  if (!nodes.firstElementChild) {
+    return [];
+  }
+  // the fist element will contain this MT tag if there's an image
+  let imageWrapper = nodes.firstElementChild.querySelector('.mt-enclosure-image');
+  if (imageWrapper) {
+    if (!imageWrapper.querySelector('img')) {
+      // due to broken MT output, this is where the image sometimes ends up
+      imageWrapper = nodes.firstElementChild.nextElementSibling;
+    }
+
+    // this image will be the same as `thumbnail640`, which is displayed as the lead image
+    // remove it from this node collection so it isn't rendered twice
+    if (imageWrapper.parentElement && imageWrapper.parentElement.nodeName === 'A') {
+      let link = imageWrapper.parentElement.href;
+      return [
+        imageWrapper.parentNode.removeChild(imageWrapper),
+        link,
+      ];
+    } else {
+      return [ imageWrapper.parentNode.removeChild(imageWrapper) ];
+    }
+  } else {
+    return [];
+  }
+}
+
+function extractImageMeta(imageWrapper) {
+  // caption is the text in the `<i/>` tag
+  let text = imageWrapper.querySelector('i');
+
+  if (!text) {
+    // no caption or credit
+    return [];
+  }
+
+  // parse HTML string for caption and credit
+  let match = text.innerHTML.match(/^([^(]+)(?:\(([^)]+)\))?/);
+  return match || [];
+}
+
 module.exports = {
   DomFixer,
   clean,
+  extractLeadImage,
+  extractImageMeta,
 };
