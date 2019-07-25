@@ -48,13 +48,14 @@ export default Factory.extend({
       slug: 'root',
     }];
   },
-  body: () => ([
-    {
+  body() {
+    let copy = this.text || faker.lorem.paragraphs(4).split("\n ").join('</p><p>');
+    return [{
       type: 'paragraph',
-      value: `<p>${faker.lorem.paragraphs(4).split("\n ").join('</p><p>')}</p>`,
+      value: `<p>${copy}</p>`,
       id: faker.random.uuid(),
-    }
-  ]),
+    }];
+  },
 
   description: faker.lorem.sentences(3),
 
