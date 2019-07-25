@@ -35,6 +35,7 @@ module.exports = {
         'lib/*/index.js',
         'fastboot.js',
         'server/**/*.js',
+        'exportist/**/*.js',
       ],
       excludedFiles: [
         'config/deprecation-workflow.js',
