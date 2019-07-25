@@ -41,16 +41,17 @@ module('Acceptance | article', function(hooks) {
     window.block_disqus = false;
   });
 
-    const article = server.create('article', {_section: 'food'});
-    server.createList('article', 5, {terms: ['@main'], _section: 'food'});
   test('visiting article route', async function(assert) {
+    const PATH = 'news/slug';
+    const article = server.create('article', {html_path: PATH, text: 'foo'});
+    server.createList('article', 5, {show_as_feature: true, _section: 'food'});
 
-    await visit(`/${article.path}`);
+    await visit(`/${PATH}`);
 
-    assert.equal(currentURL(), `/${article.path}`);
+    assert.equal(currentURL(), `/${PATH}`);
     assert.dom('[data-test-top-nav]').exists('nav should exist at load');
     assert.dom('[data-test-article-headline]').hasText(article.title);
-    assert.dom('[data-test-article-body]').hasText(article.text);
+    assert.dom('[data-test-article-body]').hasText('foo');
     assert.dom('[data-test-article-body] [data-test-inserted-ad]').exists({count: 1})
 
     // recirc

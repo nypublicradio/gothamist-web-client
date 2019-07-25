@@ -1,6 +1,7 @@
 import Route from '@ember/routing/route';
 import { inject } from '@ember/service';
 import { doTargetingForModels, clearTargetingForModels } from 'nypr-ads';
+import { wagtailImageUrl } from 'ember-wagtail-images/helpers/wagtail-image-url';
 
 import config from '../config/environment';
 
@@ -11,7 +12,7 @@ export default Route.extend({
   metrics: inject(),
   fastboot: inject(),
 
-  model({ any }) {
+  model({ section, slug }) {
     if (!this.cookies.exists(config.donateCookie)) {
       // donate tout has not been closed within the past 24 hours
 
@@ -28,8 +29,8 @@ export default Route.extend({
     }
 
     return this.store.queryRecord('article', {
-      record: `http://gothamist.com/${any}`,
-    }).then(article => article.loadGallery());
+      html_path: `${section}/${slug}`,
+    });//.then(article => article.loadGallery());
   },
 
   afterModel(model) {
