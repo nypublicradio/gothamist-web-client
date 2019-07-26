@@ -56,7 +56,7 @@ module('Unit | Adapter | article', function(hooks) {
     assert.ok('no error thrown');
   });
 
-  test('querRecord throws if html_path is not included', function(assert) {
+  test('queryRecord throws if html_path is not included', function(assert) {
     let store = this.owner.lookup('service:store');
     let adapter = this.owner.lookup('adapter:article');
 
