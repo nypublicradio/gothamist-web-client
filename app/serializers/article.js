@@ -13,14 +13,17 @@ export default ApplicationSerializer.extend({
     return this._super(ArticleClass, payload);
   },
 
-  normalizeQueryRecordResponse(_store, _modelClass, payload) {
-    // Wagtail returns an array of objects for REST query
-    // ember wants a single record in response to `queryRecord` calls
-    payload.items = payload.items[0];
-    return this._super(...arguments);
+  normalizeQueryRecordResponse(store, ArticleClass, payload) {
+    payload = {
+      article: payload,
+    };
+    return this._super(store, ArticleClass, payload);
   },
 
   extractMeta(store, articleClass, payload) {
+    if (!payload.meta) {
+      return;
+    }
     let meta = {
       total: payload.meta.total_count,
       count: Array.isArray(payload.items) ? payload.items.length : 1,
