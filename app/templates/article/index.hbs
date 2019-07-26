@@ -64,7 +64,7 @@
               <a href={{model.leadImageLink}} target="_blank" rel="noopener">
                 <NyprMFigure
                   class="c-lead"
-                  @srcS={{model.leadImage}}
+                  @srcS={{wagtail-image-url (hash id=model.leadImage.image) 640 null}}
                   @caption={{model.leadImageCaption}}
                   @credit={{model.leadImageCredit}}
                 />
@@ -72,7 +72,7 @@
             {{else}}
               <NyprMFigure
                 class="c-lead"
-                @srcS={{model.leadImage}}
+                @srcS={{wagtail-image-url (hash id=model.leadImage.image) 640 null}}
                 @caption={{model.leadImageCaption}}
                 @credit={{model.leadImageCredit}}
               />
