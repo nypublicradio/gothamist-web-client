@@ -53,7 +53,7 @@ export default Route.extend({
       this.set('metrics.context.pageData', {
         // merge with existing value, which is the previous URL set in the application route
         ...this.metrics.context.pageData,
-        sections: model.section.title || model.section.slug,
+        sections: model.section.slug,
         authors: model.authors,
         path: `/${model.path}`,
       });
