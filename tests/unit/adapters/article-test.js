@@ -47,7 +47,7 @@ module('Unit | Adapter | article', function(hooks) {
     let adapter = this.owner.lookup('adapter:article');
 
     try {
-      adapter.query(store, store.modelFor('article'), {});
+      adapter.queryRecord(store, store.modelFor('article'), {});
     } catch(e) {
       assert.ok('adapter should throw');
       assert.equal(e.message, 'html_path is a required argument');
