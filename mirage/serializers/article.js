@@ -3,19 +3,26 @@ import ApplicationSerializer from './application';
 export default ApplicationSerializer.extend({
   keyForCollection: () => 'items',
 
-  serialize(object/*, request*/) {
+  serialize(object, { queryParams }) {
     let json = ApplicationSerializer.prototype.serialize.apply(this, arguments);
 
-    delete json.indexPage; // mirage only
+    // strip out the mirage only attrs
+    json.items.forEach(item => {
+      delete item.indexPage; // mirage only
+      delete item.section;
+      delete item.html_path;
+    });
 
-    delete json._section;
-    delete json.html_path;
-
-    return {
-      ...json,
-      meta: {
-        total_count: object.models.length,
-      },
-    };
+    if (queryParams.html_path) {
+      // client is expecting a single object
+      return json.items[0];
+    } else {
+      return {
+        ...json,
+        meta: {
+          total_count: object.models.length,
+        },
+      };
+    }
   }
 });
