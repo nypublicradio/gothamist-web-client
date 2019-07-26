@@ -55,4 +55,16 @@ module('Unit | Adapter | article', function(hooks) {
     await adapter.query(store, store.modelFor('article'), {});
     assert.ok('no error thrown');
   });
+
+  test('querRecord throws if html_path is not included', function(assert) {
+    let store = this.owner.lookup('service:store');
+    let adapter = this.owner.lookup('adapter:article');
+
+    try {
+      adapter.query(store, store.modelFor('article'), {});
+    } catch(e) {
+      assert.ok('adapter should throw');
+      assert.equal(e.message, 'html_path is a required argument');
+    }
+  });
 });
