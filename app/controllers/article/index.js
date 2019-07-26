@@ -18,7 +18,7 @@ export default Controller.extend({
   navigateToComments: computed('to', function() {
     let { to, commentsAnchor } = this;
     let goToComments = to === commentsAnchor;
-    if (goToComments && this.model.allowComments) {
+    if (goToComments && !this.model.disableComments) {
       return () => document.querySelector(`#${commentsAnchor}`).scrollIntoView();
     }
   }),
