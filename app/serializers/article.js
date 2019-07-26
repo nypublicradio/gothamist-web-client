@@ -1,3 +1,5 @@
+import { dasherize } from '@ember/string';
+
 import ApplicationSerializer from './application';
 
 
@@ -9,6 +11,8 @@ export default ApplicationSerializer.extend({
     // but it'll always be a single POJO
     // pull out the first index for easier reference in the app
     payload.lead_asset = payload.lead_asset ? payload.lead_asset[0] : null;
+
+    payload.body.forEach(block => block.type = dasherize(block.type));
 
     return this._super(ArticleClass, payload);
   },
