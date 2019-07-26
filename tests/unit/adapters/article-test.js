@@ -1,5 +1,3 @@
-import DS from 'ember-data';
-
 import { module } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import test from 'ember-sinon-qunit/test-support/test';
