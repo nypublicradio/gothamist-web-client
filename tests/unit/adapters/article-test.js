@@ -31,20 +31,6 @@ module('Unit | Adapter | article', function(hooks) {
     assert.equal(ajaxOptions.url, `${URL}?${EXPECTED}`);
   });
 
-  test('queryRecord throws a 404 is items is empty', async function(assert) {
-    let store = this.owner.lookup('service:store');
-    let adapter = this.owner.lookup('adapter:article');
-
-    this.stub(adapter, 'ajax')
-      .resolves({items: []});
-
-    try {
-      await adapter.queryRecord(store, store.modelFor('article'), {});
-    } catch(e) {
-      assert.ok(e instanceof DS.NotFoundError);
-    }
-  });
-
   test('query does not throw a 404 if items is empty', async function(assert) {
     let store = this.owner.lookup('service:store');
     let adapter = this.owner.lookup('adapter:article');
