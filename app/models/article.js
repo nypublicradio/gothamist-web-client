@@ -75,29 +75,28 @@ export default Page.extend({
   moveableTypeId: reads('legacyId'),
 
   breadcrumb: computed('section', function() {
-    return;
-    // if (!this.section.slug) {
-    //   return;
-    // }
-    // let breadcrumb = [{
-    //   route: ['sections', this.section.slug],
-    //   label: this.section.title
-    // }];
-    // if (this.isSponsored) {
-    //   breadcrumb.push({label: 'Sponsored'});
-    // }
-    // if (this.isOpinion) {
-    //   breadcrumb.push({label: 'Opinion', route: ['tags', 'opinion']});
-    // }
-    // if (this.isAnalysis) {
-    //   breadcrumb.push({label: 'Analysis', route: ['tags', 'analysis']});
-    // }
-    //
-    // // HACK
-    // if (this.tags.includes('we the commuters')) {
-    //   breadcrumb.push({label: 'We the Commuters', route: ['tags', 'wethecommuters']});
-    // }
-    // return breadcrumb;
+    if (!this.section.slug) {
+      return;
+    }
+    let breadcrumb = [{
+      route: ['sections', this.section.slug],
+      label: this.section.title
+    }];
+    if (this.isSponsored) {
+      breadcrumb.push({label: 'Sponsored'});
+    }
+    if (this.isOpinion) {
+      breadcrumb.push({label: 'Opinion', route: ['tags', 'opinion']});
+    }
+    if (this.isAnalysis) {
+      breadcrumb.push({label: 'Analysis', route: ['tags', 'analysis']});
+    }
+
+    // HACK
+    if (this.tags.includes('we the commuters')) {
+      breadcrumb.push({label: 'We the Commuters', route: ['tags', 'wethecommuters']});
+    }
+    return breadcrumb;
   }),
 
   authors: computed('authorNickname', function() {
