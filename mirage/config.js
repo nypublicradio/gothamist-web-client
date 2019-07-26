@@ -77,6 +77,9 @@ export default function() {
   this.get('/api/v2/pages/find', (schema, request) => {
     let { html_path } = request.queryParams;
 
+    // HACK for supporting demo page structure
+    // currently has `articles` in the middle
+    html_path = html_path.replace('/articles', '');
     let found = searchAllCollections({ html_path }, schema);
 
     return found || new Response(404);
