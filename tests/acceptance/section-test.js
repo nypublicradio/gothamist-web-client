@@ -16,9 +16,7 @@ module('Acceptance | section', function(hooks) {
 
   test('visiting section page', async function(assert) {
     server.create('index-page', {
-      // this is the key we'll look for in the `find?html_path` request
-      // mirage doesn't support nested keys for `where` lookups
-      html_path: 'news',
+      slug: 'news',
       title: 'News',
     });
 
@@ -37,9 +35,7 @@ module('Acceptance | section', function(hooks) {
   test('section lists get updated with commentCount', async function(assert) {
     server.create('index-page', {
       id: '1',
-      // this is the key we'll look for in the `find?html_path` request
-      // mirage doesn't support nested keys for `where` lookups
-      html_path: 'news',
+      slug: 'news',
       title: 'News',
     });
 
@@ -65,7 +61,7 @@ module('Acceptance | section', function(hooks) {
     const TITLE_1 = 'Featured 1';
     const TITLE_2 = 'Featured 2';
 
-    const NEWS = server.create('index-page', {html_path: 'news'});
+    const NEWS = server.create('index-page', {slug: 'news'});
     server.create('article', {
       id: 'foo',
       title: TITLE_1,
