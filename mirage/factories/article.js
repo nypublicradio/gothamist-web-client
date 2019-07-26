@@ -112,6 +112,7 @@ export default Factory.extend({
       biography: "",
       website: "",
       email: "",
+      slug: slug(),
     }
   ]),
   related_contributing_organizations: () => ([]),
