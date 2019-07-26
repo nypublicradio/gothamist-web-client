@@ -32,8 +32,8 @@ export default Factory.extend({
         detail_url: 'http://localhost/api/v2/pages/8/',
         html_url: 'http://localhost/news/',
       },
-      title: this._section[0].toUpperCase() + this._section.slice(1),
-      slug: this._section,
+      title: this.section[0].toUpperCase() + this.section.slice(1),
+      slug: this.section,
     }, {
       id: faker.random.number(500, 700),
       meta: {
@@ -84,16 +84,20 @@ export default Factory.extend({
   listing_summary: '',
   listing_image: null,
 
-  meta: () => ({
-    first_published_at: moment.utc(faker.date.recent()).format(CMS_TIMESTAMP_FORMAT),
-    type: 'news.ArticlePage',
-    detail_url: '',
-    html_url: `${faker.random.arrayElement(['news', 'food', 'arts'])}/${slug()}`, // used to derive path for now
-    slug: slug(),
-    show_in_menus: false,
-    seo_title: '',
-    search_description: '',
-  }),
+  meta() {
+    const SLUG = this.slug || slug();
+    const SECTION = this.section || section();
+    return {
+      first_published_at: moment.utc(faker.date.recent()).format(CMS_TIMESTAMP_FORMAT),
+      type: 'news.ArticlePage',
+      detail_url: '',
+      html_url: `${SECTION}/${SLUG}`, // used to derive path for now
+      slug: SLUG,
+      show_in_menus: false,
+      seo_title: '',
+      search_description: '',
+    };
+  },
 
   publication_date: () => moment.utc(faker.date.recent()).format(CMS_TIMESTAMP_FORMAT),
 
