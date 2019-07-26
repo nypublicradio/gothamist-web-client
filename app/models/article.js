@@ -99,11 +99,11 @@ export default Page.extend({
     return breadcrumb;
   }),
 
-  authors: computed('authorNickname', function() {
-    return [{
-      name: this.authorNickname,
-      route: ['author-detail', this.authorNickname],
-    }]
+  authors: computed('relatedAuthors', function() {
+    return this.relatedAuthors.map(author => ({
+      name: `${author.first_name} ${author.last_name}`,
+      route: ['author-detail', author.slug],
+    }));
   }),
 
   // MAPPINGS
