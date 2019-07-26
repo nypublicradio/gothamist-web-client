@@ -42,13 +42,12 @@ module('Acceptance | article', function(hooks) {
   });
 
   test('visiting article route', async function(assert) {
-    const PATH = 'news/slug';
-    const article = server.create('article', {html_path: PATH, text: 'foo'});
-    server.createList('article', 5, {show_as_feature: true, _section: 'food'});
+    const article = server.create('article', {text: 'foo'});
+    server.createList('article', 5, {show_as_feature: true, section: 'food'});
 
-    await visit(`/${PATH}`);
+    await visit(`/${article.html_path}`);
 
-    assert.equal(currentURL(), `/${PATH}`);
+    assert.equal(currentURL(), `/${article.html_path}`);
     assert.dom('[data-test-top-nav]').exists('nav should exist at load');
     assert.dom('[data-test-article-headline]').hasText(article.title);
     assert.dom('[data-test-article-body]').hasText('foo');
@@ -127,81 +126,83 @@ module('Acceptance | article', function(hooks) {
   });
 
   test('no disqus if comments are not allowed', async function(assert) {
-    server.create('article', {allow_comments: false, path: 'foo'});
+    let article = server.create('article', {disable_comments: true});
 
-    await visit('/foo');
+    await visit(`/${article.html_path}`);
 
     assert.dom(`#${config.commentsAnchor}`).doesNotExist();
   });
 
   test('breadcrumbs', async function(assert) {
-    server.create('article', {path: 'opinion', tags: ['@opinion']});
-    server.create('article', {path: 'analysis', tags: ['@analysis']});
-    server.create('article', {path: 'sponsor', tags: ['@sponsor']});
-    server.create('article', {path: 'wtc', tags: ['we the commuters']});
+    const OPINION = server.create('article', {tags: ['@opinion']});
+    const ANALYSIS = server.create('article', {tags: ['@analysis']});
+    const SPONSOR = server.create('article', {sponsored_content: true});
+    const WTC = server.create('article', {tags: ['we the commuters']});
 
-    await visit('/opinion');
+    await visit(OPINION.html_path);
     assert.dom('.o-breadcrumbs').includesText('Opinion');
 
-    await visit('/analysis');
+    await visit(ANALYSIS.html_path);
     assert.dom('.o-breadcrumbs').includesText('Analysis');
 
-    await visit('/sponsor');
+    await visit(SPONSOR.html_path);
     assert.dom('.o-breadcrumbs').includesText('Sponsored');
 
-    await visit('/wtc');
+    await visit(WTC.html_path);
     assert.dom('.o-breadcrumbs').includesText('We the Commuters');
   });
 
   test('navigating to comments section', async function(assert) {
     server.create('article', {
       text: faker.lorem.words(1000),
-      tags: ['@main'],
+      show_as_feature: true,
       id: '1',
-      path: 'foo',
+      section: 'news',
+      slug: 'foo',
     });
     server.create('article', {
       text: faker.lorem.words(1000),
-      tags: ['@main'],
+      show_as_feature: true,
       id: '2',
-      path: 'bar',
+      section: 'news',
+      slug: 'bar',
     });
 
     await visit('/');
 
     await click('[data-test-block="1"] [data-test-article-block-meta] a');
 
-    assert.equal(currentURL(), `/foo?to=${config.commentsAnchor}`, 'comment anchor should be in query string');
+    assert.equal(currentURL(), `/news/foo?to=${config.commentsAnchor}`, 'comment anchor should be in query string');
     assert.ok(inViewport(find(`#${config.commentsAnchor}`)), 'comments area should be on screen');
 
     await click('[data-test-header-logo]');
     await click('[data-test-block="2"] [data-test-block-title] a');
 
-    assert.equal(currentURL(), '/bar');
+    assert.equal(currentURL(), '/news/bar');
     assert.notOk(inViewport(find(`#${config.commentsAnchor}`)), 'comments area should not be on screen');
   });
 
   test('donation tout only appears after visiting 3 articles', async function(assert) {
-    server.create('article', {path: 'foo'});
-    server.create('article', {path: 'bar'});
-    server.create('article', {path: 'baz'});
+    server.create('article', {section: 'food', slug: 'foo'});
+    server.create('article', {section: 'food', slug: 'bar'});
+    server.create('article', {section: 'food', slug: 'baz'});
 
-    await visit('/foo');
+    await visit('/food/foo');
     await scrollPastTarget(this, '.c-article__footer');
 
-    assert.equal(currentURL(), '/foo');
+    assert.equal(currentURL(), '/food/foo');
     assert.dom('.c-donate-tout').doesNotExist('not active on first article');
 
-    await visit('/bar');
+    await visit('/food/bar');
     await scrollPastTarget(this, '.c-article__footer');
 
-    assert.equal(currentURL(), '/bar');
+    assert.equal(currentURL(), '/food/bar');
     assert.dom('.c-donate-tout').doesNotExist('not active on second article');
 
-    await visit('/baz');
+    await visit('/food/baz');
     let reset = await scrollPastTarget(this, '.c-article__footer', () => find('.c-donate-tout.is-active'));
 
-    assert.equal(currentURL(), '/baz');
+    assert.equal(currentURL(), '/food/baz');
 
     let viewCount = document.cookie.match(new RegExp(`${config.articleViewsCookie}=(\\d)`));
     assert.equal(viewCount[1], '3', 'tracks views');
@@ -216,14 +217,14 @@ module('Acceptance | article', function(hooks) {
     const cookieService = this.owner.lookup('service:cookies');
     let cookieSpy = this.spy(cookieService, 'write');
 
-    server.create('article', {path: 'foo'});
-    server.create('article', {path: 'bar'});
+    server.create('article', {path: 'news', slug: 'foo'});
+    server.create('article', {path: 'news', slug: 'bar'});
 
-    await visit('/foo');
-    await visit('/bar');
-    await visit('/foo');
+    await visit('/news/foo');
+    await visit('/news/bar');
+    await visit('/news/foo');
 
-    assert.equal(currentURL(), '/foo');
+    assert.equal(currentURL(), '/news/foo');
 
     let reset = await scrollPastTarget(this, '.c-article__footer', () => find('.c-donate-tout.is-active'));
 
@@ -296,9 +297,9 @@ module('Acceptance | article', function(hooks) {
     const SECTION = 'news';
     const AUTHOR = 'Foo Bar';
     server.create('article', {
-      _section: SECTION,
+      section: SECTION,
       author_nickname: AUTHOR,
-      path: 'foo',
+      slug: 'foo',
     });
 
     await visit('/foo');
@@ -312,14 +313,14 @@ module('Acceptance | article', function(hooks) {
 
     // first article
     server.create('article', {
-      path: 'foo',
-      _section: 'food',
+      slug: 'foo',
+      section: 'food',
     });
     // final article
     server.create('article', {
-      path: 'bar',
-      terms: ['@main'],
-      _section: 'food',
+      slug: 'bar',
+      show_as_feature: true,
+      section: 'food',
     });
 
     await visit('/');
