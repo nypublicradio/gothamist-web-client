@@ -216,8 +216,8 @@ module('Acceptance | article', function(hooks) {
     const cookieService = this.owner.lookup('service:cookies');
     let cookieSpy = this.spy(cookieService, 'write');
 
-    server.create('article', {path: 'news', slug: 'foo'});
-    server.create('article', {path: 'news', slug: 'bar'});
+    server.create('article', {section: 'news', slug: 'foo'});
+    server.create('article', {section: 'news', slug: 'bar'});
 
     await visit('/news/foo');
     await visit('/news/bar');
