@@ -9,6 +9,12 @@ import {
 
 
 export default Factory.extend({
+  // mirage-only attrs
+  section,
+  html_path() {
+    return this.meta && this.meta.html_url;
+  },
+
   ancestry() {
     return [{
       id: faker.random.number(100, 300),
@@ -127,10 +133,4 @@ export default Factory.extend({
   now: trait({
     publication_date: moment.utc().format(CMS_TIMESTAMP_FORMAT),
   }),
-
-  // mirage-only attrs
-  _section: section(),
-  html_path() {
-    return this.meta.html_url;
-  }
 });
