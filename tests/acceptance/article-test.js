@@ -255,14 +255,14 @@ module('Acceptance | article', function(hooks) {
     const firstCall = spy.getCall(0).args[0];
     const secondCall = spy.getCall(1).args[0]
 
-    assert.deepEqual([
+    assert.deepEqual(Object.keys(firstCall), [
       "sections",
       "authors",
       "path",
       "title",
       "virtualReferrer",
-    ], Object.keys(firstCall));
-    assert.deepEqual({
+    ]);
+    assert.deepEqual(firstCall, {
       sections: `Gothamist,news,Gothamist news`,
       authors: `${article.related_authors[0].first_name} ${article.related_authors[0].last_name}`,
       path: `/${article.html_path}`,
@@ -271,16 +271,16 @@ module('Acceptance | article', function(hooks) {
       // chartbeat will use the <title> tag on initial load, so we need to use it manually so things stay in sync
       // the document title is in sync with ember-cli-document-title
       title: document.title,
-    }, firstCall, 'first virtual call should have article data');
+    }, 'first virtual call should have article data');
 
-    assert.deepEqual([
+    assert.deepEqual(Object.keys(secondCall), [
       "sections",
       "authors",
       "path",
       "title",
       "virtualReferrer",
-    ], Object.keys(secondCall));
-    assert.deepEqual({
+    ]);
+    assert.deepEqual(secondCall, {
       sections: 'Gothamist,Home,Gothamist Home',
       authors: '',
       path: location.pathname,
@@ -289,7 +289,7 @@ module('Acceptance | article', function(hooks) {
       // chartbeat will use the <title> tag on initial load, so we need to use it manually so things stay in sync
       // the document title is in sync with ember-cli-document-title
       title: document.title,
-    }, secondCall, 'second virtual call should have home page data');
+    }, 'second virtual call should have home page data');
   });
 
   test('chartbeat is initialized with article metadata on direct navigation', async function(assert) {
