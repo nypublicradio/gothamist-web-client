@@ -1,4 +1,4 @@
-import { module, skip /*test*/ } from 'qunit';
+import { module, test } from 'qunit';
 import { visit, currentURL, click } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
@@ -18,22 +18,18 @@ module('Acceptance | gallery', function(hooks) {
     window.block_disqus = false;
   })
 
-  skip('gallery should contain 2 slides and 0 ads', async function(assert) {
-    const article = server.create('article', 'mtGallery', {_section: 'food'});
-    // 7 articles - 5 = 2
-    article.gallery_array.splice(0, 5)
-    article.gallery_captions.splice(0, 5)
-    article.gallery_full.splice(0, 5)
+  test('gallery should contain 2 slides and 0 ads', async function(assert) {
+    const gallery = server.create('gallery', {section: 'food', count: 2});
 
-    await visit(`/${article.path}/gallery`);
+    await visit(`/food/galleries/${gallery.slug}`);
 
     // do a match to guard against non-determinism with ?image query string
-    assert.ok(currentURL().match(`/${article.path}/gallery`), 'path should include gallery');
+    assert.ok(currentURL().match(`/food/photos/${gallery.slug}`), 'path should include gallery');
     assert.dom('[data-test-gallery-slide]').exists({count: 2});
     assert.dom('[data-test-gallery-overlay] [data-test-ad-tag-wide]').exists({count: 0});
   });
 
-  skip('gallery should contain 3 slides and 1 ad', async function(assert) {
+  test('gallery should contain 3 slides and 1 ad', async function(assert) {
     const article = server.create('article', 'mtGallery', {_section: 'food'});
     // 7 articles - 4 = 3
     article.gallery_array.splice(0, 4);
@@ -47,7 +43,7 @@ module('Acceptance | gallery', function(hooks) {
     assert.dom('[data-test-gallery-overlay] [data-test-ad-tag-wide]').exists({count: 1});
   });
 
-  skip('gallery should contain 5 slides and 1 ads', async function(assert) {
+  test('gallery should contain 5 slides and 1 ads', async function(assert) {
     const article = server.create('article', 'mtGallery', {_section: 'food'});
     // 7 articles - 2 = 6
     article.gallery_array.splice(0, 2)
@@ -62,7 +58,7 @@ module('Acceptance | gallery', function(hooks) {
   });
 
 
-  skip('gallery should contain 6 slides and 2 ads', async function(assert) {
+  test('gallery should contain 6 slides and 2 ads', async function(assert) {
     const article = server.create('article', 'mtGallery', {_section: 'food'});
     // 7 articles - 1 = 6
     article.gallery_array.splice(0, 1)
@@ -76,7 +72,7 @@ module('Acceptance | gallery', function(hooks) {
     assert.dom('[data-test-gallery-overlay] [data-test-ad-tag-wide]').exists({count: 2});
   });
 
-  skip('gallery should contain 14 slides and still only 2 ads', async function(assert) {
+  test('gallery should contain 14 slides and still only 2 ads', async function(assert) {
     const article = server.create('article', 'mtGallery', {_section: 'food'});
     // 7 articles + 7 = 14
     article.gallery_array.push(...article.gallery_array);
@@ -90,7 +86,7 @@ module('Acceptance | gallery', function(hooks) {
     assert.dom('[data-test-gallery-overlay] [data-test-ad-tag-wide]').exists({count: 2});
   });
 
-  skip('navigating to a gallery that returns a 500 should still load the article', async function(assert) {
+  test('navigating to a gallery that returns a 500 should still load the article', async function(assert) {
     server.create('article', 'platypusGallery', {path: 'foo', id: '1'});
     server.get(`${config.apiServer}/platypus/api/gallery/:gallery`, new Response(500));
 
