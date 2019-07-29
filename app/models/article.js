@@ -124,7 +124,7 @@ export default Page.extend({
   thumbnail: computed('leadImage', 'listingImage', function() {
     if (this.listingImage) {
       return {id: this.listingImage.id};
-    } else if (this.leadImage) {
+    } else if (this.leadImage && this.leadImage.image) {
       return {id: this.leadImage.image};
     }
   }),
