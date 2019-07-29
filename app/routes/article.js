@@ -40,12 +40,12 @@ export default Route.extend({
       ogType: 'article',
       ogTitle: model.title, // don't include " - Gothamist" like in <title> tag
       publishedTime: model.publishedMoment.format(),
-      modifiedTime: model.modifiedMoment.format(),
+      modifiedTime: model.modifiedMoment.isValid() && model.modifiedMoment.format(),
       section: model.section.title,
       tags: model.displayTags,
       authors: model.authors,
       image: {
-        full: wagtailImageUrl([model.leadImage, 640, null, 'width'], {}),
+        full: wagtailImageUrl([{id: model.leadImage.image}, 640, null, 'width'], {}),
       },
     });
 
