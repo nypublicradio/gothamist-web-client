@@ -27,7 +27,7 @@ export default Controller.extend({
     let results = yield this.store.query('page', {q});
 
     this.set('results', results);
-  }),
+  }).drop(),
 
   // prevents UI jumping between searches
   resultsStyle: computed('search.{isIdle}', function() {
