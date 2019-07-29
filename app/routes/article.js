@@ -12,7 +12,7 @@ export default Route.extend({
   metrics: inject(),
   fastboot: inject(),
 
-  model({ section, slug }) {
+  model({ section, path }) {
     if (!this.cookies.exists(config.donateCookie)) {
       // donate tout has not been closed within the past 24 hours
 
@@ -29,7 +29,7 @@ export default Route.extend({
     }
 
     return this.store.queryRecord('article', {
-      html_path: `${section}/${slug}`,
+      html_path: `${section}/${path}`,
     });//.then(article => article.loadGallery());
   },
 
@@ -55,7 +55,7 @@ export default Route.extend({
         ...this.metrics.context.pageData,
         sections: model.section.slug,
         authors: model.authors,
-        path: `/${model.path}`,
+        path: `/${model.section.slug}/${model.path}`,
       });
     }
 
