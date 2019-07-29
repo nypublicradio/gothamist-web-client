@@ -1,5 +1,7 @@
 import Controller from '@ember/controller';
+import { computed } from '@ember/object';
 import { filter } from '@ember/object/computed';
+import { htmlSafe } from '@ember/string';
 import { task } from 'ember-concurrency';
 
 export default Controller.extend({
@@ -25,4 +27,9 @@ export default Controller.extend({
 
     this.set('results', results);
   }),
+
+  // prevents UI jumping between searches
+  resultsStyle: computed('search.{isIdle}', function() {
+    return htmlSafe(`opacity: ${this.search.isIdle ? '1' : '0'}`);
+  })
 });
