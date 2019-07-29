@@ -9,13 +9,4 @@ export const DEFAULT_QUERY_PARAMS = {
 
 export default PageAdapter.extend({
   DEFAULT_QUERY_PARAMS,
-
-  queryRecord(_store, _type, query = {}) {
-    if (!query.html_path) {
-      throw new Error('html_path is a required argument');
-    }
-
-    return this._super(...arguments);
-  },
-
 });
