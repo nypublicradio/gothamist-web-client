@@ -2,6 +2,9 @@ import EmberRouter from '@ember/routing/router';
 import { inject } from '@ember/service';
 import config from './config/environment';
 
+
+export const GALLERY_PATH = 'galleries';
+
 const Router = EmberRouter.extend({
   headData: inject(),
   location: config.locationType,
@@ -16,6 +19,7 @@ Router.map(function() {
   this.route('404', {path: '*wildcard'});
   this.route('500', {path: '*other-error'});
 
+  this.route('gallery', {path: `:section/${GALLERY_PATH}/:slug`});
   this.route('article', {path: ':section/*path'});
 
   this.route('search');
