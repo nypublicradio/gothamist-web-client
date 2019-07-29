@@ -1,8 +1,5 @@
-import moment from 'moment';
-
 import Controller from '@ember/controller';
 import fade from 'ember-animated/transitions/fade';
-import { inject as service } from '@ember/service';
 
 import addCommentCount from '../utils/add-comment-count';
 import config from '../config/environment';
@@ -21,8 +18,6 @@ export default Controller.extend({
 
   WTC_ENDPOINT,
   WTC_PARAMS,
-
-  cookies: service(),
 
   init() {
     this._super(...arguments);
@@ -54,12 +49,4 @@ export default Controller.extend({
 
     return moreArticles;
   },
-
-  actions: {
-    hideBanner(productBanner) {
-      let expires = moment().add(productBanner.frequency, 'hours').toDate();
-      this.cookies.write(productBanner.cookieId, 1, {expires, path: '/'});
-      productBanner.set('isDismissed', true);
-    }
-  }
 });

@@ -19,6 +19,6 @@ export default DS.Model.extend({
   isCookieSet: computed('cookieId', function() {
     return this.cookies.exists(this.cookieId);
   }),
-  isDismissed: attr('boolean', {defaultValue() {return false;}}),
+  isDismissed: attr('boolean'),
   isHidden: or('isCookieSet', 'isDismissed'),
 });
