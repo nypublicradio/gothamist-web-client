@@ -14,11 +14,7 @@ export default PageAdapter.extend({
     if (!query.html_path) {
       throw new Error('html_path is a required argument');
     }
-    // HACK: articles currently have `articles` in the page path for the moment
-    let path = query.html_path.split('/');
-    path.splice(1, 0, 'articles');
-    query.html_path = path.join('/')
-    
+
     return this._super(...arguments);
   },
 
