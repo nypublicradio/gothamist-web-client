@@ -16,9 +16,8 @@ Router.map(function() {
   this.route('404', {path: '*wildcard'});
   this.route('500', {path: '*other-error'});
 
-  this.route('article', {path: ':section/*path'}, function() {
-    this.route('gallery');
-  });
+  this.route('article', {path: ':section/*path'});
+
   this.route('search');
   this.route('tags', {path: 'tags/:tag'});
   this.route('popular');

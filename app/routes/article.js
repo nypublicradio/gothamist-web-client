@@ -2,15 +2,28 @@ import Route from '@ember/routing/route';
 import { inject } from '@ember/service';
 import { doTargetingForModels, clearTargetingForModels } from 'nypr-ads';
 import { wagtailImageUrl } from 'ember-wagtail-images/helpers/wagtail-image-url';
+import { reads } from '@ember/object/computed';
 
+import addCommentCount from '../utils/add-comment-count';
 import config from '../config/environment';
 
 
+const {
+  articleViewsCookie,
+  donateCookie,
+} = config;
+
 export default Route.extend({
+  header: inject('nypr-o-header'),
+  dataLayer: inject('nypr-metrics/data-layer'),
   cookies: inject(),
   headData: inject(),
   metrics: inject(),
   fastboot: inject(),
+
+  isFastBoot: reads('fastboot.isFastBoot'),
+
+  titleToken: model => model.title,
 
   model({ section, path }) {
     if (!this.cookies.exists(config.donateCookie)) {
@@ -34,6 +47,8 @@ export default Route.extend({
   },
 
   afterModel(model) {
+    this.dataLayer.setForType('article', model);
+    this.dataLayer.push({template: 'article'});
 
     this.headData.setProperties({
       metaDescription: model.description,
@@ -49,7 +64,31 @@ export default Route.extend({
       },
     });
 
-    if (!this.fastboot.isFastBoot) {
+    this.header.addRule('article', {
+      all: {
+        donate: true,
+        search: true,
+      },
+      resting: {
+        leaderboard: true,
+        nav: true,
+      },
+      floating: {
+        headline: model.title,
+        progressTarget: '.c-article__body',
+        logoLinkClass: 'u-hide-until--m',
+        share: {
+          title: model.title,
+          permalink: model.permalink,
+        }
+      }
+    });
+
+    this.controllerFor('application').setProperties({
+      headerLandmark: '.c-article__share',
+    });
+
+    if (!this.isFastBoot) {
       this.set('metrics.context.pageData', {
         // merge with existing value, which is the previous URL set in the application route
         ...this.metrics.context.pageData,
@@ -59,17 +98,36 @@ export default Route.extend({
       });
     }
 
+    // save the comment API call for the client
+    if (this.isFastBoot || model.disableComments) {
+      return;
+    }
+
+    addCommentCount(model);
+
+  },
+
+  setupController(controller) {
+    this._super(...arguments);
+
+    // have seen at least 3 articles
+    // have not closed the donation tout in the past 24 hours
+    let showTout = this.cookies.read(articleViewsCookie) >= 3 && !this.cookies.exists(donateCookie);
+    controller.set('showTout', showTout);
+  },
+
+  resetController(controller) {
+    controller.set('to', null);
   },
 
   actions: {
     didTransition() {
-      let article = this.currentModel;
-      doTargetingForModels(article);
+      doTargetingForModels(this.currentModel);
       return true;
     },
     willTransition() {
-      let article = this.currentModel;
-      clearTargetingForModels(article);
+      clearTargetingForModels(this.currentModel);
+      this.dataLayer.clearForType('article');
       return true;
     }
   }
