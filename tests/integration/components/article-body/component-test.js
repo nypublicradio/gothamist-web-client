@@ -17,6 +17,17 @@ module('Integration | Component | article-body', function(hooks) {
     assert.equal(this.element.textContent.trim(), '');
   });
 
+  test('it handles unknonwn types', async function(assert) {
+    const BODY = [{
+      type: 'foo',
+    }];
+
+    this.set('body', BODY);
+    await render(hbs`<ArticleBody @blocks={{body}} />`);
+
+    assert.ok('can render without exception if it encounters a type without a corresponding component');
+  });
+
   test('it handles paragraph types', async function(assert) {
     const BODY = [{
       type: 'paragraph',
@@ -80,7 +91,6 @@ module('Integration | Component | article-body', function(hooks) {
     }];
 
     this.set('body', BODY);
-
     await render(hbs`<ArticleBody @blocks={{body}} />`);
 
     assert.dom('#foo').hasText('hello world');
