@@ -31,38 +31,13 @@ $ember-basic-dropdown-content-z-index: 10000;
 }
 
 // target links embedded in gothamist captions with proper styling
-.o-caption__text > span > a {
-  display: inline;
-  color: #333;
-  border-bottom: 2px dotted #333;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-}
-
-// embedded MT images
-.image-none {
-  i {
-    display: flex;
-    align-items: center;
-    font-style: normal; // this should be decorated with emphasis
-    margin-top: -28px; // offset embedded <br/>
-    font-family: "Pragati Narrow", Helvetica, sans-serif;
-    font-size: 16px;
-
-    &:before {
-      content: url("data:image/svg+xml;charset=utf8,%3Csvg%20class%3D%22arrow-dashed-icon%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2030%2030%22%20fill%3D%22%23f25917%22%3E%3Cpolygon%20points%3D%2218.74%203.12%2029.96%2014%2018.74%2024.88%2018.74%2016.72%2015%2016.72%2015%2011.28%2018.74%2011.28%2018.74%203.12%22%20%2F%3E%20%3Crect%20x%3D%228.2%22%20y%3D%2211.28%22%20width%3D%225.44%22%20height%3D%225.44%22%20%2F%3E%3Crect%20x%3D%224.12%22%20y%3D%2211.28%22%20width%3D%222.72%22%20height%3D%225.44%22%20%2F%3E%3Crect%20x%3D%220.04%22%20y%3D%2211.28%22%20width%3D%222.72%22%20height%3D%225.44%22%20%2F%3E%3C%2Fsvg%3E");
-      width: 20px;
-      height: 20px;
-      display: inline-block;
-      margin-right: 8px;
-    }
-  }
-
-  a {
-    color: #333;
-    border-bottom-color: #333;
-  }
-}
+// .o-caption__text > span > a {
+//   display: inline;
+//   color: #333;
+//   border-bottom: 2px dotted #333;
+//   -webkit-box-decoration-break: clone;
+//   box-decoration-break: clone;
+// }
 
 // header compat for hanging logo
 .homepage {
@@ -96,14 +71,6 @@ $ember-basic-dropdown-content-z-index: 10000;
   overflow: scroll;
 }
 
-// fix extra spacing from line breaks
-// try to get both breaks following an image
-.c-article__body > blockquote > br,
-.c-article__body > .image-none + br,
-.c-article__body > .image-none + br + br {
-  display: none;
-}
-
 .c-article__body {
   .image-right,
   .image-left {
@@ -133,6 +100,7 @@ $ember-basic-dropdown-content-z-index: 10000;
   transform: translateX(-50%);
   width: 100vw;
 }
+
 .space-filler {
   margin: 40px 0 32px 0;
 }
