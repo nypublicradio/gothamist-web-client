@@ -80,9 +80,9 @@ export default Factory.extend({
 
   legacy_id: () => faker.random.number(50000, 80000),
 
-  listing_title: '',
-  listing_summary: '',
   listing_image: null,
+  listing_summary: '',
+  listing_title: '',
 
   meta() {
     const SLUG = this.slug || slug();
