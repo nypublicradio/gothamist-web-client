@@ -91,7 +91,7 @@ export default Factory.extend({
       first_published_at: moment.utc(faker.date.recent()).format(CMS_TIMESTAMP_FORMAT),
       type: 'news.ArticlePage',
       detail_url: '',
-      html_url: `${SECTION}/${SLUG}`, // used to derive path for now
+      html_url: `${SECTION}/${SLUG}/`, // used to derive path for now
       slug: SLUG,
       show_in_menus: false,
       seo_title: '',

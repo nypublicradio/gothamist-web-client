@@ -77,6 +77,9 @@ export default function() {
   this.get('/api/v2/pages/find', (schema, request) => {
     let { html_path } = request.queryParams;
 
+    // add a trailing slash to match server expectations
+    html_path = html_path.replace(/([^/]+)$/, '$1/');
+
     let found = searchAllCollections({ html_path }, schema);
 
     return found || new Response(404);

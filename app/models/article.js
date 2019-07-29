@@ -164,7 +164,10 @@ export default Page.extend({
   path: computed('meta.html_url', 'section', function() {
     if (typeof this.meta.html_url === 'string') {
       let path = this.meta.html_url.replace(/https?:\/\/[^/]+\//, '');
-      return path.replace(`${this.section.slug}/`, '');
+      // strip out the section
+      path = path.replace(`${this.section.slug}/`, '');
+      // no trailing slash
+      return path.replace(/\/$/, '');
     }
   }),
 
