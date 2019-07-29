@@ -265,7 +265,7 @@ module('Acceptance | article', function(hooks) {
     assert.deepEqual(firstCall, {
       sections: `Gothamist,news,Gothamist news`,
       authors: `${article.related_authors[0].first_name} ${article.related_authors[0].last_name}`,
-      path: `/${article.html_path}`,
+      path: `/${article.html_path.replace(/\/$/, '')}`,
       virtualReferrer: '/',
 
       // chartbeat will use the <title> tag on initial load, so we need to use it manually so things stay in sync
@@ -284,7 +284,7 @@ module('Acceptance | article', function(hooks) {
       sections: 'Gothamist,Home,Gothamist Home',
       authors: '',
       path: location.pathname,
-      virtualReferrer: `/${article.html_path}`,
+      virtualReferrer: `/${article.html_path.replace(/\/$/, '')}`,
 
       // chartbeat will use the <title> tag on initial load, so we need to use it manually so things stay in sync
       // the document title is in sync with ember-cli-document-title
