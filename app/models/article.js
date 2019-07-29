@@ -157,4 +157,15 @@ export default Page.extend({
   adBindings: computed(function() {
     return ['internalTags:tags','section.slug:Category'];
   }),
+
+  // compute `path` for article so it doesn't include the `section` slug
+  // this is so we can easily create link-tos and compensate
+  // for neste url structures
+  path: computed('meta.html_url', 'section', function() {
+    if (typeof this.meta.html_url === 'string') {
+      let path = this.meta.html_url.replace(/https?:\/\/[^/]+\//, '');
+      return path.replace(`${this.section.slug}/`, '');
+    }
+  }),
+
 });
