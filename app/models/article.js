@@ -138,8 +138,7 @@ export default Page.extend({
     switch(this.leadAsset.type) {
       case LEAD_IMAGE:
         return this.leadAsset.value;
-      case LEAD_AUDIO:
-      case LEAD_VIDEO:
+      default:
         return {
           image: this.leadAsset.value.default_image
         };
