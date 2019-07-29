@@ -7,7 +7,7 @@
 
   {{#with model.systemMessages.topProductBanner as |productBanner|}}
     {{#unless productBanner.isHidden}}
-      <NyprMBoxBanner data-test-top-product-banner @close={{action 'hideBanner' productBanner}} as |banner|>
+      <NyprMBoxBanner data-test-top-product-banner @close={{action model.systemMessages.hideBanner productBanner}} as |banner|>
 
         <banner.title>
           {{{productBanner.title}}}
