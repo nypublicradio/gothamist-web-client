@@ -1,3 +1,5 @@
+import sinon from 'sinon';
+
 import { module, test } from 'qunit';
 import {
   visit,
@@ -7,6 +9,8 @@ import {
 } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+
+import config from 'gothamist-web-client/config/environment';
 
 module('Acceptance | search', function(hooks) {
   setupApplicationTest(hooks);
@@ -28,6 +32,7 @@ module('Acceptance | search', function(hooks) {
     await fillIn('.c-search-results__form input', 'foo');
     await click('.c-search-results__form [data-test-inline-search-submit]');
 
+    assert.equal(currentURL(), '/search?q=foo', 'should update the url from the input');
     assert.dom('[data-test-block]').exists({count: 10});
 
     await click('[data-test-header-right] .c-search-toggle');
@@ -36,6 +41,20 @@ module('Acceptance | search', function(hooks) {
 
     // can conduct new searches on search page
     assert.dom('[data-test-block]').exists({count: 3});
+  });
+
+  test('searching on search only makes one call', async function(assert) {
+    const SEARCH_STUB = sinon.stub().returns({meta: {}, items: []});
+    server.get(`${config.cmsServer}/api/v2/search/`, SEARCH_STUB);
+
+    await visit('/search');
+
+    await fillIn('.c-search-results__form input', 'foo');
+    await click('.c-search-results__form [data-test-inline-search-submit]');
+
+    assert.equal(currentURL(), '/search?q=foo');
+
+    assert.ok(SEARCH_STUB.calledOnce, 'should only call one time');
   });
 
   test('searching from the header', async function(assert) {
