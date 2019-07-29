@@ -23,6 +23,7 @@ export default Controller.extend({
   // }),
 
   search: task(function *(q) {
+    this.set('q', q);
     let results = yield this.store.query('page', {q});
 
     this.set('results', results);
