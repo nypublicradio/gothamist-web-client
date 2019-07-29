@@ -14,6 +14,12 @@ This is a how Wagtail's API represents a Wagtail Block:
 }
 */
 
+// fromEntries polyfill for node/fastboot
+Object.fromEntries = Object.fromEntries || function(iterable) {
+  return [...iterable]
+    .reduce((obj, { 0: key, 1: val }) => Object.assign(obj, { [key]: val }), {})
+}
+
 /**
   Takes a JSON Object representing a Wagtail Block,
   and returns a JSON API formatted object.
@@ -22,13 +28,6 @@ This is a how Wagtail's API represents a Wagtail Block:
   @param block {Object}
   @return {Object}
 */
-
-//** fromEntries polyfill for node/fastboot
-Object.fromEntries = Object.fromEntries || function(iterable) {
-  return [...iterable]
-    .reduce((obj, { 0: key, 1: val }) => Object.assign(obj, { [key]: val }), {})
-}
-
 export const blockToJSONAPI = function(block) {
   return {
     id: block.id,
