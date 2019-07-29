@@ -24,7 +24,7 @@ export default ApplicationSerializer.extend({
 
   normalizeQueryRecordResponse(store, ArticleClass, payload) {
     payload = {
-      article: payload,
+      [this.modelNameFromPayloadKey()]: payload,
     };
     return this._super(store, ArticleClass, payload);
   },
