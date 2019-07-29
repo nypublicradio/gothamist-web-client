@@ -21,7 +21,7 @@ export default Factory.extend({
       first_published_at: moment.utc(faker.date.recent()).format(CMS_TIMESTAMP_FORMAT),
       type: "standardpages.IndexPage",
       detail_url: '',
-      html_url: SLUG,
+      html_url: `${SLUG}/`,
       slug: SLUG,
       show_in_menus: true,
       seo_title: '',
