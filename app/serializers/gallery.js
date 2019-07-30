@@ -18,4 +18,11 @@ export default ApplicationSerializer.extend({
     return this._super(GalleryModel, payload);
   },
 
+  extractRelationships(GalleryModel, hash) {
+    if (hash.related_articles) {
+      return this._super(GalleryModel, {
+        related_articles: hash.related_articles.mapBy('id')
+      });
+    }
+  },
 });
