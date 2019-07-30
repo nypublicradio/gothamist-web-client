@@ -22,7 +22,7 @@ export default DS.RESTAdapter.extend(AdapterFetch, {
   },
 
   ajaxOptions(url, type, options) {
-    if (type === 'GET' && options.data) {
+    if (type === 'GET' && Object.keys(options.data).length > 0) {
       // query request
       let query = {...this.DEFAULT_QUERY_PARAMS, ...options.data};
       options.data = {};
