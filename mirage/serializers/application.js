@@ -28,7 +28,11 @@ export default Serializer.extend({
   serialize(object, { queryParams }) {
     let json = Serializer.prototype.serialize.apply(this, arguments);
 
-    json.items.forEach(item => cleanMirageAttrs(item, MIRAGE_ONLY));
+    if (Array.isArray(json)) {
+      json.forEach(item => cleanMirageAttrs(item, MIRAGE_ONLY));
+    } else {
+      cleanMirageAttrs(json, MIRAGE_ONLY);
+    }
 
     if (queryParams.html_path) {
       // client is expecting a single object
