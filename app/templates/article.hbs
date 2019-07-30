@@ -1,27 +1,27 @@
 <DoTargeting @key='Template' @value='Article' />
-{{remember-document-scroll key=model.id}}
+{{remember-document-scroll key=model.article.id}}
 <div class="u-section-spacing l-container l-wrap">
   <article class="c-article l-container u-spacing--double">
     <NyprOArticleHeader as |header|>
       <header.top as |top|>
-        {{#if model.breadcrumb}}
-          <top.breadcrumb @breadcrumbs={{model.breadcrumb}}/>
+        {{#if model.article.breadcrumb}}
+          <top.breadcrumb @breadcrumbs={{model.article.breadcrumb}}/>
         {{/if}}
 
         <top.headline data-test-article-headline>
-          {{{model.title}}}
+          {{{model.article.title}}}
         </top.headline>
 
         <top.meta
           @galleryPhotosCount={{model.gallery.slides.length}}
           @galleryRoute='article.gallery'
           @commentsUrl={{concat '#' commentsAnchor}}
-          @commentCount={{model.commentCount}}
+          @commentCount={{model.article.commentCount}}
           data-test-article-meta
           as |meta|>
 
-          <meta.byline @authors={{model.authors}} @sponsor={{model.sponsor}}/>
-          <meta.publishDate @publishDate={{model.publishedMoment}} />
+          <meta.byline @authors={{model.article.authors}} @sponsor={{model.article.sponsor}}/>
+          <meta.publishDate @publishDate={{model.article.publishedMoment}} />
 
         </top.meta>
 
@@ -36,45 +36,45 @@
             />
             <share.share
               @service='twitter'
-              @params={{hash text=model.title via='gothamist'}}
+              @params={{hash text=model.article.title via='gothamist'}}
               @utm={{hash medium='social' source='twitter' campaign='shared_twitter'}}
             />
             <share.share
               @service='reddit'
-              @params={{hash title=model.title}}
+              @params={{hash title=model.article.title}}
               @utm={{hash medium='social' source='reddit' campaign='shared_twitter'}}
             />
             <share.share
               @service='email'
-              @params={{hash body=(concat model.title ' - {{URL}}')}}
+              @params={{hash body=(concat model.article.title ' - {{URL}}')}}
               @utm={{hash medium='social' source='email' campaign='shared_email'}}
             />
           </NyprMShareTools>
         </lead.left>
 
         <lead.center>
-          {{#if model.hasGallery}}
+          {{#if model.article.hasGallery}}
             <NyprMGalleryLead
               @slides={{model.gallery.slides}}
               @viewAll={{action 'viewGallery'}}
               @goToSlide={{action 'goToSlide'}}
             />
-          {{else if model.leadImage}}
-            {{#if model.leadImageLink}}
-              <a href={{model.leadImageLink}} target="_blank" rel="noopener">
+          {{else if model.article.leadImage}}
+            {{#if model.article.leadImageLink}}
+              <a href={{model.article.leadImageLink}} target="_blank" rel="noopener">
                 <NyprMFigure
                   class="c-lead"
-                  @srcS={{wagtail-image-url (hash id=model.leadImage.image) 640 null}}
-                  @caption={{model.leadImageCaption}}
-                  @credit={{model.leadImageCredit}}
+                  @srcS={{wagtail-image-url (hash id=model.article.leadImage.image) 640 null}}
+                  @caption={{model.article.leadImageCaption}}
+                  @credit={{model.article.leadImageCredit}}
                 />
               </a>
             {{else}}
               <NyprMFigure
                 class="c-lead"
-                @srcS={{wagtail-image-url (hash id=model.leadImage.image) 640 null}}
-                @caption={{model.leadImageCaption}}
-                @credit={{model.leadImageCredit}}
+                @srcS={{wagtail-image-url (hash id=model.article.leadImage.image) 640 null}}
+                @caption={{model.article.leadImageCaption}}
+                @credit={{model.article.leadImageCredit}}
               />
             {{/if}}
           {{/if}}
@@ -88,20 +88,20 @@
 
     </NyprOArticleHeader>
 
-    <AdTagInside @slot="gothamist/interior/midpage/1" @contentsId={{model.moveableTypeId}}>
-      <NyprOArticleBody class={{unless model.hasLead 'u-space--zero--top'}} data-test-article-body>
-        <ArticleBody @blocks={{model.body}} />
+    <AdTagInside @slot="gothamist/interior/midpage/1" @contentsId={{model.article.moveableTypeId}}>
+      <NyprOArticleBody class={{unless model.article.hasLead 'u-space--zero--top'}} data-test-article-body>
+        <ArticleBody @blocks={{model.article.body}} />
       </NyprOArticleBody>
     </AdTagInside>
 
     <div class="l-container--content u-section-spacing">
       <NyprOArticleFooter as |footer|>
-        <footer.tags @tags={{model.displayTags}} as |Tag tag|>
+        <footer.tags @tags={{model.article.displayTags}} as |Tag tag|>
           <Tag @route={{array 'tags' tag}}/>
         </footer.tags>
 
         <footer.contact>
-          <p><strong>Do you know the scoop?</strong> &nbsp; {{#unless model.disableComments}}<a href="#{{commentsAnchor}}">Comment</a> below or {{/unless}}<a href="mailto:tips@gothamist.com" target="_blank" rel="noopener">Send us a Tip</a></p>
+          <p><strong>Do you know the scoop?</strong> &nbsp; {{#unless model.article.disableComments}}<a href="#{{commentsAnchor}}">Comment</a> below or {{/unless}}<a href="mailto:tips@gothamist.com" target="_blank" rel="noopener">Send us a Tip</a></p>
         </footer.contact>
 
         {{#if showTout}}
@@ -124,12 +124,12 @@
           />
         </footer.ad>
 
-        {{#unless model.disableComments}}
+        {{#unless model.article.disableComments}}
           <footer.comments>
             <DisqusComments
               @id={{commentsAnchor}}
-              @identifier={{model.moveableTypeId}}
-              @permalink={{model.permalink}}
+              @identifier={{model.article.moveableTypeId}}
+              @permalink={{model.article.permalink}}
               @onReady={{navigateToComments}}
             />
           </footer.comments>
@@ -138,7 +138,7 @@
     </div>
 
     <div class="l-container l-container--14col">
-      {{!-- <ArticleRecirc @article={{model}}/> --}}
+      {{!-- <ArticleRecirc @article={{model.article}}/> --}}
     </div>
 
   </article>
