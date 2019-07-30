@@ -12,7 +12,7 @@ import {
 
 export default Factory.extend({
   // mirage-only attrs
-  count: 0, // slide count
+  count: 5, // slide count
   section,
   html_path() {
     return this.meta && this.meta.html_url;
