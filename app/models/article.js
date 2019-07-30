@@ -1,5 +1,3 @@
-import moment from 'moment';
-
 import DS from 'ember-data';
 import Page from './page';
 import { computed } from '@ember/object';
@@ -44,9 +42,6 @@ export default Page.extend({
   updatedDate: DS.attr('moment', {timezoneOverride: true}),
 
   // computed
-  publishedMoment: computed('meta.first_published_at', 'publicationDate', function() {
-    return this.publicationDate.isValid() ? this.publicationDate : moment.tz(this.meta.first_published_at, moment.defaultZone.name);
-  }),
   modifiedMoment: reads('updatedDate'),
 
   section: computed('ancestry', function() {
