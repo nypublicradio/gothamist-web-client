@@ -74,7 +74,7 @@ export default Route.extend({
       this.headData.setProperties({
         image: {
           full: wagtailImageUrl([
-            {id: slide.slide_image.image},
+            slide.image,
             640,
             null,
             'width',
