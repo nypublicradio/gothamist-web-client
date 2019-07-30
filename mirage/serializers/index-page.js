@@ -1,17 +1,18 @@
-import ApplicationSerializer from './application';
+import ApplicationSerializer, { cleanMirageAttrs } from './application';
+
+
+const MIRAGE_ONLY = ['descendants'];
 
 export default ApplicationSerializer.extend({
-  serialize(_object, request) {
+  serialize() {
     let json = ApplicationSerializer.prototype.serialize.apply(this, arguments);
 
-    if (request.queryParams.html_path) {
-      let [ page ] = json.indexPages;
-
-      delete page.descendants; // only for mirage
-      // find request
-      return json.indexPages[0];
+    if (json.items) {
+      json.items.forEach(item => cleanMirageAttrs(item, MIRAGE_ONLY));
     } else {
-      return json;
+      cleanMirageAttrs(json, MIRAGE_ONLY);
     }
+
+    return json;
   }
 });
