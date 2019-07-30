@@ -5491,10 +5491,10 @@ ember-truth-helpers@^2.1.0:
   dependencies:
     ember-cli-babel "^6.6.0"
 
-ember-wagtail-images@^0.1.0:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/ember-wagtail-images/-/ember-wagtail-images-0.1.1.tgz#057c1d63fd98c05b3facf06d106a42cf4aa24e39"
-  integrity sha512-q2c0kNf3hj3GN2yBoYhHxjpyxuMfiSjRCaCFUBOVMDNM6wirNp538yUmEkc5Ivhdeu9FuFK2AN5W4Uo6qnNchA==
+ember-wagtail-images@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/ember-wagtail-images/-/ember-wagtail-images-0.1.2.tgz#79ae3957e7e9e7f813e8941a961fb7560f495076"
+  integrity sha512-5cVZDMxsuGGmjHNFjOlLAxwXp/HB5x5e2lHwDXKq3RyvOIPsPeeeLCXoRfxdCem37elyMjdUeEB2pUj5XJUuQQ==
   dependencies:
     ember-cli-babel "^7.1.2"
 

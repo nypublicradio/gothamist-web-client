@@ -76,7 +76,7 @@
     "ember-template-lint": "^1.2.0",
     "ember-test-selectors": "^2.0.0",
     "ember-truth-helpers": "^2.1.0",
-    "ember-wagtail-images": "^0.1.0",
+    "ember-wagtail-images": "^0.1.2",
     "ember-wormhole": "^0.5.5",
     "eslint-plugin-ember": "^5.2.0",
     "include-media": "^1.4.9",
