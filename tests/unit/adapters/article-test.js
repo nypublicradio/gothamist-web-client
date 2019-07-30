@@ -28,7 +28,7 @@ module('Unit | Adapter | article', function(hooks) {
 
     const ajaxOptions = adapter.ajaxOptions(URL, 'GET', {data: QP});
 
-    assert.equal(`${URL}?${EXPECTED}`, ajaxOptions.url);
+    assert.equal(ajaxOptions.url, `${URL}?${EXPECTED}`);
   });
 
   test('queryRecord throws a 404 is items is empty', async function(assert) {
