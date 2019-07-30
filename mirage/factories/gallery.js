@@ -63,7 +63,7 @@ export default Factory.extend({
         value: {
           slide_title: faker.lorem.words(2),
           slide_image: {
-            image: faker.random.number(1, 5000),
+            image: faker.random.number(5000),
             caption: faker.lorem.sentence(),
           },
         },
