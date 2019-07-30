@@ -60,17 +60,13 @@ export default Route.extend({
 
   afterModel(model) {
     this.headData.setProperties({
-      metaDescription: model.description,
+      metaDescription: model.gallery.description,
       ogType: 'article',
-      ogTitle: model.title,
+      ogTitle: model.gallery.title,
       gallery: model.gallery.slides,
-      publishedTime: model.publishedMoment.format(),
-      modifiedTime: model.modifiedMoment.isValid() && model.modifiedMoment.format(),
-      section: model.section.title,
-      authors: model.authors,
-      image: {
-        full: wagtailImageUrl([{id: model.leadImage.image}, 640, null, 'width'], {}),
-      },
+      publishedTime: model.gallery.publishedMoment.format(),
+      section: model.section,
+      authors: model.gallery.authors,
     });
 
     if (this.image) {
