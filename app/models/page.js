@@ -19,7 +19,7 @@ export default DS.Model.extend({
 
   title: DS.attr('string', {defaultValue: ''}),
 
-  // computed
+  // computeds
   path: computed('meta.html_url', function() {
     if (typeof this.meta.html_url === 'string') {
       return this.meta.html_url.replace(/https?:\/\/[^/]+\//, '');
