@@ -38,7 +38,7 @@ module('Acceptance | banner', function(hooks) {
     await click('[data-test-top-product-banner] button.o-box-banner__close');
 
     assert.dom('[data-test-top-product-banner]').doesNotExist();
-    assert.ok(document.cookie.includes('gothamist_product_banner_12345=1'));
+    assert.ok(document.cookie.includes(`${config.productBannerCookiePrefix}12345=1`));
   });
 
   test('top product banner does not show when cookie is set', async function(assert) {
