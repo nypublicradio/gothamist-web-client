@@ -15,6 +15,7 @@ export default Route.extend({
 
   fastboot: inject(),
   headData: inject(),
+  metrics: inject(),
   header: inject('nypr-o-header'),
   dataLayer: inject('nypr-metrics/data-layer'),
 
