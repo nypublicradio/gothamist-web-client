@@ -23,6 +23,7 @@ export default Serializer.extend({
   root: false,
 
   keyForAttribute: attr => underscore(attr),
+  keyForEmbeddedRelationship: attr => underscore(attr),
 
   serialize(object, { queryParams }) {
     let json = Serializer.prototype.serialize.apply(this, arguments);
