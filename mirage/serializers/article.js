@@ -1,7 +1,7 @@
 import ApplicationSerializer, { cleanMirageAttrs } from './application';
 
 
-const MIRAGE_ONLY = ['indexPage'];
+const MIRAGE_ONLY = ['indexPage', 'gallery'];
 
 export default ApplicationSerializer.extend({
   serialize() {
