@@ -1,3 +1,5 @@
+import RSVP from 'rsvp';
+
 import Route from '@ember/routing/route';
 import { inject } from '@ember/service';
 import { doTargetingForModels, clearTargetingForModels } from 'nypr-ads';
@@ -13,6 +15,8 @@ const {
   donateCookie,
 } = config;
 
+const { hash } = RSVP;
+
 export default Route.extend({
   header: inject('nypr-o-header'),
   dataLayer: inject('nypr-metrics/data-layer'),
@@ -24,7 +28,7 @@ export default Route.extend({
 
   isFastBoot: reads('fastboot.isFastBoot'),
 
-  titleToken: model => model.title,
+  titleToken: model => model.article.title,
 
   model({ section, path }) {
     if (!this.cookies.exists(config.donateCookie)) {
@@ -44,28 +48,31 @@ export default Route.extend({
 
     return this.store.queryRecord('article', {
       html_path: `${section}/${path}`,
-    });//.then(article => article.loadGallery());
+    }).then(article => hash({
+      article,
+      gallery: article.gallery, // load gallery in the model hook to prevent async leaks in fastboot
+    }));
   },
 
-  afterModel(model) {
-    if (model.sensitiveContent) {
+  afterModel({ article }) {
+    if (article.sensitiveContent) {
       this.sensitive.activate();
     }
 
-    this.dataLayer.setForType('article', model);
+    this.dataLayer.setForType('article', article);
     this.dataLayer.push({template: 'article'});
 
     this.headData.setProperties({
-      metaDescription: model.description,
+      metaDescription: article.description,
       ogType: 'article',
-      ogTitle: model.title, // don't include " - Gothamist" like in <title> tag
-      publishedTime: model.publishedMoment.format(),
-      modifiedTime: model.modifiedMoment.isValid() && model.modifiedMoment.format(),
-      section: model.section.title,
-      tags: model.displayTags,
-      authors: model.authors,
+      ogTitle: article.title, // don't include " - Gothamist" like in <title> tag
+      publishedTime: article.publishedMoment.format(),
+      modifiedTime: article.modifiedMoment.isValid() && article.modifiedMoment.format(),
+      section: article.section.title,
+      tags: article.displayTags,
+      authors: article.authors,
       image: {
-        full: model.leadImage ? wagtailImageUrl([{id: model.leadImage.image}, 640, null, 'width'], {}) : null,
+        full: article.leadImage ? wagtailImageUrl([{id: article.leadImage.image}, 640, null, 'width'], {}) : null,
       },
     });
 
@@ -79,12 +86,12 @@ export default Route.extend({
         nav: true,
       },
       floating: {
-        headline: model.title,
+        headline: article.title,
         progressTarget: '.c-article__body',
         logoLinkClass: 'u-hide-until--m',
         share: {
-          title: model.title,
-          permalink: model.permalink,
+          title: article.title,
+          permalink: article.permalink,
         }
       }
     });
@@ -97,17 +104,19 @@ export default Route.extend({
       this.set('metrics.context.pageData', {
         // merge with existing value, which is the previous URL set in the application route
         ...this.metrics.context.pageData,
-        sections: model.section.slug,
-        authors: model.authors,
-        path: `/${model.section.slug}/${model.path}`,
+        sections: article.section.slug,
+        authors: article.authors,
+        path: `/${article.section.slug}/${article.path}`,
       });
     }
 
     // save the comment API call for the client
-    if (this.isFastBoot || model.disableComments) {
+    if (this.isFastBoot || article.disableComments) {
       return;
     }
-    addCommentCount(model);
+
+    addCommentCount(article);
+
   },
 
   setupController(controller) {
@@ -125,11 +134,11 @@ export default Route.extend({
 
   actions: {
     didTransition() {
-      doTargetingForModels(this.currentModel);
+      doTargetingForModels(this.currentModel.article);
       return true;
     },
     willTransition() {
-      clearTargetingForModels(this.currentModel);
+      clearTargetingForModels(this.currentModel.article);
       this.dataLayer.clearForType('article');
       return true;
     }
