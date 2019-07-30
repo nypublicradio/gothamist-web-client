@@ -177,4 +177,7 @@ export default Page.extend({
     }
   }),
 
+  // relationships
+  gallery: DS.belongsTo(),
+
 });
