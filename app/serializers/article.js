@@ -2,6 +2,8 @@ import { dasherize } from '@ember/string';
 
 import ApplicationSerializer from './application';
 
+import { LEAD_GALLERY } from '../models/article';
+
 
 export default ApplicationSerializer.extend({
   modelNameFromPayloadKey: () => 'article',
@@ -32,5 +34,14 @@ export default ApplicationSerializer.extend({
     }
     delete payload.meta;
     return meta;
+  },
+
+  extractRelationships(ArticleModel, hash) {
+    if (hash.lead_asset && hash.lead_asset.type === LEAD_GALLERY) {
+      let gallery = {
+        gallery: hash.lead_asset.value.gallery,
+      }
+      return this._super(ArticleModel, gallery);
+    }
   },
 });
