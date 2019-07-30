@@ -1,3 +1,5 @@
+import RSVP from 'rsvp';
+
 import Route from '@ember/routing/route';
 import { inject } from '@ember/service';
 import { or } from '@ember/object/computed';
@@ -5,6 +7,9 @@ import { doTargetingForModels, clearTargetingForModels } from 'nypr-ads';
 import { wagtailImageUrl } from 'ember-wagtail-images/helpers/wagtail-image-url';
 
 import { GALLERY_PATH } from '../router';
+
+const { hash } = RSVP;
+
 
 export default Route.extend({
   queryParams: {
@@ -44,8 +49,12 @@ export default Route.extend({
 
 
   model({ section, slug }) {
-    return this.store.queryRecord('gallery', {
-      html_path: `${section}/${GALLERY_PATH}/${slug}`,
+    return hash({
+      gallery: this.store.queryRecord('gallery', {
+        html_path: `${section}/${GALLERY_PATH}/${slug}`,
+      }),
+      section,
+      slug,
     });
   },
 
