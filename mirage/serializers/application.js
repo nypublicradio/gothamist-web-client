@@ -19,10 +19,10 @@ export function cleanMirageAttrs(obj, attrs = []) {
 }
 
 export default Serializer.extend({
-  keyForAttribute: attr => underscore(attr),
   embed: true,
   root: false,
 
+  keyForAttribute: attr => underscore(attr),
 
   serialize(object, { queryParams }) {
     let json = Serializer.prototype.serialize.apply(this, arguments);
