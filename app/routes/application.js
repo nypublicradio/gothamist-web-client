@@ -36,7 +36,7 @@ export default Route.extend({
     this.router.on('routeDidChange', (transition) => {
       const from = get(transition, 'from.name')
       const to = get(transition, 'to.name')
-      if (from === 'article.gallery' && to === 'article.gallery') {
+      if (from === 'gallery' && to === 'gallery') {
         schedule('afterRender', () => this.dataLayer.push('event', 'Gallery Slide View'));
       } else {
         schedule('afterRender', () => this.dataLayer.sendPageView());
