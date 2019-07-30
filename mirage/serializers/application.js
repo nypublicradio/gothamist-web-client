@@ -20,6 +20,8 @@ export function cleanMirageAttrs(obj, attrs = []) {
 
 export default Serializer.extend({
   keyForAttribute: attr => underscore(attr),
+  embed: true,
+  root: false,
 
   keyForCollection: () => 'items',
 
