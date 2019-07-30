@@ -36,10 +36,12 @@ export default Serializer.extend({
 
     if (queryParams.html_path) {
       // client is expecting a single object
-      return json.items[0];
+      return json[0];
     } else {
+      // query request
+      // return everything under an `items` namespace
       return {
-        ...json,
+        items: json,
         meta: {
           total_count: object.models.length,
         },
