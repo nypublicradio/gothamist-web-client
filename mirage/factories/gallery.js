@@ -1,6 +1,8 @@
 import moment from 'moment';
 import { Factory, faker } from 'ember-cli-mirage';
 
+import { GALLERY_PATH } from 'gothamist-web-client/router';
+
 import {
   CMS_TIMESTAMP_FORMAT,
   slug,
@@ -29,7 +31,7 @@ export default Factory.extend({
       first_published_at: moment.utc(faker.date.recent()).format(CMS_TIMESTAMP_FORMAT),
       type: 'gallery.GalleryPage',
       detail_url: '',
-      html_url: `${SECTION}/galleries/${SLUG}/`, // used to derive path for now
+      html_url: `${SECTION}/${GALLERY_PATH}/${SLUG}/`, // used to derive path for now
       slug: SLUG,
       show_in_menus: false,
       seo_title: '',
