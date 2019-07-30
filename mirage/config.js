@@ -24,6 +24,21 @@ const searchAllCollections = (query, schema) => {
 export default function() {
   this.urlPrefix = config.cmsServer;
 
+  this.get('/api/v2/pages/:id', (schema, request) => {
+    const collectionNames = schema.db._collections.mapBy('name').filter(n => n !== 'consts');
+    let { id } = request.params;
+
+    for (let i = 0; i < collectionNames.length; i++) {
+      let collection = collectionNames[i];
+      let found = schema[collection].find(id);
+      if (found) {
+        return found;
+      }
+    }
+
+    return new Response(404);
+  });
+
   this.get('/api/v2/pages', (schema, request) => {
     let {
       limit,
