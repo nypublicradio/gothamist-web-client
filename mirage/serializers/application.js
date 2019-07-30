@@ -25,7 +25,7 @@ export default Serializer.extend({
   keyForAttribute: attr => underscore(attr),
   keyForEmbeddedRelationship: attr => underscore(attr),
 
-  serialize(object, { queryParams }) {
+  serialize(object, { queryParams, params }) {
     let json = Serializer.prototype.serialize.apply(this, arguments);
 
     if (Array.isArray(json)) {
@@ -37,6 +37,10 @@ export default Serializer.extend({
     if (queryParams.html_path) {
       // client is expecting a single object
       return json[0];
+    } else if (params.id) {
+      // find request
+      // returned JSON is not an array
+      return json;
     } else {
       // query request
       // return everything under an `items` namespace
