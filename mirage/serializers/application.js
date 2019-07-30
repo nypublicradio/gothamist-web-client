@@ -23,7 +23,6 @@ export default Serializer.extend({
   embed: true,
   root: false,
 
-  keyForCollection: () => 'items',
 
   serialize(object, { queryParams }) {
     let json = Serializer.prototype.serialize.apply(this, arguments);
