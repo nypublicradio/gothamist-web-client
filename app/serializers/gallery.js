@@ -4,7 +4,7 @@ import ApplicationSerializer from './application';
 export default ApplicationSerializer.extend({
   modelNameFromPayloadKey: () => 'gallery',
 
-  normalize(GalleryClass, payload) {
+  normalize(GalleryModel, payload) {
     if (payload.slides) {
       payload.slides = payload.slides.map(({ value }) => ({
         title: value.slide_title,
@@ -15,14 +15,7 @@ export default ApplicationSerializer.extend({
       }));
     }
 
-    return this._super(GalleryClass, payload);
+    return this._super(GalleryModel, payload);
   },
 
-  normalizeQueryRecordResponse(store, PageModel, payload) {
-    payload = {
-      [this.modelNameFromPayloadKey()]: payload,
-    };
-
-    return this._super(store, PageModel, payload);
-  },
 });
