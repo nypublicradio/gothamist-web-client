@@ -13,7 +13,7 @@ export default ApplicationSerializer.extend({
         "type": "utils.SystemMessagesSettings",
         "detail_url": "http://localhost/api/v2/system_messages/1/"
       },
-      product_banners: json.productBanners.map(mirageModelToBlock)
+      product_banners: json.product_banners.map(mirageModelToBlock)
     };
     return response;
   }
