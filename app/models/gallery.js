@@ -5,6 +5,11 @@ import { computed } from '@ember/object';
 import Page from './page';
 
 export default Page.extend({
+  // slides are normalized from the server to look like so:
+  // {
+  //   title String,
+  //   image Object{id Number, caption String},
+  // }
   slides: DS.attr(),
 
   relatedAuthors:                   DS.attr({defaultValue: () => []}),
