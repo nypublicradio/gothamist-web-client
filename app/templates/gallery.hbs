@@ -3,10 +3,12 @@
 <NyprOGalleryOverlay
   @title={{model.title}}
   @parentRoute={{array 'article' model.path}}
-  @slides={{model.gallery.slides}}
+  @slides={{this.slides}}
   @viewedSlide={{action this.viewedSlide}}
   @slideForInit={{this.image}}
   @share={{this.shareMetadata}}
+  @breakM={{600}}
+  @breakL={{1000}}
   as |index gallery|>
   {{!-- 1 ad every 3 photos --}}
   {{#if (eq (mod index 3) 2)}}
