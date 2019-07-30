@@ -25,10 +25,10 @@ export default Controller.extend({
 
   actions: {
     viewGallery() {
-      this.transitionToRoute('article.gallery');
+      this.transitionToRoute('gallery');
     },
     goToSlide(index) {
-      this.transitionToRoute('article.gallery', {queryParams: {image: index}});
+      this.transitionToRoute('gallery', {queryParams: {image: index}});
     },
     closeDonation() {
       let expires = moment().add(24, 'hours').toDate();
