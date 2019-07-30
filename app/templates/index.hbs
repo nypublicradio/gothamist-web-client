@@ -5,9 +5,13 @@
 <h1 class="is-vishidden" aria-hidden="true">Gothamist: New York City Local News, Food, Arts & Events</h1>
 <div class="c-home__sections u-section-spacing--wide l-container l-container--xl l-wrap u-trigger-floating-header">
 
+
   {{#with model.systemMessages.topProductBanner as |productBanner|}}
-    {{#unless productBanner.isHidden}}
-      <NyprMBoxBanner data-test-top-product-banner @close={{action model.systemMessages.hideBanner productBanner}} as |banner|>
+    <DismissableBlock
+      @cookieId={{productBanner.cookieId}}
+      @dismissedFor={{productBanner.frequency}}
+      as |dismiss|>
+      <NyprMBoxBanner data-test-top-product-banner @close={{action dismiss}} as |banner|>
 
         <banner.title>
           {{{productBanner.title}}}
@@ -28,7 +32,7 @@
         </banner.body>
 
       </NyprMBoxBanner>
-    {{/unless}}
+    </DismissableBlock>
   {{/with}}
 
   {{#with model.breaking.firstObject as |breaking|}}
