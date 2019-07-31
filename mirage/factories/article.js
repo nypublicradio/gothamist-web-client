@@ -143,7 +143,7 @@ export default Factory.extend({
 
   withGallery: trait({
     afterCreate(article, server) {
-      const gallery = server.create('gallery', {id: Number(article.id) + 100});
+      const gallery = server.create('gallery', {id: Number(article.id) + 100, count: 200});
       article.update({
         lead_asset: [{
           type: 'lead_gallery',
