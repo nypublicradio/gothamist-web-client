@@ -1,22 +1,53 @@
 <DoTargeting key='Template' value='Search Results' />
-<div class="u-spacing--double c-search-results">
+<div class="u-spacing--quad c-search-results">
 
-  <div class="l-wrap l-container l-container--14col u-spacing">
-    <header class="c-search-results__header c-search-results__header--no-border u-spacing">
+  <div class="l-container l-container--14col l-wrap">
+    <header class="c-search-results__header u-spacing">
       <h1 class="is-vishidden">Search Results</h1>
-      <div class="c-search-results__result-number u-font--secondary-style u-font--secondary">Results for:</div>
+      <div
+        class="c-search-results__result-number u-font--secondary-style u-font--secondary"
+        style={{resultsStyle}}
+      >
+        {{#if this.articles.length}}
+          <strong>{{this.articles.length}}</strong>
+          {{if (eq this.articles.length 1) 'Result' 'Results'}} for:
+        {{/if}}
+      </div>
 
-      <div class="c-search-results__term">{{q}}</div>
+      <NyprMInlineSearch
+        @formClass="c-search-results__form"
+        @query={{q}}
+        @search={{perform search}}
+        data-test-search-form
+      />
+
     </header>
-
-    <hr class="u-border-accent u-hide-until--m" aria-hidden="true">
-
   </div>
 
   <div class="c-listing__sections u-section-spacing l-container l-container--14col l-wrap">
 
-    <div class="u-spacing--quad">
-      {{search-results query=q}}
+    <div class="u-spacing--quad" data-test-search-results>
+      {{#if this.search.isRunning}}
+        <p class="u-align--center u-font--l u-font--primary">
+          Searching...
+        </p>
+      {{else if this.articles}}
+        <section class="c-listing__section o-section" data-test-search-results>
+          <NyprMBlockList @items={{this.articles}} as |article|>
+            <ArticleBlock
+              @article={{article}}
+              @orientation='h'
+              @size='l'
+              @thumbnailSize={{array 100 100 true}}
+              @mediumThumbnailSize={{array 360 240}}
+            />
+          </NyprMBlockList>
+        </section>
+      {{else if (gt this.search.performCount 0)}}
+        <p class="u-align--center u-font--l u-font--primary">
+          No Results
+        </p>
+      {{/if}}
     </div>
 
   </div>

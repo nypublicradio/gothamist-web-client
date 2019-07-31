@@ -10,6 +10,18 @@ const QUERY_MAP = {
 
 const PARAMS_TO_SKIP = ['fields', 'type', 'limit', 'offset', 'order'];
 
+const searchAllCollections = (query, schema) => {
+  const collectionNames = schema.db._collections.mapBy('name').filter(n => n !== 'consts');
+
+  for (let i = 0; i < collectionNames.length; i++) {
+    let collection = collectionNames[i];
+    let found = schema[collection].where({...query});
+    if (found.models.length) {
+      return found;
+    }
+  }
+};
+
 export default function() {
 
   this.urlPrefix = config.cmsServer;
@@ -65,60 +77,34 @@ export default function() {
   // general purpose find endpoint
   // look at every defined model and see if there's a matching html_path
   this.get('/api/v2/pages/find', (schema, request) => {
-    const collectionNames = schema.db._collections.mapBy('name').filter(n => n !== 'consts');
     let { html_path } = request.queryParams;
 
-    for (let i = 0; i < collectionNames.length; i++) {
-      let collection = collectionNames[i];
-      let found = schema[collection].where({ html_path });
-      if (found.models.length) {
-        return found;
-      }
+    let found = searchAllCollections({ html_path }, schema);
+
+    return found || new Response(404);
+  });
+
+  // elasticsearch endpoint
+  this.get('/api/v2/search/', function(schema, { queryParams: { q } }) {
+    let found = searchAllCollections({ description: q }, schema);
+    found = this.serialize(found);
+    if (found) {
+      found.items = found.items.map(item => ({
+        result: item,
+        content_type_id: 5,
+        score: 1.2345,
+      }));
+    } else {
+      found = {
+        items: [],
+        meta: { total_count: 0 }
+      };
     }
 
-    return new Response(404);
+    return found;
   });
 
   this.urlPrefix = config.apiServer;
-
-  this.get('/topics/search', function(schema, request) {
-    let {
-      term,
-      record,
-      count,
-      page = 1,
-    } = qpExtract(request.url);
-    if (term) {
-      if (!Array.isArray(term)) {
-        term = [term];
-      }
-      let articles;
-
-      let category = term.find(t => t.startsWith('c|'));
-      let author = term.find(t => t.startsWith('a|'));
-      if (category) {
-        // section/category query
-        category = category.replace('c|', '');
-        articles = schema.articles.all();
-        articles = articles.filter(a => a.categories[0].basename === category);
-      } else if (author) {
-        // author query
-        author = author.replace('a|', '');
-        articles = schema.articles.where({author_nickname: author});
-      } else {
-        // tag queries
-        articles = schema.articles.where({tags: term});
-      }
-      return articles.slice((page - 1) * count, page * count);
-    }
-
-    if (record) {
-      return schema.articles.where({ permalink: record });
-    }
-
-    const allArticles = schema.articles.all();
-    return allArticles.slice((page - 1) * count, page * count);
-  });
 
   this.get('/api/v3/buckets/:id', 'wnyc-story');
 
@@ -142,22 +128,4 @@ export default function() {
 
   this.urlPrefix = config.etagAPI;
   this.get('/', {});
-}
-
-function qpExtract(url) {
-  return url
-    .split('?')[1]
-    .split('&')
-    .map(p => ([p.split('=')[0], decodeURIComponent(p.split('=')[1])]))
-    .reduce((params, [key, val]) => {
-      if (params[key] && Array.isArray(params[key])) {
-        params[key].push(val);
-      } else if (params[key]) {
-        params[key] = [params[key]];
-        params[key].push(val);
-      } else {
-        params[key] = val;
-      }
-      return params;
-    }, {});
 }
