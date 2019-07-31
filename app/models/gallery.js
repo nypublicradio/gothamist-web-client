@@ -37,6 +37,20 @@ export default Page.extend({
     }));
   }),
 
+  /**
+    Generate a map of arbitrary keys to image urls specified by parameters.
+
+    Values of the `ops` param will be interpreted in the following way:
+    - Number - resize width according to given value
+    - Array[size Number, dimension String('height'|'width')] - resize to given `size` along given `dimension` string
+    - Array[size Number, fit String('fill'|'cover'|'contain')] - crop to a square according to `size`, and resize according to `fit`
+    - Array[width Number, height Number, fit String('fill'|'cover'|'contain')] - crop to give `width` and `height` according to given `fit`
+
+    @method makeSizes
+    @param ops {Object} Object of keynames to parameters passed through to wagtail-image-url
+    @param others {Object} Additional key/values to attach to generated slide objects
+    @return {Array[Object]}
+  */
   makeSizes(ops = {}, others = {}) {
     return this.slides.map(slide => {
       let sizes = Object.keys(ops)
