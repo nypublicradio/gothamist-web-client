@@ -1,6 +1,7 @@
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
 import { wagtailImageUrl } from 'ember-wagtail-images';
+import { reads } from '@ember/object/computed';
 
 export default Controller.extend({
   queryParams: ['image'],
@@ -9,6 +10,8 @@ export default Controller.extend({
   viewedSlide(slide, el, index) {
     this.set('image', index);
   },
+
+  parentArticle: reads('model.gallery.relatedArticles.firstObject'),
 
   slides: computed('model.gallery', function() {
     // make images for each breakpoint
@@ -24,7 +27,8 @@ export default Controller.extend({
     });
   }),
 
-  shareMetadata: computed('model', function() {
+  shareMetadata: computed('parentArticle', function() {
+    let { title } = this.parentArticle;
     return {
       facebook: {
         utm: {
@@ -34,7 +38,7 @@ export default Controller.extend({
         },
       },
       twitter: {
-        text: this.model.title,
+        text: title,
         via: 'gothamist',
         utm: {
           source: 'twitter',
@@ -43,7 +47,7 @@ export default Controller.extend({
         },
       },
       reddit: {
-        title: this.model.title,
+        title: title,
         utm: {
           source: 'reddit',
           medium: 'social',
@@ -51,8 +55,8 @@ export default Controller.extend({
         },
       },
       email: {
-        subject: `From Gothamist: ${this.model.title}`,
-        body: `${this.model.title}
+        subject: `From Gothamist: ${title}`,
+        body: `${title}
         {{URL}}`,
         utm: {
           source: 'email',
