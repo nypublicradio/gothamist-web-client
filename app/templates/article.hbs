@@ -56,7 +56,7 @@
           {{#if model.article.hasGallery}}
             <NyprMGalleryLead
               data-test-gallery-lead
-              @slides={{model.gallery.slides}}
+              @slides={{galleryLeadSlides}}
               @viewAll={{action 'viewGallery'}}
               @goToSlide={{action 'goToSlide'}}
             />

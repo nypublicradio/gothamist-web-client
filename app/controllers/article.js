@@ -23,6 +23,17 @@ export default Controller.extend({
     }
   }),
 
+  galleryLeadSlides: computed('model.gallery', function() {
+    if (!this.model.gallery) {
+      return;
+    }
+
+    return this.model.gallery.makeSizes({
+      srcS: [625, 416],
+      thumb: [106, 'fill']
+    });
+  }),
+
   actions: {
     viewGallery() {
       this.transitionToRoute('gallery');
