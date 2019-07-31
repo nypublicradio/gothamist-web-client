@@ -84,12 +84,7 @@ export default Route.extend({
       let slide = model.gallery.slides[this.image] || {};
       this.headData.setProperties({
         image: {
-          full: wagtailImageUrl([
-            slide.image,
-            640,
-            null,
-            'width',
-          ], {}),
+          full: wagtailImageUrl([ slide.image, 640 ]),
         }
       });
     }
