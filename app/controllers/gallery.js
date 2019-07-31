@@ -25,7 +25,7 @@ export default Controller.extend({
   }),
 
   shareMetadata: computed('parentArticle', function() {
-    let { title } = this.parentArticle;
+    let { title } = this.parentArticle || {};
     return {
       facebook: {
         utm: {
