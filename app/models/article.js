@@ -157,7 +157,11 @@ export default Page.extend({
       .map(tag => tag.replace(/^@/,''));
   }),
   adBindings: computed(function() {
-    return ['internalTags:tags','section.slug:Category'];
+    return [
+      'tags',
+      'section.slug:Category',
+      'provocativeContent:@racy'
+    ];
   }),
 
   // compute `path` for article so it doesn't include the `section` slug
