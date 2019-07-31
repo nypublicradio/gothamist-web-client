@@ -10,7 +10,7 @@ export default Controller.extend({
     this.set('image', index);
   },
 
-  parentArticle: reads('model.gallery.relatedArticles.firstObject'),
+  parentArticle: reads('model.articles.firstObject'),
 
   slides: computed('model.gallery', function() {
     // make images for each breakpoint
