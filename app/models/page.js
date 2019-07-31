@@ -3,6 +3,7 @@ import moment from 'moment';
 import DS from 'ember-data';
 
 import { computed } from '@ember/object';
+import { reads } from '@ember/object/computed';
 
 export default DS.Model.extend({
   meta: DS.attr(),
@@ -20,6 +21,8 @@ export default DS.Model.extend({
   title: DS.attr('string', {defaultValue: ''}),
 
   // computeds
+  slug: reads('meta.slug'),
+
   path: computed('meta.html_url', function() {
     if (this.meta && typeof this.meta.html_url === 'string') {
       return this.meta.html_url.replace(/https?:\/\/[^/]+\//, '').replace(/\/$/, '');
