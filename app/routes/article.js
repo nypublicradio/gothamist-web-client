@@ -72,7 +72,7 @@ export default Route.extend({
       tags: article.displayTags,
       authors: article.authors,
       image: {
-        full: article.leadImage ? wagtailImageUrl([{id: article.leadImage.image}, 640, null, 'width'], {}) : null,
+        full: article.leadImage ? wagtailImageUrl([{id: article.leadImage.image}, 640]) : null,
       },
     });
 
