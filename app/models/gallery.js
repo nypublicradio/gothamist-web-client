@@ -37,6 +37,10 @@ export default Page.extend({
     }));
   }),
 
+  section: computed('path', function() {
+    return this.path.split('/')[0];
+  }),
+
   /**
     Generate a map of arbitrary keys to image urls specified by parameters.
 

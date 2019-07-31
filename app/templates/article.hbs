@@ -14,7 +14,7 @@
 
         <top.meta
           @galleryPhotosCount={{model.gallery.slides.length}}
-          {{!-- @galleryRoute='gallery' --}}
+          @galleryRoute={{array 'gallery' model.gallery.section model.gallery.slug}}
           @commentsUrl={{concat '#' commentsAnchor}}
           @commentCount={{model.article.commentCount}}
           data-test-article-meta
