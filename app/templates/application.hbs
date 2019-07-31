@@ -109,7 +109,12 @@
     {{/if}}
 
     {{#if header.rules.close}}
-      <NyprAButton @blank={{true}} @onclick={{header.rules.close}} class="u-padding--half">
+      <NyprAButton
+        @blank={{true}}
+        @onclick={{header.rules.close}}
+        class="u-padding--half"
+        data-test-header-close
+      >
         <NyprASvg @icon='close' class='c-main-header__close'/>
       </NyprAButton>
     {{/if}}
