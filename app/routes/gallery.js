@@ -26,7 +26,13 @@ export default Route.extend({
 
   image: or('fastboot.request.queryParams.image', 'controller.image'),
 
-  titleToken: model => model.title,
+  titleToken: model => {
+    if (model.articles.firstObject) {
+      return model.articles.firstObject.title;
+    } else {
+      return model.gallery.title;
+    }
+  },
 
   beforeModel() {
     this.dataLayer.push({template: 'article gallery'});
@@ -62,14 +68,16 @@ export default Route.extend({
   },
 
   afterModel(model) {
+    let { gallery, articles: { firstObject:article } } = model;
+
     this.headData.setProperties({
-      metaDescription: model.gallery.description,
+      metaDescription: article ? article.description : model.gallery.description,
       ogType: 'article',
-      ogTitle: model.gallery.title,
-      gallery: model.gallery.slides,
-      publishedTime: model.gallery.publishedMoment.format(),
-      section: model.section,
-      authors: model.gallery.authors,
+      ogTitle: article ? article.title : gallery.title,
+      gallery: gallery.slides,
+      publishedTime: article ? article.publishedMoment.format() : gallery.publishedMoment.format(),
+      section: article ? article.section.slug : gallery.section,
+      authors: article ? article.authors : gallery.authors,
     });
 
     if (this.image) {
@@ -90,8 +98,8 @@ export default Route.extend({
       this.set('metrics.context.pageData', {
         // merge with existing value, which is the previous URL set in the application route
         ...this.metrics.context.pageData,
-        sections: model.section,
-        authors: model.gallery.authors,
+        sections: article ? article.section.slug : gallery.section,
+        authors: article ? article.authors : gallery.authors,
         path: `/${model.section}/${GALLERY_PATH}/${model.slug}`,
       });
     }
