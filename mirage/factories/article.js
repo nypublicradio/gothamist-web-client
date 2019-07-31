@@ -101,6 +101,8 @@ export default Factory.extend({
 
   publication_date: () => moment.utc(faker.date.recent()).format(CMS_TIMESTAMP_FORMAT),
 
+  provocative_content: false,
+
   updated_date: null,
 
   related_authors: () => ([

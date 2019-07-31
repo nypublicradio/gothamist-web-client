@@ -29,6 +29,8 @@ export default Page.extend({
     timezoneOverride: true,
   }),
 
+  provocativeContent: DS.attr('boolean'),
+
   relatedAuthors:                   DS.attr({defaultValue: () => []}),
   relatedContributingOrganizations: DS.attr({defaultValue: () => []}),
   relatedLinks:                     DS.attr({defaultValue: () => []}),
