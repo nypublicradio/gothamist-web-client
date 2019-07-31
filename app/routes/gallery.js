@@ -91,6 +91,9 @@ export default Route.extend({
         authors: model.gallery.authors,
         path: `/${model.section}/${GALLERY_PATH}/${model.slug}`,
       });
+    } else {
+      // avoid async leaks
+      return model.gallery.relatedArticles;
     }
   },
 
