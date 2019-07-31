@@ -15,6 +15,10 @@ module('Acceptance | homepage', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
+  hooks.beforeEach(() => {
+    server.create('system-message');
+  });
+
   test('visiting homepage', async function(assert) {
     server.createList('article', 10, 'now', {
       show_as_feature: true,
