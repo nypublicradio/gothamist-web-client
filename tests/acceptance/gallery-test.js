@@ -2,6 +2,7 @@ import { module, test } from 'qunit';
 import { visit, currentURL, find, click } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { scrollPastHeader } from 'nypr-design-system/test-support';
 
 
 module('Acceptance | gallery', function(hooks) {
@@ -24,11 +25,39 @@ module('Acceptance | gallery', function(hooks) {
 
     assert.dom('[data-test-gallery-lead]').exists();
     // mirage defualt is 5 slides per gallery
-    assert.dom('[data-test-gallery-lead-view-all]').hasText('View all 5')
+    assert.dom('[data-test-gallery-lead-view-all]').hasText('View all 200')
 
     let preview = find('[data-test-gallery-lead-preview] img');
-    assert.ok(preview.src.match(`images/${slides[0].value.slide_image.id}/width-800`))
+    assert.ok(preview.src.match(`images/${slides[0].value.slide_image.image}/fill-625x416`), 'preview image has expected URL')
 
+    await click('[data-test-gallery-thumb="1"]');
+    assert.ok(preview.src.match(`images/${slides[1].value.slide_image.image}/fill-625x416`), 'preview image is updated to new image')
+
+    await click('[data-test-gallery-lead-view-all]');
+
+    assert.equal(currentURL(), `/${article.gallery.html_path.slice(0, -1)}`, 'should navigate to gallery');
+
+    assert.dom('[data-test-gallery-title]').hasText(article.title);
+
+    await click('.o-back-to-link');
+
+    assert.equal(currentURL(), `/${article.html_path.slice(0, -1)}`, 'should be back on article');
+
+    await click('[data-test-gallery-thumb="3"]');
+    await click('[data-test-gallery-current]');
+
+    assert.equal(
+      currentURL(),
+      `/${article.gallery.html_path.slice(0, -1)}?image=3`,
+      'should navigate to previewed slide'
+    );
+
+    let reset = await scrollPastHeader(this);
+    await click('[data-test-header-close]');
+
+    assert.equal(currentURL(), `/${article.html_path.slice(0, -1)}`, 'should be back on article');
+
+    reset();
   });
 
   test('gallery should have the expected images', async function(assert) {
