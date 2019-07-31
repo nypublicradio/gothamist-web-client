@@ -20,6 +20,7 @@ export default Route.extend({
   headData: inject(),
   metrics: inject(),
   fastboot: inject(),
+  sensitive: inject('ad-sensitivity'),
 
   isFastBoot: reads('fastboot.isFastBoot'),
 
@@ -47,6 +48,10 @@ export default Route.extend({
   },
 
   afterModel(model) {
+    if (model.sensitiveContent) {
+      this.sensitive.activate();
+    }
+
     this.dataLayer.setForType('article', model);
     this.dataLayer.push({template: 'article'});
 
@@ -102,9 +107,7 @@ export default Route.extend({
     if (this.isFastBoot || model.disableComments) {
       return;
     }
-
     addCommentCount(model);
-
   },
 
   setupController(controller) {
