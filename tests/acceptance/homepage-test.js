@@ -9,14 +9,14 @@ import { TOTAL_COUNT } from 'gothamist-web-client/routes/index';
 import config from 'gothamist-web-client/config/environment';
 
 import { CMS_TIMESTAMP_FORMAT } from '../../mirage/factories/consts';
-
+import defaultScenario from '../../mirage/scenarios/test-default';
 
 module('Acceptance | homepage', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(() => {
-    server.create('system-message');
+    defaultScenario(server);
   });
 
   test('visiting homepage', async function(assert) {
