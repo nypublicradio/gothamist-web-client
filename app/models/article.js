@@ -168,7 +168,7 @@ export default Page.extend({
   // this is so we can easily create link-tos and compensate
   // for neste url structures
   path: computed('meta.html_url', 'section', function() {
-    if (typeof this.meta.html_url === 'string') {
+    if (this.meta && typeof this.meta.html_url === 'string') {
       let path = this.meta.html_url.replace(/https?:\/\/[^/]+\//, '');
       // strip out the section
       path = path.replace(`${this.section.slug}/`, '');

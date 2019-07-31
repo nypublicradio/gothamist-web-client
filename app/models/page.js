@@ -21,8 +21,8 @@ export default DS.Model.extend({
 
   // computeds
   path: computed('meta.html_url', function() {
-    if (typeof this.meta.html_url === 'string') {
-      return this.meta.html_url.replace(/https?:\/\/[^/]+\//, '');
+    if (this.meta && typeof this.meta.html_url === 'string') {
+      return this.meta.html_url.replace(/https?:\/\/[^/]+\//, '').replace(/\/$/, '');
     }
   }),
 
