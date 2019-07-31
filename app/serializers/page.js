@@ -16,14 +16,6 @@ export default ApplicationSerializer.extend({
   // the key will be `items`
   modelNameFromPayloadKey: key => key === 'items' ? 'page' : key,
 
-  normalizeQueryRecordResponse(store, PageModel, payload) {
-    payload = {
-      [this.modelNameFromPayloadKey()]: payload,
-    };
-
-    return this._super(store, PageModel, payload);
-  },
-
   normalizeQueryResponse(store, PageModel, payload, id, requestType) {
     payload.items = payload.items.map(({ result }) => {
       return {
