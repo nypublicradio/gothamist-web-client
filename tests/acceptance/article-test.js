@@ -133,8 +133,8 @@ module('Acceptance | article', function(hooks) {
   });
 
   test('breadcrumbs', async function(assert) {
-    const OPINION = server.create('article', {tags: ['@opinion']});
-    const ANALYSIS = server.create('article', {tags: ['@analysis']});
+    const OPINION = server.create('article', {tags: ['opinion']});
+    const ANALYSIS = server.create('article', {tags: ['analysis']});
     const SPONSOR = server.create('article', {sponsored_content: true});
     const WTC = server.create('article', {tags: ['we the commuters']});
 
