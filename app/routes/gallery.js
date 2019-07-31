@@ -113,7 +113,7 @@ export default Route.extend({
   },
 
   closeGallery() {
-    let { firstObject:article } = this.currentModel.gallery.relatedArticles;
+    let { firstObject:article } = this.currentModel.articles;
     this.transitionTo('article', article.section.slug, article.path);
   },
 
@@ -122,11 +122,11 @@ export default Route.extend({
       if (!this.fastboot.isFastBoot && !this.image) {
         window.scrollTo(0, 0);
       }
-      doTargetingForModels(this.currentModel);
+      doTargetingForModels(this.currentModel.gallery);
       return true;
     },
     willTransition() {
-      clearTargetingForModels(this.currentModel);
+      clearTargetingForModels(this.currentModel.gallery);
       return true;
     }
   }
