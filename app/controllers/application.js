@@ -11,6 +11,7 @@ const NEWSLETTER_PARAMS = {list: config.dailyNewsletter};
 
 export default Controller.extend({
   router: inject(),
+  sensitive: inject('ad-sensitivity'),
 
   queryParams: ['build'],
   build: null,

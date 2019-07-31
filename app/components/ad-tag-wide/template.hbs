@@ -1,50 +1,52 @@
-<DfpAd
-  @slot={{@slot}}
-  @target={{@target}}
-  @mapping={{array
-    (array 0
-      (array
-        (array 300 250)
-        (array 320 50)
+{{#unless this.sensitive.on}}
+  <DfpAd
+    @slot={{@slot}}
+    @target={{@target}}
+    @mapping={{array
+      (array 0
+        (array
+          (array 300 250)
+          (array 320 50)
+        )
       )
-    )
-    (array 750
-      (array
-        (array 300 600)
-        (array 728 90)
-        (array 300 250)
+      (array 750
+        (array
+          (array 300 600)
+          (array 728 90)
+          (array 300 250)
+        )
       )
-    )
-    (array 1000
-      (array
-        (array 970 250)
-        (array 970 90)
-        (array 728 90)
-        (array 300 600)
-        (array 300 250)
+      (array 1000
+        (array
+          (array 970 250)
+          (array 970 90)
+          (array 728 90)
+          (array 300 600)
+          (array 300 250)
+        )
       )
-    )
-  }}
-  @sizes={{array
-    (array 320 50)
-    (array 300 250)
-    (array 300 600)
-    (array 728 90)
-    (array 970 90)
-    (array 970 250)
-  }}
-  data-test-ad-tag-wide
-as |ad|>
-  <div class={{if @breakMargins "break-margins"}}>
-    <div class="flex-wrapper">
-      {{ad.tag}}
-      {{#if (and @showLabel (not ad.isEmpty))}}
-        <NyprAAdLabel/>
-      {{/if}}
+    }}
+    @sizes={{array
+      (array 320 50)
+      (array 300 250)
+      (array 300 600)
+      (array 728 90)
+      (array 970 90)
+      (array 970 250)
+    }}
+    data-test-ad-tag-wide
+  as |ad|>
+    <div class={{if @breakMargins "break-margins"}}>
+      <div class="flex-wrapper">
+        {{ad.tag}}
+        {{#if (and @showLabel (not ad.isEmpty))}}
+          <NyprAAdLabel/>
+        {{/if}}
+      </div>
     </div>
-  </div>
-  {{#if (and @breakMargins (not ad.isEmpty))}}
-    <div class="space-filler"
-    style={{html-safe (concat "height:" ad.height "px")}}></div>
-  {{/if}}
-</DfpAd>
+    {{#if (and @breakMargins (not ad.isEmpty))}}
+      <div class="space-filler"
+      style={{html-safe (concat "height:" ad.height "px")}}></div>
+    {{/if}}
+  </DfpAd>
+{{/unless}}

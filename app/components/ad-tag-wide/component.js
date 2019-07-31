@@ -1,7 +1,10 @@
 import Component from '@ember/component';
+import { inject } from '@ember/service';
 
 export default Component.extend({
   classNames: ['ad-tag-wide'],
+
+  sensitive: inject('ad-sensitivity'),
   /**
     The dfp ad slot path
 

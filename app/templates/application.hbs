@@ -1,4 +1,6 @@
-<DfpAd class="dfp-skin" role="presentation" aria-hidden="true" @slot='gothamist/skin' @sizes={{array (array 1 1)}} @clearOnEmptyRefresh={{true}} />
+{{#unless this.sensitive.on}}
+  <DfpAd class="dfp-skin" role="presentation" aria-hidden="true" @slot='gothamist/skin' @sizes={{array (array 1 1)}} @clearOnEmptyRefresh={{true}} />
+{{/unless}}
 
 <HeadLayout/>
 
@@ -10,11 +12,13 @@
   as |header|>
 
   <header.leaderboard>
-    {{#if (eq target.currentRouteName 'index')}}
-      <AdTagLeaderboard @slot='gothamist/index/leaderboard' />
-    {{else}}
-      <AdTagLeaderboard @slot='gothamist/interior/leaderboard' />
-    {{/if}}
+    {{#unless this.sensitive.on}}
+      {{#if (eq target.currentRouteName 'index')}}
+        <AdTagLeaderboard @slot='gothamist/index/leaderboard' />
+      {{else}}
+        <AdTagLeaderboard @slot='gothamist/interior/leaderboard' />
+      {{/if}}
+    {{/unless}}
   </header.leaderboard>
 
   <header.menu @donateUrl={{DONATE_URL}} data-test-side-menu as |menu|>
