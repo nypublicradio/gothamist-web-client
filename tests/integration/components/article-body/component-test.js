@@ -52,7 +52,7 @@ module('Integration | Component | article-body', function(hooks) {
       id: 'abcde-1325'
     }];
 
-    const EXPECTED_URL = wagtailImageUrl([{id: 123}, 630, null, 'width'], {});
+    const EXPECTED_URL = wagtailImageUrl([{id: 123}, 630,]);
 
     this.set('body', BODY);
 
