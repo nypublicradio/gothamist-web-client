@@ -105,7 +105,8 @@ export default Route.extend({
   },
 
   closeGallery() {
-    this.transitionTo('article.index');
+    let { firstObject:article } = this.currentModel.gallery.relatedArticles;
+    this.transitionTo('article', article.section.slug, article.path);
   },
 
   actions: {
