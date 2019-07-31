@@ -49,12 +49,15 @@ export default Route.extend({
 
 
   model({ section, slug }) {
-    return hash({
-      gallery: this.store.queryRecord('gallery', {
+    return this.store.queryRecord('gallery', {
         html_path: `${section}/${GALLERY_PATH}/${slug}`,
-      }),
-      section,
-      slug,
+      }).then(gallery => {
+        return hash({
+          gallery,
+          articles: gallery.relatedArticles,
+          section,
+          slug,
+      });
     });
   },
 
@@ -91,9 +94,6 @@ export default Route.extend({
         authors: model.gallery.authors,
         path: `/${model.section}/${GALLERY_PATH}/${model.slug}`,
       });
-    } else {
-      // avoid async leaks
-      return model.gallery.relatedArticles;
     }
   },
 
