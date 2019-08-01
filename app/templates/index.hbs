@@ -17,19 +17,23 @@
           {{{productBanner.title}}}
         </banner.title>
 
-        <banner.body as |body|>
-          <body.dek>
-            {{{productBanner.description}}}
-          </body.dek>
+        {{#if (or productBanner.description productBanner.buttonText)}}
+          <banner.body as |body|>
+            {{#if productBanner.description}}
+              <body.dek>
+                {{{productBanner.description}}}
+              </body.dek>
+            {{/if}}
 
-          {{#if productBanner.buttonText}}
-            <body.cta>
-              <NyprAButton @url={{productBanner.buttonLink}}>
-                {{productBanner.buttonText}}
-              </NyprAButton>
-            </body.cta>
-          {{/if}}
-        </banner.body>
+            {{#if productBanner.buttonText}}
+              <body.cta>
+                <NyprAButton @url={{productBanner.buttonLink}}>
+                  {{productBanner.buttonText}}
+                </NyprAButton>
+              </body.cta>
+            {{/if}}
+          </banner.body>
+        {{/if}}
 
       </NyprMBoxBanner>
     </DismissableBlock>
