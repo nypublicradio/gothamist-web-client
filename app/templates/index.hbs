@@ -11,7 +11,11 @@
       @cookieId={{productBanner.cookieId}}
       @dismissedFor={{productBanner.frequency}}
       as |dismiss|>
-      <NyprMBoxBanner data-test-top-product-banner @close={{action dismiss}} as |banner|>
+      <NyprMBoxBanner
+        class={{unless productBanner.description 'o-box-banner--no-desc'}}
+        @close={{action dismiss}}
+        data-test-top-product-banner
+        as |banner|>
 
         <banner.title>
           {{{productBanner.title}}}
