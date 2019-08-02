@@ -7,11 +7,25 @@ module('Integration | Helper | is-external', function(hooks) {
   setupRenderingTest(hooks);
 
   // Replace this with your real tests.
-  test('it renders', async function(assert) {
-    this.set('inputValue', '1234');
+  test('it tests if urls go to other domains', async function(assert) {
+    this.set('url', 'https://example.com');
+    await render(hbs`{{#if (is-external url)}}true{{else}}false{{/if}}`);
+    assert.equal(this.element.textContent.trim(), 'true');
 
-    await render(hbs`{{is-external inputValue}}`);
+    this.set('url', 'mailto:abc@example.com');
+    await render(hbs`{{#if (is-external url)}}true{{else}}false{{/if}}`);
+    assert.equal(this.element.textContent.trim(), 'true');
 
-    assert.equal(this.element.textContent.trim(), '1234');
+    this.set('url', `${window.location.origin}`);
+    await render(hbs`{{#if (is-external url)}}true{{else}}false{{/if}}`);
+    assert.equal(this.element.textContent.trim(), 'false');
+
+    this.set('url', `${window.location.origin}/test/`);
+    await render(hbs`{{#if (is-external url)}}true{{else}}false{{/if}}`);
+    assert.equal(this.element.textContent.trim(), 'false');
+
+    this.set('url', `/test/`);
+    await render(hbs`{{#if (is-external url)}}true{{else}}false{{/if}}`);
+    assert.equal(this.element.textContent.trim(), 'false');
   });
 });
