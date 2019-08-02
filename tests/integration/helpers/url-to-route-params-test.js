@@ -8,10 +8,10 @@ module('Integration | Helper | url-to-route-params', function(hooks) {
 
   // Replace this with your real tests.
   test('it renders', async function(assert) {
-    this.set('inputValue', '1234');
+    this.set('url', '/author/authorname');
 
-    await render(hbs`{{url-to-route-params inputValue}}`);
+    await render(hbs`{{url-to-route-params url}}`);
 
-    assert.equal(this.element.textContent.trim(), '1234');
+    assert.equal(this.element.textContent.trim(), 'author-detail,authorname');
   });
 });
