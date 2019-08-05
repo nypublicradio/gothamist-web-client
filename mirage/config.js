@@ -3,7 +3,6 @@ import { Response, faker } from 'ember-cli-mirage';
 
 import config from '../config/environment';
 
-
 const QUERY_MAP = {
   descendant_of: 'indexPageId',
 };
@@ -103,6 +102,8 @@ export default function() {
 
     return found;
   });
+
+  this.get('/api/v2/system_messages/:id/');
 
   this.urlPrefix = config.apiServer;
 

@@ -62,8 +62,10 @@ module.exports = function(environment) {
     commentsAnchor:     'comments',
     donateCookie:       'goth_donateToutClosed',
     articleViewsCookie: 'goth_articleViews',
+    productBannerCookiePrefix: 'gothamist_product_banner_',
     imgixHost:          'https://gothamist.imgix.net',
     imgixPlatypusHost:  'https://gothamist-platypus.imgix.net',
+    siteId:             1, //id for system_messages, sitewidecomponents, etc.
 
     // for nypr-auth
     etagAPI: process.env.BROWSER_ID_ENDPOINT,
@@ -97,6 +99,10 @@ module.exports = function(environment) {
 
     // for mirage endpoints
     ENV.apiServer = 'https://api.demo.nypr.digital';
+    ENV.cmsServer = 'https://cms.demo.nypr.digital';
+    ENV.disqusAPI = 'https://disqus.com';
+    ENV.disqusKey = 'disqus-key';
+    ENV.etagAPI = 'https://browserid.com';
   }
 
   if (environment === 'test') {
@@ -113,6 +119,7 @@ module.exports = function(environment) {
     // for mirage endpoints
     ENV.cmsServer = 'https://cms.demo.nypr.digital';
     ENV.apiServer = 'https://api.demo.nypr.digital';
+    ENV.cmsServer = 'https://cms.demo.nypr.digital';
     ENV.disqusAPI = 'https://disqus.com';
     ENV.disqusKey = 'disqus-key';
     ENV.etagAPI = 'https://browserid.com';
