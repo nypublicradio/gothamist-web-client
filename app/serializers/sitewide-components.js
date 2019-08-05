@@ -8,7 +8,8 @@ import { blockToJSONAPI } from '../utils/wagtail-api';
   },
   modelNameFromPayloadKey: () => 'sitewide-components',
   normalizeFindRecordResponse(store, primaryModelClass, payload, id) {
-  return {
+    payload.breaking_news = payload.breaking_news || [];
+    return {
       data: {
         id,
         type: 'sitewide-components',

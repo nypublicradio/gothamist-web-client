@@ -11,7 +11,7 @@
         data-test-breaking-news
         @url={{news.link}}
         @title={{news.title}}
-        @timestamp={{timestamp news.time}}
+        @timestamp={{timestamp news.startTime}}
         @description={{news.description}}
       />
     {{else}}
@@ -19,7 +19,7 @@
         data-test-breaking-news
         @route={{url-to-route-params news.link}}
         @title={{news.title}}
-        @timestamp={{timestamp news.time}}
+        @timestamp={{timestamp news.startTime}}
         @description={{news.description}}
       />
     {{/if}}
