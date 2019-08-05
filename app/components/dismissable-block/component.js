@@ -35,13 +35,16 @@ export default Component.extend({
   cookieId: null,
   dismissedFor: 0,
   dismissedUnit: 'hours',
+  isCookieSet: false,
+  wasDismissCalled: false,
+  didReceiveAttrs() {
+    if (this.cookieName && this.cookies.exists(this.cookieName)) {
+      this.set('isCookieSet', true);
+    }
+  },
   cookieName: computed('cookiePrefix','cookieId', function() {
     return `${this.cookiePrefix}${this.cookieId}`;
   }),
-  isCookieSet: computed('cookieName', function() {
-    return this.cookies.exists(this.cookieName);
-  }),
-  wasDismissCalled: false,
   wasDismissed: or('isCookieSet', 'wasDismissCalled'),
   actions: {
     dismiss() {
