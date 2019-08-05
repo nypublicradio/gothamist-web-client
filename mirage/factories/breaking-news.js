@@ -9,7 +9,7 @@ export default Factory.extend({
   title: () => capitalize(faker.lorem.words()),
   link: () => faker.internet.url(),
   description: () => `<p>${faker.lorem.sentence(5)}</p>`,
-  time: () => moment.utc(faker.date.recent()).format(CMS_TIMESTAMP_FORMAT),
+  start_time: () => moment.utc(faker.date.recent()).format(CMS_TIMESTAMP_FORMAT),
   afterCreate(breakingNews, server) {
     // breaking news gets added to sitewide-components
     let sitewideComponent = server.schema.sitewideComponents.first();

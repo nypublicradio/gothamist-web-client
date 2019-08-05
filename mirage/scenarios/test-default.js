@@ -6,4 +6,5 @@ export default function(server) {
     overhead to every test that uses this scenario.
   */
   server.create('system-message');
+  server.create('sitewide-component');
 }

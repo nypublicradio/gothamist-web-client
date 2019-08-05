@@ -1,7 +1,7 @@
 import ApplicationSerializer from './application';
 import { mirageModelToBlock } from '../../utils/wagtail-api';
 
- export default ApplicationSerializer.extend({
+export default ApplicationSerializer.extend({
   include() {
     return ['breakingNews'];
   },
@@ -11,7 +11,7 @@ import { mirageModelToBlock } from '../../utils/wagtail-api';
       id: 1,
       "meta": {
         "type": "sitewide.SiteWideComponents",
-        "detail_url": "https://cms.demo.nypr.digital/api/v2/sitewide_components/1/"
+        "detail_url": "http://localhost/api/v2/sitewide_components/1/"
       },
       breaking_news: json.breakingNews.map(mirageModelToBlock)
     };

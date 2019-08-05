@@ -21,9 +21,7 @@ module('Unit | Serializer | system messages', function(hooks) {
         type: "utils.SystemMessagesSettings",
         detail_url: "http://localhost/api/v2/system_messages/1/"
       },
-      value: {
-        product_banners: []
-      }
+      product_banners: []
     };
 
     let expected = {
