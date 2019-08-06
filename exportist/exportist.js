@@ -10,8 +10,8 @@ const {
 } = require('./lib/dom-fixer');
 
 var bucket = 'nypr-cms-demo';
-var key = 'gothamist-1k.db';
-var uploadKey = 'gothamist-1k-fixed.db';
+var key = 'gothamist.db';
+var uploadKey = 'gothamist-fixed.db';
 
 // pull sqlite file down from S3
 var s3 = new AWS.S3();
