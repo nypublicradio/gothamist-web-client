@@ -312,6 +312,11 @@ function extractLeadImage(nodes) {
       imageWrapper = nodes.firstElementChild.nextElementSibling;
     }
 
+    if (!imageWrapper) {
+      // if we ended up at a dead end - bail out and don't try to extract the lead image.
+      return []
+    }
+
     // this image will be the same as `thumbnail640`, which is displayed as the lead image
     // remove it from this node collection so it isn't rendered twice
     if (imageWrapper.parentElement && imageWrapper.parentElement.nodeName === 'A') {
