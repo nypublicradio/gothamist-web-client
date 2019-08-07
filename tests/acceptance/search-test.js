@@ -9,6 +9,7 @@ import {
 } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import defaultScenario from '../../mirage/scenarios/test-default';
 
 import config from 'gothamist-web-client/config/environment';
 import { COUNT } from 'gothamist-web-client/controllers/search';
@@ -16,6 +17,10 @@ import { COUNT } from 'gothamist-web-client/controllers/search';
 module('Acceptance | search', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
+
+  hooks.beforeEach(() => {
+    defaultScenario(server);
+  });
 
   test('visiting /search', async function(assert) {
     await visit('/search');
