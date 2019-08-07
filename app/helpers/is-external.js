@@ -1,19 +1,19 @@
-import { helper } from '@ember/component/helper';
+import Helper from '@ember/component/helper';
+import { inject as service } from '@ember/service';
 
-export function isExternal([ url ]/*, hash*/) {
-  if (window && window.location) {
-    let base = window.location.origin;
-    if (url.startsWith(base)) {
-      return false;
+export default Helper.extend({
+  router: service(),
+  compute([ url ]/*, hash*/) {
+    let router = this.get('router');
+    if (window && window.location) {
+
+      let origin = `${location.protocol}//${location.host}`;
+      url = url.replace(origin, '');
+
+      if (url.startsWith(router.rootURL) || url === '') {
+        return false;
+      }
     }
-    if (url.startsWith('/')) {
-      return false;
-    }
-    if (url === '') {
-      return false;
-    }
+    return true;
   }
-  return true;
-}
-
-export default helper(isExternal);
+});
