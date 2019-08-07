@@ -1,12 +1,29 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
+import Service from '@ember/service';
 import hbs from 'htmlbars-inline-precompile';
+
+const routerStub = Service.extend({
+  rootURL: '/',
+  recognize() {
+    return {
+      name: 'author-detail',
+      paramNames: ['name'],
+      params: {
+        'name': 'authorname'
+      }
+    };
+  },
+});
 
 module('Integration | Helper | url-to-route-params', function(hooks) {
   setupRenderingTest(hooks);
 
-  // Replace this with your real tests.
+  hooks.beforeEach(function() {
+    this.owner.register('service:router', routerStub);
+  });
+
   test('it renders', async function(assert) {
     this.set('url', '/author/authorname');
 

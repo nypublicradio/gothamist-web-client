@@ -30,22 +30,66 @@ module('Acceptance | breaking news', function(hooks) {
 
   test('external breaking news links open in new window', async function(assert) {
     server.create('breaking-news', {
-      url: 'http://example.com'
+      link: 'http://example.com'
     });
 
     await visit('/');
 
-    assert.dom('[data-test-breaking-news] a').hasAttribute('target','_blank');
-    assert.dom('[data-test-breaking-news] a').hasAttribute('rel','noopener');
+    assert.dom('[data-test-breaking-news] a').exists();
+    assert.dom('[data-test-breaking-news] a').hasAttribute('href','http://example.com');
+    assert.dom('[data-test-breaking-news] a').hasAttribute('target', '_blank');
+    assert.dom('[data-test-breaking-news] a').hasAttribute('rel', 'noopener');
   });
 
-  test('local breaking news links open in same window', async function(assert) {
+  test('local breaking news links open in same window, contact', async function(assert) {
+    const url = '/contact';
     server.create('breaking-news', {
-      url: '/news/'
+      link: url
     });
 
     await visit('/');
 
+    assert.dom('[data-test-breaking-news] a').exists();
+    assert.dom('[data-test-breaking-news] a').hasAttribute('href', url);
+    assert.dom('[data-test-breaking-news] a').doesNotHaveAttribute('target');
+  });
+
+  test('local breaking news links open in same window, author', async function(assert) {
+    const url = '/author/abc';
+    server.create('breaking-news', {
+      link: url
+    });
+
+    await visit('/');
+
+    assert.dom('[data-test-breaking-news] a').exists();
+    assert.dom('[data-test-breaking-news] a').hasAttribute('href', url);
+    assert.dom('[data-test-breaking-news] a').doesNotHaveAttribute('target');
+  });
+
+  test('local breaking news links open in same window, article', async function(assert) {
+    const url = '/article/123';
+    server.create('breaking-news', {
+      link: url
+    });
+
+    await visit('/');
+
+    assert.dom('[data-test-breaking-news] a').exists();
+    assert.dom('[data-test-breaking-news] a').hasAttribute('href', url);
+    assert.dom('[data-test-breaking-news] a').doesNotHaveAttribute('target');
+  });
+
+  test('local breaking news links open in same window, gallery', async function(assert) {
+    const url = '/article/123/gallery';
+    server.create('breaking-news', {
+      link: url
+    });
+
+    await visit('/');
+
+    assert.dom('[data-test-breaking-news] a').exists();
+    assert.dom('[data-test-breaking-news] a').hasAttribute('href', url);
     assert.dom('[data-test-breaking-news] a').doesNotHaveAttribute('target');
   });
 });
