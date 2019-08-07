@@ -17,7 +17,7 @@ module('Acceptance | breaking news', function(hooks) {
 
     await visit('/');
 
-    assert.dom('[data-test-breaking-news]').exists({count: 1});
+    assert.dom('.c-block--urgent').exists({count: 1});
   });
 
   test('multiple breaking news appear on the home page', async function(assert) {
@@ -25,7 +25,7 @@ module('Acceptance | breaking news', function(hooks) {
 
     await visit('/');
 
-    assert.dom('[data-test-breaking-news]').exists({count: 4});
+    assert.dom('.c-block--urgent').exists({count: 4});
   });
 
   test('external breaking news links open in new window', async function(assert) {
@@ -35,10 +35,10 @@ module('Acceptance | breaking news', function(hooks) {
 
     await visit('/');
 
-    assert.dom('[data-test-breaking-news] a').exists();
-    assert.dom('[data-test-breaking-news] a').hasAttribute('href','http://example.com');
-    assert.dom('[data-test-breaking-news] a').hasAttribute('target', '_blank');
-    assert.dom('[data-test-breaking-news] a').hasAttribute('rel', 'noopener');
+    assert.dom('.c-block--urgent a').exists();
+    assert.dom('.c-block--urgent a').hasAttribute('href','http://example.com');
+    assert.dom('.c-block--urgent a').hasAttribute('target', '_blank');
+    assert.dom('.c-block--urgent a').hasAttribute('rel', 'noopener');
   });
 
   test('local breaking news links open in same window, contact', async function(assert) {
@@ -49,9 +49,9 @@ module('Acceptance | breaking news', function(hooks) {
 
     await visit('/');
 
-    assert.dom('[data-test-breaking-news] a').exists();
-    assert.dom('[data-test-breaking-news] a').hasAttribute('href', url);
-    assert.dom('[data-test-breaking-news] a').doesNotHaveAttribute('target');
+    assert.dom('.c-block--urgent a').exists();
+    assert.dom('.c-block--urgent a').hasAttribute('href', url);
+    assert.dom('.c-block--urgent a').doesNotHaveAttribute('target');
   });
 
   test('local breaking news links open in same window, author', async function(assert) {
@@ -62,9 +62,9 @@ module('Acceptance | breaking news', function(hooks) {
 
     await visit('/');
 
-    assert.dom('[data-test-breaking-news] a').exists();
-    assert.dom('[data-test-breaking-news] a').hasAttribute('href', url);
-    assert.dom('[data-test-breaking-news] a').doesNotHaveAttribute('target');
+    assert.dom('.c-block--urgent a').exists();
+    assert.dom('.c-block--urgent a').hasAttribute('href', url);
+    assert.dom('.c-block--urgent a').doesNotHaveAttribute('target');
   });
 
   test('local breaking news links open in same window, article', async function(assert) {
@@ -75,9 +75,9 @@ module('Acceptance | breaking news', function(hooks) {
 
     await visit('/');
 
-    assert.dom('[data-test-breaking-news] a').exists();
-    assert.dom('[data-test-breaking-news] a').hasAttribute('href', url);
-    assert.dom('[data-test-breaking-news] a').doesNotHaveAttribute('target');
+    assert.dom('.c-block--urgent a').exists();
+    assert.dom('.c-block--urgent a').hasAttribute('href', url);
+    assert.dom('.c-block--urgent a').doesNotHaveAttribute('target');
   });
 
   test('local breaking news links open in same window, gallery', async function(assert) {
@@ -88,8 +88,8 @@ module('Acceptance | breaking news', function(hooks) {
 
     await visit('/');
 
-    assert.dom('[data-test-breaking-news] a').exists();
-    assert.dom('[data-test-breaking-news] a').hasAttribute('href', url);
-    assert.dom('[data-test-breaking-news] a').doesNotHaveAttribute('target');
+    assert.dom('.c-block--urgent a').exists();
+    assert.dom('.c-block--urgent a').hasAttribute('href', url);
+    assert.dom('.c-block--urgent a').doesNotHaveAttribute('target');
   });
 });

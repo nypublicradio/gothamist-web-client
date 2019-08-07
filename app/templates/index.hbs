@@ -8,7 +8,6 @@
   {{#each model.sitewideComponents.breakingNews as |news|}}
     {{#if (get-route-params news.link)}}
       <NyprMBlockUrgent
-        data-test-breaking-news
         @route={{get-route-params news.link}}
         @title={{news.title}}
         @timestamp={{timestamp news.startTime}}
@@ -16,7 +15,6 @@
       />
     {{else}}
       <NyprMBlockUrgent
-        data-test-breaking-news
         @url={{news.link}}
         @title={{news.title}}
         @timestamp={{timestamp news.startTime}}
