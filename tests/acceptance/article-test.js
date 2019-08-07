@@ -5,6 +5,7 @@ import { visit, currentURL, click, find } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import test from 'ember-sinon-qunit/test-support/test';
+import defaultScenario from '../../mirage/scenarios/test-default';
 
 import { scrollPastHeader, scrollPastTarget } from 'nypr-design-system/test-support';
 import { SERVICE_MAP } from 'nypr-design-system/components/nypr-m-share-tools';
@@ -28,6 +29,7 @@ module('Acceptance | article', function(hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(() => {
+    defaultScenario(server);
     document.cookie = `${config.donateCookie}=; expires=${moment().subtract(1, 'day')}; path=/`;
     document.cookie = `${config.articleViewsCookie}=; expires=${moment().subtract(1, 'day')}; path=/`;
     window.block_disqus = true;
