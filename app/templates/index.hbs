@@ -6,10 +6,10 @@
 <div class="c-home__sections u-section-spacing--wide l-container l-container--xl l-wrap u-trigger-floating-header">
 
   {{#each model.sitewideComponents.breakingNews as |news|}}
-    {{#if (is-external news.link)}}
+    {{#if (get-route-params news.link)}}
       <NyprMBlockUrgent
         data-test-breaking-news
-        @url={{news.link}}
+        @route={{get-route-params news.link}}
         @title={{news.title}}
         @timestamp={{timestamp news.startTime}}
         @description={{news.description}}
@@ -17,7 +17,7 @@
     {{else}}
       <NyprMBlockUrgent
         data-test-breaking-news
-        @route={{url-to-route-params news.link}}
+        @url={{news.link}}
         @title={{news.title}}
         @timestamp={{timestamp news.startTime}}
         @description={{news.description}}

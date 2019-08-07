@@ -7,7 +7,10 @@ import { inject as service } from '@ember/service';
  *  an array of route parameters for use with our custom
  *  link-to, if possible.
  *
- *  It will return undefined when running in fastboot,
+ *  If the current Url isn't an internal route,
+ *  it returns undefined.
+ *
+ *  It will also return undefined when running in fastboot,
  *  because we don't have access to the current location.
  *
  */
