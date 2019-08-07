@@ -17,7 +17,7 @@ const routerStub = Service.extend({
   },
 });
 
-module('Integration | Helper | url-to-route-params', function(hooks) {
+module('Integration | Helper | get-route-params', function(hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function() {
@@ -27,8 +27,17 @@ module('Integration | Helper | url-to-route-params', function(hooks) {
   test('it renders', async function(assert) {
     this.set('url', '/author/authorname');
 
-    await render(hbs`{{url-to-route-params url}}`);
+    await render(hbs`{{get-route-params url}}`);
 
     assert.equal(this.element.textContent.trim(), 'author-detail,authorname');
   });
+
+  test('it returns undefined for external urls', async function(assert) {
+    this.set('url', 'http://example.com');
+
+    await render(hbs`{{#if (get-route-params url)}}true{{else}}false{{/if}}`);
+
+    assert.equal(this.element.textContent.trim(), 'false');
+  });
+
 });
