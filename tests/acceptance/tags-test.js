@@ -2,6 +2,7 @@ import { module, test } from 'qunit';
 import { visit, currentURL, click,findAll } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import defaultScenario from '../../mirage/scenarios/test-default';
 
 import config from 'gothamist-web-client/config/environment';
 import { COUNT } from 'gothamist-web-client/routes/tags';
@@ -9,6 +10,10 @@ import { COUNT } from 'gothamist-web-client/routes/tags';
 module('Acceptance | tags', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
+
+  hooks.beforeEach(() => {
+    defaultScenario(server);
+  });
 
   test('visiting /tags', async function(assert) {
     server.createList('article', COUNT * 5, {tags: [{slug: 'dogs-and-cats', name: 'dogs and cats'}], section: 'food', tag_slug: 'dogs-and-cats'});

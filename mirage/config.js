@@ -116,7 +116,6 @@ export default function() {
         meta: { total_count: 0 }
       };
 
-      this.logging = true;
     }
 
     return found;
