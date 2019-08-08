@@ -1,4 +1,5 @@
 import { camelize, dasherize, underscore } from '@ember/string';
+import fromEntries from '../utils/from-entries';
 
 /**
 Utils to help dealing with Wagtail's API format
@@ -14,11 +15,6 @@ This is a how Wagtail's API represents a Wagtail Block:
 }
 */
 
-// fromEntries polyfill for node/fastboot
-Object.fromEntries = Object.fromEntries || function(iterable) {
-  return [...iterable]
-    .reduce((obj, { 0: key, 1: val }) => Object.assign(obj, { [key]: val }), {})
-}
 
 /**
   Takes a JSON Object representing a Wagtail Block,
@@ -33,7 +29,7 @@ export const blockToJSONAPI = function(block) {
     id: block.id,
     type: dasherize(block.type),
     // move 'values' to 'attributes' and camelize keys
-    attributes: {...Object.fromEntries(
+    attributes: {...fromEntries(
       Object.entries(block.value).map(([k, v]) => [camelize(k), v])
     )},
   }
