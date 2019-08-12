@@ -4,8 +4,6 @@ import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { Response } from 'ember-cli-mirage';
 
-import defaultScenario from '../../mirage/scenarios/test-default';
-
 import config from 'gothamist-web-client/config/environment';
 
 module('Acceptance | 404', function(hooks) {
@@ -13,7 +11,6 @@ module('Acceptance | 404', function(hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(() => {
-    defaultScenario(server);
     window.pSUPERFLY = {virtualPage: () => true};
   });
 

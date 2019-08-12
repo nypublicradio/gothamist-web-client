@@ -2,17 +2,12 @@ import { module, skip /* test */ } from 'qunit';
 import { visit, currentURL } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import defaultScenario from '../../mirage/scenarios/test-default';
 
 import config from 'gothamist-web-client/config/environment';
 
 module('Acceptance | popular', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
-
-  hooks.beforeEach(() => {
-    defaultScenario(server);
-  });
 
   skip('visiting /popular', async function(assert) {
     // it's basically the same as the tags page

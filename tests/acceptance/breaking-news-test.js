@@ -2,14 +2,13 @@ import { module, test } from 'qunit';
 import { visit } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import defaultScenario from '../../mirage/scenarios/test-default';
 
 module('Acceptance | breaking news', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(() => {
-    defaultScenario(server);
+    server.create('sitewide-component');
   });
 
   test('breaking news appears on the home page', async function(assert) {
