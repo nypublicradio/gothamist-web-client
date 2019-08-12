@@ -30,6 +30,7 @@ Router.map(function() {
   this.route('author-detail', {path: 'staff/:slug'});
 
   this.route('contact');
+  this.route('preview');
 });
 
 export default Router;
