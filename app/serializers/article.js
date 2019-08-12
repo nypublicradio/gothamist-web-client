@@ -14,7 +14,10 @@ export default ApplicationSerializer.extend({
 
     // `type` key is used to look up a corresponding component
     // ember wants component names to be dasherized
-    payload.body.forEach(block => block.type = dasherize(block.type));
+    // make this safe for testing
+    if (payload.body) {
+      payload.body.forEach(block => block.type = dasherize(block.type));
+    }
 
     return this._super(ArticleClass, payload);
   },
