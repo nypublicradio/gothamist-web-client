@@ -5,7 +5,6 @@ import { visit, click } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import test from 'ember-sinon-qunit/test-support/test';
-import defaultScenario from '../../mirage/scenarios/test-default';
 
 import * as uuid from 'uuid/v1';
 
@@ -19,7 +18,6 @@ module('Acceptance | analytics', function(hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(() => {
-    defaultScenario(server);
     window.block_disqus = true;
   });
 

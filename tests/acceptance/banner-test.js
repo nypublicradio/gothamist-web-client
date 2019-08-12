@@ -4,17 +4,16 @@ import { setupApplicationTest } from 'ember-qunit';
 import moment from 'moment';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import config from 'gothamist-web-client/config/environment';
-import defaultScenario from '../../mirage/scenarios/test-default';
 
 module('Acceptance | banner', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(() => {
-    defaultScenario(server);
     //clear cookie
     document.cookie = `${config.productBannerCookiePrefix}12345=; expires=${moment().subtract(1, 'day')}; path=/`;
     // create banner;
+    server.create('system-message');
     server.create('product-banner', {
       "id": "12345",
       "title": "Test Title",
