@@ -12,16 +12,18 @@ module('Unit | Adapter | page', function(hooks) {
   });
 
   test('it uses the expected URL for query', function() {
+    const store = this.owner.lookup('service:store');
+    const PageModel = store.modelFor('page');
     const adapter = this.owner.lookup('adapter:page');
     const QUERY = 'foo';
 
     const ajaxMock = this.mock()
       .once()
-      .withArgs(`${adapter.host}/${adapter.namespace}/search/?q=${QUERY}`);
+      .withArgs(`${adapter.host}/${adapter.namespace}/search/`, 'GET', {data: {q: QUERY}});
 
     adapter.ajax = ajaxMock;
 
-    adapter.query(null, null, {q: QUERY});
+    adapter.query(null, PageModel, {q: QUERY});
   });
 
   test('it uses the expected URL for queryRcord', function() {
