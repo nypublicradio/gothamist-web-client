@@ -6,11 +6,17 @@ export default ApplicationAdapter.extend({
   // multiple types in the response, and we can support that
   // using ~ * p o l y m o r p h i s m * ~
   // see the `Page` serializer for more
-  query(_store, _type, query = {}) {
-    let url = this.buildURL('page');
-    url = `${url.replace('pages', 'search')}?q=${query.q}`;
-
-    return this.ajax(url);
+  
+  // when other types use the query method, we want to defer to the
+  // default behavior of the RESTAdapter, which is to use the `pages`
+  // path and append all the given query params
+  urlForQuery(query, modelName) {
+    switch(modelName) {
+      case 'page':
+        return `${this.host}/${this.namespace}/search`;
+      default:
+        return this._super(...arguments);
+    }
   },
 
   // when we don't know what we're looking for, we use `queryRecord` on the
