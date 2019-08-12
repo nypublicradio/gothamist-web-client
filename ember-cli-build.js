@@ -7,6 +7,9 @@ module.exports = function(defaults) {
     sourcemaps: {
       enabled: true,
     },
+    babel: {
+      sourceMaps: 'inline'
+    },
     sassOptions: {
       includePaths: [
         'node_modules/include-media/dist',
