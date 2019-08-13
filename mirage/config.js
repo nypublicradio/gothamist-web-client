@@ -120,6 +120,14 @@ export default function() {
     return found;
   });
 
+  this.get('/api/v2/page_preview', (schema, request) => {
+    if (request.queryParams) {
+      let { identifier, token } = request.queryParams;
+      return schema.articles.where({slug: `${identifier}-${token}`});
+    }
+    return new Response(404);
+  });
+
   this.get('/api/v2/system_messages/:id/');
 
   this.urlPrefix = config.apiServer;
