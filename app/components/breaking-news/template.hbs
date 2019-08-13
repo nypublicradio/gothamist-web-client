@@ -1,0 +1,23 @@
+<NyprMBlock @urgent={{true}} as |block|>
+  <block.object as |o|>
+
+    <o.eyebrow @text='Breaking News'/>
+
+    <o.title
+      @h3
+      @route={{array 'article' @article.path}}
+    >
+      {{{@article.title}}}
+    </o.title>
+
+    <o.body as |body|>
+      <body.meta @timestamp={{timestamp @article.publishedMoment}}/>
+
+      <body.text>
+        {{{@article.excerptPretty}}}
+      </body.text>
+    </o.body>
+
+  </block.object>
+</NyprMBlock>
+

@@ -48,6 +48,7 @@ export default Route.extend({
     return hash({
       sponsored: this.getSponsoredPost(),
       sponsoredMain: this.getSponsoredMain(),
+      breaking: this.getBreakingNews(),
       main: this.store.query('article', {
         index: 'gothamist',
         term: '@main',
@@ -110,6 +111,24 @@ export default Route.extend({
     }
     const ageInHours = moment().diff(post.publishedMoment, 'hours');
     if (ageInHours >= 24 && ageInHours <= 48) {
+      return post;
+    }
+  },
+
+  // check for breaking news
+  // filter it out if it's older than 6 hours
+  async getBreakingNews() {
+    let post = await this.store.query('article', {
+      index: 'gothamist',
+      term: '@breaking',
+      count: 1,
+    });
+
+    if (!post.firstObject) {
+      return;
+    }
+
+    if (moment().diff(post.firstObject.publishedMoment, 'hours') < 6) {
       return post;
     }
   },

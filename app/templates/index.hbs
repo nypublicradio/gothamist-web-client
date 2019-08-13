@@ -30,6 +30,10 @@
     </NyprMBoxBanner>
   {{/if}}
 
+  {{#with model.breaking.firstObject as |breaking|}}
+    <BreakingNews @article={{breaking}} />
+  {{/with}}
+
   <NyprOFeaturedBlockList data-test-featured-block-list as |fbl|>
     <fbl.heading>
       <span class="c-featured-blocks__heading-icon o-icon u-icon--s u-path-fill--quaternary">
