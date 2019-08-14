@@ -152,9 +152,6 @@ export default Page.extend({
         };
     }
   }),
-  leadImageCaption: reads('leadImage.caption'),
-  leadImageCredit:  reads('leadImage.credit'),
-  leadImageAlt:     reads('leadImage.alt'),
   // leadImageLink:    reads('_parsedLegacyContent.leadImageLink'),
 
   displayTags: computed('tags', function() {
