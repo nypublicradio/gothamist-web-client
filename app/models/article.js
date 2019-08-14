@@ -130,9 +130,9 @@ export default Page.extend({
 
   thumbnail: computed('leadImage', 'listingImage', function() {
     if (this.listingImage) {
-      return {id: this.listingImage.id};
+      return this.listingImage;
     } else if (this.leadImage && this.leadImage.image) {
-      return {id: this.leadImage.image};
+      return this.leadImage.image;
     }
   }),
 
@@ -147,7 +147,8 @@ export default Page.extend({
         return this.leadAsset.value;
       default:
         return {
-          image: this.leadAsset.value.default_image
+          image: this.leadAsset.value.default_image,
+          caption: this.leadAsset.value.caption,
         };
     }
   }),

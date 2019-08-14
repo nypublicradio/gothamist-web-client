@@ -41,7 +41,9 @@ module('Unit | Model | article', function(hooks) {
       leadAsset: {
         type: LEAD_IMAGE,
         value: {
-          image: EXPECTED,
+          image: {
+            id: EXPECTED,
+          }
         }
       }
     });
@@ -51,7 +53,9 @@ module('Unit | Model | article', function(hooks) {
       leadAsset: {
         type: LEAD_AUDIO,
         value: {
-          default_image: EXPECTED,
+          default_image: {
+            id: EXPECTED,
+          }
         }
       }
     });
@@ -61,7 +65,9 @@ module('Unit | Model | article', function(hooks) {
       leadAsset: {
         type: LEAD_VIDEO,
         value: {
-          default_image: EXPECTED,
+          default_image: {
+            id: EXPECTED,
+          }
         }
       }
     });
