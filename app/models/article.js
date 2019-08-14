@@ -3,6 +3,8 @@ import Page from './page';
 import { computed } from '@ember/object';
 import { reads, bool } from '@ember/object/computed';
 
+import { extractPath } from '../utils/wagtail-api';
+
 
 export const WAGTAIL_MODEL_TYPE = 'news.ArticlePage';
 export const SECTION_PAGE_TYPE = 'standardpages.IndexPage';
@@ -168,12 +170,10 @@ export default Page.extend({
   // this is so we can easily create link-tos and compensate
   // for neste url structures
   path: computed('meta.html_url', 'section', function() {
-    if (this.meta && typeof this.meta.html_url === 'string') {
-      let path = this.meta.html_url.replace(/https?:\/\/[^/]+\//, '');
+    if (this.meta) {
+      let path = extractPath(this.meta.html_url);
       // strip out the section
-      path = path.replace(`${this.section.slug}/`, '');
-      // no trailing slash
-      return path.replace(/\/$/, '');
+      return path.replace(`${this.section.slug}/`, '');
     }
   }),
 
