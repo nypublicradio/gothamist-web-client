@@ -15,7 +15,7 @@
         <o.eyebrow @kickerClass="o-kicker--sponsored" @text="Sponsored"/>
       {{else}}
         <o.eyebrow
-          @route={{array 'sections' @article.path}}
+          @route={{array 'sections' @article.section.slug}}
           @text={{@article.section.title}}
           data-test-section-label
         />
