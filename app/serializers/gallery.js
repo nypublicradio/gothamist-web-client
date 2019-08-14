@@ -8,10 +8,8 @@ export default ApplicationSerializer.extend({
     if (payload.slides) {
       payload.slides = payload.slides.map(({ value }) => ({
         title: value.slide_title,
-        image: {
-          id: value.slide_image.image,
-          caption: value.slide_image.caption,
-        }
+        caption: value.slide_image.caption,
+        image: value.slide_image.image,
       }));
     }
 
