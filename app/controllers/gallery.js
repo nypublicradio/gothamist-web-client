@@ -15,13 +15,16 @@ export default Controller.extend({
 
   slides: computed('model.gallery', function() {
     // make images for each breakpoint
-    return this.model.gallery.slides.map(({image, title}) => ({
+    return this.model.gallery.slides.map(({image, title, caption}) => ({
       thumb: wagtailImageUrl([image, 150, 150]),
       srcS: wagtailImageUrl([image, 420]),
       srcM: wagtailImageUrl([image, 800]),
       srcL: wagtailImageUrl([image, 1200]),
       width: 1200,
-      caption: image.caption,
+      caption: caption || image.caption,
+      credit: image.credit,
+      creditLink: image.creditLink,
+      alt: image.alt,
       title,
     }));
   }),
