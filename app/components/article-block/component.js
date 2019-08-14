@@ -194,7 +194,7 @@ export default Component.extend({
       return;
     }
 
-    let thumbnail = this.article.listingImage || this.article.thumbnail;
+    let { thumbnail } = this.article;
 
     if (!thumbnail) {
       // fallback image
@@ -205,13 +205,14 @@ export default Component.extend({
     if (thumbnail) {
       let [ width, height, highDpi ] = this.thumbnailSize || [];
 
-      let { id } = thumbnail;
-      let sizes = {
+      let { id, alt } = thumbnail;
+      let data = {
+        alt,
         srcS: `${getWagtailUrl(id, {width, height})}`,
       };
 
       if (highDpi) {
-        sizes.srcSet = `${getWagtailUrl(id, {width, height})} 1x,
+        data.srcSet = `${getWagtailUrl(id, {width, height})} 1x,
           ${getWagtailUrl(id, {width: width * 2, height: height * 2})} 2x,
           ${getWagtailUrl(id, {width: width * 3, height: height * 3})} 3x`;
       }
@@ -220,15 +221,15 @@ export default Component.extend({
         let [ width, height, highDpi ] = this.mediumThumbnailSize || [];
 
         if (highDpi) {
-          sizes.srcM = `${getWagtailUrl(id, {width, height})} 1x,
+          data.srcM = `${getWagtailUrl(id, {width, height})} 1x,
           ${getWagtailUrl(id, {width: width * 2, height: height * 2})} 2x,
           ${getWagtailUrl(id, {width: width * 3, height: height * 3})} 3x`;
         } else {
-          sizes.srcM = `${getWagtailUrl(id, {width, height})}`;
+          data.srcM = `${getWagtailUrl(id, {width, height})}`;
         }
       }
 
-      return sizes;
+      return data;
     }
   }),
 
