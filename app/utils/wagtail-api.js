@@ -65,3 +65,17 @@ export const mirageModelToBlock = function(modelJSON) {
   });
   return block;
 };
+
+/**
+  Extract a path from a wagtail `html_url` value. Strips trailing slashes and removes the leading protocol/host.
+
+  @function extractPath
+  @param url {String}
+  @return {String} the cleaned path
+*/
+export const extractPath = function(url) {
+  if (typeof url !== 'string') {
+    return '';
+  }
+  return url.replace(/https?:\/\/[^/]+\//, '').replace(/\/$/, '');
+}
