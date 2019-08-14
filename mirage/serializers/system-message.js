@@ -2,9 +2,7 @@ import ApplicationSerializer from './application';
 import { mirageModelToBlock } from '../../utils/wagtail-api';
 
 export default ApplicationSerializer.extend({
-  include() {
-    return ['productBanners'];
-  },
+  include: ['productBanners'], // eslint-disable-line
   serialize() {
     let json = ApplicationSerializer.prototype.serialize.apply(this, arguments);
     let response = {
