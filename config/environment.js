@@ -123,6 +123,7 @@ module.exports = function(environment) {
     ENV.disqusAPI = 'https://disqus.com';
     ENV.disqusKey = 'disqus-key';
     ENV.etagAPI = 'https://browserid.com';
+    ENV.APP.wagtailImages.imagePath = 'https://example.com/images';
   }
 
   if (environment === 'production') {
