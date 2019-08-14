@@ -29,10 +29,13 @@ export default Controller.extend({
       return;
     }
 
-    return this.model.gallery.slides.map(({image, title}) => ({
+    return this.model.gallery.slides.map(({image, title, caption}) => ({
       srcS: wagtailImageUrl([image, 625, 416]),
       thumb: wagtailImageUrl([image, 106, 106]),
-      caption: image.caption,
+      caption: caption || image.caption,
+      alt: image.alt,
+      credit: image.credit,
+      creditLink: image.creditLink,
       title,
     }));
   }),
