@@ -98,11 +98,11 @@ module.exports = function(environment) {
     };
 
     // for mirage endpoints
-    ENV.apiServer = 'https://api.demo.nypr.digital';
-    ENV.cmsServer = 'https://cms.demo.nypr.digital';
-    ENV.disqusAPI = 'https://disqus.com';
-    ENV.disqusKey = 'disqus-key';
-    ENV.etagAPI = 'https://browserid.com';
+    ENV.apiServer = ENV.apiServer || 'https://api.demo.nypr.digital';
+    ENV.cmsServer = ENV.cmsServer || 'https://cms.demo.nypr.digital';
+    ENV.disqusAPI = ENV.disqusAPI || 'https://disqus.com';
+    ENV.disqusKey = ENV.disqusKey || 'disqus-key';
+    ENV.etagAPI = ENV.etagAPI || 'https://browserid.com';
   }
 
   if (environment === 'test') {
