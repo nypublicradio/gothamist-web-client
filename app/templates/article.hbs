@@ -64,24 +64,28 @@
               @viewAll={{action 'viewGallery'}}
               @goToSlide={{action 'goToSlide'}}
             />
-          {{else if model.article.leadImage}}
-            {{#if model.article.leadImageLink}}
-              <a href={{model.article.leadImageLink}} target="_blank" rel="noopener">
+          {{else}}
+            {{#with model.article.leadImage as |lead|}}
+              {{#if model.article.leadImageLink}}
+                <a href={{model.article.leadImageLink}} target="_blank" rel="noopener">
+                  <NyprMFigure
+                    class="c-lead"
+                    @srcS={{wagtail-image-url lead.image 640}}
+                    @caption={{or lead.caption lead.image.caption}}
+                    @credit={{lead.image.credit}}
+                    @alt={{lead.image.alt}}
+                  />
+                </a>
+              {{else}}
                 <NyprMFigure
                   class="c-lead"
-                  @srcS={{wagtail-image-url (hash id=model.article.leadImage.image) 640}}
-                  @caption={{model.article.leadImageCaption}}
-                  @credit={{model.article.leadImageCredit}}
+                  @srcS={{wagtail-image-url lead.image 640}}
+                  @caption={{or lead.caption lead.image.caption}}
+                  @credit={{lead.image.credit}}
+                  @alt={{lead.image.alt}}
                 />
-              </a>
-            {{else}}
-              <NyprMFigure
-                class="c-lead"
-                @srcS={{wagtail-image-url (hash id=model.article.leadImage.image) 640}}
-                @caption={{model.article.leadImageCaption}}
-                @credit={{model.article.leadImageCredit}}
-              />
-            {{/if}}
+              {{/if}}
+            {{/with}}
           {{/if}}
         </lead.center>
 
