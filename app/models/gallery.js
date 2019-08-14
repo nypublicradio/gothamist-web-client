@@ -9,7 +9,8 @@ export default Page.extend({
   // slides are normalized from the server to look like so:
   // {
   //   title String,
-  //   image Object{id Number, caption String},
+  //   caption String,
+  //   image Object{id Number, caption String, credit String, creditLink String, alt String},
   // }
   slides: DS.attr({defaultValue: () => []}),
 
