@@ -1,5 +1,11 @@
-import  { blockToJSONAPI, mirageModelToBlock, extractPath } from 'gothamist-web-client/utils/wagtail-api';
 import { module, test } from 'qunit';
+
+import  {
+  blockToJSONAPI,
+  mirageModelToBlock,
+  extractPath,
+  camelizeObject
+} from 'gothamist-web-client/utils/wagtail-api';
 
 module('Unit | Utility | wagtail-api', function() {
 
@@ -56,4 +62,17 @@ module('Unit | Utility | wagtail-api', function() {
 
     assert.equal(extractPath('foo/bar'), 'foo/bar', 'should not strip anything besides a trailing slash or leading protocol/domain');
   });
+
+  test('camelizeObject camelizes an object', function(assert) {
+    assert.deepEqual(camelizeObject({
+      foo_bar: 'baz',
+      bizBuz: 'qux'
+    }), {
+      fooBar: 'baz',
+      bizBuz: 'qux'
+    }, 'only updates snake cased keys');
+
+    assert.deepEqual(camelizeObject(), {}, 'returns an object for an undefined argument');
+    assert.deepEqual(camelizeObject(null), {}, 'returns an object for a null argument');
+  })
 });
