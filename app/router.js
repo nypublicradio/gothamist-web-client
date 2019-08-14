@@ -3,7 +3,7 @@ import { inject } from '@ember/service';
 import config from './config/environment';
 
 
-export const GALLERY_PATH = 'galleries';
+export const GALLERY_PATH = 'photos';
 
 const Router = EmberRouter.extend({
   headData: inject(),
