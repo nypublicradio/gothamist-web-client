@@ -1,5 +1,6 @@
 import ApplicationSerializer from './application';
 
+import { camelizeObject } from '../utils/wagtail-api';
 
 export default ApplicationSerializer.extend({
   modelNameFromPayloadKey: () => 'gallery',
@@ -9,7 +10,7 @@ export default ApplicationSerializer.extend({
       payload.slides = payload.slides.map(({ value }) => ({
         title: value.slide_title,
         caption: value.slide_image.caption,
-        image: value.slide_image.image,
+        image: camelizeObject(value.slide_image.image),
       }));
     }
 
