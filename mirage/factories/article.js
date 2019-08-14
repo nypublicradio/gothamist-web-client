@@ -72,7 +72,9 @@ export default Factory.extend({
     {
       type: 'lead_image',
       value: {
-        image: 1283,
+        image: {
+          id: 1283,
+        },
         caption: faker.lorem.words(5),
       },
       id: faker.random.uuid(),
