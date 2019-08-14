@@ -21,7 +21,7 @@ export default Page.extend({
   //   title String,
   //   image Object{id Number, caption String},
   // }
-  slides: DS.attr({deafultValue: () => []}),
+  slides: DS.attr({defaultValue: () => []}),
 
   relatedAuthors:                   DS.attr({defaultValue: () => []}),
   relatedContributingOrganizations: DS.attr({defaultValue: () => []}),
