@@ -3,6 +3,7 @@ import moment from 'moment';
 import Controller from '@ember/controller';
 import { inject } from '@ember/service';
 import { computed } from '@ember/object';
+import { wagtailImageUrl } from 'ember-wagtail-images';
 
 import config from '../config/environment';
 
@@ -28,10 +29,12 @@ export default Controller.extend({
       return;
     }
 
-    return this.model.gallery.makeSizes({
-      srcS: [625, 416],
-      thumb: [106, 'fill']
-    });
+    return this.model.gallery.slides.map(({image, title}) => ({
+      srcS: wagtailImageUrl([image, 625, 416]),
+      thumb: wagtailImageUrl([image, 106, 106]),
+      caption: image.caption,
+      title,
+    }));
   }),
 
   actions: {
