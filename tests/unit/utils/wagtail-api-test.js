@@ -1,4 +1,4 @@
-import  { blockToJSONAPI, mirageModelToBlock } from 'gothamist-web-client/utils/wagtail-api';
+import  { blockToJSONAPI, mirageModelToBlock, extractPath } from 'gothamist-web-client/utils/wagtail-api';
 import { module, test } from 'qunit';
 
 module('Unit | Utility | wagtail-api', function() {
@@ -47,4 +47,13 @@ module('Unit | Utility | wagtail-api', function() {
     assert.deepEqual(result, expected);
   });
 
+  test('extractPath strips protocols, domains, and trailing slashes', function(assert) {
+    assert.equal(extractPath('http://gothamist.com/foo/bar/'), 'foo/bar');
+
+    assert.deepEqual(extractPath({
+      foo: 'http://gothamist.com/foo/bar'
+    }), '', 'should silently handle unexpected types by returning the empty string');
+
+    assert.equal(extractPath('foo/bar'), 'foo/bar', 'should not strip anything besides a trailing slash or leading protocol/domain');
+  });
 });
