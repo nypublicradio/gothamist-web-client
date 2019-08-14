@@ -1,6 +1,7 @@
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
+import { wagtailImageUrl } from 'ember-wagtail-images';
 
 export default Controller.extend({
   queryParams: ['image'],
@@ -14,14 +15,15 @@ export default Controller.extend({
 
   slides: computed('model.gallery', function() {
     // make images for each breakpoint
-    return this.model.gallery.makeSizes({
-      thumb: [150, 150],
-      srcS: 420,
-      srcM: 800,
-      srcL: 1200,
-    }, {
+    return this.model.gallery.slides.map(({image, title}) => ({
+      thumb: wagtailImageUrl([image, 150, 150]),
+      srcS: wagtailImageUrl([image, 420]),
+      srcM: wagtailImageUrl([image, 800]),
+      srcL: wagtailImageUrl([image, 1200]),
       width: 1200,
-    });
+      caption: image.caption,
+      title,
+    }));
   }),
 
   shareMetadata: computed('parentArticle', function() {
