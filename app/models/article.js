@@ -3,7 +3,7 @@ import Page from './page';
 import { computed } from '@ember/object';
 import { reads, bool } from '@ember/object/computed';
 
-import { extractPath } from '../utils/wagtail-api';
+import { extractPath, camelizeObject } from '../utils/wagtail-api';
 
 
 export const WAGTAIL_MODEL_TYPE = 'news.ArticlePage';
@@ -130,9 +130,9 @@ export default Page.extend({
 
   thumbnail: computed('leadImage', 'listingImage', function() {
     if (this.listingImage) {
-      return this.listingImage;
+      return camelizeObject(this.listingImage);
     } else if (this.leadImage && this.leadImage.image) {
-      return this.leadImage.image;
+      return camelizeObject(this.leadImage.image);
     }
   }),
 
@@ -144,12 +144,14 @@ export default Page.extend({
     }
     switch(this.leadAsset.type) {
       case LEAD_IMAGE:
-        return this.leadAsset.value;
+        return camelizeObject(this.leadAsset.value);
       default:
-        return {
-          image: this.leadAsset.value.default_image,
-          caption: this.leadAsset.value.caption,
-        };
+        if (this.leadAsset.value.default_image) {
+          return {
+            image: camelizeObject(this.leadAsset.value.default_image),
+            caption: this.leadAsset.value.caption,
+          };
+        }
     }
   }),
   // leadImageLink:    reads('_parsedLegacyContent.leadImageLink'),
