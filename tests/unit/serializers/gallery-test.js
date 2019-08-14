@@ -35,6 +35,8 @@ module('Unit | Serializer | gallery', function(hooks) {
             image: {
               id: 1,
               caption: "Original caption",
+              credit: "foo",
+              credit_link: "http://google.com",
             },
             caption: "A caption override"
           }
@@ -65,6 +67,8 @@ module('Unit | Serializer | gallery', function(hooks) {
       image: {
         id: 1,
         caption: "Original caption",
+        credit: "foo",
+        creditLink: "http://google.com",
       }
     }, {
       title: 'slide 2',
