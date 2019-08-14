@@ -3,6 +3,9 @@ import moment from 'moment';
 import DS from 'ember-data';
 
 import { computed } from '@ember/object';
+import { reads } from '@ember/object/computed';
+
+import { extractPath } from '../utils/wagtail-api';
 
 export default DS.Model.extend({
   meta: DS.attr(),
@@ -19,10 +22,12 @@ export default DS.Model.extend({
 
   title: DS.attr('string', {defaultValue: ''}),
 
-  // computed
+  // computeds
+  slug: reads('meta.slug'),
+
   path: computed('meta.html_url', function() {
-    if (typeof this.meta.html_url === 'string') {
-      return this.meta.html_url.replace(/https?:\/\/[^/]+\//, '');
+    if (this.meta) {
+      return extractPath(this.meta.html_url);
     }
   }),
 

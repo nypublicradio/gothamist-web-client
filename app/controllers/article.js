@@ -3,6 +3,7 @@ import moment from 'moment';
 import Controller from '@ember/controller';
 import { inject } from '@ember/service';
 import { computed } from '@ember/object';
+import { wagtailImageUrl } from 'ember-wagtail-images';
 
 import config from '../config/environment';
 
@@ -23,12 +24,27 @@ export default Controller.extend({
     }
   }),
 
+  galleryLeadSlides: computed('model.gallery', function() {
+    if (!this.model.gallery) {
+      return;
+    }
+
+    return this.model.gallery.slides.map(({image, title}) => ({
+      srcS: wagtailImageUrl([image, 625, 416]),
+      thumb: wagtailImageUrl([image, 106, 106]),
+      caption: image.caption,
+      title,
+    }));
+  }),
+
   actions: {
     viewGallery() {
-      this.transitionToRoute('article.gallery');
+      let { gallery } = this.model;
+      this.transitionToRoute('gallery', gallery.section, gallery.slug);
     },
     goToSlide(index) {
-      this.transitionToRoute('article.gallery', {queryParams: {image: index}});
+      let { gallery } = this.model;
+      this.transitionToRoute('gallery', gallery.section, gallery.slug, {queryParams: {image: index}});
     },
     closeDonation() {
       let expires = moment().add(24, 'hours').toDate();

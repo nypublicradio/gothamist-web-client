@@ -14,15 +14,8 @@ export default ApplicationSerializer.extend({
   // enable polymorphic responses
   // if it's an actual `Page` response coming straight from the server
   // the key will be `items`
-  modelNameFromPayloadKey: key => key === 'items' ? 'page' : key,
-
-  normalizeQueryRecordResponse(store, PageModel, payload) {
-    payload = {
-      page: payload,
-    };
-
-    return this._super(store, PageModel, payload);
-  },
+  // `'page'` is the default because it's the polymorphic base model
+  modelNameFromPayloadKey: (key = 'page') => key === 'items' ? 'page' : key,
 
   normalizeQueryResponse(store, PageModel, payload, id, requestType) {
     payload.items = payload.items.map(({ result }) => {

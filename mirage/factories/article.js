@@ -140,4 +140,21 @@ export default Factory.extend({
   now: trait({
     publication_date: moment.utc().format(CMS_TIMESTAMP_FORMAT),
   }),
+
+  withGallery: trait({
+    afterCreate(article, server) {
+      const gallery = server.create('gallery', {id: Number(article.id) + 100, count: 200});
+      article.update({
+        lead_asset: [{
+          type: 'lead_gallery',
+          value: {
+            gallery: gallery.id,
+            default_image: null,
+          },
+          id: faker.random.uuid(),
+        }],
+        gallery,
+      });
+    },
+  }),
 });

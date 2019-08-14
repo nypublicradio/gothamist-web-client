@@ -1,5 +1,7 @@
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
+import { reads } from '@ember/object/computed';
+import { wagtailImageUrl } from 'ember-wagtail-images';
 
 export default Controller.extend({
   queryParams: ['image'],
@@ -9,7 +11,23 @@ export default Controller.extend({
     this.set('image', index);
   },
 
-  shareMetadata: computed('model', function() {
+  parentArticle: reads('model.articles.firstObject'),
+
+  slides: computed('model.gallery', function() {
+    // make images for each breakpoint
+    return this.model.gallery.slides.map(({image, title}) => ({
+      thumb: wagtailImageUrl([image, 150, 150]),
+      srcS: wagtailImageUrl([image, 420]),
+      srcM: wagtailImageUrl([image, 800]),
+      srcL: wagtailImageUrl([image, 1200]),
+      width: 1200,
+      caption: image.caption,
+      title,
+    }));
+  }),
+
+  shareMetadata: computed('parentArticle', function() {
+    let { title } = this.parentArticle || {};
     return {
       facebook: {
         utm: {
@@ -19,7 +37,7 @@ export default Controller.extend({
         },
       },
       twitter: {
-        text: this.model.title,
+        text: title,
         via: 'gothamist',
         utm: {
           source: 'twitter',
@@ -28,7 +46,7 @@ export default Controller.extend({
         },
       },
       reddit: {
-        title: this.model.title,
+        title: title,
         utm: {
           source: 'reddit',
           medium: 'social',
@@ -36,8 +54,8 @@ export default Controller.extend({
         },
       },
       email: {
-        subject: `From Gothamist: ${this.model.title}`,
-        body: `${this.model.title}
+        subject: `From Gothamist: ${title}`,
+        body: `${title}
         {{URL}}`,
         utm: {
           source: 'email',

@@ -1,6 +1,7 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
+
 module('Unit | Model | gallery', function(hooks) {
   setupTest(hooks);
 

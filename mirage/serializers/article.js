@@ -1,28 +1,19 @@
-import ApplicationSerializer from './application';
+import ApplicationSerializer, { cleanMirageAttrs } from './application';
+
+
+const MIRAGE_ONLY = ['indexPage', 'gallery'];
 
 export default ApplicationSerializer.extend({
-  keyForCollection: () => 'items',
-
-  serialize(object, { queryParams }) {
+  serialize() {
     let json = ApplicationSerializer.prototype.serialize.apply(this, arguments);
 
     // strip out the mirage only attrs
-    json.items.forEach(item => {
-      delete item.indexPage; // mirage only
-      delete item.section;
-      delete item.html_path;
-    });
-
-    if (queryParams.html_path) {
-      // client is expecting a single object
-      return json.items[0];
+    if (json.items) {
+      json.items.forEach(item => cleanMirageAttrs(item, MIRAGE_ONLY));
     } else {
-      return {
-        ...json,
-        meta: {
-          total_count: object.models.length,
-        },
-      };
+      cleanMirageAttrs(json, MIRAGE_ONLY)
     }
+
+    return json;
   }
 });

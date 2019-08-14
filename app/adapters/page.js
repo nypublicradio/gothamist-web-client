@@ -24,6 +24,10 @@ export default ApplicationAdapter.extend({
   // this will redirect to a deatil view, but since we don't know the ID ahead
   // of time, this needs to be a query.
   queryRecord(_store, _type, query = {}) {
+    if (!query.html_path) {
+      throw new Error('html_path is a required argument');
+    }
+
     let url = this.buildURL('page');
     url = `${url}find/?html_path=${query.html_path}`;
 
