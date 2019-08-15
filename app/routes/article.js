@@ -132,7 +132,7 @@ export default Route.extend({
     controller.set('to', null);
   },
 
-  serialize(article) {
+  serialize({ article }) {
     return {
       section: article.section.slug,
       path: article.meta.slug
