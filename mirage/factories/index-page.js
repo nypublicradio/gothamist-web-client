@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { Factory, faker } from 'ember-cli-mirage';
+import { Factory, faker, trait } from 'ember-cli-mirage';
 
 import { COUNT } from 'gothamist-web-client/routes/sections';
 
@@ -38,14 +38,16 @@ export default Factory.extend({
   show_on_index_listing: true,
 
   // for section pages
-  afterCreate(page, server) {
-    if (!page.descendants.length) {
-      page.update({
-        descendants: server.createList('article', COUNT * 2, {
-          indexPage: page,
-          section: page.meta.slug
-        }),
-      });
+  withArticles: trait({
+    afterCreate(page, server) {
+      if (!page.descendants.length) {
+        page.update({
+          descendants: server.createList('article', COUNT * 2, {
+            indexPage: page,
+            section: page.meta.slug
+          }),
+        });
+      }
     }
-  }
+  }),
 });

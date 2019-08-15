@@ -15,7 +15,7 @@ module('Acceptance | section', function(hooks) {
   setupMirage(hooks);
 
   test('visiting section page', async function(assert) {
-    server.create('index-page', {
+    server.create('index-page', 'withArticles', {
       slug: 'news',
       title: 'News',
     });
@@ -33,7 +33,7 @@ module('Acceptance | section', function(hooks) {
   });
 
   test('section lists get updated with commentCount', async function(assert) {
-    server.create('index-page', {
+    server.create('index-page', 'withArticles', {
       id: '1',
       slug: 'news',
       title: 'News',
@@ -61,7 +61,7 @@ module('Acceptance | section', function(hooks) {
     const TITLE_1 = 'Featured 1';
     const TITLE_2 = 'Featured 2';
 
-    const NEWS = server.create('index-page', {slug: 'news'});
+    const NEWS = server.create('index-page', 'withArticles', {slug: 'news'});
     server.create('article', {
       id: 'foo',
       title: TITLE_1,
