@@ -25,36 +25,34 @@ export default Component.extend({
       return;
     }
 
-    // four popular articles in case the current article shows up in the results
-    let popular = this.store.query('article', {
-      index: 'gothamist',
-      sort: 'socialtopics_score_1d',
-      count: 4,
-      term: `c|${this.article.section.basename}`,
+    // four recent articles in case the current article shows up in the results
+    let recent = this.store.query('article', {
+      limit: 4,
+      descendant_of: this.article.section.id,
     });
 
-    // five featured articles in case the current article or any of the popular
+    // five featured articles in case the current article or any of the recent
     // articles show up in the results
     let featured = this.store.query('article', {
-      index: 'gothamist',
-      count: 5,
-      term: ['@main', `c|${this.article.section.basename}`],
+      limit: 5,
+      show_as_feature: true,
+      descendant_of: this.article.section.id,
     });
 
     // wait for both result sets
-    Promise.all([featured, popular]).then(([featured, popular]) => {
+    Promise.all([featured, recent]).then(([featured, recent]) => {
         addCommentCount(featured);
-        addCommentCount(popular);
+        addCommentCount(recent);
 
         // remove current article from results
-        popular = this._dedupe(this.article, popular);
+        recent = this._dedupe(this.article, recent);
         featured = this._dedupe(this.article, featured);
 
-        // dedupe featured if it happens to show up in popular
-        popular.forEach(article => featured = this._dedupe(article, featured));
+        // dedupe featured if it happens to show up in recent
+        recent.forEach(article => featured = this._dedupe(article, featured));
 
         this.setProperties({
-          popular,
+          recent,
           featured,
         });
       });
