@@ -13,7 +13,9 @@ $ember-basic-dropdown-content-z-index: 10000;
 .responsive-object {
   position: relative;
 
-  > iframe {
+  iframe,
+  > .fb-video,
+  > img {
     position: absolute;
   	top: 0;
   	left: 0;
