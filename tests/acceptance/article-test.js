@@ -41,8 +41,12 @@ module('Acceptance | article', function(hooks) {
   });
 
   test('visiting article route', async function(assert) {
-    const article = server.create('article', {text: 'foo'});
-    server.createList('article', 5, {show_as_feature: true, section: 'food'});
+    const article = server.create('article', 'withSection', {text: 'foo', section: 'food'});
+    server.createList('article', 5, 'withSection', {
+      show_as_feature: true,
+      show_on_index_listing: true,
+      section: 'food'
+    });
 
     await visit(`/${article.html_path}`);
 
@@ -53,8 +57,8 @@ module('Acceptance | article', function(hooks) {
     assert.dom('[data-test-article-body] [data-test-inserted-ad]').exists({count: 1})
 
     // recirc
-    // assert.dom('[data-test-recirc-popular] .c-block').exists({count: 3});
-    // assert.dom('[data-test-recirc-featured] .c-block').exists({count: 1});
+    assert.dom('[data-test-recirc-recent] .c-block').exists({count: 3});
+    assert.dom('[data-test-recirc-featured] .c-block').exists({count: 1});
   });
 
   test('tweeting an article', async function() {
@@ -309,12 +313,12 @@ module('Acceptance | article', function(hooks) {
     const spy = this.spy(window.pSUPERFLY, 'virtualPage');
 
     // first article
-    server.create('article', {
+    server.create('article', 'withSection', {
       slug: 'foo',
       section: 'food',
     });
     // final article
-    server.create('article', {
+    server.create('article', 'withSection', {
       slug: 'bar',
       show_as_feature: true,
       section: 'food',
@@ -326,11 +330,11 @@ module('Acceptance | article', function(hooks) {
 
     assert.equal(currentURL(), '/food/foo');
 
-    // await click('[data-test-recirc-popular] .c-block a');
-    //
-    // assert.equal(currentURL(), '/food/bar');
+    await click('[data-test-recirc-recent] .c-block a');
+
+    assert.equal(currentURL(), '/food/bar');
 
     assert.equal(spy.firstCall.args[0].virtualReferrer, '/');
-    // assert.equal(spy.secondCall.args[0].virtualReferrer, '/food/foo');
+    assert.equal(spy.secondCall.args[0].virtualReferrer, '/food/foo');
   });
 });
