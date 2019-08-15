@@ -36,7 +36,6 @@ export default Route.extend({
     }).then(section => {
       const QUERY = {
         descendant_of: section.id,
-        show_on_index_listing: true,
         limit: COUNT,
       };
 

@@ -19,7 +19,6 @@ export default Controller.extend({
 
     return {
       descendant_of: this.model.section.id,
-      show_on_index_listing: true,
       limit: COUNT,
     };
   }),

@@ -27,7 +27,6 @@ export default Controller.extend({
 
     this.set('riverQuery', {
       limit: TOTAL_COUNT,
-      show_on_index_listing: true,
     });
   },
 
