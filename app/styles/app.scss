@@ -10,10 +10,17 @@ $ember-basic-dropdown-content-z-index: 10000;
 @import "nypr-design-system/objects/gallery-overlay";
 
 // embedded media compat
-// blockquote.instagram-media,
-// blockquote.instagram-media-registered {
-//   opacity: 0;
-// }
+.responsive-object {
+  position: relative;
+
+  > iframe {
+    position: absolute;
+  	top: 0;
+  	left: 0;
+  	width: 100%;
+  	height: 100%;
+  }
+}
 
 .c-featured-blocks__heading--wnyc .wnyc-logo-icon {
   width: 94px;
