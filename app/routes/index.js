@@ -54,7 +54,6 @@ export default Route.extend({
         limit: MAIN_COUNT,
       }),
       river: this.store.query('article', {
-        show_on_index_listing: true,
         limit: TOTAL_COUNT,
       }),
       systemMessages: this.store.findRecord('system-messages', config.siteId).catch(() => ''),

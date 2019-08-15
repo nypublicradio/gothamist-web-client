@@ -46,7 +46,6 @@ export default Route.extend({
       title: titleize(tag),
       articles: this.store.query('article', {
         tags: tag,
-        show_on_index_listing: true,
         limit: COUNT,
       }),
       // HACK
@@ -66,7 +65,6 @@ export default Route.extend({
     controller.setProperties({
       query: {
         tags: model.tag,
-        show_on_index_listing: true,
         limit: COUNT,
       },
       transition: fade,
