@@ -1,4 +1,5 @@
 import ApplicationAdapter from './application';
+import { get } from '@ember/object';
 
 export default ApplicationAdapter.extend({
   // we use the query method to hit the elasticsearch backend
@@ -24,13 +25,14 @@ export default ApplicationAdapter.extend({
   // this will redirect to a deatil view, but since we don't know the ID ahead
   // of time, this needs to be a query.
   queryRecord(_store, _type, query = {}, options = {}) {
-    if (!query.html_path) {
+    let preview = get(options, 'adapterOptions.preview');
+    if (!query.html_path && !preview) {
       throw new Error('html_path is a required argument');
     }
 
     let url;
-    if (options.adapterOptions && options.adapterOptions.preview) {
-      let {identifier, token} = options.adapterOptions;
+    if (preview) {
+      let { identifier, token } = options.adapterOptions;
       url = `${this.buildURL()}page_preview?identifier=${identifier}&token=${token}`;
     } else {
       url = `${this.buildURL('page')}find/?html_path=${query.html_path}`;
