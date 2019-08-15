@@ -40,7 +40,7 @@
       {{/unless}}
 
       <body.meta
-        @author={{if showAuthor @article.authorNickname}}
+        @author={{if showAuthor @article.authors}}
         @timestamp={{if showTimestamp (timestamp @article.publishedMoment)}}
         @commentCount={{if showCommentCount @article.commentCount}}
         @commentRoute={{array 'article' @article.section.slug @article.path (hash isQueryParams=true values=(hash to=commentsAnchor))}}
