@@ -10,6 +10,7 @@ import {
 
 export default Factory.extend({
   // mirage-only attrs
+  slug,
   section,
   html_path() {
     return this.meta && this.meta.html_url;
@@ -85,14 +86,12 @@ export default Factory.extend({
   listing_title: '',
 
   meta() {
-    const SLUG = this.slug || slug();
-    const SECTION = this.section || section();
     return {
       first_published_at: moment.utc(faker.date.recent()).format(CMS_TIMESTAMP_FORMAT),
       type: 'news.ArticlePage',
       detail_url: '',
-      html_url: `${SECTION}/${SLUG}/`, // used to derive path for now
-      slug: SLUG,
+      html_url: `${this.section}/${this.slug}/`, // used to derive path for now
+      slug: this.slug,
       show_in_menus: false,
       seo_title: '',
       search_description: '',
