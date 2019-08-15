@@ -59,6 +59,7 @@ export default Page.extend({
       return {
         title: NEAREST_SECTION.title,
         slug: NEAREST_SECTION.slug,
+        id: NEAREST_SECTION.id,
       };
     } else {
       return {};
