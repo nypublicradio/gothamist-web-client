@@ -132,6 +132,13 @@ export default Route.extend({
     controller.set('to', null);
   },
 
+  serialize(article) {
+    return {
+      section: article.section.slug,
+      path: article.meta.slug
+    }
+  },
+
   actions: {
     didTransition() {
       doTargetingForModels(this.currentModel.article);
