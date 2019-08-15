@@ -7,6 +7,9 @@ export default Route.extend({
     );
   },
   afterModel(model) {
-    this.transitionTo('article', { article: model })
+    this.transitionTo('article', {
+      article: model,
+      gallery: model.gallery
+    })
   }
 });
