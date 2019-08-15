@@ -96,8 +96,25 @@ module('Integration | Component | article-body', function(hooks) {
     assert.dom('#foo').hasText('hello world');
   });
 
-  // test('it handles embeds');
-  //
+  test('it handles embeds', async function(assert) {
+    const BODY = [{
+      type: 'embed',
+      value: {
+        embed: `
+          <div>
+            <span id="embed" />
+            <script>document.getElementById("embed").textContent="embedded";</script>
+          </div>
+        `
+      }
+    }];
+
+    this.set('body', BODY);
+    await render(hbs`<ArticleBody @blocks={{body}} />`);
+
+    assert.dom('#embed').hasText('embedded');
+  });
+
   // test('it handles quotes');
   //
   // test('it handles pull quotes');

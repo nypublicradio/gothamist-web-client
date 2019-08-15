@@ -1,0 +1,4 @@
+{{#with @value.embed as |code|}}
+  {{!-- the code component expects `value` to be an object with a `code` key --}}
+  {{article-body/code value=(hash code=code)}}
+{{/with}}
