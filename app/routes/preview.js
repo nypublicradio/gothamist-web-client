@@ -7,9 +7,14 @@ export default Route.extend({
     );
   },
   afterModel(model) {
-    this.transitionTo('article', {
-      article: model,
-      gallery: model.gallery
-    })
+    // don't transition in fastboot, we
+    // don't want the target route to
+    // reload the model once it rehydrates
+    if (window.location) {
+      this.transitionTo('article', {
+        article: model,
+        gallery: model.gallery
+      })
+    }
   }
 });
