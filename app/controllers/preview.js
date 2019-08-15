@@ -1,6 +1,6 @@
-import ArticleController from './article';
+import Controller from '@ember/controller';
 
-export default ArticleController.extend({
+export default Controller.extend({
   queryParams: ['to','identifier','token'],
   to: null,
   identifier: null,

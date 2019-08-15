@@ -1,6 +1,6 @@
-import ArticleRoute from './article';
+import Route from '@ember/routing/route';
 
-export default ArticleRoute.extend({
+export default Route.extend({
   templateName: 'article',
   model({ identifier, token }) {
     return this.store.queryRecord('article',
@@ -8,4 +8,7 @@ export default ArticleRoute.extend({
       {adapterOptions: {preview: true, identifier, token}}
     );
   },
+  afterModel(model) {
+    this.transitionTo('article', model)
+  }
 });
