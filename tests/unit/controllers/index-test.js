@@ -15,7 +15,6 @@ module('Unit | Controller | index', function(hooks) {
     assert.ok(controller);
     assert.deepEqual(controller.riverQuery, {
       limit: TOTAL_COUNT,
-      show_on_index_listing: true,
     });
   });
 
