@@ -27,7 +27,7 @@ module('Unit | Model | article', function(hooks) {
       ancestry: ANCESTRY,
     });
 
-    assert.deepEqual(model.section, {slug: 'news', title: 'News'});
+    assert.deepEqual(model.section, {slug: 'news', title: 'News', id: 8});
   });
 
   test('thumbnail is properly computed', function(assert) {
