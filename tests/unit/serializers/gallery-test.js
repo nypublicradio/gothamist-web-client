@@ -32,7 +32,12 @@ module('Unit | Serializer | gallery', function(hooks) {
         value: {
           slide_title: "test 1",
           slide_image: {
-            image: 1,
+            image: {
+              id: 1,
+              caption: "Original caption",
+              credit: "foo",
+              credit_link: "http://google.com",
+            },
             caption: "A caption override"
           }
         },
@@ -43,7 +48,10 @@ module('Unit | Serializer | gallery', function(hooks) {
         value: {
           slide_title: "slide 2",
           slide_image: {
-            image: 1287,
+            image: {
+              id: 1287,
+              caption: '',
+            },
             caption: "image of blackout"
           }
         },
@@ -55,15 +63,19 @@ module('Unit | Serializer | gallery', function(hooks) {
 
     assert.deepEqual(normalized.data.attributes.slides, [{
       title: 'test 1',
+      caption: 'A caption override',
       image: {
         id: 1,
-        caption: 'A caption override',
+        caption: "Original caption",
+        credit: "foo",
+        creditLink: "http://google.com",
       }
     }, {
       title: 'slide 2',
+      caption: 'image of blackout',
       image: {
         id: 1287,
-        caption: 'image of blackout'
+        caption: '',
       }
     }]);
   })

@@ -28,10 +28,10 @@ module('Acceptance | gallery', function(hooks) {
     assert.dom('[data-test-gallery-lead-view-all]').hasText('View all 200')
 
     let preview = find('[data-test-gallery-lead-preview] img');
-    assert.ok(preview.src.match(`images/${slides[0].value.slide_image.image}/fill-625x416`), 'preview image has expected URL')
+    assert.ok(preview.src.match(`images/${slides[0].value.slide_image.image.id}/fill-625x416`), 'preview image has expected URL')
 
     await click('[data-test-gallery-thumb="1"]');
-    assert.ok(preview.src.match(`images/${slides[1].value.slide_image.image}/fill-625x416`), 'preview image is updated to new image')
+    assert.ok(preview.src.match(`images/${slides[1].value.slide_image.image.id}/fill-625x416`), 'preview image is updated to new image')
 
     await click('[data-test-gallery-lead-view-all]');
 
@@ -65,7 +65,7 @@ module('Acceptance | gallery', function(hooks) {
     await visit(gallery.html_path);
 
     gallery.slides.forEach((slide, i) => {
-      let { image:id } = slide.value.slide_image;
+      let { id } = slide.value.slide_image.image;
 
       let img = find(`[data-test-gallery-slide="${i}"] img`);
       assert.dom(img).hasAttribute('src');

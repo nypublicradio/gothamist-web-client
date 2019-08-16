@@ -79,3 +79,15 @@ export const extractPath = function(url) {
   }
   return url.replace(/https?:\/\/[^/]+\//, '').replace(/\/$/, '');
 }
+
+
+/**
+  Camelize the keys of an object one level deep.
+
+  @function camelizeObject
+  @param obj {Object}
+  @return {Object} the updated object
+*/
+export const camelizeObject = obj => Object.fromEntries(
+  Object.entries(obj || {}).map(([k, v]) => [camelize(k), v])
+)

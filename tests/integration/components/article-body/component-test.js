@@ -46,13 +46,15 @@ module('Integration | Component | article-body', function(hooks) {
     const BODY = [{
       type: 'image',
       value: {
-        image: 123,
+        image: {
+          id: 123,
+        },
         caption: 'hello there'
       },
       id: 'abcde-1325'
     }];
 
-    const EXPECTED_URL = wagtailImageUrl([{id: 123}, 630,]);
+    const EXPECTED_URL = wagtailImageUrl([{id: 123}, 630]);
 
     this.set('body', BODY);
 
