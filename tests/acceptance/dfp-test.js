@@ -48,14 +48,14 @@ module('Acceptance | dfp', function(hooks) {
     googletag.default = {cmd: []};
   });
 
-  test('provocative articles should pass @racy to DFP', async function(assert) {
+  test('provocative articles should pass racy to DFP', async function(assert) {
     this.stub(googletag.default.cmd, 'push').callsArg(0);
     const targetingSpy = this.spy(PUB_ADS_STUB, 'setTargeting');
 
     const article = server.create('article', {provocative_content: true});
     await visit(article.html_path);
 
-    assert.ok(targetingSpy.calledWith('@racy', true), 'should pass @racy');
+    assert.ok(targetingSpy.calledWith('racy', 'true'), 'should pass racy as the literal string "true" to conform with DFP expectations');
   });
 
   test('article should pass their tags, sections, and template type to DFP', async function(assert) {
