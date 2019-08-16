@@ -8,16 +8,19 @@ export default Route.extend({
       {adapterOptions: {preview: true, identifier, token}}
     );
   },
-  afterModel(model) {
-    // don't transition in fastboot, we
-    // don't want the target route to
-    // reload the model once it rehydrates
+  renderTemplate(controller, model) {
     if (typeof FastBoot === 'undefined') {
-      if (get(model, 'meta.type') === ARTICLE_TYPE) {
-        this.transitionTo('article', {
-          article: model,
-          gallery: model.gallery
-        });
+      switch(get(model, 'meta.type')) {
+      case ARTICLE_TYPE:
+        this.render('article', {
+          model: {
+            article: model,
+            gallery: model.gallery
+          }
+        })
+        break;
+      default:
+        this._super(...arguments);
       }
     }
   }
