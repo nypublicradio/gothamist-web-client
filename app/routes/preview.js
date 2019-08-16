@@ -12,7 +12,7 @@ export default Route.extend({
     // don't transition in fastboot, we
     // don't want the target route to
     // reload the model once it rehydrates
-    if (window.location) {
+    if (typeof FastBoot === 'undefined') {
       if (get(model, 'meta.type') === ARTICLE_TYPE) {
         this.transitionTo('article', {
           article: model,

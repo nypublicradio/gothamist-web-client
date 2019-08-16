@@ -37,8 +37,8 @@ export default Serializer.extend({
     if (queryParams.html_path) {
       // client is expecting a single object
       return json[0];
-    } else if (params.id) {
-      // find request
+    } else if (params.id || queryParams.token) {
+      // find request or preview page
       // returned JSON is not an array
       return json;
     } else {
