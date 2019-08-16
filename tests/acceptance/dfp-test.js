@@ -24,7 +24,9 @@ const AD_STUB = {
 };
 
 const DFP_STUB = () => ({
-  cmd: [],
+  cmd: {
+    push: fn => fn(), // force function queue to run
+  },
   pubads: () => PUB_ADS_STUB,
   defineSlot: () => AD_STUB,
   sizeMapping: () => MAPPING_STUB,
@@ -49,7 +51,6 @@ module('Acceptance | dfp', function(hooks) {
   });
 
   test('provocative articles should pass racy to DFP', async function(assert) {
-    this.stub(googletag.default.cmd, 'push').callsArg(0);
     const targetingSpy = this.spy(PUB_ADS_STUB, 'setTargeting');
 
     const article = server.create('article', {provocative_content: true});
@@ -59,7 +60,6 @@ module('Acceptance | dfp', function(hooks) {
   });
 
   test('article should pass their tags, sections, and template type to DFP', async function(assert) {
-    this.stub(googletag.default.cmd, 'push').callsArg(0);
     const targetingSpy = this.spy(PUB_ADS_STUB, 'setTargeting');
 
     const article = server.create('article', {tags: ['foo', 'bar'], section: 'news'});
@@ -74,8 +74,6 @@ module('Acceptance | dfp', function(hooks) {
   test('sensitive articles should not render ads', async function(assert) {
     const sensitive = server.create('article', {sensitive_content: true, show_as_feature: true});
     const numb = server.create('article', {show_as_feature: true});
-
-    this.stub(googletag.default.cmd, 'push').callsArg(0);
 
     const defineSpy = this.spy(googletag.default, 'defineSlot');
 
@@ -96,5 +94,41 @@ module('Acceptance | dfp', function(hooks) {
     await click(`[data-test-block="${numb.id}"] a`);
 
     assert.ok(defineSpy.callCount > HOMEPAGE_ADS * 2, 'non-sensitive articles should call ads after a sensitive ad');
-  })
+  });
+
+  test('sponsored articles should pass their sponsor name to DFP', async function(assert) {
+    const targetingSpy = this.spy(PUB_ADS_STUB, 'setTargeting');
+
+    const SPONSOR_1 = "NYC Wine & Food Festival";
+    const SPONSOR_2 = "Volvo";
+
+    let article = server.create('article', {
+      related_sponsors: [{
+        id: 3,
+        link: "https://nycwff.org/",
+        name: SPONSOR_1,
+      }],
+    });
+    await visit(article.html_path);
+
+    assert.ok(targetingSpy.calledWith('Sponsor', SPONSOR_1), 'should pass in related sponsor names');
+
+    article = server.create('article', {
+      related_sponsors: [{
+        id: 3,
+        link: "https://nycwff.org/",
+        name: SPONSOR_1,
+      }, {
+        id: 5,
+        link: "https://volvo.com",
+        name: SPONSOR_2,
+      }],
+    });
+    await visit(article.html_path);
+
+    assert.ok(
+      targetingSpy.calledWith('Sponsor', [SPONSOR_1, SPONSOR_2].join(',')),
+      'multiple sponsors should be separated by comma'
+    );
+  });
 });
