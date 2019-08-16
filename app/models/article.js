@@ -14,6 +14,12 @@ export const LEAD_VIDEO   = 'lead_video';
 export const LEAD_AUDIO   = 'lead_audio';
 export const LEAD_IMAGE   = 'lead_image';
 
+const AD_BINDINGS = [
+  'tags',
+  'racy',
+  'section.slug:Category',
+];
+
 export default Page.extend({
   ancestry:    DS.attr(),
   body:        DS.attr(),
@@ -159,12 +165,10 @@ export default Page.extend({
       .filter(tag => tag.match(/^@/))
       .map(tag => tag.replace(/^@/,''));
   }),
-  adBindings: computed(function() {
-    return [
-      'tags',
-      'section.slug:Category',
-      'provocativeContent:@racy'
-    ];
+  adBindings: AD_BINDINGS,
+  racy: computed('provocativeContent', function() {
+    // DFP does not like primitive booleans for targeting
+    return this.provocativeContent ? 'true': '';
   }),
 
   // compute `path` for article so it doesn't include the `section` slug
