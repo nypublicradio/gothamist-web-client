@@ -22,7 +22,7 @@ module('Acceptance | preview', function(hooks) {
 
     await visit(url);
 
-    assert.equal(currentURL(), `/${article.section}/${article.slug}`, 'it should bring you to the correct route');
+    assert.equal(currentURL(), url);
     assert.dom('[data-test-article-headline]').hasText(article.title);
     assert.dom('[data-test-article-body]').hasText('foo');
     assert.dom('[data-test-article-body] [data-test-inserted-ad]').exists({count: 1})
