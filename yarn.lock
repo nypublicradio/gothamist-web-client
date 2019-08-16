@@ -9193,7 +9193,7 @@ nypr-auth@^0.2.4:
 
 nypr-design-system@nypublicradio/nypr-design-system#master:
   version "2.0.2"
-  resolved "https://codeload.github.com/nypublicradio/nypr-design-system/tar.gz/077a39a78c62b6489db1c8b94c9d5afc892cb6eb"
+  resolved "https://codeload.github.com/nypublicradio/nypr-design-system/tar.gz/1c907219037ebf200ca28a8c9013499857ea77f1"
   dependencies:
     "@babel/core" "^7.0.0"
     broccoli-merge-files "^0.8.0"
