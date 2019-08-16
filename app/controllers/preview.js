@@ -1,8 +1,7 @@
 import Controller from '@ember/controller';
 
 export default Controller.extend({
-  queryParams: ['to','identifier','token'],
-  to: null,
+  queryParams: ['identifier','token'],
   identifier: null,
   token: null,
 });
