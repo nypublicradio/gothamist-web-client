@@ -16,4 +16,11 @@ module('Unit | Adapter | application', function(hooks) {
 
     assert.notOk(ajaxOptions.url.endsWith('?'), 'should not have a query string');
   });
+
+  test('ajaxOptions should add a key multiple times if the value is an array', function(assert) {
+    let adapter = this.owner.lookup('adapter:application');
+    const { url } = adapter.ajaxOptions('http://foo.com', 'GET', {data: {foo: ['bar', 'baz']}});
+
+    assert.equal(url.split('?')[1], 'foo=bar&foo=baz');
+  });
 });
