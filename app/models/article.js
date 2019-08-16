@@ -17,6 +17,7 @@ export const LEAD_IMAGE   = 'lead_image';
 const AD_BINDINGS = [
   'tags',
   'racy',
+  'sponsorNames:Sponsor',
   'section.slug:Category',
 ];
 
@@ -169,6 +170,9 @@ export default Page.extend({
   racy: computed('provocativeContent', function() {
     // DFP does not like primitive booleans for targeting
     return this.provocativeContent ? 'true': '';
+  }),
+  sponsorNames: computed('relatedSponsors', function() {
+    return this.relatedSponsors.mapBy('name').join(',');
   }),
 
   // compute `path` for article so it doesn't include the `section` slug
