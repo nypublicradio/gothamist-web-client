@@ -78,6 +78,7 @@ export default Route.extend({
       publishedTime: article ? article.publishedMoment.format() : gallery.publishedMoment.format(),
       section: article ? article.section.slug : gallery.section,
       authors: article ? article.authors : gallery.authors,
+      hideFromRobots: !gallery.showOnIndexListing,
     });
 
     if (this.image) {
