@@ -28,13 +28,11 @@ export default DS.RESTAdapter.extend(AdapterFetch, {
       options.data = {};
 
       // construct query params according to wagtail spec
-      // multiple keys are unconventional; added as comma-separatec raw key names
-      // instead of with the usual `[]`
-      // e.g. tags=food,news
+      // multiple keys are added without with the usual `[]`
+      // e.g. tags: ['food', 'news'] -> tags=food&tags=news
       var qp = Object.keys(query).map(key => {
         if (Array.isArray(query[key])) {
-          let vals = query[key].map(encodeURIComponent).join(',');
-          return `${key}=${vals}`;
+          return query[key].map(val => `${key}=${encodeURIComponent(val)}`).join('&');
         } else {
           return `${key}=${encodeURIComponent(query[key])}`;
         }
