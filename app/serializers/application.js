@@ -21,4 +21,16 @@ export default DS.RESTSerializer.extend({
     return this._super(store, Model, payload);
   },
 
+  extractMeta(store, Model, payload) {
+    if (!payload.meta) {
+      return;
+    }
+    let meta = {
+      total: payload.meta.total_count,
+      count: Array.isArray(payload.items) ? payload.items.length : 1,
+    }
+    delete payload.meta;
+    return meta;
+  },
+
 });
