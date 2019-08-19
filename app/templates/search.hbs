@@ -24,31 +24,62 @@
     </header>
   </div>
 
-  <div class="c-listing__sections u-section-spacing l-container l-container--14col l-wrap">
+  <div class="c-listing__sections u-section-spacing l-container l-container--14col l-wrap" data-test-search-results>
+    {{#if this.search.isRunning}}
+      <p class="u-align--center u-font--l u-font--primary">
+        Searching...
+      </p>
+    {{else if this.articles}}
+      <section class="c-listing__section o-section">
+        <NyprMBlockList @items={{this.articles}} as |article|>
+          <ArticleBlock
+            @article={{article}}
+            @orientation='h'
+            @size='l'
+            @thumbnailSize={{array 100 100 true}}
+            @mediumThumbnailSize={{array 360 240}}
+          />
+        </NyprMBlockList>
+      </section>
 
-    <div class="u-spacing--quad" data-test-search-results>
-      {{#if this.search.isRunning}}
-        <p class="u-align--center u-font--l u-font--primary">
-          Searching...
-        </p>
-      {{else if this.articles}}
-        <section class="c-listing__section o-section" data-test-search-results>
-          <NyprMBlockList @items={{this.articles}} as |article|>
-            <ArticleBlock
-              @article={{article}}
-              @orientation='h'
-              @size='l'
-              @thumbnailSize={{array 100 100 true}}
-              @mediumThumbnailSize={{array 360 240}}
-            />
-          </NyprMBlockList>
-        </section>
-      {{else if (gt this.search.performCount 0)}}
-        <p class="u-align--center u-font--l u-font--primary">
-          No Results
-        </p>
-      {{/if}}
-    </div>
+      <QueryMore
+        @query={{QUERY}}
+        @model='page'
+        @total={{results.meta.total}}
+        as |more|>
+        <AnimatedContainer class="u-section-spacing" @onInitialRender={{true}}>
+          {{#each more.pages as |page|}}
+            <AriaLoadMessage @message="More Results Loaded" />
+            <section class="c-listing__section o-section">
+              <NyprMBlockList @items={{page}} as |article|>
+                <ArticleBlock
+                  @article={{article}}
+                  @orientation='h'
+                  @size='l'
+                  @thumbnailSize={{array 100 100 true}}
+                  @mediumThumbnailSize={{array 360 240}}
+                />
+              </NyprMBlockList>
+            </section>
+          {{/each}}
+        </AnimatedContainer>
 
+        {{#unless more.isFinished}}
+          <div class="u-align-center">
+            <NyprAButton
+              data-test-more-results
+              class="o-button--c-quaternary o-button--extra"
+              @onclick={{perform more.queryMore}}
+            >
+              {{if more.queryMore.isRunning 'Loading...' 'More Results'}}
+            </NyprAButton>
+          </div>
+        {{/unless}}
+      </QueryMore>
+    {{else if (gt this.search.performCount 0)}}
+      <p class="u-align--center u-font--l u-font--primary">
+        No Results
+      </p>
+    {{/if}}
   </div>
 </div>
