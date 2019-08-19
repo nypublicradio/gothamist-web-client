@@ -79,7 +79,7 @@ export default Route.extend({
         url: 'https://wnyc.us5.list-manage.com/subscribe?u=4109fdd323aaac7078eadaa8f&id=65dbec786b',
         text: 'Newsletter',
       }, {
-        url: 'https://feeds.gothamistllc.com/gothamist05',
+        url: '/feed/',
         text: 'RSS Feed',
       }, {
         route: ['staff'],
