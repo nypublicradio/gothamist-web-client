@@ -117,10 +117,36 @@ module('Integration | Component | article-body', function(hooks) {
     assert.dom('#embed').hasText('embedded');
   });
 
-  // test('it handles quotes');
-  //
-  // test('it handles pull quotes');
-  //
+  test('it handles block quotes', async function(assert) {
+    const BODY = [{
+      type: 'block_quote',
+      value: {
+        block_quote: "Long Quote No Big Deal",
+      }
+    }];
+
+    this.set('body', BODY);
+    await render(hbs`<ArticleBody @blocks={{body}} />`);
+
+    assert.dom('blockquote > p').hasText('Long Quote No Big Deal');
+  });
+
+  test('it handles pull quotes', async function(assert) {
+    const BODY = [{
+      type: 'pull_quote',
+      value: {
+        pull_quote: "Long Quote No Big Deal",
+        attribution: "Sally Ride",
+      }
+    }];
+
+    this.set('body', BODY);
+    await render(hbs`<ArticleBody @blocks={{body}} />`);
+
+    assert.dom('blockquote.o-pullquote > p > span').hasText('Long Quote No Big Deal');
+    assert.dom('blockquote.o-pullquote > .o-pullquote__author').hasText('Sally Ride');
+  });
+
   // test('it handles documents');
 
 });
