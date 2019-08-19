@@ -27,7 +27,7 @@ Router.map(function() {
   this.route('popular');
   this.route('staff');
   this.route('sections', {path: ':section'});
-  this.route('author-detail', {path: 'author/:slug'});
+  this.route('author-detail', {path: 'staff/:slug'});
 
   this.route('contact');
 });
