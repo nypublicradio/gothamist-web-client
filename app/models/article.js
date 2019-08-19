@@ -1,7 +1,7 @@
 import DS from 'ember-data';
 import Page from './page';
 import { computed } from '@ember/object';
-import { reads, bool } from '@ember/object/computed';
+import { reads, bool, or } from '@ember/object/computed';
 
 import { extractPath, camelizeObject } from '../utils/wagtail-api';
 
@@ -84,7 +84,7 @@ export default Page.extend({
   hasAudio: computed('leadAsset', function() {
     return this.leadAsset ? this.leadAsset.type === LEAD_AUDIO : false;
   }),
-  moveableTypeId: reads('legacyId'),
+  idForComments: or('legacyId', 'uuid'),
 
   breadcrumb: computed('section', function() {
     if (!this.section.slug) {
@@ -184,6 +184,11 @@ export default Page.extend({
       // strip out the section
       return path.replace(`${this.section.slug}/`, '');
     }
+  }),
+
+  // for comments and share dialogs
+  permalink: computed('path', function() {
+    return `https://gothamist.com/${this.path}`;
   }),
 
   // relationships
