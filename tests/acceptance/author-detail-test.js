@@ -15,7 +15,7 @@ module('Acceptance | author detail', function(hooks) {
   hooks.beforeEach(() => {
     // author page
     server.create('page', {
-      html_path: 'staff/foo-bar/',
+      html_path: 'author/foo-bar/',
       slug: AUTHOR_SLUG,
       title: 'Foo Bar',
     });
@@ -26,9 +26,9 @@ module('Acceptance | author detail', function(hooks) {
   });
 
   test('visiting author-detail', async function(assert) {
-    await visit(`/staff/${AUTHOR_SLUG}`);
+    await visit(`/author/${AUTHOR_SLUG}`);
 
-    assert.equal(currentURL(), '/staff/foo-bar');
+    assert.equal(currentURL(), '/author/foo-bar');
 
     assert.dom('[data-test-block]').exists({count: COUNT});
     assert.dom('[data-test-author-heading]').hasText('Foo Bar');
@@ -43,7 +43,7 @@ module('Acceptance | author detail', function(hooks) {
       .models.map((a, i) => ({posts: Math.ceil(Math.random() * i + 1), identifiers: [a.id]}));
 
     server.get(`${config.disqusAPI}/threads/set.json`, {response: EXPECTED});
-    await visit(`/staff/${AUTHOR_SLUG}`);
+    await visit(`/author/${AUTHOR_SLUG}`);
 
     await click('[data-test-more-results]');
 
