@@ -4,6 +4,9 @@ import { filter } from '@ember/object/computed';
 import { htmlSafe } from '@ember/string';
 import { task } from 'ember-concurrency';
 
+
+export const COUNT = 12;
+
 export default Controller.extend({
   queryParams: ['q'],
 
@@ -24,9 +27,15 @@ export default Controller.extend({
 
   search: task(function *(q) {
     this.set('q', q);
-    let results = yield this.store.query('page', {q});
+    const QUERY = {
+      q,
+      limit: COUNT,
+    };
+    let results = yield this.store.query('page', QUERY);
 
-    this.set('results', results);
+    this.setProperties({
+      results,
+    });
   }).drop(),
 
   // prevents UI jumping between searches
