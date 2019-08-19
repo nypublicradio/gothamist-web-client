@@ -25,7 +25,7 @@ module('Acceptance | gallery', function(hooks) {
 
     assert.dom('[data-test-gallery-lead]').exists();
     // mirage defualt is 5 slides per gallery
-    assert.dom('[data-test-gallery-lead-view-all]').hasText('View all 200')
+    assert.dom('[data-test-gallery-lead-view-all]').hasText('View all 8')
 
     let preview = find('[data-test-gallery-lead-preview] img');
     assert.ok(preview.src.match(`images/${slides[0].value.slide_image.image.id}/fill-625x416`), 'preview image has expected URL')
