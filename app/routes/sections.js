@@ -31,7 +31,7 @@ export default Route.extend({
   },
 
   model({ section }) {
-    return  this.store.queryRecord('page', {
+    return this.store.queryRecord('page', {
       html_path: section,
     }).then(section => {
       const QUERY = {
