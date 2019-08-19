@@ -20,7 +20,7 @@ export default Controller.extend({
       srcS: wagtailImageUrl([image, 420]),
       srcM: wagtailImageUrl([image, 800]),
       srcL: wagtailImageUrl([image, 1200]),
-      width: 1200,
+      height: 733, // slides are specified to 733 max in CSS
       caption: caption || image.caption,
       credit: image.credit,
       creditLink: image.creditLink,
