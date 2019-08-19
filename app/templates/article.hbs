@@ -99,7 +99,7 @@
 
     </NyprOArticleHeader>
 
-    <AdTagInside @slot="gothamist/interior/midpage/1" @contentsId={{model.article.moveableTypeId}}>
+    <AdTagInside @slot="gothamist/interior/midpage/1" @contentsId={{model.article.idForComments}}>
       <NyprOArticleBody class={{unless model.article.hasLead 'u-space--zero--top'}} data-test-article-body>
         <ArticleBody @blocks={{model.article.body}} />
       </NyprOArticleBody>
@@ -139,8 +139,8 @@
           <footer.comments>
             <DisqusComments
               @id={{commentsAnchor}}
-              @identifier={{model.article.moveableTypeId}}
               @permalink={{concat 'https://gothamist.com/' model.article.path}}
+              @identifier={{model.article.idForComments}}
               @onReady={{navigateToComments}}
             />
           </footer.comments>
