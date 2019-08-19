@@ -186,6 +186,11 @@ export default Page.extend({
     }
   }),
 
+  // for comments and share dialogs
+  permalink: computed('path', function() {
+    return `https://gothamist.com/${this.path}`;
+  }),
+
   // relationships
   gallery: DS.belongsTo(),
 
