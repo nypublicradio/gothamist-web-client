@@ -2,24 +2,14 @@ import moment from 'moment';
 import { Response, faker } from 'ember-cli-mirage';
 
 import config from '../config/environment';
+import { paginate, searchAllCollections } from './utils';
+
 
 const QUERY_MAP = {
   descendant_of: 'pageId',
 };
 
 const PARAMS_TO_SKIP = ['fields', 'type', 'limit', 'offset', 'order'];
-
-const searchAllCollections = (query, schema) => {
-  const collectionNames = schema.db._collections.mapBy('name').filter(n => n !== 'consts');
-
-  for (let i = 0; i < collectionNames.length; i++) {
-    let collection = collectionNames[i];
-    let found = schema[collection].where({...query});
-    if (found.models.length) {
-      return found;
-    }
-  }
-};
 
 export default function() {
   this.urlPrefix = config.cmsServer;
@@ -42,7 +32,7 @@ export default function() {
   this.get('/api/v2/pages', (schema, request) => {
     let {
       limit,
-      offset = 0,
+      offset,
       fields,
       type,
       order = '',
@@ -51,13 +41,6 @@ export default function() {
     if (!fields && !type) {
       return new Response(400, {}, {detail: ["fields and type are required"]});
     }
-
-    // coerce
-    offset = Number(offset);
-    limit = Number(limit);
-
-    const START = offset;
-    const END = (offset + 1 * limit);
 
     // construct a query object for the `where` method
     const QUERY = {}
@@ -84,7 +67,7 @@ export default function() {
       articles = articles.sort(sortFn)
     }
 
-    return articles.slice(START, END);
+    return paginate(articles, limit, offset);
   });
 
   // general purpose find endpoint
@@ -101,7 +84,13 @@ export default function() {
   });
 
   // elasticsearch endpoint
-  this.get('/api/v2/search/', function(schema, { queryParams: { q } }) {
+  this.get('/api/v2/search/', function(schema, { queryParams }) {
+    let {
+      limit,
+      offset,
+      q,
+    } = queryParams;
+
     let found = searchAllCollections({ description: q }, schema);
     found = this.serialize(found);
     if (found) {
@@ -110,6 +99,7 @@ export default function() {
         content_type_id: 5,
         score: 1.2345,
       }));
+      found.items = paginate(found.items, limit, offset);
     } else {
       found = {
         items: [],
