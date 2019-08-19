@@ -30,15 +30,18 @@ export default Route.extend({
     });
   },
 
-  model({ name }) {
+  model({ slug }) {
+    const QUERY = {
+      author_slug: slug,
+      limit: COUNT,
+    };
+
     return hash({
-      name,
-      articles: this.store.query('article', {
-        index: 'gothamist',
-        term: `a|${name}`,
-        count: COUNT,
-      })
-    })
+      author: this.store.queryRecord('page', {
+        html_path: `staff/${slug}`
+      }),
+      articles: this.store.query('article', QUERY),
+    });
   },
 
   setupController(controller, model) {
@@ -46,10 +49,8 @@ export default Route.extend({
 
     controller.setProperties({
       query: {
-        index: 'gothamist',
-        term: `a|${model.name}`,
-        count: COUNT,
-        page: 2,
+        limit: COUNT,
+        author_slug: model.author.slug,
       },
       transition: fade,
     });
