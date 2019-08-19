@@ -35,6 +35,7 @@ export default Controller.extend({
 
     this.setProperties({
       results,
+      QUERY,
     });
   }).drop(),
 
