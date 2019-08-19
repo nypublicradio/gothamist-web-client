@@ -4,7 +4,7 @@ import { Response, faker } from 'ember-cli-mirage';
 import config from '../config/environment';
 
 const QUERY_MAP = {
-  descendant_of: 'indexPageId',
+  descendant_of: 'pageId',
 };
 
 const PARAMS_TO_SKIP = ['fields', 'type', 'limit', 'offset', 'order'];
