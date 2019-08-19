@@ -1,7 +1,7 @@
 import ApplicationSerializer, { cleanMirageAttrs } from './application';
 
 
-const MIRAGE_ONLY = ['descendants'];
+const MIRAGE_ONLY = ['descendants', 'type'];
 
 export default ApplicationSerializer.extend({
   serialize() {

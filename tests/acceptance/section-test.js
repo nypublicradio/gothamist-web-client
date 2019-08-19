@@ -15,7 +15,7 @@ module('Acceptance | section', function(hooks) {
   setupMirage(hooks);
 
   test('visiting section page', async function(assert) {
-    server.create('index-page', 'withArticles', {
+    server.create('page', 'withArticles', {
       slug: 'news',
       title: 'News',
     });
@@ -33,13 +33,13 @@ module('Acceptance | section', function(hooks) {
   });
 
   test('section lists get updated with commentCount', async function(assert) {
-    server.create('index-page', 'withArticles', {
+    server.create('page', 'withArticles', {
       id: '1',
       slug: 'news',
       title: 'News',
     });
 
-    const EXPECTED = server.schema.articles.where({indexPageId: '1'})
+    const EXPECTED = server.schema.articles.where({pageId: '1'})
       .models.map((a, i) => ({posts: Math.ceil(Math.random() * i + 1), identifiers: [a.id]}));
 
     server.get(`${config.disqusAPI}/threads/set.json`, {response: EXPECTED});
@@ -61,23 +61,23 @@ module('Acceptance | section', function(hooks) {
     const TITLE_1 = 'Featured 1';
     const TITLE_2 = 'Featured 2';
 
-    const NEWS = server.create('index-page', 'withArticles', {slug: 'news'});
+    const NEWS = server.create('page', 'withArticles', {slug: 'news'});
     server.create('article', {
       id: 'foo',
       title: TITLE_1,
       show_as_feature: true,
-      indexPage: NEWS,
+      page: NEWS,
       publication_date: moment.utc().subtract(2, 'minute').format(CMS_TIMESTAMP_FORMAT),
     });
     server.create('article', {
       id: 'bar',
       title: TITLE_2,
       show_as_feature: true,
-      indexPage: NEWS,
+      page: NEWS,
       publication_date: moment.utc().subtract(1, 'minute').format(CMS_TIMESTAMP_FORMAT),
     });
     // ensure the featured articles aren't just the newest
-    server.create('article', 'now', {indexPage: NEWS});
+    server.create('article', 'now', {page: NEWS});
 
     await visit('/news');
 

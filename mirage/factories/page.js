@@ -11,6 +11,7 @@ import {
 
 export default Factory.extend({
   // mirage-only attrs
+  type: "standardpages.IndexPage",
   html_path() {
     return this.meta && this.meta.html_url;
   },
@@ -19,7 +20,7 @@ export default Factory.extend({
     const SLUG = this.slug || slug();
     return {
       first_published_at: moment.utc(faker.date.recent()).format(CMS_TIMESTAMP_FORMAT),
-      type: "standardpages.IndexPage",
+      type: this.type,
       detail_url: '',
       html_url: `${SLUG}/`,
       slug: SLUG,
@@ -43,7 +44,7 @@ export default Factory.extend({
       if (!page.descendants.length) {
         page.update({
           descendants: server.createList('article', COUNT * 2, {
-            indexPage: page,
+            page,
             section: page.meta.slug
           }),
         });
