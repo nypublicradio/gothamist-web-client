@@ -38,7 +38,7 @@ export default Route.extend({
 
     return hash({
       author: this.store.queryRecord('page', {
-        html_path: `staff/${slug}`
+        html_path: `author/${slug}`
       }),
       articles: this.store.query('article', QUERY),
     });
