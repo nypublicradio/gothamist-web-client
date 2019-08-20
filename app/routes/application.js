@@ -67,9 +67,6 @@ export default Route.extend({
       }, {
         route: ['sections', 'food'],
         text: 'Food',
-      }, {
-        route: ['popular'],
-        text: 'Popular',
       }],
 
       secondaryNav: [{

@@ -55,8 +55,9 @@ module('Acceptance | analytics', function(hooks) {
     await click('[data-test-top-nav] [data-test-nav-link="0"]'); // news section
     assert.ok(spyLayer.push.calledWith({template: 'section'}), 'section template is declared');
 
-    await click('[data-test-top-nav] [data-test-nav-link="3"]'); // popular "dimension"
-    assert.ok(spyLayer.push.calledWith({template: 'dimension'}), 'dimension template is declared');
+    // remove popular for now
+    // await click('[data-test-top-nav] [data-test-nav-link="3"]'); // popular "dimension"
+    // assert.ok(spyLayer.push.calledWith({template: 'dimension'}), 'dimension template is declared');
 
     await click('[data-test-main-footer] [data-test-secondary-nav-link="1"]'); // contact us
     assert.ok(spyLayer.push.calledWith({template: 'flatpage'}), 'flatpage template is declared');
