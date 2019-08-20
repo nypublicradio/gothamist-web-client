@@ -4,7 +4,7 @@ import { WAGTAIL_MODEL_TYPE as ARTICLE_TYPE } from '../models/article';
 
 export default Route.extend({
   model({ identifier, token }) {
-    return this.store.queryRecord('article', {},
+    return this.store.queryRecord('page', {},
       {adapterOptions: {preview: true, identifier, token}}
     );
   },
