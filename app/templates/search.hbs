@@ -8,9 +8,9 @@
         class="c-search-results__result-number u-font--secondary-style u-font--secondary"
         style={{resultsStyle}}
       >
-        {{#if this.articles.length}}
-          <strong>{{this.articles.length}}</strong>
-          {{if (eq this.articles.length 1) 'Result' 'Results'}} for:
+        {{#if this.results}}
+          <strong>{{this.results.meta.total}}</strong>
+          {{if (eq this.results.meta.total 1) 'Result' 'Results'}} for:
         {{/if}}
       </div>
 
