@@ -12,7 +12,7 @@ export const QUERY_PARAMS = {
 };
 export const BASE = `${config.disqusAPI}/threads/set.json`;
 
-const DEFAULT_OPS = {
+const DEFAULT_OPTIONS = {
   ident: 'idForComments',
 };
 
@@ -26,14 +26,14 @@ const DEFAULT_OPS = {
   @param modelOrRecordArray {DS.Model|DS.RecordArray}
   @return {void}
 */
-export default async function addCommentCount(modelOrRecordArray, ops = {}) {
-  ops = {...DEFAULT_OPS, ...ops};
+export default async function addCommentCount(modelOrRecordArray, options = {}) {
+  options = {...DEFAULT_OPTIONS, ...options};
   let qp = Object.keys(QUERY_PARAMS).map(key => `${key}=${QUERY_PARAMS[key]}`);
 
   if (modelOrRecordArray instanceof DS.Model) {
-    qp.push(`thread:ident=${get(modelOrRecordArray, ops.ident)}`);
+    qp.push(`thread:ident=${get(modelOrRecordArray, options.ident)}`);
   } else if (modelOrRecordArray instanceof DS.RecordArray) {
-    modelOrRecordArray.mapBy(ops.ident).forEach(ident => qp.push(`thread:ident=${ident}`));
+    modelOrRecordArray.mapBy(options.ident).forEach(ident => qp.push(`thread:ident=${ident}`));
   }
 
   let res;
@@ -58,7 +58,7 @@ export default async function addCommentCount(modelOrRecordArray, ops = {}) {
     response.forEach(thread => {
       let { identifiers, posts } = thread;
       let [ id ] = identifiers;
-      let article = modelOrRecordArray.findBy(ops.ident, id);
+      let article = modelOrRecordArray.findBy(options.ident, id);
       if (article) {
         article.set('commentCount', posts);
       }
