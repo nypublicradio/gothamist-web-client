@@ -1,6 +1,8 @@
 import Route from '@ember/routing/route';
 import { get } from '@ember/object';
 import { WAGTAIL_MODEL_TYPE as ARTICLE_TYPE } from '../models/article';
+import RSVP from 'rsvp';
+const { hash } = RSVP;
 
 export default Route.extend({
   model({ identifier, token }) {
@@ -9,19 +11,17 @@ export default Route.extend({
     );
   },
   renderTemplate(controller, model) {
-    if (typeof FastBoot === 'undefined') {
-      switch(get(model, 'meta.type')) {
+    switch(get(model, 'meta.type')) {
       case ARTICLE_TYPE:
-        this.render('article', {
-          model: {
-            article: model,
-            gallery: model.gallery
-          }
+        hash({
+          article: model,
+          gallery: model.gallery
+        }).then(model => {
+          this.render('article', { model })
         })
         break;
       default:
         this._super(...arguments);
-      }
     }
   }
 });
