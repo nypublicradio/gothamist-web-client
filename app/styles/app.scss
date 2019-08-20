@@ -40,7 +40,8 @@ $ember-basic-dropdown-content-z-index: 10000;
 }
 
 // target links embedded in gothamist captions with proper styling
-.o-caption__text > span > a {
+// sometimes they're not a direct child
+.o-caption__text > span a {
   display: inline;
   color: #333;
   border-bottom: 2px dotted #333;
