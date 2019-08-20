@@ -1,6 +1,8 @@
 import DS from 'ember-data';
 import fetch from 'fetch';
 
+import { get } from '@ember/object';
+
 import config from '../config/environment';
 
 
@@ -9,6 +11,10 @@ export const QUERY_PARAMS = {
   forum: 'gothamist',
 };
 export const BASE = `${config.disqusAPI}/threads/set.json`;
+
+const DEFAULT_OPTIONS = {
+  ident: 'idForComments',
+};
 
 /**
   Takes the given model or list of models (aka RecordArray) and fetches their comment count
@@ -20,13 +26,14 @@ export const BASE = `${config.disqusAPI}/threads/set.json`;
   @param modelOrRecordArray {DS.Model|DS.RecordArray}
   @return {void}
 */
-export default async function addCommentCount(modelOrRecordArray) {
+export default async function addCommentCount(modelOrRecordArray, options = {}) {
+  options = {...DEFAULT_OPTIONS, ...options};
   let qp = Object.keys(QUERY_PARAMS).map(key => `${key}=${QUERY_PARAMS[key]}`);
 
   if (modelOrRecordArray instanceof DS.Model) {
-    qp.push(`thread:ident=${modelOrRecordArray.id}`);
+    qp.push(`thread:ident=${get(modelOrRecordArray, options.ident)}`);
   } else if (modelOrRecordArray instanceof DS.RecordArray) {
-    modelOrRecordArray.mapBy('id').forEach(id => qp.push(`thread:ident=${id}`));
+    modelOrRecordArray.mapBy(options.ident).forEach(ident => qp.push(`thread:ident=${ident}`));
   }
 
   let res;
@@ -51,7 +58,7 @@ export default async function addCommentCount(modelOrRecordArray) {
     response.forEach(thread => {
       let { identifiers, posts } = thread;
       let [ id ] = identifiers;
-      let article = modelOrRecordArray.findBy('id', id);
+      let article = modelOrRecordArray.findBy(options.ident, id);
       if (article) {
         article.set('commentCount', posts);
       }

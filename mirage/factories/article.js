@@ -81,8 +81,6 @@ export default Factory.extend({
     }
   ]),
 
-  legacy_id: () => faker.random.number(50000, 80000),
-
   listing_image: null,
   listing_summary: '',
   listing_title: '',
@@ -137,6 +135,8 @@ export default Factory.extend({
   tags: () => ([]),
 
   title: () => faker.random.words(6),
+
+  uuid: () => faker.random.uuid(),
 
   now: trait({
     publication_date: moment.utc().format(CMS_TIMESTAMP_FORMAT),
