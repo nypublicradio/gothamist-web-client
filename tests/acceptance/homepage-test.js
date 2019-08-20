@@ -92,7 +92,7 @@ module('Acceptance | homepage', function(hooks) {
     });
     server.createList('article', TOTAL_COUNT * 2);
     const EXPECTED = server.schema.articles.all()
-      .models.map((a, i) => ({posts: Math.ceil(Math.random() * i + 1), identifiers: [a.id]}));
+      .models.map((a, i) => ({posts: Math.ceil(Math.random() * i + 1), identifiers: [a.uuid]}));
 
     server.get(`${config.disqusAPI}/threads/set.json`, {response: EXPECTED});
 
@@ -103,7 +103,8 @@ module('Acceptance | homepage', function(hooks) {
     // assert that articles loaded via "read more" also get updated
     findAll('[data-test-block]').forEach(block => {
       let id = block.dataset.testBlock;
-      let { posts } = EXPECTED.find(d => d.identifiers.includes(id));
+      let { uuid } = server.schema.articles.find(id);
+      let { posts } = EXPECTED.find(d => d.identifiers.includes(uuid));
       assert.ok(block.querySelector('.c-block-meta__comments'), 'comments are rendered');
       assert.dom(block.querySelector('.c-block-meta__comments')).includesText(String(posts));
     });
