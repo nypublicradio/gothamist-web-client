@@ -15,9 +15,9 @@ module('Unit | Utility | add-comment-count', function(hooks) {
   test('it updates an article model', async function(assert) {
     const EXPECTED = 100;
     let store = this.owner.lookup('service:store');
-    const ARTICLE = store.createRecord('article', {id: 'foo'});
+    const ARTICLE = store.createRecord('article', {idForComments: 'foo'});
 
-    let qp = {...QUERY_PARAMS, ...{'thread:ident': ARTICLE.id}};
+    let qp = {...QUERY_PARAMS, ...{'thread:ident': ARTICLE.idForComments}};
     qp = Object.keys(qp).map(k => `${k}=${qp[k]}`);
     this.mock(fetch)
       .expects('default')
@@ -35,7 +35,7 @@ module('Unit | Utility | add-comment-count', function(hooks) {
     let qp = Object.keys(QUERY_PARAMS).map(k => `${k}=${QUERY_PARAMS[k]}`);
 
     for (let id = 0; id < 3; id++) {
-      store.createRecord('article', {id});
+      store.createRecord('article', {idForComments: id});
       qp.push(`thread:ident=${id}`);
     }
 
@@ -45,7 +45,7 @@ module('Unit | Utility | add-comment-count', function(hooks) {
       .resolves(new Response(JSON.stringify({
         response: EXPECTED.map((posts, id) => ({
           posts,
-          identifiers: [String(id)]
+          identifiers: [id]
         })
       )})));
 

@@ -13,7 +13,7 @@ export const QUERY_PARAMS = {
 export const BASE = `${config.disqusAPI}/threads/set.json`;
 
 const DEFAULT_OPS = {
-  ident: 'id',
+  ident: 'idForComments',
 };
 
 /**
