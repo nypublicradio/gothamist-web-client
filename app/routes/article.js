@@ -74,6 +74,7 @@ export default Route.extend({
       image: {
         full: article.leadImage ? wagtailImageUrl([article.leadImage.image, 640]) : null,
       },
+      hideFromRobots: !article.showOnIndexListing,
     });
 
     this.header.addRule('article', {

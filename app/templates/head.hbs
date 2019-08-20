@@ -4,6 +4,10 @@
   <link rel="amphtml" href="https://amp.gothamist.com/amp/articles/create?article_id={{model.ampId}}">
 {{/if}}
 
+{{#if model.hideFromRobots}}
+  <meta name="robots" content="noindex">
+{{/if}}
+
 <title>{{{model.title}}}</title>
 
 <link rel="canonical" href={{model.url}}>
