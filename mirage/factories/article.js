@@ -161,15 +161,15 @@ export default Factory.extend({
 
   withSection: trait({
     afterCreate(article, server) {
-      if (article.indexPage) {
+      if (article.page) {
         return;
       }
       // does a corresponding section exist?
-      let section = server.schema.indexPages.findBy({ slug: article.section });
+      let section = server.schema.pages.findBy({ slug: article.section });
 
       // create one if not with correct attributes
       if (!section) {
-        section = server.create('index-page', {
+        section = server.create('page', {
           slug: article.section,
           title: article.section[0].toUpperCase() + article.section.slice(1),
         });
@@ -178,7 +178,7 @@ export default Factory.extend({
       // add the current article to the section's descendants
       section.descendants.add(article);
       // make the section this article's index page
-      article.update({indexPage: section});
+      article.update({page: section});
       // client derives the section ID from the `ancestry` key, so make sure the
       // ID is updated there as well
       article.ancestry.findBy('meta.type', 'standardpages.IndexPage').id = section.id;
