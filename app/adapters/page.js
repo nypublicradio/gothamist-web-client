@@ -32,7 +32,7 @@ export default ApplicationAdapter.extend({
 
     let url;
     if (preview) {
-      let { identifier, token } = options.adapterOptions;
+      let { identifier, token } = query;
       url = `${this.buildURL()}page_preview?identifier=${identifier}&token=${token}`;
     } else {
       url = `${this.buildURL('page')}find/?html_path=${query.html_path}`;
