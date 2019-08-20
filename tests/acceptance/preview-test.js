@@ -7,6 +7,14 @@ module('Acceptance | preview', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
+  hooks.beforeEach(() => {
+    window.block_disqus = true;
+  });
+
+  hooks.afterEach(() => {
+    window.block_disqus = false;
+  });
+
   test('visiting preview article', async function(assert) {
     let identifier = 'preview';
     let token = '123';
