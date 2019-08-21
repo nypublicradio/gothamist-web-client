@@ -106,7 +106,6 @@ export default Page.extend({
     if (this.isAnalysis) {
       breadcrumb.push({label: 'Analysis', route: ['tags', 'analysis']});
     }
-
     // HACK
     if (this.tags.mapBy('name').includes('we the commuters')) {
       breadcrumb.push({label: 'We the Commuters', route: ['tags', 'wethecommuters']});
@@ -159,6 +158,10 @@ export default Page.extend({
     }
   }),
   // leadImageLink:    reads('_parsedLegacyContent.leadImageLink'),
+
+  ogImage: computed('socialImage', 'leadImage', function() {
+    return this.socialImage || this.leadImage;
+  }),
 
   displayTags: computed('tags', function() {
     let tags = this.tags || [];

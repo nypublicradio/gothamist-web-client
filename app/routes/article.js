@@ -3,7 +3,6 @@ import RSVP from 'rsvp';
 import Route from '@ember/routing/route';
 import { inject } from '@ember/service';
 import { doTargetingForModels, clearTargetingForModels } from 'nypr-ads';
-import { wagtailImageUrl } from 'ember-wagtail-images/helpers/wagtail-image-url';
 import { reads } from '@ember/object/computed';
 
 import addCommentCount from '../utils/add-comment-count';
@@ -75,9 +74,7 @@ export default Route.extend({
       section: article.section.title,
       tags: article.displayTags,
       authors: article.authors,
-      image: {
-        full: article.leadImage ? wagtailImageUrl([article.leadImage.image, 640]) : null,
-      },
+      image: article.ogImage,
       hideFromRobots: !article.showOnIndexListing,
     });
 
