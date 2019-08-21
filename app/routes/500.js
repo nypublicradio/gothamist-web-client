@@ -29,9 +29,7 @@ export default Route.extend({
 
   model() {
     return this.store.query('article', {
-      index: 'gothamist',
-      sort: 'socialtopics_score_1d',
-      count: COUNT,
+      limit: COUNT,
     })
   },
 
