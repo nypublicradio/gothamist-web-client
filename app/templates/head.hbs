@@ -17,13 +17,10 @@
 <meta property="og:site_name" content="Gothamist">
 
 {{#if model.image}}
-  <link rel="preload" as="image" href={{model.image.full}}>
+  <meta property="og:image" content={{wagtail-image-url model.image 640}}>
+  <meta property="twitter:image" content={{wagtail-image-url model.image 640}}>
 
-  <meta property="og:image" content={{model.image.full}}>
-  <meta property="twitter:image" content={{model.image.full}}>
-
-  <meta property="og:image:width" content={{model.image.width}}>
-  <meta property="og:image:height" content={{model.image.height}}>
+  <meta property="og:image:width" content="640">
 
   <meta property="og:image:alt" content={{model.image.caption}}>
   <meta property="twitter:image:alt" content={{model.image.caption}}>
