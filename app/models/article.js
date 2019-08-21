@@ -160,7 +160,7 @@ export default Page.extend({
   // leadImageLink:    reads('_parsedLegacyContent.leadImageLink'),
 
   ogImage: computed('socialImage', 'leadImage', function() {
-    return this.socialImage || this.leadImage;
+    return this.socialImage || (this.leadImage && this.leadImage.image);
   }),
 
   displayTags: computed('tags', function() {
