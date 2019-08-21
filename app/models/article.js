@@ -15,7 +15,7 @@ export const LEAD_AUDIO   = 'lead_audio';
 export const LEAD_IMAGE   = 'lead_image';
 
 const AD_BINDINGS = [
-  'tags',
+  'adTags:tags',
   'racy',
   'sponsorNames:Sponsor',
   'section.slug:Category',
@@ -105,7 +105,7 @@ export default Page.extend({
     }
 
     // HACK
-    if (this.tags.includes('we the commuters')) {
+    if (this.tags.mapBy('name').includes('we the commuters')) {
       breadcrumb.push({label: 'We the Commuters', route: ['tags', 'wethecommuters']});
     }
     return breadcrumb;
@@ -122,10 +122,10 @@ export default Page.extend({
   isSponsored: reads('sponsoredContent'),
 
   isOpinion: computed('tags', function() {
-    return this.tags.includes('@opinion') || this.tags.includes('opinion');
+    return this.tags.mapBy('name').includes('@opinion') || this.tags.mapBy('name').includes('opinion');
   }),
   isAnalysis: computed('tags', function() {
-    return this.tags.includes('@analysis') || this.tags.includes('analysis');
+    return this.tags.mapBy('name').includes('@analysis') || this.tags.mapBy('name').includes('analysis');
   }),
 
   thumbnail: computed('leadImage', 'listingImage', function() {
@@ -158,13 +158,13 @@ export default Page.extend({
 
   displayTags: computed('tags', function() {
     let tags = this.tags || [];
-    return tags.filter(tag => !tag.match(/^@/));
+    return tags.filter(tag => !tag.name.match(/^@/));
   }),
   internalTags: computed('tags', function() {
     let tags = this.tags || [];
     return tags
-      .filter(tag => tag.match(/^@/))
-      .map(tag => tag.replace(/^@/,''));
+      .filter(tag => tag.name.match(/^@/))
+      .map(tag => tag.name.replace(/^@/,''));
   }),
   adBindings: AD_BINDINGS,
   racy: computed('provocativeContent', function() {
@@ -173,6 +173,9 @@ export default Page.extend({
   }),
   sponsorNames: computed('relatedSponsors', function() {
     return this.relatedSponsors.mapBy('name').join(',');
+  }),
+  adTags: computed('tags', function() {
+    return this.tags.mapBy('name');
   }),
 
   // compute `path` for article so it doesn't include the `section` slug
