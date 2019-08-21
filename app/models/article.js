@@ -2,6 +2,7 @@ import DS from 'ember-data';
 import Page from './page';
 import { computed } from '@ember/object';
 import { reads, bool, or } from '@ember/object/computed';
+import { inject } from '@ember/service';
 
 import { extractPath, camelizeObject } from '../utils/wagtail-api';
 
@@ -22,6 +23,8 @@ const AD_BINDINGS = [
 ];
 
 export default Page.extend({
+  router: inject(),
+
   ancestry:    DS.attr(),
   body:        DS.attr(),
   description: DS.attr('string'),
@@ -115,6 +118,7 @@ export default Page.extend({
     return this.relatedAuthors.map(author => ({
       name: `${author.first_name} ${author.last_name}`,
       route: ['author-detail', author.slug],
+      url: this.router.urlFor('author-detail', author.slug),
     }));
   }),
 
