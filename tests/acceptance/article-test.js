@@ -137,10 +137,10 @@ module('Acceptance | article', function(hooks) {
   });
 
   test('breadcrumbs', async function(assert) {
-    const OPINION = server.create('article', {tags: ['opinion']});
-    const ANALYSIS = server.create('article', {tags: ['analysis']});
+    const OPINION = server.create('article', {tags: [{slug: 'opinion', name: 'opinion'}]});
+    const ANALYSIS = server.create('article', {tags: [{slug: 'analysis', name: 'analysis'}]});
     const SPONSOR = server.create('article', {sponsored_content: true});
-    const WTC = server.create('article', {tags: ['we the commuters']});
+    const WTC = server.create('article', {tags: [{slug: 'we the commuters', name: 'we the commuters'}]});
 
     await visit(OPINION.html_path);
     assert.dom('.o-breadcrumbs').includesText('Opinion');
