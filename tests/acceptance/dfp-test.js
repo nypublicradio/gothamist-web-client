@@ -62,7 +62,7 @@ module('Acceptance | dfp', function(hooks) {
   test('article should pass their tags, sections, and template type to DFP', async function(assert) {
     const targetingSpy = this.spy(PUB_ADS_STUB, 'setTargeting');
 
-    const article = server.create('article', {tags: ['foo', 'bar'], section: 'news'});
+    const article = server.create('article', {tags: [{slug: 'foo', name: 'foo'}, {slug: 'bar', name: 'bar'}], section: 'news'});
 
     await visit(article.html_path);
 
