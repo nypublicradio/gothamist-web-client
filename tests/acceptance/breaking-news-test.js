@@ -19,6 +19,16 @@ module('Acceptance | breaking news', function(hooks) {
     assert.dom('.c-block--urgent').exists({count: 1});
   });
 
+  test('breaking news ingores null news', async function(assert) {
+    server.create('breaking-news', { value: null });
+    server.create('breaking-news');
+
+    await visit('/');
+
+    assert.dom('.c-block--urgent').exists({count: 1});
+  });
+
+
   test('multiple breaking news appear on the home page', async function(assert) {
     server.createList('breaking-news', 4);
 

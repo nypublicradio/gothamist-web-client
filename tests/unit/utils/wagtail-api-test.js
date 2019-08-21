@@ -3,6 +3,7 @@ import { module, test } from 'qunit';
 import  {
   blockToJSONAPI,
   mirageModelToBlock,
+  blockIsNotNull,
   extractPath,
   camelizeObject
 } from 'gothamist-web-client/utils/wagtail-api';
@@ -51,6 +52,47 @@ module('Unit | Utility | wagtail-api', function() {
 
     let result = mirageModelToBlock(modelJSON);
     assert.deepEqual(result, expected);
+  });
+
+  test(`mirageModelToBlock converts mirage model JSON with null value to
+    wagtail block JSON format with null value`, function(assert) {
+    let modelJSON = {
+      id: "0123456-abcdef-78910",
+      type: "model-type",
+      value: null,
+      key_one: "foo",
+      key_two: "bar",
+    };
+
+    let expected = {
+      "type": "model_type",
+      "value": null,
+      "id": "0123456-abcdef-78910"
+    };
+
+    let result = mirageModelToBlock(modelJSON);
+    assert.deepEqual(result, expected);
+  });
+
+  test('blockIsNotNull returns false for a block with null value', function(assert) {
+    let block = {
+      "type": "model_type",
+      "value": null,
+      "id": "0123456-abcdef-78910"
+    };
+    assert.notOk(blockIsNotNull(block));
+  });
+
+  test('blockIsNotNull returns true for a block with non-null value', function(assert) {
+    let block = {
+      "type": "model_type",
+      "value": {
+        "key_one": "foo",
+        "key_two": "bar"
+      },
+      "id": "0123456-abcdef-78910"
+    };
+    assert.ok(blockIsNotNull(block));
   });
 
   test('extractPath strips protocols, domains, and trailing slashes', function(assert) {

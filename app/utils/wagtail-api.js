@@ -36,12 +36,33 @@ export const blockToJSONAPI = function(block) {
 };
 
 /**
+  Takes a JSON Object representing a Wagtail Block,
+  and returns false if the block value is null, true if
+  non-null.
+
+  Usage:
+
+  arrayOfBlocks.filter(blockIsNotNull)
+
+  @function blockIsNotNull
+  @param block {Object}
+  @return {Boolean}
+**/
+export const blockIsNotNull = function(block) {
+  return block.value !== null;
+}
+
+/**
   Takes a JSON Object representing an mirage model,
   and returns a JSON Object formatted like a
   Wagtail Block from the Wagtail API.
 
   Moves all properties besides id and type into an
   object under the 'value' key.
+
+  If the mirage model has a value key set to null,
+  instead of containing the other properties, the
+  value key of the response will be null as well.
 
   @function mirageModelToBlock
   @param modelJSON {Object}
@@ -55,9 +76,14 @@ export const mirageModelToBlock = function(modelJSON) {
   }
   delete modelJSON.id;
   delete modelJSON.type;
-  Object.keys(modelJSON).forEach(key => {
-    block.value[key] = modelJSON[key];
-  });
+  if (modelJSON.value === null) {
+  // let mirage set explicit null values
+    block.value = null;
+  } else {
+    Object.keys(modelJSON).forEach(key => {
+      block.value[key] = modelJSON[key];
+    });
+  }
   return block;
 };
 
