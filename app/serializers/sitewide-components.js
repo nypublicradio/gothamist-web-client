@@ -1,6 +1,6 @@
 import ApplicationSerializer from './application';
 import DS from 'ember-data';
-import { blockToJSONAPI } from '../utils/wagtail-api';
+import { blockToJSONAPI, blockIsNotNull } from '../utils/wagtail-api';
 
  export default ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
   attrs: {
