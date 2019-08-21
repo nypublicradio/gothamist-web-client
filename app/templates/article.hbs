@@ -108,7 +108,7 @@
     <div class="l-container--content u-section-spacing">
       <NyprOArticleFooter as |footer|>
         <footer.tags @tags={{model.article.displayTags}} as |Tag tag|>
-          <Tag @route={{array 'tags' tag}}/>
+          <Tag @route={{array 'tags' tag.slug}} @tag={{tag.name}}/>
         </footer.tags>
 
         <footer.contact>
