@@ -15,13 +15,15 @@ import { blockToJSONAPI, blockIsNotNull } from '../utils/wagtail-api';
         type: 'sitewide-components',
         relationships: {
           breakingNews: {
-            data: payload.breaking_news.map(banner =>
+            data: payload.breaking_news
+            .filter(blockIsNotNull)
+            .map(banner =>
               ({ id: banner.id, type: 'breaking-news' })
             )
           }
         }
       },
-      included: payload.breaking_news.map(blockToJSONAPI)
+      included: payload.breaking_news.filter(blockIsNotNull).map(blockToJSONAPI)
     };
   }
 });
