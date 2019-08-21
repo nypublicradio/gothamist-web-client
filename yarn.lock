@@ -5573,6 +5573,13 @@ ember-oo-modifiers@^0.3.0:
     ember-cli-babel "^7.7.3"
     ember-modifier-manager-polyfill "^1.0.3"
 
+ember-poll@^1.2.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/ember-poll/-/ember-poll-1.4.0.tgz#bc598a49a531e36bc781860ab504263bfacbd80d"
+  integrity sha512-os4PKEgRTmcEd+gKDtWt2Qn81ZiWG3HtzO9E4eaG2UL44Kli6OzIxhoQGa2YqxY+rxlvUhREZh8P8Gf6O9AWEA==
+  dependencies:
+    ember-cli-babel "^6.6.0"
+
 ember-qunit@^3.4.1:
   version "3.5.3"
   resolved "https://registry.yarnpkg.com/ember-qunit/-/ember-qunit-3.5.3.tgz#bfd0bff8298c78c77e870cca43fe0826e78a0d09"
@@ -9231,13 +9238,14 @@ nypr-fastboot@^0.7.0:
     morgan "^1.9.1"
     obj-extend "^0.1.0"
 
-nypr-metrics@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/nypr-metrics/-/nypr-metrics-0.6.0.tgz#8549d8abbdb6867b9c314192e3874946be5ead96"
-  integrity sha512-9ZCYVisi5sFbLPF5JZ7D8rzlrsOx3oqEHR41tkWeweHuAk5BFQt2adcEtYyOQ9MILa9wqW+fIPeatnGME/eKKw==
+nypr-metrics@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/nypr-metrics/-/nypr-metrics-0.7.0.tgz#75d22a31bb2933e23be743fc23959b521373bd1f"
+  integrity sha512-fTAo2WTzyE2hZpJbAAUR+2LcXzVxnqq8Xz9P4LBqqZJdhC8iqh8Ve/fB0zRRZUe3LHmmzw9VrefhkMlHGLLYGw==
   dependencies:
     ember-cli-babel "^7.0.0"
     ember-get-config "^0.2.2"
+    ember-poll "^1.2.0"
 
 oauth-sign@~0.9.0:
   version "0.9.0"
