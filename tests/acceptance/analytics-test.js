@@ -1,13 +1,16 @@
-import { module, skip } from 'qunit';
+import moment from 'moment';
+
+import { module } from 'qunit';
 import { visit, click } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-// import test from 'ember-sinon-qunit/test-support/test';
+import test from 'ember-sinon-qunit/test-support/test';
 
 import * as uuid from 'uuid/v1';
 
 import config from 'gothamist-web-client/config/environment';
 import { ANCESTRY } from '../unit/fixtures/article-fixtures';
+import { CMS_TIMESTAMP_FORMAT } from '../../mirage/factories/consts';
 
 
 module('Acceptance | analytics', function(hooks) {
@@ -22,7 +25,7 @@ module('Acceptance | analytics', function(hooks) {
     window.block_disqus = false;
   });
 
-  skip('dataLayer values', async function(assert) {
+  test('dataLayer values', async function(assert) {
     this.stub(uuid, 'default').returns(1);
 
     const BROWSER_ID = 'foo';
@@ -32,17 +35,22 @@ module('Acceptance | analytics', function(hooks) {
     const spyLayer = {push: this.spy()};
     this.stub(dataLayer, 'getDataLayer').returns(spyLayer);
 
-    const TAGS = ['foo', 'bar', 'baz'];
-    const AUTHOR = 'Foo Bar';
+    const TAGS = [{name: 'foo', slug: 'foo'}, {name: 'bar', slug: 'bar'}, {name: 'baz', slug: 'baz'}];
+    const AUTHOR_FIRST = 'Foo';
+    const AUTHOR_LAST = 'Bar';
     const SECTION = 'News';
     const TITLE = 'Hello World';
-    server.create('article', 'mtGallery', {
+    server.create('article', 'withGallery', 'withSection', {
       id: 'gallery',
-      author_nickname: AUTHOR,
-      authored_on_utc: '20190101120000',
+      related_authors: [{
+        first_name: AUTHOR_FIRST,
+        last_name: AUTHOR_LAST,
+      }],
+      publication_date: moment.utc('2019-01-01 12:00').format(CMS_TIMESTAMP_FORMAT),
       ancestry: ANCESTRY,
       tags: TAGS,
       title: TITLE,
+      section: 'news',
     });
 
     await visit('/');
@@ -68,8 +76,8 @@ module('Acceptance | analytics', function(hooks) {
     await visit('/search');
     assert.ok(spyLayer.push.calledWith({template: 'search'}), 'search template is declared');
 
-    await visit('/does-not-exist');
-    assert.ok(spyLayer.push.calledWith({template: '404'}), '404 template is declared');
+    // await visit('/does-not-exist');
+    // assert.ok(spyLayer.push.calledWith({template: '404'}), '404 template is declared');
 
     await visit('/');
     spyLayer.push.resetHistory();
@@ -77,8 +85,8 @@ module('Acceptance | analytics', function(hooks) {
     await click('[data-test-block="gallery"] a'); // article with a gallery
 
     assert.deepEqual(spyLayer.push.getCall(1).args[0], {
-      articleTags: TAGS.join(','),
-      articleAuthors: AUTHOR,
+      articleTags: TAGS.mapBy('name').join(','),
+      articleAuthors: `${AUTHOR_FIRST} ${AUTHOR_LAST}`,
       articleSection: SECTION,
       articleTitle: TITLE,
       articlePublishTime: '2019-01-01T07:00-05:00', // going from UTC to eastern subtracts 5 hours
