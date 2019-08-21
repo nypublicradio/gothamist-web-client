@@ -17,6 +17,8 @@ const {
 
 const { hash } = RSVP;
 
+const { log } = console;
+
 export default Route.extend({
   header: inject('nypr-o-header'),
   dataLayer: inject('nypr-metrics/data-layer'),
@@ -50,7 +52,9 @@ export default Route.extend({
       html_path: `${section}/${path}`,
     }).then(article => hash({
       article,
-      gallery: article.gallery, // load gallery in the model hook to prevent async leaks in fastboot
+       // load gallery in the model hook to prevent async leaks in fastboot
+       // but if gallery fails for some reason, don't bork out
+      gallery: article.gallery.catch(() => log('gallery not found')),
     }));
   },
 
