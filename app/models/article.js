@@ -117,7 +117,7 @@ export default Page.extend({
     return this.relatedAuthors.map(author => ({
       name: `${author.first_name} ${author.last_name}`,
       route: ['author-detail', author.slug],
-      url: this.router.urlFor('author-detail', author.slug),
+      url: author.slug && this.router.urlFor('author-detail', author.slug),
     }));
   }),
 
