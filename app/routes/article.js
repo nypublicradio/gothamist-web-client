@@ -72,7 +72,7 @@ export default Route.extend({
       publishedTime: article.publishedMoment.format(),
       modifiedTime: article.modifiedMoment.isValid() && article.modifiedMoment.format(),
       section: article.section.title,
-      tags: article.displayTags,
+      tags: article.displayTags.mapBy('name'),
       authors: article.authors,
       image: article.ogImage,
       hideFromRobots: !article.showOnIndexListing,
