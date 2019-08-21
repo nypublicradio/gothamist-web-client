@@ -24,7 +24,7 @@ module('Acceptance | gallery', function(hooks) {
     await visit(article.html_path);
 
     assert.dom('[data-test-gallery-lead]').exists();
-    // mirage defualt is 5 slides per gallery
+    // mirage withGallery trait default is 8 slides per gallery
     assert.dom('[data-test-gallery-lead-view-all]').hasText('View all 8')
 
     let preview = find('[data-test-gallery-lead-preview] img');
