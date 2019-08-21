@@ -13,7 +13,7 @@ export default ApplicationSerializer.extend({
         "type": "sitewide.SiteWideComponents",
         "detail_url": "http://localhost/api/v2/sitewide_components/1/"
       },
-      breaking_news: json.breakingNews.map(mirageModelToBlock)
+      breaking_news: json.breaking_news.map(mirageModelToBlock)
     };
     return response;
   }
