@@ -14,6 +14,9 @@ export const MAIN_COUNT = 4;
 export const TOTAL_COUNT = BASE_COUNT + MAIN_COUNT;
 export const GROUP_SIZE = 7;
 
+const { warn } = console;
+const failSafe = name => () => warn(`${name} failed to load`);
+
 export default Route.extend({
   header: inject('nypr-o-header'),
   headData: inject(),
@@ -46,16 +49,15 @@ export default Route.extend({
 
   model() {
     return hash({
-      sponsored: this.getSponsoredPost(),
-      sponsoredMain: this.getSponsoredMain(),
-      breaking: this.getBreakingNews(),
+      sponsored: this.getSponsoredPost().catch(failSafe('sponsored')),
+      sponsoredMain: this.getSponsoredMain().catch(failSafe('sponsoredMain')),
       main: this.store.query('article', {
         show_as_feature: true,
         limit: MAIN_COUNT,
-      }),
+      }).catch(failSafe('main')),
       river: this.store.query('article', {
         limit: TOTAL_COUNT,
-      }),
+      }).catch(failSafe('river')),
       systemMessages: this.store.findRecord('system-messages', config.siteId).catch(() => ''),
       wnyc: getWnycStories(),
     }).then(results => {
@@ -109,24 +111,6 @@ export default Route.extend({
     }
     const ageInHours = moment().diff(post.publishedMoment, 'hours');
     if (ageInHours >= 24 && ageInHours <= 48) {
-      return post;
-    }
-  },
-
-  // check for breaking news
-  // filter it out if it's older than 6 hours
-  async getBreakingNews() {
-    let post = await this.store.query('article', {
-      index: 'gothamist',
-      term: '@breaking',
-      count: 1,
-    });
-
-    if (!post.firstObject) {
-      return;
-    }
-
-    if (moment().diff(post.firstObject.publishedMoment, 'hours') < 6) {
       return post;
     }
   },
