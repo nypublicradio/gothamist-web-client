@@ -25,5 +25,10 @@ export default ApplicationSerializer.extend({
       };
     })
     return this._super(store, PageModel, payload, id, requestType);
+  },
+
+  normalizeQueryRecordResponse(store, PageModel, payload, ...rest) {
+    payload.type = TYPES[payload.meta.type];
+    return this._super(store, PageModel, payload, ...rest);
   }
 });
