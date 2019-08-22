@@ -70,7 +70,7 @@
                 <a href={{model.article.leadImageLink}} target="_blank" rel="noopener">
                   <NyprMFigure
                     class="c-lead"
-                    @srcS={{wagtail-image-url lead.image 640}}
+                    @srcS={{wagtail-image-url lead.image 661 496}}
                     @caption={{or lead.caption lead.image.caption}}
                     @credit={{lead.image.credit}}
                     @creditLink={{lead.image.creditLink}}
@@ -80,7 +80,7 @@
               {{else}}
                 <NyprMFigure
                   class="c-lead"
-                  @srcS={{wagtail-image-url lead.image 640}}
+                  @srcS={{wagtail-image-url lead.image 661 496}}
                   @caption={{or lead.caption lead.image.caption}}
                   @credit={{lead.image.credit}}
                   @creditLink={{lead.image.creditLink}}
