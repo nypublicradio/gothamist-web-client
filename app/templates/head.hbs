@@ -17,10 +17,11 @@
 <meta property="og:site_name" content="Gothamist">
 
 {{#if model.image}}
-  <meta property="og:image" content={{wagtail-image-url model.image 640}}>
-  <meta property="twitter:image" content={{wagtail-image-url model.image 640}}>
+  <meta property="og:image" content={{wagtail-image-url model.image 1200 650}}>
+  <meta property="twitter:image" content={{wagtail-image-url model.image 1200 650}}>
 
-  <meta property="og:image:width" content="640">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="650">
 
   <meta property="og:image:alt" content={{model.image.caption}}>
   <meta property="twitter:image:alt" content={{model.image.caption}}>
@@ -51,10 +52,10 @@
 {{/if}}
 
 {{#each model.gallery as |slide|}}
-  <link rel="preload" as="image" href={{wagtail-image-url slide.image 640}}>
-  <meta property="og:image" content={{wagtail-image-url slide.image 640}}>
-  <meta property="og:image:width" content={{slide.width}}>
-  <meta property="og:image:height" content={{slide.height}}>
+  <link rel="preload" as="image" href={{wagtail-image-url slide.image 1200 650}}>
+  <meta property="og:image" content={{wagtail-image-url slide.image 1200 650}}>
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="650">
   <meta property="og:image:alt" content={{slide.image.caption}}>
 {{/each}}
 
