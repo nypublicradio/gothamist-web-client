@@ -4,6 +4,7 @@ import { computed } from '@ember/object';
 
 import Page from './page';
 
+export const WAGTAIL_MODEL_TYPE = 'gallery.GalleryPage';
 
 export default Page.extend({
   // slides are normalized from the server to look like so:
