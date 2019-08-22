@@ -128,5 +128,7 @@ test_redirect /blog4.php 301 /
 test_redirect /blog5.php 301 /
 test_redirect /blog6.php 301 /
 test_redirect /2015/09/10/hiv_doe_howard_sellers.php 301 /2015/09/10/hiv_meds_howard.php
+test_redirect '/sections/arts & entertainment' 301 /arts-entertainment
+test_redirect '/sections/arts%20&%20entertainment' 301 /arts-entertainment
 
 totals
