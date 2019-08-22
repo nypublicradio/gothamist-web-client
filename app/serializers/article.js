@@ -24,17 +24,6 @@ export default ApplicationSerializer.extend({
     return this._super(ArticleModel, payload);
   },
 
-  extractMeta(store, articleClass, payload) {
-    if (!payload.meta) {
-      return;
-    }
-    let meta = {
-      total: payload.meta.total_count,
-      count: Array.isArray(payload.items) ? payload.items.length : 1,
-    }
-    delete payload.meta;
-    return meta;
-  },
 
   extractRelationships(ArticleModel, hash) {
     if (hash.lead_asset && hash.lead_asset.type === LEAD_GALLERY) {

@@ -11,6 +11,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 import config from 'gothamist-web-client/config/environment';
+import { COUNT } from 'gothamist-web-client/controllers/search';
 
 module('Acceptance | search', function(hooks) {
   setupApplicationTest(hooks);
@@ -24,7 +25,7 @@ module('Acceptance | search', function(hooks) {
 
   test('searching on search', async function(assert) {
     // mirage endpoint just searches the `description` attr
-    server.createList('article', 10, {description: 'foo'});
+    server.createList('article', COUNT * 5, {description: 'foo'});
     server.createList('article', 3, {description: 'bar'});
 
     await visit('/search');
@@ -33,7 +34,11 @@ module('Acceptance | search', function(hooks) {
     await click('.c-search-results__form [data-test-inline-search-submit]');
 
     assert.equal(currentURL(), '/search?q=foo', 'should update the url from the input');
-    assert.dom('[data-test-block]').exists({count: 10});
+    assert.dom('[data-test-block]').exists({count: COUNT});
+
+    await click('[data-test-more-results]');
+
+    assert.dom('[data-test-block]').exists({count: COUNT * 2}, 'Clicking "read more" brings in another set of results equal to the amount of COUNT');
 
     await click('[data-test-header-right] .c-search-toggle');
     await fillIn('[data-test-header-search] .c-search__input',  'bar');
