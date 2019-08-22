@@ -28,10 +28,10 @@ module('Acceptance | gallery', function(hooks) {
     assert.dom('[data-test-gallery-lead-view-all]').hasText('View all 8')
 
     let preview = find('[data-test-gallery-lead-preview] img');
-    assert.ok(preview.src.match(`images/${slides[0].value.slide_image.image.id}/fill-625x416`), 'preview image has expected URL')
+    assert.ok(preview.src.match(`images/${slides[0].value.slide_image.image.id}/fill-661x496`), 'preview image has expected URL')
 
     await click('[data-test-gallery-thumb="1"]');
-    assert.ok(preview.src.match(`images/${slides[1].value.slide_image.image.id}/fill-625x416`), 'preview image is updated to new image')
+    assert.ok(preview.src.match(`images/${slides[1].value.slide_image.image.id}/fill-661x496`), 'preview image is updated to new image')
 
     await click('[data-test-gallery-lead-view-all]');
 
