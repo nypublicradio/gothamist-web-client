@@ -30,7 +30,7 @@ export default Controller.extend({
     }
 
     return this.model.gallery.slides.map(({image, title, caption}) => ({
-      srcS: wagtailImageUrl([image, 625, 416]),
+      srcS: wagtailImageUrl([image, 661, 496]),
       thumb: wagtailImageUrl([image, 106, 106]),
       caption: caption || image.caption,
       alt: image.alt,
