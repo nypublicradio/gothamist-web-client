@@ -113,7 +113,8 @@ export default function() {
   this.get('/api/v2/page_preview', (schema, request) => {
     if (request.queryParams) {
       let { identifier, token } = request.queryParams;
-      return schema.articles.findBy({ identifier, token });
+      return schema.articles.findBy({ identifier, token }) ||
+      schema.galleries.findBy({ identifier, token });
     }
     return new Response(404);
   });

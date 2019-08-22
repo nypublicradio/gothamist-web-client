@@ -1,12 +1,14 @@
 import ApplicationSerializer from './application';
 
 import { WAGTAIL_MODEL_TYPE as ARTICLE } from '../models/article';
+import { WAGTAIL_MODEL_TYPE as GALLERY } from '../models/gallery';
 
 
 // making responses p o l y m o r p h i c
 // additional models that extend from `Page` can go here
 const TYPES = {
   [ARTICLE]: 'article',
+  [GALLERY]: 'gallery',
   // [PERSON]: 'person',
 };
 
