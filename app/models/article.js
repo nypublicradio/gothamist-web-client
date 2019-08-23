@@ -159,7 +159,7 @@ export default Page.extend({
         }
     }
   }),
-  // leadImageLink:    reads('_parsedLegacyContent.leadImageLink'),
+  leadImageLink: reads('leadAsset.value.image_link'),
 
   ogImage: computed('socialImage', 'leadImage', function() {
     return this.socialImage || (this.leadImage && this.leadImage.image);
