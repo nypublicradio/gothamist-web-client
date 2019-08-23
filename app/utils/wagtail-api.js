@@ -109,6 +109,6 @@ export const extractPath = function(url) {
   @param obj {Object}
   @return {Object} the updated object
 */
-export const camelizeObject = obj => Object.fromEntries(
+export const camelizeObject = obj => fromEntries(
   Object.entries(obj || {}).map(([k, v]) => [camelize(k), v])
 )
