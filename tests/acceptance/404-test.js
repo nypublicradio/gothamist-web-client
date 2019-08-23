@@ -4,7 +4,6 @@ import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { Response } from 'ember-cli-mirage';
 
-
 import config from 'gothamist-web-client/config/environment';
 
 module('Acceptance | 404', function(hooks) {

@@ -5,6 +5,25 @@
 <h1 class="is-vishidden" aria-hidden="true">Gothamist: New York City Local News, Food, Arts & Events</h1>
 <div class="c-home__sections u-section-spacing--wide l-container l-container--xl l-wrap u-trigger-floating-header">
 
+  <div class="l-container l-container--16col">
+    {{#each model.sitewideComponents.breakingNews as |news|}}
+      {{#if (get-route-params news.link)}}
+        <NyprMTextBanner
+          @route={{get-route-params news.link}}
+          @title={{news.title}}
+          @timestamp={{timestamp news.startTime}}
+          @description={{news.description}}
+        />
+      {{else}}
+        <NyprMTextBanner
+          @url={{news.link}}
+          @title={{news.title}}
+          @timestamp={{timestamp news.startTime}}
+          @description={{news.description}}
+        />
+      {{/if}}
+    {{/each}}
+  </div>
 
   {{#with model.systemMessages.topProductBanner as |productBanner|}}
     <DismissableBlock

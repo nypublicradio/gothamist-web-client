@@ -8,8 +8,8 @@ export default ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
   },
   modelNameFromPayloadKey: () => 'system-messages',
   normalizeFindRecordResponse(store, primaryModelClass, payload, id) {
-  payload.product_banners = payload.product_banners || [];
-  return {
+    payload.product_banners = payload.product_banners || [];
+    return {
       data: {
         id,
         type: 'system-messages',

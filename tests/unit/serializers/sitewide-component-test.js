@@ -1,35 +1,36 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
-module('Unit | Serializer | system messages', function(hooks) {
+module('Unit | Serializer | sitewide component', function(hooks) {
   setupTest(hooks);
 
+  // Replace this with your real tests.
   test('it exists', function(assert) {
     let store = this.owner.lookup('service:store');
-    let serializer = store.serializerFor('system-messages');
+    let serializer = store.serializerFor('sitewide-components');
 
     assert.ok(serializer);
   });
 
   test('it normalizes the response', function(assert) {
     let store = this.owner.lookup('service:store');
-    let serializer = store.serializerFor('systemMessages');
+    let serializer = store.serializerFor('sitewide-components');
 
     let payload = {
       id: 1,
       meta: {
-        type: "utils.SystemMessagesSettings",
-        detail_url: "http://localhost/api/v2/system_messages/1/"
+        type: "sitewide.SiteWideComponents",
+        detail_url: "http://localhost/api/v2/sitewide_components/1/"
       },
-      product_banners: []
+      breaking_news: []
     };
 
     let expected = {
       data: {
         id: 1,
-        type: 'system-messages',
+        type: 'sitewide-components',
         relationships: {
-          productBanners: {
+          breakingNews: {
             data: []
           }
         }
@@ -41,25 +42,23 @@ module('Unit | Serializer | system messages', function(hooks) {
     assert.deepEqual(normalizedJSON, expected);
   });
 
-  test('it normalizes responses with product-banners', function(assert) {
+  test('it normalizes responses with breaking-news', function(assert) {
     let store = this.owner.lookup('service:store');
-    let serializer = store.serializerFor('systemMessages');
+    let serializer = store.serializerFor('sitewide-components');
 
     let payload = {
       id: 1,
       meta: {
-        type: "utils.SystemMessagesSettings",
-        detail_url: "http://localhost/api/v2/system_messages/1/"
+        type: "sitewide.SiteWideComponents",
+        detail_url: "http://localhost/api/v2/sitewide_components/1/"
       },
-      product_banners: [{
-        type: "product_banner",
+      breaking_news: [{
+        type: "breaking_news",
         value: {
           title:"Test Title",
+          link: "http://example.com",
           description: "<p>Test Description</p>",
-          button_text: "Test Button",
-          button_link: "http://example.com",
-          frequency: 8,
-          location: "TOP",
+          start_time: "2019-05-02T22:07:31.764000Z"
         },
         id: "1234-abcd",
       }]
@@ -68,32 +67,28 @@ module('Unit | Serializer | system messages', function(hooks) {
     let expected = {
       data: {
         id: 1,
-        type: 'system-messages',
+        type: 'sitewide-components',
         relationships: {
-          productBanners: {
+          breakingNews: {
             data: [
-              {id: "1234-abcd", type: "product-banner"}
+               {id: "1234-abcd", type: "breaking-news"}
             ]
           }
         }
       },
       included: [{
         id: "1234-abcd",
-        type: "product-banner",
+        type: "breaking-news",
         attributes: {
           title:"Test Title",
+          link: "http://example.com",
           description: "<p>Test Description</p>",
-          buttonText: "Test Button",
-          buttonLink: "http://example.com",
-          frequency: 8,
-          location: "TOP",
+          startTime: "2019-05-02T22:07:31.764000Z",
         }
       }]
     };
 
     let normalizedJSON = serializer.normalizeFindRecordResponse(store, 'systemMessages', payload, payload.id);
     assert.deepEqual(normalizedJSON, expected);
-
   });
-
 });

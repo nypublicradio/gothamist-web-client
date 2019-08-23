@@ -59,6 +59,7 @@ export default Route.extend({
         limit: TOTAL_COUNT,
       }).catch(failSafe('river')),
       systemMessages: this.store.findRecord('system-messages', config.siteId).catch(() => ''),
+      sitewideComponents: this.store.findRecord('sitewide-components', config.siteId).catch(() => ''),
       wnyc: getWnycStories(),
     }).then(results => {
       results.main = results.main.slice();

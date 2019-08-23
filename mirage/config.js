@@ -105,6 +105,7 @@ export default function() {
         items: [],
         meta: { total_count: 0 }
       };
+
     }
 
     return found;
@@ -118,6 +119,8 @@ export default function() {
     }
     return new Response(404);
   });
+
+  this.get('/api/v2/sitewide_components/:id/');
 
   this.get('/api/v2/system_messages/:id/');
 
