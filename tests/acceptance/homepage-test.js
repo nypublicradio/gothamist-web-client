@@ -109,31 +109,4 @@ module('Acceptance | homepage', function(hooks) {
       assert.dom(block.querySelector('.c-block-meta__comments')).includesText(String(posts));
     });
   });
-
-  test('breaking news appears', async function(assert) {
-    const TITLE = 'Cats and Dogs Living Together';
-    server.create('article', {
-      tags: ['@breaking'],
-      title: TITLE,
-      authored_on_utc: moment().subtract(1, 'hours'),
-    });
-
-    await visit('/');
-
-    assert.dom('.c-block--urgent').exists();
-    assert.dom('.c-block--urgent .c-block__title').hasText(TITLE);
-  });
-
-  test('breaking news expires', async function(assert) {
-    const TITLE = 'Cats and Dogs Living Together';
-    server.create('article', {
-      tags: ['@breaking'],
-      title: TITLE,
-      authored_on_utc: moment().subtract(7, 'hours'),
-    });
-
-    await visit('/');
-
-    assert.dom('.c-block--urgent').doesNotExist('if breaking news is older than six hours, take it down');
-  });
 });
