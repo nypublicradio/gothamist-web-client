@@ -134,5 +134,7 @@ test_redirect '/sections/artsentertainment' 301 /arts-entertainment
 test_redirect '/sections/arts-entertainment' 301 /arts-entertainment
 test_redirect '/sections/arts' 301 /arts-entertainment
 test_redirect '/sections/art' 301 /arts-entertainment
+test_redirect '/author/Jen Chung' 301 https://gothamist.com/staff/jen-chung
+test_redirect '/author/John Del Signore' 301 https://gothamist.com/staff/john-del-signore
 
 totals
