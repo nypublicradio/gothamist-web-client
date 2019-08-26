@@ -62,5 +62,14 @@ export default Route.extend({
 
       controller.set('addComments', results => (addCommentCount(results), results));
     }
+  },
+
+  actions: {
+    didTransition() {
+      if (!this.fastboot.isFastBoot) {
+        window.scrollTo(0, 0);
+      }
+      return true;
+    }
   }
 });
