@@ -76,6 +76,7 @@ export default Route.extend({
       authors: article.authors,
       image: article.ogImage,
       hideFromRobots: !article.showOnIndexListing,
+      path: `${article.section.slug}/${article.path}`,
     });
 
     this.header.addRule('article', {

@@ -96,6 +96,7 @@ export default Route.extend({
       this.headData.setProperties({
         url,
         apiServer: config.apiServer,
+        champEndpoint: config.champEndpoint,
         // default og image if nested route does not override
         image: {
           full: '/static-images/home_og_1200x600.png',

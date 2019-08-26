@@ -1,7 +1,8 @@
 <link rel="preconnect" href={{model.apiServer}} crossorigin>
 <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
-{{#if model.ampId}}
-  <link rel="amphtml" href="https://amp.gothamist.com/amp/articles/create?article_id={{model.ampId}}">
+
+{{#if model.path}}
+  <link rel="amphtml" href="{{model.champEndpoint}}/{{model.path}}">
 {{/if}}
 
 {{#if model.hideFromRobots}}
