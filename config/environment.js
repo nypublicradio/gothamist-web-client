@@ -55,6 +55,7 @@ module.exports = function(environment) {
     apiServer: process.env.API_SERVER,
     disqusAPI: process.env.DISQUS_API,
     disqusKey: process.env.DISQUS_PUBLIC_KEY,
+    champEndpoint: process.env.CHAMP_ENDPOINT,
 
     // OTHER CONFIG
     wtcNewsletter:      '8c376c6dff',
