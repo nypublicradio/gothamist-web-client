@@ -56,6 +56,8 @@ export default Page.extend({
   tags:        DS.attr({defaultValue: () => []}),
   updatedDate: DS.attr('moment', {timezoneOverride: true}),
 
+  url: DS.attr('string'),
+
   // computed
   modifiedMoment: reads('updatedDate'),
 
@@ -197,9 +199,7 @@ export default Page.extend({
   }),
 
   // for comments and share dialogs
-  permalink: computed('path', function() {
-    return `https://gothamist.com/${this.path}`;
-  }),
+  permalink: reads('url'),
 
   // relationships
   gallery: DS.belongsTo(),
