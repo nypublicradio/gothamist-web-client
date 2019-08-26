@@ -32,7 +32,7 @@ export default async function addCommentCount(modelOrRecordArray, options = {}) 
 
   if (modelOrRecordArray instanceof DS.Model) {
     qp.push(`thread:ident=${get(modelOrRecordArray, options.ident)}`);
-  } else if (modelOrRecordArray instanceof DS.RecordArray) {
+  } else if (modelOrRecordArray instanceof DS.RecordArray || modelOrRecordArray instanceof Array) {
     modelOrRecordArray.mapBy(options.ident).forEach(ident => qp.push(`thread:ident=${ident}`));
   }
 
