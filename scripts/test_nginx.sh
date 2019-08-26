@@ -130,10 +130,10 @@ test_redirect /blog6.php 301 /
 test_redirect /2015/09/10/hiv_doe_howard_sellers.php 301 /2015/09/10/hiv_meds_howard.php
 test_redirect '/sections/arts & entertainment' 301 /arts-entertainment
 test_redirect '/sections/arts%20&%20entertainment' 301 /arts-entertainment
-test_redirect '/sections/artsentertainment' 301 /arts-entertainment
-test_redirect '/sections/arts-entertainment' 301 /arts-entertainment
-test_redirect '/sections/arts' 301 /arts-entertainment
-test_redirect '/sections/art' 301 /arts-entertainment
+test_redirect /sections/artsentertainment 301 /arts-entertainment
+test_redirect /sections/arts-entertainment 301 /arts-entertainment
+test_redirect /sections/arts 301 /arts-entertainment
+test_redirect /sections/art 301 /arts-entertainment
 test_redirect '/author/Jen Chung' 301 https://gothamist.com/staff/jen-chung
 test_redirect '/author/John Del Signore' 301 https://gothamist.com/staff/john-del-signore
 
