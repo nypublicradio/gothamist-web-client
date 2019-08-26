@@ -113,6 +113,7 @@ test_redirect /judges 301 /2018/09/12/judges_ballot_primary_nyc.php
 test_redirect /labs/map 301 /map
 test_redirect /submit 301 https://gothamist.submittable.com/submit/18730
 test_redirect /turnout 301 https://project.gothamist.com/voter-turnout
+test_redirect /tags/wethecommuters 301 /tags/we-the-commuters
 
 title "Checking feed redirects..."
 test_redirect /atom.xml 301 https://feeds.gothamistllc.com/gothamist05
