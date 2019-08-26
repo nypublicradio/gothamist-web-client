@@ -4,7 +4,6 @@ import Route from '@ember/routing/route';
 import { inject } from '@ember/service';
 import { or } from '@ember/object/computed';
 import { doTargetingForModels, clearTargetingForModels } from 'nypr-ads';
-import { wagtailImageUrl } from 'ember-wagtail-images/helpers/wagtail-image-url';
 
 import { GALLERY_PATH } from '../router';
 
@@ -84,9 +83,7 @@ export default Route.extend({
     if (this.image) {
       let slide = model.gallery.slides[this.image] || {};
       this.headData.setProperties({
-        image: {
-          full: wagtailImageUrl([ slide.image, 640 ]),
-        }
+        image: slide.image,
       });
     }
 
