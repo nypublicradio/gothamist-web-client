@@ -20,8 +20,14 @@ const LISTING_FIELDS = [
   'ancestry',
   'description',
   'lead_asset',
+  'legacy_id',
   'listing_image',
-  'publication_date'
+  'publication_date',
+  'show_as_feature',
+  'sponsored_content',
+  'tags',
+  'url',
+  'uuid',
 ].join(',');
 
 export default Route.extend({
