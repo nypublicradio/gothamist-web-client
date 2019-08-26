@@ -63,3 +63,39 @@
 {{!-- twitter specific tags --}}
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@gothamist">
+
+{{#if (eq model.ogType 'article')}}
+  <script id="structured-data" type="application/ld+json">
+    {{! template-lint-disable }}
+    {
+      "@context": "http://schema.org",
+      "@type": "NewsArticle",
+      "mainEntityOfPage": "https://gothamist.com/{{model.path}}",
+      "image": "{{wagtail-image-url model.image 1200 650}}",
+      "headline": "{{model.title}}",
+      "description": "{{model.metaDescriptoin}}",
+      "datePublished": "{{model.publishedTime}}",
+    {{#if model.modifiedTime}}
+      "dateModified": "{{model.modifiedTime}}",
+    {{/if}}
+    "author": [
+    {{#each model.authors as |author|}}
+      {
+        "@type": "Person",
+        "name": "{{author.name}}"
+      }{{unless (eq model.authors.lastObject author) ','}}
+    {{/each}}
+    ],
+    "publisher": {
+      "@type": "Organization",
+      "name": "Gothamist",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "http://gothamist.com/static-images/home_og_1200x600.png",
+        "width": "1200",
+        "height": "600"
+      }
+    }
+  }
+  </script>
+{{/if}}
