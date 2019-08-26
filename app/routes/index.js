@@ -16,6 +16,13 @@ export const GROUP_SIZE = 7;
 
 const { warn } = console;
 const failSafe = name => () => warn(`${name} failed to load`);
+const LISTING_FIELDS = [
+  'ancestry',
+  'description',
+  'lead_asset',
+  'listing_image',
+  'publication_date'
+].join(',');
 
 export default Route.extend({
   header: inject('nypr-o-header'),
@@ -54,9 +61,11 @@ export default Route.extend({
       main: this.store.query('article', {
         show_as_feature: true,
         limit: MAIN_COUNT,
+        fields: LISTING_FIELDS,
       }).catch(failSafe('main')),
       river: this.store.query('article', {
         limit: TOTAL_COUNT,
+        fields: LISTING_FIELDS,
       }).catch(failSafe('river')),
       systemMessages: this.store.findRecord('system-messages', config.siteId).catch(() => ''),
       sitewideComponents: this.store.findRecord('sitewide-components', config.siteId).catch(() => ''),
