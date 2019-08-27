@@ -116,9 +116,9 @@ test_redirect /turnout 301 https://project.gothamist.com/voter-turnout
 test_redirect /tags/wethecommuters 301 /tags/we-the-commuters
 
 title "Checking feed redirects..."
-test_redirect /atom.xml 301 https://feeds.gothamistllc.com/gothamist05
-test_redirect /index.rdf 301 https://feeds.gothamistllc.com/gothamist05
-test_redirect /index.xml 301 https://feeds.gothamistllc.com/gothamist05
+test_redirect /atom.xml 301 https://gothamist.com/feed
+test_redirect /index.rdf 301 https://gothamist.com/feed
+test_redirect /index.xml 301 https://gothamist.com/feed
 
 title "Checking regex redirects..."
 test_redirect /archives/foo.php 301 /foo.php
