@@ -150,7 +150,9 @@ export default Factory.extend({
           type: 'lead_gallery',
           value: {
             gallery: gallery.id,
-            default_image: null,
+            default_image: {
+              id: 1283,
+            },
           },
           id: faker.random.uuid(),
         }],
