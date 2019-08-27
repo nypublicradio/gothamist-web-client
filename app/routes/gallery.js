@@ -71,7 +71,6 @@ export default Route.extend({
 
     this.headData.setProperties({
       metaDescription: article ? article.description : model.gallery.description,
-      ogType: 'article',
       ogTitle: article ? article.title : gallery.title,
       gallery: gallery.slides,
       publishedTime: article ? article.publishedMoment.format() : gallery.publishedMoment.format(),
