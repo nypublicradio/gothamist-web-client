@@ -11,7 +11,7 @@
         <NyprMBlockList @items={{model}} as |author|>
           <NyprMAuthorBlock
             @author={{author}}
-            @articleRoute={{if author.articles (array 'author-detail' author.name)}}
+            @articleRoute={{if author.slug (array 'author-detail' author.slug)}}
           />
         </NyprMBlockList>
       </section>
