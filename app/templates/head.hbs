@@ -71,15 +71,11 @@
       "@context": "http://schema.org",
       "@type": "NewsArticle",
       "mainEntityOfPage": "https://gothamist.com/{{model.path}}",
-    {{#if model.image}}
-      "image": "{{wagtail-image-url model.image 1200 650}}",
-    {{/if}}
-    "headline": "{{model.title}}",
+      "image": "{{if model.image (wagtail-image-url model.image 1200 650)}}",
+      "headline": "{{model.title}}",
       "description": "{{model.metaDescription}}",
       "datePublished": "{{model.publishedTime}}",
-    {{#if model.modifiedTime}}
-      "dateModified": "{{model.modifiedTime}}",
-    {{/if}}
+      "dateModified": "{{if model.modifiedTime model.modifiedTime}}",
     "author": [
     {{#each model.authors as |author|}}
       {
