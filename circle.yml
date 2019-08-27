@@ -24,11 +24,6 @@ templates:
             env | sed -n "s/^${ENV}_//p" >> .env
             npx ember deploy "$(echo $ENV | awk '{print tolower($0)}')" --verbose
 
-  filter_wagtail: &filter_wagtail
-    filters:
-      branches:
-        only: wagtail
-
   filter_demo: &filter_demo
     filters:
       branches:
@@ -130,27 +125,16 @@ jobs:
       - deploy:
           name: Deploying QA Build
           command: |
-            env | sed -n "s/^WAGTAIL_//p" > .env
+            env | sed -n "s/^DEMO_//p" > .env
             npx ember deploy qa:$CIRCLE_BRANCH --verbose --activate
       - run:
           name: Make QA artifact
           command: |
             mkdir /tmp/qa-builds
-            echo "<a href=\"https://$WAGTAIL_QA_HOST?build=$CIRCLE_BRANCH\">https://$WAGTAIL_QA_HOST?build=$CIRCLE_BRANCH</a>" > /tmp/qa-builds/$CIRCLE_SHA1.html
+            echo "<a href=\"https://$QA_HOST?build=$CIRCLE_BRANCH\">https://$QA_HOST?build=$CIRCLE_BRANCH</a>" > /tmp/qa-builds/$CIRCLE_SHA1.html
 
       - store_artifacts:
           path: /tmp/qa-builds
-
-  deploy-static-wagtail:
-    environment:
-      ENV: WAGTAIL
-    <<: *deploy_static
-
-  deploy-fastboot-wagtail:
-    environment:
-      ENV: wagtail
-      TAG: wagtail
-    <<: *deploy_fastboot
 
   deploy-static-demo:
     environment:
@@ -180,7 +164,7 @@ workflows:
       - build-static:
           filters:
             branches:
-              ignore: /master|wagtail|[A-Za-z-_]+/[A-Za-z-_\d]+/
+              ignore: /master|[A-Za-z-_]+/[A-Za-z-_\d]+/
       - test-static:
           requires:
             - build-static
@@ -193,23 +177,6 @@ workflows:
           requires:
             - build-static
       - deploy-static-qa:
-          requires:
-            - test-static
-
-  deploy-wagtail:
-    jobs:
-      - build-static:
-          <<: *filter_wagtail
-      - test-static:
-          <<: *filter_wagtail
-          requires:
-            - build-static
-      - deploy-static-wagtail:
-          <<: *filter_wagtail
-          requires:
-            - test-static
-      - deploy-fastboot-wagtail:
-          <<: *filter_wagtail
           requires:
             - test-static
 
