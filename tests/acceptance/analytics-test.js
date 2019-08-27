@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 import { module } from 'qunit';
 import { visit, click } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
@@ -7,6 +9,8 @@ import test from 'ember-sinon-qunit/test-support/test';
 import * as uuid from 'uuid/v1';
 
 import config from 'gothamist-web-client/config/environment';
+import { ANCESTRY } from '../unit/fixtures/article-fixtures';
+import { CMS_TIMESTAMP_FORMAT } from '../../mirage/factories/consts';
 
 
 module('Acceptance | analytics', function(hooks) {
@@ -31,20 +35,22 @@ module('Acceptance | analytics', function(hooks) {
     const spyLayer = {push: this.spy()};
     this.stub(dataLayer, 'getDataLayer').returns(spyLayer);
 
-    const TAGS = ['foo', 'bar', 'baz'];
-    const AUTHOR = 'Foo Bar';
+    const TAGS = [{name: 'foo', slug: 'foo'}, {name: 'bar', slug: 'bar'}, {name: 'baz', slug: 'baz'}];
+    const AUTHOR_FIRST = 'Foo';
+    const AUTHOR_LAST = 'Bar';
     const SECTION = 'News';
     const TITLE = 'Hello World';
-    server.create('article', 'mtGallery', {
+    server.create('article', 'withGallery', 'withSection', {
       id: 'gallery',
-      author_nickname: AUTHOR,
-      authored_on_utc: '20190101120000',
-      categories: [{
-        basename: 'news',
-        label: SECTION
+      related_authors: [{
+        first_name: AUTHOR_FIRST,
+        last_name: AUTHOR_LAST,
       }],
+      publication_date: moment.utc('2019-01-01 12:00').format(CMS_TIMESTAMP_FORMAT),
+      ancestry: ANCESTRY,
       tags: TAGS,
       title: TITLE,
+      section: 'news',
     });
 
     await visit('/');
@@ -57,8 +63,9 @@ module('Acceptance | analytics', function(hooks) {
     await click('[data-test-top-nav] [data-test-nav-link="0"]'); // news section
     assert.ok(spyLayer.push.calledWith({template: 'section'}), 'section template is declared');
 
-    await click('[data-test-top-nav] [data-test-nav-link="3"]'); // popular "dimension"
-    assert.ok(spyLayer.push.calledWith({template: 'dimension'}), 'dimension template is declared');
+    // remove popular for now
+    // await click('[data-test-top-nav] [data-test-nav-link="3"]'); // popular "dimension"
+    // assert.ok(spyLayer.push.calledWith({template: 'dimension'}), 'dimension template is declared');
 
     await click('[data-test-main-footer] [data-test-secondary-nav-link="1"]'); // contact us
     assert.ok(spyLayer.push.calledWith({template: 'flatpage'}), 'flatpage template is declared');
@@ -69,8 +76,8 @@ module('Acceptance | analytics', function(hooks) {
     await visit('/search');
     assert.ok(spyLayer.push.calledWith({template: 'search'}), 'search template is declared');
 
-    await visit('/does-not-exist');
-    assert.ok(spyLayer.push.calledWith({template: '404'}), '404 template is declared');
+    // await visit('/does-not-exist');
+    // assert.ok(spyLayer.push.calledWith({template: '404'}), '404 template is declared');
 
     await visit('/');
     spyLayer.push.resetHistory();
@@ -78,8 +85,8 @@ module('Acceptance | analytics', function(hooks) {
     await click('[data-test-block="gallery"] a'); // article with a gallery
 
     assert.deepEqual(spyLayer.push.getCall(1).args[0], {
-      articleTags: TAGS.join(','),
-      articleAuthors: AUTHOR,
+      articleTags: TAGS.mapBy('name').join(','),
+      articleAuthors: `${AUTHOR_FIRST} ${AUTHOR_LAST}`,
       articleSection: SECTION,
       articleTitle: TITLE,
       articlePublishTime: '2019-01-01T07:00-05:00', // going from UTC to eastern subtracts 5 hours
@@ -98,6 +105,6 @@ module('Acceptance | analytics', function(hooks) {
       articlePublishTime: null,
     }, 'dataLayer is cleared of article metadata on route exit');
 
-    assert.ok(spyLayer.push.calledWith({template: 'article gallery'}), 'article template is declared');
+    assert.ok(spyLayer.push.calledWith({template: 'article gallery'}), 'gallery template is declared');
   });
 });

@@ -11,13 +11,14 @@ module('Acceptance | tags', function(hooks) {
   setupMirage(hooks);
 
   test('visiting /tags', async function(assert) {
-    server.createList('article', COUNT * 5, {tags: ['dogs and cats']});
-    await visit('/tags/dogs%20and%20cats');
+    server.createList('article', COUNT * 5, {tags: [{slug: 'dogs-and-cats', name: 'dogs and cats'}], section: 'food', tag_slug: 'dogs-and-cats'});
+    await visit('/tags/dogs-and-cats');
 
-    assert.equal(currentURL(), '/tags/dogs%20and%20cats');
+    assert.equal(currentURL(), '/tags/dogs-and-cats');
 
     assert.dom('[data-test-block]').exists({count: COUNT});
-    assert.dom('[data-test-tag-heading]').hasText('Dogs And Cats');
+    assert.dom('[data-test-tag-heading]').hasText('dogs and cats');
+    assert.dom('[data-test-section-label]').hasText('Food', 'section label is populated');
 
     await click('[data-test-more-results]');
 
@@ -25,9 +26,9 @@ module('Acceptance | tags', function(hooks) {
   });
 
   test('tag lists get updated with commentCount', async function(assert) {
-    server.createList('article', COUNT * 5, {tags: ['dogs']});
+    server.createList('article', COUNT * 5, {tags: [{slug: 'dogs', name: 'dogs'}], tag_slug: 'dogs'});
     const EXPECTED = server.schema.articles.all()
-      .models.map((a, i) => ({posts: Math.ceil(Math.random() * i + 1), identifiers: [a.id]}));
+      .models.map((a, i) => ({posts: Math.ceil(Math.random() * i + 1), identifiers: [a.uuid]}));
 
     server.get(`${config.disqusAPI}/threads/set.json`, {response: EXPECTED});
 
@@ -39,7 +40,8 @@ module('Acceptance | tags', function(hooks) {
     // assert that articles loaded via "read more" also get updated
     findAll('[data-test-block]').forEach(block => {
       let id = block.dataset.testBlock;
-      let { posts } = EXPECTED.find(d => d.identifiers.includes(id));
+      let { uuid } = server.schema.articles.find(id);
+      let { posts } = EXPECTED.find(d => d.identifiers.includes(uuid));
       assert.ok(block.querySelector('.c-block-meta__comments'), 'comments are rendered');
       assert.dom(block.querySelector('.c-block-meta__comments')).includesText(String(posts));
     });

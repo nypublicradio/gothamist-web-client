@@ -1,140 +1,103 @@
-import moment from 'moment';
-
 import DS from 'ember-data';
+import Page from './page';
 import { computed } from '@ember/object';
-import { reads, or } from '@ember/object/computed';
+import { reads, bool, or } from '@ember/object/computed';
+import { inject } from '@ember/service';
 
-import DomFixer from '../utils/dom-fixer';
-import { imgixUri } from '../helpers/imgix-uri';
-import { GOTH_HOST_REGEX } from '../serializers/gallery';
+import { extractPath, camelizeObject } from '../utils/wagtail-api';
 
 
-export default DS.Model.extend({
-  allowComments: DS.attr('boolean'),
-  authorId: DS.attr('number'),
-  authorName: DS.attr('string'),
-  authorNickname: DS.attr('string'), // display name
-  authoredOn: DS.attr('string'),
-  authoredOnUtc: DS.attr('string'),
-  blogId: DS.attr('number'),
-  categories: DS.attr(),
-  commentCount: DS.attr('number'),
-  entrytopics: DS.attr(),
-  excerpt: DS.attr('string'),
-  excerptFull: DS.attr('string'),
-  excerptPretty: DS.attr('string'),
-  excerptSponsor: DS.attr('string'),
-  modifiedOn: DS.attr('string'),
-  modifiedOnUtc: DS.attr('string'),
-  permalink: DS.attr('string'),
-  platypusId: DS.attr('string'),
-  socialtopics: DS.attr(),
-  tags: DS.attr(),
-  text: DS.attr('string'),
-  textMore: DS.attr('string'),
-  thumbnail60: DS.attr('string'),
-  thumbnail105: DS.attr('string'),
-  thumbnail300: DS.attr('string'),
-  thumbnail640: DS.attr('string'),
-  title: DS.attr('string', {defaultValue:  ''}),
+export const WAGTAIL_MODEL_TYPE = 'news.ArticlePage';
+export const SECTION_PAGE_TYPE = 'standardpages.IndexPage';
 
-  // gallery attrs
-  gallery: DS.attr(),
+export const LEAD_GALLERY = 'lead_gallery';
+export const LEAD_VIDEO   = 'lead_video';
+export const LEAD_AUDIO   = 'lead_audio';
+export const LEAD_IMAGE   = 'lead_image';
 
-  hasGallery: DS.attr('boolean'),
-  galleryDropbox: DS.attr('boolean'),
-  galleryFull: DS.attr(),
-  galleryArray: DS.attr(),
-  galleryCaptions: DS.attr(),
-  galleryCredit: DS.attr(),
+const AD_BINDINGS = [
+  'adTags:tags',
+  'racy',
+  'sponsorNames:Sponsor',
+  'section.slug:Category',
+];
 
-  async loadGallery() {
-    if (!this.hasGallery) {
-      return this;
-    }
+export default Page.extend({
+  router: inject(),
 
-    if (this.galleryDropbox) {
-      try {
-        let gallery = await this.store.findRecord('gallery', this.entrytopics[0])
-        this.set('gallery', gallery);
-      } catch(_e) {
-        this.set('hasGallery', false);
-        return this;
-      }
-    } else {
-      let slides = [];
-      for (let i = 0; i < this.galleryFull.length; i++) {
-        let path = this.galleryFull[i].replace(GOTH_HOST_REGEX, '');
-        slides.push({
-          thumb: imgixUri(path, {w: 106, h: 106}),
-          preview: imgixUri(path, {w: 625, h: 416, q: 90}),
-          full: imgixUri(path, {w: 1200, q: 90}),
-          caption: DomFixer.removeHTML(this.galleryCaptions[i]),
-          credit: this.galleryCredit[i],
-          thumbSrcSet: `${imgixUri(path, {w: 106, h: 106, dpr: 1})} 1x,
-          ${imgixUri(path, {w: 106, h: 106, dpr: 2})} 2x,
-          ${imgixUri(path, {w: 106, h: 106, dpr: 3})} 3x`,
-        });
-      }
-      this.set('gallery', {slides});
-    }
+  ancestry:    DS.attr(),
+  body:        DS.attr(),
+  description: DS.attr('string'),
 
-    return this;
-  },
+  disableComments: DS.attr('boolean'),
 
+  leadAsset:      DS.attr(),
+
+  legacyId:       DS.attr('string'),
+
+  meta: DS.attr(),
+
+  publicationDate: DS.attr('moment', {
+    timezoneOverride: true,
+  }),
+
+  provocativeContent: DS.attr('boolean'),
+
+  relatedAuthors:                   DS.attr({defaultValue: () => []}),
+  relatedContributingOrganizations: DS.attr({defaultValue: () => []}),
+  relatedLinks:                     DS.attr({defaultValue: () => []}),
+  relatedSponsors:                  DS.attr({defaultValue: () => []}),
+
+  sensitiveContent:   DS.attr('boolean'),
+  showAsFeature:      DS.attr('boolean'),
+
+  sponsoredContent: DS.attr('boolean'),
+
+  tags:        DS.attr({defaultValue: () => []}),
+  updatedDate: DS.attr('moment', {timezoneOverride: true}),
+
+  url: DS.attr('string'),
 
   // computed
-  thumbnailPath: computed('{thumbnail640,thumbnail300,thumbnail105,thumbnail60}', function() {
-    let thumbnail;
-    if (this.thumbnail640) {
-      thumbnail = this.thumbnail640;
-    } else if (this.thumbnail300) {
-      thumbnail = this.thumbnail300;
-    } else if (this.thumbnail105) {
-      thumbnail = this.thumbnail105;
-    } else if (this.thumbnail60) {
-      thumbnail = this.thumbnail60;
+  modifiedMoment: reads('updatedDate'),
+
+  section: computed('ancestry', function() {
+    if (!this.ancestry || !this.ancestry.length) {
+      return {};
+    }
+    const NEAREST_SECTION = this.ancestry.findBy('meta.type', SECTION_PAGE_TYPE);
+
+    if (NEAREST_SECTION) {
+      return {
+        title: NEAREST_SECTION.title,
+        slug: NEAREST_SECTION.slug,
+        id: NEAREST_SECTION.id,
+      };
     } else {
-      // no thumbnail for this article
-      return;
+      return {};
     }
-    return thumbnail.replace(GOTH_HOST_REGEX, '');
   }),
-  path: computed('permalink', function() {
-    return this.permalink.replace('http://gothamist.com/', '');
+
+  hasMain: reads('showAsFeature'),
+
+  hasGallery: computed('leadAsset', function() {
+    return this.leadAsset ? this.leadAsset.type === LEAD_GALLERY : false;
   }),
-  publishedMoment: computed('authoredOnUtc', function() {
-    return moment.utc(this.authoredOnUtc, 'YYYYMMDDHHmmss');
+  hasVideo: computed('leadAsset', function() {
+    return this.leadAsset ? this.leadAsset.type === LEAD_VIDEO : false;
   }),
-  modifiedMoment: computed('modifiedOnUtc', function() {
-    return moment.utc(this.modifiedOnUtc, 'YYYYMMDDHHmmss');
+  hasAudio: computed('leadAsset', function() {
+    return this.leadAsset ? this.leadAsset.type === LEAD_AUDIO : false;
   }),
-  section: computed('categories', function() {
-    // HACK: basename for arts & entertainment is wrong
-    let section = this.categories[0] || {};
-    if (section.basename === 'arts') {
-      section.basename = 'arts & entertainment';
-    }
-    return section;
-  }),
-  hasMain: computed('tags', function() {
-    return this.tags.includes('@main');
-  }),
-  hasVideo: computed('tags', function() {
-    return this.tags.includes('@video');
-  }),
-  hasAudio: computed('tags', function() {
-    return this.tags.includes('@audio');
-  }),
-  moveableTypeId: reads('id'),
+  idForComments: or('legacyId', 'uuid'),
 
   breadcrumb: computed('section', function() {
-    if (!this.section.basename) {
+    if (!this.section.slug) {
       return;
     }
     let breadcrumb = [{
-      route: ['sections', this.section.basename],
-      label: this.section.label
+      route: ['sections', this.section.slug],
+      label: this.section.title
     }];
     if (this.isSponsored) {
       breadcrumb.push({label: 'Sponsored'});
@@ -145,161 +108,100 @@ export default DS.Model.extend({
     if (this.isAnalysis) {
       breadcrumb.push({label: 'Analysis', route: ['tags', 'analysis']});
     }
-
     // HACK
-    if (this.tags.includes('we the commuters')) {
+    if (this.tags.mapBy('name').includes('we the commuters')) {
       breadcrumb.push({label: 'We the Commuters', route: ['tags', 'wethecommuters']});
     }
     return breadcrumb;
   }),
 
-  authors: computed('authorNickname', function() {
-    return [{
-      name: this.authorNickname,
-      route: ['author-detail', this.authorNickname],
-    }]
+  authors: computed('relatedAuthors', function() {
+    return this.relatedAuthors.map(author => ({
+      name: `${author.first_name} ${author.last_name}`,
+      route: ['author-detail', author.slug],
+      url: author.slug && this.router.urlFor('author-detail', author.slug),
+    }));
   }),
 
-  isSponsored: computed('tags', function() {
-    let tags = this.tags || [];
-    return tags.includes('@sponsored') || tags.includes('@sponsor');
-  }),
+  // MAPPINGS
+  isSponsored: reads('sponsoredContent'),
+
   isOpinion: computed('tags', function() {
-    let tags = this.tags || [];
-    return tags.includes('@opinion') || tags.includes('opinion');
+    return this.tags.mapBy('name').includes('@opinion') || this.tags.mapBy('name').includes('opinion');
   }),
   isAnalysis: computed('tags', function() {
-    let tags = this.tags || [];
-    return tags.includes('@analysis') || tags.includes('analysis');
+    return this.tags.mapBy('name').includes('@analysis') || this.tags.mapBy('name').includes('analysis');
   }),
 
-  hasLead:          or('leadImage', 'hasGallery'),
+  thumbnail: computed('leadImage', 'listingImage', function() {
+    if (this.listingImage) {
+      return camelizeObject(this.listingImage);
+    } else if (this.leadImage && this.leadImage.image) {
+      return camelizeObject(this.leadImage.image);
+    }
+  }),
 
-  leadImage:        reads('_parsedLegacyContent.leadImage'),
-  leadImageCaption: reads('_parsedLegacyContent.caption'),
-  leadImageCredit:  reads('_parsedLegacyContent.credit'),
-  leadImageAlt:     reads('_parsedLegacyContent.alt'),
-  leadImageLink:    reads('_parsedLegacyContent.leadImageLink'),
+  hasLead: bool('leadAsset'),
+
+  leadImage: computed('leadAsset', function() {
+    if (!this.leadAsset) {
+      return;
+    }
+    switch(this.leadAsset.type) {
+      case LEAD_IMAGE:
+        return camelizeObject(this.leadAsset.value);
+      default:
+        if (this.leadAsset.value.default_image) {
+          return {
+            image: camelizeObject(this.leadAsset.value.default_image),
+            caption: this.leadAsset.value.caption,
+          };
+        }
+    }
+  }),
+  // leadImageLink:    reads('_parsedLegacyContent.leadImageLink'),
+
+  ogImage: computed('socialImage', 'leadImage', function() {
+    return this.socialImage || (this.leadImage && this.leadImage.image);
+  }),
 
   displayTags: computed('tags', function() {
     let tags = this.tags || [];
-    return tags.filter(tag => !tag.match(/^@/));
+    return tags.filter(tag => !tag.name.match(/^@/));
   }),
   internalTags: computed('tags', function() {
     let tags = this.tags || [];
     return tags
-      .filter(tag => tag.match(/^@/))
-      .map(tag => tag.replace(/^@/,''));
+      .filter(tag => tag.name.match(/^@/))
+      .map(tag => tag.name.replace(/^@/,''));
   }),
-  adBindings: computed(function() {
-    return ['internalTags:tags','section.basename:Category'];
+  adBindings: AD_BINDINGS,
+  racy: computed('provocativeContent', function() {
+    // DFP does not like primitive booleans for targeting
+    return this.provocativeContent ? 'true': '';
   }),
-
-  get body() {
-    if (typeof FastBoot !== 'undefined') {
-      return this.text;
-    }
-    return cloneNodes(this._parsedLegacyContent.nodes);
-  },
-
-  _parsedLegacyContent: computed('text', function() {
-    if (typeof FastBoot !== 'undefined') {
-      return;
-    }
-
-    const parsed = {};
-
-    // in a browser environment, use the native DOM parser to turn text into concrete nodes
-    const domFixer = new DomFixer(this.text);
-
-    // do some minor processing
-
-    // get rid of the empty nodes
-    domFixer.removeEmptyNodes();
-
-    // links to other domains open in a new window
-    domFixer.externalizeAnchors();
-
-    // make sure iframes are https
-    domFixer.secureSrc('iframe');
-
-    // make sure images are https
-    domFixer.secureSrc('img');
-
-    // fix up the body text too
-    // wrap raw text nodes in a paragraph
-    domFixer.rescueOrphans();
-    // split any paragraphs that contain double line breaks
-    domFixer.unbreakParagraphs();
-
-    // make sure blockquotes aren't wrapping raw text
-    domFixer.rescueOrphans('blockquote');
-
-    // remove duplicate lead image
-    // mutates passed in nodes
-    let [leadImage, leadImageLink] = this._extractLeadImage(domFixer.nodes);
-
-    // extract caption and credit and alt
-    if (leadImage) {
-      let img = leadImage.querySelector('img');
-      parsed.leadImage = img ? imgixUri(img.src.replace(GOTH_HOST_REGEX, ''), {w: 640, q: 90}) : '';
-      parsed.leadImageLink = leadImageLink;
-
-      let [, caption, credit] = this._getImageMeta(leadImage);
-      parsed.caption = caption ? caption.trim() : 'Image from Gothamist';
-      parsed.credit = credit ? credit.trim() : '';
-      parsed.alt = caption? DomFixer.removeHTML(parsed.caption) : "";
-    }
-
-    parsed.nodes = domFixer.nodes;
-    return parsed;
+  sponsorNames: computed('relatedSponsors', function() {
+    return this.relatedSponsors.mapBy('name').join(',');
+  }),
+  adTags: computed('tags', function() {
+    return this.tags.mapBy('name');
   }),
 
-  _extractLeadImage(nodes) {
-    if (!nodes.firstElementChild) {
-      return [];
+  // compute `path` for article so it doesn't include the `section` slug
+  // this is so we can easily create link-tos and compensate
+  // for neste url structures
+  path: computed('meta.html_url', 'section', function() {
+    if (this.meta) {
+      let path = extractPath(this.meta.html_url);
+      // strip out the section
+      return path.replace(`${this.section.slug}/`, '');
     }
-    // the fist element will contain this MT tag if there's an image
-    let imageWrapper = nodes.firstElementChild.querySelector('.mt-enclosure-image');
-    if (imageWrapper) {
-      if (!imageWrapper.querySelector('img')) {
-        // due to broken MT output, this is where the image sometimes ends up
-        imageWrapper = nodes.firstElementChild.nextElementSibling;
-      }
+  }),
 
-      // this image will be the same as `thumbnail640`, which is displayed as the lead image
-      // remove it from this node collection so it isn't rendered twice
-      if (imageWrapper.parentElement && imageWrapper.parentElement.nodeName === 'A') {
-        let link = imageWrapper.parentElement.href;
-        return [
-          imageWrapper.parentNode.removeChild(imageWrapper),
-          link,
-        ];
-      } else {
-        return [ imageWrapper.parentNode.removeChild(imageWrapper) ];
-      }
-    } else {
-      return [];
-    }
-  },
+  // for comments and share dialogs
+  permalink: reads('url'),
 
-  _getImageMeta(imageWrapper) {
-      // caption is the text in the `<i/>` tag
-      let text = imageWrapper.querySelector('i');
-
-      if (!text) {
-        // no caption or credit
-        return [];
-      }
-
-      // parse HTML string for caption and credit
-      let match = text.innerHTML.match(/^([^(]+)(?:\(([^)]+)\))?/);
-      return match || [];
-  },
+  // relationships
+  gallery: DS.belongsTo(),
 
 });
-
-function cloneNodes(nodes) {
-  const DEEP_COPY = true;
-  return nodes.cloneNode(DEEP_COPY);
-}

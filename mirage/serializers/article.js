@@ -1,17 +1,18 @@
-import { Serializer } from 'ember-cli-mirage';
-import { underscore } from '@ember/string';
+import ApplicationSerializer, { cleanMirageAttrs } from './application';
 
-export default Serializer.extend({
-  keyForCollection: () => 'entries',
-  keyForAttribute: attr => underscore(attr),
 
-  serialize(object, request) {
-    let json = Serializer.prototype.serialize.apply(this, arguments);
+const MIRAGE_ONLY = ['page', 'gallery', 'author_slug'];
 
-    return {
-      ...json,
-      total_entries: object.models.length,
-      listed_entries: parseInt(request.queryParams.count, 10),
-    };
+export default ApplicationSerializer.extend({
+  serialize() {
+    let json = ApplicationSerializer.prototype.serialize.apply(this, arguments);
+
+    if (json.items) {
+      json.items.forEach(item => cleanMirageAttrs(item, MIRAGE_ONLY));
+    } else {
+      cleanMirageAttrs(json, MIRAGE_ONLY)
+    }
+
+    return json;
   }
 });

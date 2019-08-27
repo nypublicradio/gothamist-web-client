@@ -14,9 +14,7 @@ module('Unit | Controller | index', function(hooks) {
     let controller = this.owner.lookup('controller:index');
     assert.ok(controller);
     assert.deepEqual(controller.riverQuery, {
-      index: 'gothamist',
-      count: TOTAL_COUNT,
-      page: 2,
+      limit: TOTAL_COUNT,
     });
   });
 

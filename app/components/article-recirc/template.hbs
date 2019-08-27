@@ -1,10 +1,10 @@
 <NyprOBlockListGroup @layoutType='offset' as |blg|>
-  <blg.col1 class="c-recirc-tout__col1" data-test-recirc-popular>
-    {{#if this.popular}}
+  <blg.col1 class="c-recirc-tout__col1" data-test-recirc-recent>
+    {{#if this.recent}}
       <NyprMBlockList
         class="u-spacing--and-half"
-        @heading={{concat 'Popular in ' @article.section.label}}
-        @items={{slice 0 3 this.popular}}
+        @heading={{concat 'Recent in ' @article.section.title}}
+        @items={{slice 0 3 this.recent}}
         as |article|>
         <ArticleBlock
           @hideEyebrow={{true}}
@@ -21,7 +21,7 @@
 
   <blg.col2 class="c-recirc-tout__col2" data-test-recirc-featured>
     <h2 class="o-section__heading o-bg-text-accent">
-      Featured in {{@article.section.label}}
+      Featured in {{@article.section.title}}
     </h2>
     {{#if this.featured}}
       <ArticleBlock

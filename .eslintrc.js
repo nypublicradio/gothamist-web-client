@@ -1,7 +1,6 @@
 module.exports = {
   globals: {
     server: true,
-    google: true,
     DISQUS: true,
     instgrm: true,
   },
@@ -35,6 +34,7 @@ module.exports = {
         'lib/*/index.js',
         'fastboot.js',
         'server/**/*.js',
+        'exportist/**/*.js',
       ],
       excludedFiles: [
         'config/deprecation-workflow.js',

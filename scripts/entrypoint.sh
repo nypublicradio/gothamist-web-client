@@ -12,6 +12,9 @@ prod)
 demo)
     supervisord -c nginx/supervisord.conf
     ;;
+wagtail)
+    supervisord -c nginx/supervisord.conf
+    ;;
 *)
     node fastboot
     ;;

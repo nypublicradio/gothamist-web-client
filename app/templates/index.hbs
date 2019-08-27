@@ -3,32 +3,66 @@
 <DoTargeting key='Template' value='Homepage' />
 
 <h1 class="is-vishidden" aria-hidden="true">Gothamist: New York City Local News, Food, Arts & Events</h1>
-
 <div class="c-home__sections u-section-spacing--wide l-container l-container--xl l-wrap u-trigger-floating-header">
 
-  {{#if (and (is-same-or-before '2019-06-30' precision='day') showPledgeAsk)}}
-    <NyprMBoxBanner @close={{action 'hideBannerFor24'}} as |banner|>
+  {{#with model.sitewideComponents.breakingNews as |breaking|}}
+    <div class="l-container l-container--16col">
+      {{#each breaking as |news|}}
+        {{#if (get-route-params news.link)}}
+          <NyprMTextBanner
+            @route={{get-route-params news.link}}
+            @title={{news.title}}
+            @timestamp={{timestamp news.startTime}}
+            @description={{news.description}}
+          />
+        {{else}}
+          <NyprMTextBanner
+            @url={{news.link}}
+            @title={{news.title}}
+            @timestamp={{timestamp news.startTime}}
+            @description={{news.description}}
+          />
+        {{/if}}
+      {{/each}}
+    </div>
+  {{/with}}
 
-      <banner.title>
-        Support Gothamist by June 30th!
-      </banner.title>
+  {{#with model.systemMessages.topProductBanner as |productBanner|}}
+    <DismissableBlock
+      @cookieId={{productBanner.cookieId}}
+      @dismissedFor={{productBanner.frequency}}
+      as |dismiss|>
+      <NyprMBoxBanner
+        class={{unless productBanner.description 'o-box-banner--no-desc'}}
+        @close={{action dismiss}}
+        data-test-top-product-banner
+        as |banner|>
 
-      <banner.body as |body|>
-        <body.dek>
-          <p>
-            The end of our budget year is approaching. Support Gothamist and local news in New York today, and your donation will help us reach our goal. We’re counting on you!
-          </p>
-        </body.dek>
+        <banner.title>
+          {{{productBanner.title}}}
+        </banner.title>
 
-        <body.cta>
-          <NyprAButton @url="https://pledge3.wnyc.org/donate/gothamist/onestep/?utm_medium=partnersite&utm_source=gothamist&utm_campaign=prodmktgbanner">
-            Donate Now
-          </NyprAButton>
-        </body.cta>
-      </banner.body>
+        {{#if (or productBanner.description productBanner.buttonText)}}
+          <banner.body as |body|>
+            {{#if productBanner.description}}
+              <body.dek>
+                {{{productBanner.description}}}
+              </body.dek>
+            {{/if}}
 
-    </NyprMBoxBanner>
-  {{/if}}
+            {{#if productBanner.buttonText}}
+              <body.cta>
+                <NyprAButton @url={{productBanner.buttonLink}}>
+                  {{productBanner.buttonText}}
+                </NyprAButton>
+              </body.cta>
+            {{/if}}
+          </banner.body>
+        {{/if}}
+
+      </NyprMBoxBanner>
+    </DismissableBlock>
+  {{/with}}
 
   {{#with model.breaking.firstObject as |breaking|}}
     <BreakingNews @article={{breaking}} />
@@ -181,7 +215,6 @@
         <AriaLoadMessage @message="More Results Loaded" />
         {{#animated-each page use=transition initialInsertion=true as |set|}}
           <div class="l-container l-container--14col">
-
             <ArticleList @articles={{set}} @ad='gothamist/index/midpage/repeating' />
           </div>
         {{/animated-each}}
@@ -205,9 +238,8 @@
   <div class="l-container l-container--14col">
     <NyprMNavReadMore @items={{array
       (hash route=(array 'sections' 'news') label='News')
-      (hash route=(array 'sections' 'arts & entertainment') label='Arts & Entertainment')
+      (hash route=(array 'sections' 'arts-entertainment') label='Arts & Entertainment')
       (hash route=(array 'sections' 'food') label='Food')
-      (hash route=(array 'popular') label='Popular')
     }}/>
   </div>
 

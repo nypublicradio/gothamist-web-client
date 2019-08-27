@@ -14,6 +14,22 @@ export const MAIN_COUNT = 4;
 export const TOTAL_COUNT = BASE_COUNT + MAIN_COUNT;
 export const GROUP_SIZE = 7;
 
+const { warn } = console;
+const failSafe = name => () => warn(`${name} failed to load`);
+const LISTING_FIELDS = [
+  'ancestry',
+  'description',
+  'lead_asset',
+  'legacy_id',
+  'listing_image',
+  'publication_date',
+  'show_as_feature',
+  'sponsored_content',
+  'tags',
+  'url',
+  'uuid',
+].join(',');
+
 export default Route.extend({
   header: inject('nypr-o-header'),
   headData: inject(),
@@ -46,18 +62,19 @@ export default Route.extend({
 
   model() {
     return hash({
-      sponsored: this.getSponsoredPost(),
-      sponsoredMain: this.getSponsoredMain(),
-      breaking: this.getBreakingNews(),
+      sponsored: this.getSponsoredPost().catch(failSafe('sponsored')),
+      sponsoredMain: this.getSponsoredMain().catch(failSafe('sponsoredMain')),
       main: this.store.query('article', {
-        index: 'gothamist',
-        term: '@main',
-        count: MAIN_COUNT,
-      }),
+        show_as_feature: true,
+        limit: MAIN_COUNT,
+        fields: LISTING_FIELDS,
+      }).catch(failSafe('main')),
       river: this.store.query('article', {
-        index: 'gothamist',
-        count: TOTAL_COUNT,
-      }),
+        limit: TOTAL_COUNT,
+        fields: LISTING_FIELDS,
+      }).catch(failSafe('river')),
+      systemMessages: this.store.findRecord('system-messages', config.siteId).catch(() => ''),
+      sitewideComponents: this.store.findRecord('sitewide-components', config.siteId).catch(() => ''),
       wnyc: getWnycStories(),
     }).then(results => {
       results.main = results.main.slice();
@@ -84,9 +101,8 @@ export default Route.extend({
   // filter it out if it's older than 24 hours
   async getSponsoredPost() {
     let { firstObject:post } = await this.store.query('article', {
-      index: 'gothamist',
-      term: '@sponsor',
-      count: 1,
+      sponsored_content: true,
+      limit: 1,
     });
 
     if (!post) {
@@ -101,9 +117,9 @@ export default Route.extend({
   // filter if it's not between 24 and 48 hours old
   async getSponsoredMain() {
     let { firstObject:post } = await this.store.query('article', {
-      index: 'gothamist',
-      term: ['@sponsor', '@main'],
-      count: 1,
+      sponsored_content: true,
+      show_as_feature: true,
+      limit: 1,
     });
 
     if (!post) {
@@ -111,24 +127,6 @@ export default Route.extend({
     }
     const ageInHours = moment().diff(post.publishedMoment, 'hours');
     if (ageInHours >= 24 && ageInHours <= 48) {
-      return post;
-    }
-  },
-
-  // check for breaking news
-  // filter it out if it's older than 6 hours
-  async getBreakingNews() {
-    let post = await this.store.query('article', {
-      index: 'gothamist',
-      term: '@breaking',
-      count: 1,
-    });
-
-    if (!post.firstObject) {
-      return;
-    }
-
-    if (moment().diff(post.firstObject.publishedMoment, 'hours') < 6) {
       return post;
     }
   },

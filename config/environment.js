@@ -18,8 +18,9 @@ module.exports = function(environment) {
     },
 
     APP: {
-      // Here you can pass flags/options to your application instance
-      // when it is created
+      wagtailImages: {
+        imagePath: `${process.env.CMS_SERVER}/images`,
+      }
     },
 
     fastboot: {
@@ -50,9 +51,11 @@ module.exports = function(environment) {
     },
 
     // ENDPOINTS
+    cmsServer: process.env.CMS_SERVER,
     apiServer: process.env.API_SERVER,
     disqusAPI: process.env.DISQUS_API,
     disqusKey: process.env.DISQUS_PUBLIC_KEY,
+    champEndpoint: process.env.CHAMP_ENDPOINT,
 
     // OTHER CONFIG
     wtcNewsletter:      '8c376c6dff',
@@ -60,8 +63,8 @@ module.exports = function(environment) {
     commentsAnchor:     'comments',
     donateCookie:       'goth_donateToutClosed',
     articleViewsCookie: 'goth_articleViews',
-    imgixHost:          'https://gothamist.imgix.net',
-    imgixPlatypusHost:  'https://gothamist-platypus.imgix.net',
+    productBannerCookiePrefix: 'gothamist_product_banner_',
+    siteId:             1, //id for system_messages, sitewidecomponents, etc.
 
     // for nypr-auth
     etagAPI: process.env.BROWSER_ID_ENDPOINT,
@@ -94,7 +97,11 @@ module.exports = function(environment) {
     };
 
     // for mirage endpoints
-    ENV.apiServer = 'https://api.demo.nypr.digital';
+    ENV.apiServer = ENV.apiServer || 'https://api.demo.nypr.digital';
+    ENV.cmsServer = ENV.cmsServer || 'https://cms.demo.nypr.digital';
+    ENV.disqusAPI = ENV.disqusAPI || 'https://disqus.com';
+    ENV.disqusKey = ENV.disqusKey || 'disqus-key';
+    ENV.etagAPI = ENV.etagAPI || 'https://browserid.com';
   }
 
   if (environment === 'test') {
@@ -109,10 +116,13 @@ module.exports = function(environment) {
     ENV.APP.autoboot = false;
 
     // for mirage endpoints
+    ENV.cmsServer = 'https://cms.demo.nypr.digital';
     ENV.apiServer = 'https://api.demo.nypr.digital';
+    ENV.cmsServer = 'https://cms.demo.nypr.digital';
     ENV.disqusAPI = 'https://disqus.com';
     ENV.disqusKey = 'disqus-key';
     ENV.etagAPI = 'https://browserid.com';
+    ENV.APP.wagtailImages.imagePath = 'https://example.com/images';
   }
 
   if (environment === 'production') {

@@ -1,17 +1,13 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
+import { ANCESTRY } from '../fixtures/article-fixtures';
 import {
-  CAPTION_WITH_CREDIT,
-  CREDIT_WITH_LINK,
-  CAPTION_WITH_LINK,
-  CAPTION_WITH_WHITESPACE,
-  // CAPTION_WITH_MULTIPLE_PARENS,
-  DOUBLE_BREAKS,
-  BAD_ARTICLE,
-  BAD_ARTICLE_2,
-  LINKED_LEAD_IMAGE,
-} from '../fixtures/article-fixtures';
+  // LEAD_GALLERY,
+  LEAD_VIDEO,
+  LEAD_AUDIO,
+  LEAD_IMAGE,
+} from 'gothamist-web-client/models/article';
 
 
 module('Unit | Model | article', function(hooks) {
@@ -24,122 +20,64 @@ module('Unit | Model | article', function(hooks) {
     assert.ok(model);
   });
 
-  test('images and iframes are secured', function(assert) {
+  // test computeds
+  test('section is computed from ancestry', function(assert) {
     let store = this.owner.lookup('service:store');
-    let model = store.createRecord('article', {text: `
-      <img id="img" src="http://picsum.photos/300"/>
-      <iframe id="iframe" src="http://google.com"></iframe>
-    `});
-
-    assert.ok(model.body.querySelector('#img').src.startsWith('https'));
-    assert.ok(model.body.querySelector('#iframe').src.startsWith('https'));
-  });
-
-  test('lead images', function(assert) {
-    let store = this.owner.lookup('service:store');
-    let model = store.createRecord('article', {text: CAPTION_WITH_CREDIT});
-
-    assert.equal(model.leadImageCaption, "Barsik may just be NYC's biggest cat.");
-    assert.equal(model.leadImageCredit, "Animal Care Centers of NYC");
-
-    model = store.createRecord('article', {text: CREDIT_WITH_LINK});
-
-    assert.equal(model.leadImageCaption, "Barsik may just be NYC's biggest cat.");
-    assert.equal(model.leadImageCredit, `<a href="http://example.com" target="_blank" rel="noopener">Animal Care Centers of NYC</a>`);
-
-    model = store.createRecord('article', {text: CAPTION_WITH_LINK});
-
-    assert.equal(model.leadImageCaption, `A Latch M-series keyless entrance, <a href="https://www.latch.com/m-series" target="_blank" rel="noopener">via Latch's website</a>.`);
-    assert.notOk(model.leadImateCredit);
-
-    model = store.createRecord('article', {text: CAPTION_WITH_WHITESPACE});
-
-    assert.equal(model.leadImageCaption, 'Joseph Jordan a.k.a Eric Striker');
-    assert.equal(model.leadImageCredit, 'Courtesy of the Southern Poverty Law Center');
-  });
-
-  test('linked lead images', function(assert) {
-    let store = this.owner.lookup('service:store');
-    let model = store.createRecord('article', {text: LINKED_LEAD_IMAGE});
-
-    let link = LINKED_LEAD_IMAGE.match(/<a href="([^"]+)"/);
-
-    assert.equal(model.leadImageLink, link[1]);
-  });
-
-  test('external links', function(assert) {
-    const URL = window.location.toString();
-    let store = this.owner.lookup('service:store');
-    let model = store.createRecord('article', {text: `
-      <p>
-        <a href="http://google.com" id="external">external link</a>
-      </p>
-      <p>
-        <a href="${URL}">internal link</a>
-      </p>
-    `});
-
-    let external = model.body.querySelector('#external');
-    let internal = model.body.querySelector('#internal');
-
-    assert.dom(external).hasAttribute('target', '_blank', 'external link gets target blank');
-    assert.dom(external).hasAttribute('rel', 'noopener', 'target blank gets no opener');
-
-    assert.dom(internal).doesNotHaveAttribute('target');
-  });
-
-  test('blockquotes are repaired', function(assert) {
-    let store = this.owner.lookup('service:store');
-    let model = store.createRecord('article', {text: `
-      <blockquote>
-        raw text here, followed by <a href="http://google.com">a link</a>
-
-        <p>
-          nested text here
-        </p>
-      </blockquote>
-    `});
-
-    let paragraphs = model.body.querySelectorAll('blockquote p');
-    assert.equal(paragraphs.length, 2, 'raw text wrapped in a <p/>');
-
-    assert.dom(paragraphs[0]).hasText('raw text here, followed by a link');
-    assert.equal(paragraphs[0].firstElementChild.nodeName, 'A', 'anchor tag is wrapped into paragraph');
-  });
-
-  test('directly nested raw text is also fixed', function(assert) {
-    let store = this.owner.lookup('service:store');
-    let model = store.createRecord('article', {text: BAD_ARTICLE});
-
-    let noTextNodes = [...model.body.childNodes].every(node => {
-      if (node.nodeType !== node.TEXT_NODE) {
-        return true;
-      } else if (!node.textContent.trim()) {
-        // empty text nodes are ok
-        return true;
-      } else {
-        return false;
-      }
+    let model = store.createRecord('article', {
+      ancestry: ANCESTRY,
     });
 
-    assert.ok(noTextNodes, 'all text nodes should be wrapped');
-    assert.ok(model.body.childNodes.length, 'make sure nodes are returned');
-
+    assert.deepEqual(model.section, {slug: 'news', title: 'News', id: 8});
   });
 
-  test('two adjacent line breaks creates two paragraphs', function(assert) {
-    let store = this.owner.lookup('service:store');
-    let model = store.createRecord('article', {text: DOUBLE_BREAKS});
+  test('thumbnail is properly computed', function(assert) {
+    const EXPECTED = 'foo';
+    const store = this.owner.lookup('service:store');
 
-    let childNodes = [...model.body.childNodes].map(node => node.nodeName);
+    let article = store.createRecord('article', {});
+    assert.notOk(article.thumbnail, 'thumbnail should be undefined if there is no valid source');
 
-    assert.deepEqual(childNodes, ['P', 'P', 'P'], 'should have 3 paragraphs');
-  });
+    article = store.createRecord('article', {
+      leadAsset: {
+        type: LEAD_IMAGE,
+        value: {
+          image: {
+            id: EXPECTED,
+          }
+        }
+      }
+    });
+    assert.equal(article.thumbnail.id, EXPECTED, 'lead images are turned into thumbnails')
 
-  test('this bad article', function(assert) {
-    let store = this.owner.lookup('service:store');
-    let model = store.createRecord('article', {text: BAD_ARTICLE_2});
+    article = store.createRecord('article', {
+      leadAsset: {
+        type: LEAD_AUDIO,
+        value: {
+          default_image: {
+            id: EXPECTED,
+          }
+        }
+      }
+    });
+    assert.equal(article.thumbnail.id, EXPECTED, 'lead audio images are turned into thumbnails')
 
-    assert.ok(model.body);
-  });
+    article = store.createRecord('article', {
+      leadAsset: {
+        type: LEAD_VIDEO,
+        value: {
+          default_image: {
+            id: EXPECTED,
+          }
+        }
+      }
+    });
+    assert.equal(article.thumbnail.id, EXPECTED, 'lead video images are turned into thumbnails')
+
+    article = store.createRecord('article', {
+      listingImage: {
+        id: EXPECTED,
+      }
+    });
+    assert.equal(article.thumbnail.id, EXPECTED, 'listingImage overrides everything else');
+  })
 });

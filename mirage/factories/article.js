@@ -2,92 +2,188 @@ import moment from 'moment';
 import { Factory, faker, trait } from 'ember-cli-mirage';
 
 import {
-  DATE_FORMAT,
-  PLATYPUS_GALLERY,
-  MT_GALLERY,
+  CMS_TIMESTAMP_FORMAT,
+  slug,
+  section,
 } from './consts';
 
+
 export default Factory.extend({
-  allow_comments: true,
-  author_id: () => faker.random.number({min: 500000, max: 550000}),
-  author_name: () => faker.internet.userName(),
-  author_nickname: () => faker.name.findName(),
-  authored_on: () => moment(faker.date.recent()).format(DATE_FORMAT),
-  authored_on_utc() {
-    return moment(this.authored_on, DATE_FORMAT).utc().format(DATE_FORMAT);
+  // mirage-only attrs
+  slug,
+  section,
+  html_path() {
+    return this.meta && this.meta.html_url;
   },
-  blog_id: 1,
-  categories: faker.list.random([{
-    basename: 'news',
-    label: 'News',
-  }], [{
-    basename: 'arts',
-    label: 'Arts & Entertainment',
-  }], [{
-    basename: 'food',
-    label: 'Food',
 
-  }]),
-  comment_count: 0,
-  entrytopics: () => [],
-  excerpt_full: () => faker.lorem.paragraph(7),
-  excerpt() {
-    return this.excerpt_full.slice(0, 220) + '...';
+  ancestry() {
+    return [{
+      id: faker.random.number(100, 300),
+      meta: {
+        type: 'news.ArticleIndex',
+        detail_url: 'http://localhost/api/v2/pages/12/',
+        html_url: 'http://localhost/news/articles/',
+      },
+      title: 'Articles',
+      slug: 'articles',
+    }, {
+      id: faker.random.number(300, 500),
+      meta: {
+        type: 'standardpages.IndexPage',
+        detail_url: 'http://localhost/api/v2/pages/8/',
+        html_url: 'http://localhost/news/',
+      },
+      title: this.section[0].toUpperCase() + this.section.slice(1),
+      slug: this.section,
+    }, {
+      id: faker.random.number(500, 700),
+      meta: {
+        type: 'home.HomePage',
+        detail_url: 'http://localhost/api/v2/pages/3/',
+        html_url: 'http://localhost/',
+      },
+      title: 'Home',
+      slug: 'home',
+    }, {
+      id: 1,
+      meta: {
+        type: 'wagtailcore.Page',
+        detail_url: 'http://localhost/api/v2/pages/1/',
+        html_url: null,
+      },
+      title: 'Root',
+      slug: 'root',
+    }];
   },
-  excerpt_pretty: () => faker.lorem.sentence(20),
-  excerpt_sponsor: null,
-  has_gallery: false,
-  has_map: false,
-  modified_on() {
-    return moment(this.authored_on, DATE_FORMAT).add(2, 'h').format(DATE_FORMAT);
+  body() {
+    let copy = this.text || faker.lorem.paragraphs(4).split("\n ").join('</p><p>');
+    return [{
+      type: 'paragraph',
+      value: `<p>${copy}</p>`,
+      id: faker.random.uuid(),
+    }];
   },
-  modified_on_utc() {
-    return moment(this.authored_on_utc, DATE_FORMAT).add(2, 'h').format(DATE_FORMAT);
-  },
-  national_title: null,
-  path() {
-    let slug = faker.lorem.words(3).split(' ').join('_')
-    let { authored_on:date } = this;
-    date = moment(date, DATE_FORMAT);
-    return `${date.format('YYYY')}/${date.format('MM')}/${date.format('DD')}/${slug}.php`;
-  },
-  permalink() {
-    return `http://gothamist.com/${this.path}`;
-  },
-  platypus_id: () => faker.random.uuid(),
-  socialtopics: () => [],
-  tags: () => [],
 
-  text: () => faker.lorem.paragraphs(5),
-  text_more: null,
+  description: faker.lorem.sentences(3),
 
-  thumbnail_60: () => faker.image.imageUrl(60, 60, 'food', true, true),
-  thumbnail_105: () => faker.image.imageUrl(105, 105, 'food', true, true),
-  thumbnail_300: () => faker.image.imageUrl(300, 300, 'food', true, true),
-  thumbnail_640: () => faker.image.imageUrl(640, 480, 'food', true, true),
+  disable_comments: false,
+
+  lead_asset: () => ([
+    {
+      type: 'lead_image',
+      value: {
+        image: {
+          id: 1283,
+        },
+        caption: faker.lorem.words(5),
+      },
+      id: faker.random.uuid(),
+    }
+  ]),
+
+  listing_image: null,
+  listing_summary: '',
+  listing_title: '',
+
+  meta() {
+    return {
+      first_published_at: moment.utc(faker.date.recent()).format(CMS_TIMESTAMP_FORMAT),
+      type: 'news.ArticlePage',
+      detail_url: '',
+      html_url: `${this.section}/${this.slug}/`, // used to derive path for now
+      slug: this.slug,
+      show_in_menus: false,
+      seo_title: '',
+      search_description: '',
+    };
+  },
+
+  publication_date: () => moment.utc(faker.date.recent()).format(CMS_TIMESTAMP_FORMAT),
+
+  provocative_content: false,
+
+  updated_date: null,
+
+  related_authors: () => ([
+    {
+      id: 46,
+      first_name: faker.name.firstName(),
+      last_name: faker.name.lastName(),
+      job_title: faker.name.jobTitle(),
+      biography: "",
+      website: "",
+      email: "",
+      slug: slug(),
+    }
+  ]),
+  related_contributing_organizations: () => ([]),
+  related_sponsors: () => ([]),
+  related_links: () => ([]),
+
+  sensitive_content: false,
+
+  show_as_feature: false,
+
+  show_on_index_listing: true,
+
+  sponsored_content: false,
+
+  social_image: null,
+  social_title: '',
+  social_text: '',
+
+  tags: () => ([]),
+
   title: () => faker.random.words(6),
 
-  // TRAITS
+  uuid: () => faker.random.uuid(),
 
-  sponsored: trait({
-    author_name: 'Sponsor',
-    author_nickname: 'Sponsor',
-    excerpt: () => faker.lorem.sentence() + ' [sponsor]',
-    excerpt_full: () => faker.lorem.sentence() + ' [sponsor]',
-    excerpt_sponsor: "<div id=\"sponsor-left\"><div class=\"sponsor-title\"><a href=\"http://gothamist.com/2019/02/05/escape_to_a_winter_happy_hour_at_ea_1.php\">Escape To A Winter Happy Hour At Eataly's SERRA ALPINA On The Roof</a></div><div class=\"sponsor-content\">\r\n<br><br><em>This post is brought to you by our sponsor, Eataly.</em></div></div><div id=\"sponsor-right\"><a href=\"http://gothamist.com/2019/02/05/escape_to_a_winter_happy_hour_at_ea_1.php\"><img src=\"http://gothamist.com/attachments/mei/Gothamist_Serra-Alpina_640x250_spon.jpg\"></a></div>",
-    tags: [
-      '@sponsor',
-    ]
+  now: trait({
+    publication_date: moment.utc().format(CMS_TIMESTAMP_FORMAT),
   }),
 
-  mtGallery: trait(MT_GALLERY),
-
-  platypusGallery: trait(PLATYPUS_GALLERY),
-
-  wrappedGallery: trait({
-    ...PLATYPUS_GALLERY,
-    gallery_position: 'default_gallery_template',
-    text: () => faker.lorem.paragraphs(1),
-    text_more: () => faker.lorem.paragraphs(5),
+  withGallery: trait({
+    afterCreate(article, server) {
+      const gallery = server.create('gallery', {id: Number(article.id) + 100, count: 8});
+      article.update({
+        lead_asset: [{
+          type: 'lead_gallery',
+          value: {
+            gallery: gallery.id,
+            default_image: {
+              id: 1283,
+            },
+          },
+          id: faker.random.uuid(),
+        }],
+        gallery,
+      });
+    },
   }),
+
+  withSection: trait({
+    afterCreate(article, server) {
+      if (article.page) {
+        return;
+      }
+      // does a corresponding section exist?
+      let section = server.schema.pages.findBy({ slug: article.section });
+
+      // create one if not with correct attributes
+      if (!section) {
+        section = server.create('page', {
+          slug: article.section,
+          title: article.section[0].toUpperCase() + article.section.slice(1),
+        });
+      }
+
+      // add the current article to the section's descendants
+      section.descendants.add(article);
+      // make the section this article's index page
+      article.update({page: section});
+      // client derives the section ID from the `ancestry` key, so make sure the
+      // ID is updated there as well
+      article.ancestry.findBy('meta.type', 'standardpages.IndexPage').id = section.id;
+    }
+  })
 });

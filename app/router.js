@@ -2,6 +2,9 @@ import EmberRouter from '@ember/routing/router';
 import { inject } from '@ember/service';
 import config from './config/environment';
 
+
+export const GALLERY_PATH = 'photos';
+
 const Router = EmberRouter.extend({
   headData: inject(),
   location: config.locationType,
@@ -14,20 +17,20 @@ const Router = EmberRouter.extend({
 
 Router.map(function() {
   this.route('404', {path: '*wildcard'});
+  this.route('500', {path: '*other-error'});
 
-  this.route('article', {path: '*any'}, function() {
-    this.route('gallery');
-  });
+  this.route('gallery', {path: `:section/${GALLERY_PATH}/:slug`});
+  this.route('article', {path: ':section/*path'});
+
   this.route('search');
   this.route('tags', {path: 'tags/:tag'});
   this.route('popular');
   this.route('staff');
-  this.route('sections', {path: 'sections/:section'});
-  this.route('author-detail', {path: 'author/:name'});
+  this.route('sections', {path: ':section'});
+  this.route('author-detail', {path: 'staff/:slug'});
 
   this.route('contact');
-
-  this.route('500', {path: 'server-error'});
+  this.route('preview');
 });
 
 export default Router;

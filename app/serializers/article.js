@@ -1,46 +1,36 @@
-import DS from 'ember-data';
-import { underscore } from '@ember/string';
+import { dasherize } from '@ember/string';
 
-export default DS.RESTSerializer.extend({
-  attrs: {
-    thumbnail640: 'thumbnail_640',
-    thumbnail105: 'thumbnail_105',
-    thumbnail300: 'thumbnail_300',
-  },
+import ApplicationSerializer from './application';
+
+import { LEAD_GALLERY } from '../models/article';
+
+
+export default ApplicationSerializer.extend({
   modelNameFromPayloadKey: () => 'article',
-  keyForAttribute: key => underscore(key),
 
-  normalizeResponse() {
-    let response = this._super(...arguments);
+  normalize(ArticleModel, payload) {
+    // the server defines this as an array
+    // but it'll always be a single POJO
+    // pull out the first index for easier reference in the app
+    payload.lead_asset = payload.lead_asset ? payload.lead_asset[0] : null;
 
-    if (Array.isArray(response.data)) {
-      response.data.forEach(data => stripTwitterEmbeds(data.attributes));
-    } else if (typeof response.data === 'object') {
-      stripTwitterEmbeds(response.data.attributes);
+    // `type` key is used to look up a corresponding component
+    // ember wants component names to be dasherized
+    // make this safe for testing
+    if (payload.body) {
+      payload.body.forEach(block => block.type = dasherize(block.type));
     }
 
-    return response;
+    return this._super(ArticleModel, payload);
   },
 
-  normalizeQueryRecordResponse(store, articleClass, payload) {
-    // GothTopics always returns an array of entries
-    // ember wants a single record in response to `queryRecord` calls
-    payload.entries = payload.entries[0];
-    return this._super(...arguments);
-  },
 
-  extractMeta(store, articleClass, payload) {
-    let meta = {
-      total: payload.total_entries,
-      count: payload.listed_entries,
+  extractRelationships(ArticleModel, hash) {
+    if (hash.lead_asset && hash.lead_asset.type === LEAD_GALLERY) {
+      let gallery = {
+        gallery: hash.lead_asset.value.gallery,
+      }
+      return this._super(ArticleModel, gallery);
     }
-    delete payload.total_entries;
-    delete payload.listed_entries;
-    return meta;
   },
 });
-
-const TWITTER_SCRIPT_REGEX = /<script[^>]*(?=src="[^"]*twitter[^"]*")[^>]*><\/script>/g
-function stripTwitterEmbeds(attrs) {
-  attrs.text = attrs.text.replace(TWITTER_SCRIPT_REGEX, '');
-}

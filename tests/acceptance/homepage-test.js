@@ -8,14 +8,16 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { TOTAL_COUNT } from 'gothamist-web-client/routes/index';
 import config from 'gothamist-web-client/config/environment';
 
+import { CMS_TIMESTAMP_FORMAT } from '../../mirage/factories/consts';
+
 
 module('Acceptance | homepage', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
   test('visiting homepage', async function(assert) {
-    server.createList('article', 10, {
-      tags: ['@main']
+    server.createList('article', 10, 'now', {
+      show_as_feature: true,
     });
     server.createList('article', TOTAL_COUNT * 2);
 
@@ -28,7 +30,7 @@ module('Acceptance | homepage', function(hooks) {
     assert.dom('[data-test-featured-block-list] [data-test-block]').exists();
     assert.dom('[data-test-block]').exists({count: TOTAL_COUNT});
 
-    const mainArticleInRiver = server.schema.articles.where({tags:['@main']}).slice(-1).models[0];
+    const mainArticleInRiver = server.schema.articles.where({show_as_feature: true}).slice(-1).models[0];
     assert.dom(`[data-test-block="${mainArticleInRiver.id}"]`).doesNotHaveClass('c-block--horizontal', 'articles in the "river" tagged main should not have a "--horizontal" modifier class');
 
     await click('[data-test-more-results]');
@@ -42,8 +44,8 @@ module('Acceptance | homepage', function(hooks) {
     server.create('article', {
       id: 'sponsored',
       title: TITLE,
-      tags: ['@sponsor'],
-      authored_on_utc: moment().subtract(12, 'hours'),
+      sponsored_content: true,
+      publication_date: moment.utc().subtract(12, 'hours').format(CMS_TIMESTAMP_FORMAT),
     });
 
     await visit('/');
@@ -54,8 +56,8 @@ module('Acceptance | homepage', function(hooks) {
   test('sponsored posts older than 24 hours do not appear in sponsored tout', async function(assert) {
 
     server.create('article', {
-      tags: ['@sponsor'],
-      authored_on_utc: moment().subtract(36, 'hours'),
+      sponsored_content: true,
+      publication_date: moment.utc().subtract(36, 'hours').format(CMS_TIMESTAMP_FORMAT),
     });
 
     await visit('/');
@@ -65,17 +67,18 @@ module('Acceptance | homepage', function(hooks) {
   test('sponsored posts tagged @main and between 24 and 48 hours old appear in featured area', async function(assert) {
     server.create('article', {
       id: 'sponsored-main',
-      tags: ['@sponsor', '@main'],
-      authored_on_utc: moment().subtract(36, 'hours'),
+      show_as_feature: true,
+      sponsored_content: true,
+      publication_date: moment.utc().subtract(36, 'hours').format(CMS_TIMESTAMP_FORMAT),
     });
 
     server.create('article', {
       id: 'sponsored',
-      tags: ['@sponsor'],
-      authored_on_utc: moment().subtract(12, 'hours'),
+      sponsored_content: true,
+      publication_date: moment.utc().subtract(12, 'hours').format(CMS_TIMESTAMP_FORMAT),
     });
 
-    server.createList('article', 10, {tags: ['@main']});
+    server.createList('article', 10, {show_as_feature: true});
 
     await visit('/');
     assert.dom('[data-test-featured-block-list] [data-test-block-list-item="2"] [data-test-block="sponsored-main"]').exists('sponsored post is in the featured list in the 3rd position');
@@ -85,11 +88,11 @@ module('Acceptance | homepage', function(hooks) {
 
   test('articles get updated with commentCount', async function(assert) {
     server.createList('article', 10, {
-      tags: ['@main']
+      show_as_feature: true,
     });
     server.createList('article', TOTAL_COUNT * 2);
     const EXPECTED = server.schema.articles.all()
-      .models.map((a, i) => ({posts: Math.ceil(Math.random() * i + 1), identifiers: [a.id]}));
+      .models.map((a, i) => ({posts: Math.ceil(Math.random() * i + 1), identifiers: [a.uuid]}));
 
     server.get(`${config.disqusAPI}/threads/set.json`, {response: EXPECTED});
 
@@ -100,36 +103,10 @@ module('Acceptance | homepage', function(hooks) {
     // assert that articles loaded via "read more" also get updated
     findAll('[data-test-block]').forEach(block => {
       let id = block.dataset.testBlock;
-      let { posts } = EXPECTED.find(d => d.identifiers.includes(id));
+      let { uuid } = server.schema.articles.find(id);
+      let { posts } = EXPECTED.find(d => d.identifiers.includes(uuid));
       assert.ok(block.querySelector('.c-block-meta__comments'), 'comments are rendered');
       assert.dom(block.querySelector('.c-block-meta__comments')).includesText(String(posts));
     });
-  });
-
-  test('breaking news appears', async function(assert) {
-    const TITLE = 'Cats and Dogs Living Together';
-    server.create('article', {
-      tags: ['@breaking'],
-      title: TITLE,
-      authored_on_utc: moment().subtract(1, 'hours'),
-    });
-
-    await visit('/');
-
-    assert.dom('.c-block--urgent').exists();
-    assert.dom('.c-block--urgent .c-block__title').hasText(TITLE);
-  });
-
-  test('breaking news expires', async function(assert) {
-    const TITLE = 'Cats and Dogs Living Together';
-    server.create('article', {
-      tags: ['@breaking'],
-      title: TITLE,
-      authored_on_utc: moment().subtract(7, 'hours'),
-    });
-
-    await visit('/');
-
-    assert.dom('.c-block--urgent').doesNotExist('if breaking news is older than six hours, take it down');
   });
 });

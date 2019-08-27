@@ -7,7 +7,6 @@ import { inject } from '@ember/service';
 import fade from 'ember-animated/transitions/fade';
 
 import config from '../config/environment';
-import { titleize } from '../helpers/titleize';
 import addCommentCount from '../utils/add-comment-count';
 
 
@@ -23,7 +22,7 @@ export default Route.extend({
   header: inject('nypr-o-header'),
   dataLayer: inject('nypr-metrics/data-layer'),
 
-  titleToken: model => titleize(model.tag),
+  titleToken: model => model.tag.replace(/-/g, ' '),
 
   beforeModel() {
     this.dataLayer.push({template: 'tag'});
@@ -43,11 +42,10 @@ export default Route.extend({
   model({ tag }) {
     return hash({
       tag,
-      title: titleize(tag),
+      title: tag.replace(/-/g, ' '),
       articles: this.store.query('article', {
-        index: 'gothamist',
-        term: tag,
-        count: COUNT,
+        tag_slug: tag,
+        limit: COUNT,
       }),
       // HACK
       isWTC: sanitize(tag) === 'wethecommuters',
@@ -65,10 +63,8 @@ export default Route.extend({
     this._super(...arguments);
     controller.setProperties({
       query: {
-        index: 'gothamist',
-        term: model.tag,
-        count: COUNT,
-        page: 2,
+        tag_slug: model.tag,
+        limit: COUNT,
       },
       transition: fade,
       wtcEndpoint: `${config.apiServer}/opt-in/v1/subscribe/mailchimp`,

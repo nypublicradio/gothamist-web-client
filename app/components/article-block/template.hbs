@@ -1,47 +1,49 @@
 <NyprMBlock @orientation={{@orientation}} @size={{@size}} data-test-block={{@article.id}} as |block|>
   <block.media
-    @route={{array 'article' @article.path}}
+    @route={{array 'article' @article.section.slug @article.path}}
     @srcS={{this.thumbnail.srcS}}
     @srcSet={{this.thumbnail.srcSet}}
     @breakM={{this.thumbnailBreakpoint}}
     @srcM={{this.thumbnail.srcM}}
     @alt=""
-    @ariaLabel={{@article.title}}
+    @ariaLabel={{this.title}}
   />
 
   <block.object as |o|>
-    {{#if (and @article.section.label (not @hideEyebrow))}}
+    {{#if (and @article.section.title (not @hideEyebrow))}}
       {{#if @article.isSponsored}}
         <o.eyebrow @kickerClass="o-kicker--sponsored" @text="Sponsored"/>
       {{else}}
         <o.eyebrow
-          @route={{array 'sections' @article.section.basename}}
-          @text={{@article.section.label}}/>
+          @route={{array 'sections' @article.section.slug}}
+          @text={{@article.section.title}}
+          data-test-section-label
+        />
       {{/if}}
     {{/if}}
 
     <o.title
       @h3
-      @route={{array 'article' @article.path}}
+      @route={{array 'article' @article.section.slug @article.path}}
       @hasGallery={{@article.hasGallery}}
       @hasVideo={{@article.hasVideo}}
       @hasAudio={{@article.hasAudio}}
     >
-      {{{@article.title}}}
+      {{{this.title}}}
     </o.title>
 
     <o.body as |body|>
       {{#unless @hideExcerpt}}
         <body.text>
-          {{{@article.excerptPretty}}}
+          {{{this.summary}}}
         </body.text>
       {{/unless}}
 
       <body.meta
-        @author={{if showAuthor @article.authorNickname}}
+        @authors={{if showAuthor @article.authors}}
         @timestamp={{if showTimestamp (timestamp @article.publishedMoment)}}
         @commentCount={{if showCommentCount @article.commentCount}}
-        @commentRoute={{array 'article' @article.path (hash isQueryParams=true values=(hash to=commentsAnchor))}}
+        @commentRoute={{array 'article' @article.section.slug @article.path (hash isQueryParams=true values=(hash to=commentsAnchor))}}
         data-test-article-block-meta
       />
     </o.body>

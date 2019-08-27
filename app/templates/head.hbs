@@ -1,7 +1,12 @@
 <link rel="preconnect" href={{model.apiServer}} crossorigin>
 <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
-{{#if model.ampId}}
-  <link rel="amphtml" href="https://amp.gothamist.com/amp/articles/create?article_id={{model.ampId}}">
+
+{{#if model.path}}
+  <link rel="amphtml" href="{{model.champEndpoint}}/{{model.path}}">
+{{/if}}
+
+{{#if model.hideFromRobots}}
+  <meta name="robots" content="noindex">
 {{/if}}
 
 <title>{{{model.title}}}</title>
@@ -13,13 +18,11 @@
 <meta property="og:site_name" content="Gothamist">
 
 {{#if model.image}}
-  <link rel="preload" as="image" href={{model.image.full}}>
+  <meta property="og:image" content={{wagtail-image-url model.image 1200 650}}>
+  <meta property="twitter:image" content={{wagtail-image-url model.image 1200 650}}>
 
-  <meta property="og:image" content={{model.image.full}}>
-  <meta property="twitter:image" content={{model.image.full}}>
-
-  <meta property="og:image:width" content={{model.image.width}}>
-  <meta property="og:image:height" content={{model.image.height}}>
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="650">
 
   <meta property="og:image:alt" content={{model.image.caption}}>
   <meta property="twitter:image:alt" content={{model.image.caption}}>
@@ -39,7 +42,9 @@
 
 {{#if (eq model.ogType 'article')}}
   <meta property="article:published_time" content={{model.publishedTime}}>
-  <meta property="article:modified_time" content={{model.modifiedTime}}>
+  {{#if model.modifiedTime}}
+    <meta property="article:modified_time" content={{model.modifiedTime}}>
+  {{/if}}
   <meta property="article:section" content={{model.section}}>
   <meta property="article:tag" content={{model.tags}}>
   {{#each model.authors as |author|}}
@@ -48,13 +53,47 @@
 {{/if}}
 
 {{#each model.gallery as |slide|}}
-  <link rel="preload" as="image" href={{slide.full}}>
-  <meta property="og:image" content={{slide.full}}>
-  <meta property="og:image:width" content={{slide.width}}>
-  <meta property="og:image:height" content={{slide.height}}>
-  <meta property="og:image:alt" content={{slide.caption}}>
+  <link rel="preload" as="image" href={{wagtail-image-url slide.image 1200 650}}>
+  <meta property="og:image" content={{wagtail-image-url slide.image 1200 650}}>
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="650">
+  <meta property="og:image:alt" content={{slide.image.caption}}>
 {{/each}}
 
 {{!-- twitter specific tags --}}
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@gothamist">
+
+{{#if (eq model.ogType 'article')}}
+  <script id="structured-data" type="application/ld+json">
+    {{! template-lint-disable }}
+    {
+      "@context": "http://schema.org",
+      "@type": "NewsArticle",
+      "mainEntityOfPage": "https://gothamist.com/{{model.path}}",
+      "image": "{{if model.image (wagtail-image-url model.image 1200 650)}}",
+      "headline": "{{model.title}}",
+      "description": "{{model.metaDescription}}",
+      "datePublished": "{{model.publishedTime}}",
+      "dateModified": "{{if model.modifiedTime model.modifiedTime}}",
+    "author": [
+    {{#each model.authors as |author|}}
+      {
+        "@type": "Person",
+        "name": "{{author.name}}"
+      }{{unless (eq model.authors.lastObject author) ','}}
+    {{/each}}
+    ],
+    "publisher": {
+      "@type": "Organization",
+      "name": "Gothamist",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "http://gothamist.com/static-images/home_og_1200x600.png",
+        "width": "1200",
+        "height": "600"
+      }
+    }
+  }
+  </script>
+{{/if}}

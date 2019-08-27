@@ -36,7 +36,7 @@ export default Route.extend({
     this.router.on('routeDidChange', (transition) => {
       const from = get(transition, 'from.name')
       const to = get(transition, 'to.name')
-      if (from === 'article.gallery' && to === 'article.gallery') {
+      if (from === 'gallery' && to === 'gallery') {
         schedule('afterRender', () => this.dataLayer.push('event', 'Gallery Slide View'));
       } else {
         schedule('afterRender', () => this.dataLayer.sendPageView());
@@ -62,14 +62,11 @@ export default Route.extend({
         route: ['sections', 'news'],
         text: 'News',
       }, {
-        route: ['sections', 'arts & entertainment'],
+        route: ['sections', 'arts-entertainment'],
         text: 'Arts & Entertainment',
       }, {
         route: ['sections', 'food'],
         text: 'Food',
-      }, {
-        route: ['popular'],
-        text: 'Popular',
       }],
 
       secondaryNav: [{
@@ -99,6 +96,7 @@ export default Route.extend({
       this.headData.setProperties({
         url,
         apiServer: config.apiServer,
+        champEndpoint: config.champEndpoint,
         // default og image if nested route does not override
         image: {
           full: '/static-images/home_og_1200x600.png',
@@ -130,33 +128,33 @@ export default Route.extend({
 
   actions: {
     error(e, transition) {
+      console.error(e); // eslint-disable-line
+      // extract required arguments for urlFor:
+
+      // The dot-separated, fully-qualified name of the route, like "article.index"
+      let targetRoute = transition.targetName;
+      // all the RouteInfos for the intended route
+      let routes = transition.routeInfos;
+      // gather up the path params in their correct order
+      let params = routes.map(route =>
+        route.paramNames.map(key => route.params[key])  // `paramNames` is each param in order
+                                                        // specified in router.js
+      ).reduce((params, vals) => params.concat(vals), []); // flatten
+
+      let path = this.router.urlFor(targetRoute, ...params);
+      // strip the leading slash
+      path = path === '/' ? path : path.replace(/^\//, '');
+
       if (e instanceof DS.NotFoundError) {
         if (this.fastboot.isFastBoot) {
           this.set('fastboot.response.statusCode', 404);
         }
-
-        // extract required arguments for urlFor:
-
-        // The dot-separated, fully-qualified name of the route, like "article.index"
-        let targetRoute = transition.targetName;
-        // all the RouteInfos for the intended route
-        let routes = transition.routeInfos;
-        // gather up the path params in their correct order
-        let params = routes.map(route =>
-          route.paramNames.map(key => route.params[key])  // `paramNames` is each param in order
-                                                          // specified in router.js
-        ).reduce((params, vals) => params.concat(vals), []); // flatten
-
-        let path = this.router.urlFor(targetRoute, ...params);
-        // strip the leading slash
-        path = path.replace(/^\//, '');
-
         this.transitionTo('404', path);
       } else if (this.fastboot.isFastBoot) {
         this.set('fastboot.response.statusCode', 500);
         this.transitionTo('500');
       } else {
-        throw e;
+        this.transitionTo('500', path);
       }
     },
 

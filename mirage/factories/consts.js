@@ -1,3 +1,9 @@
+import { faker } from 'ember-cli-mirage';
+
+export const slug = () => faker.lorem.words(3).split(' ').join('-');
+export const section = () => faker.random.arrayElement(['news', 'food', 'arts']);
+
+export const CMS_TIMESTAMP_FORMAT = 'YYYY-MM-DDTHH:mm:ss.SSSSSS[Z]';
 export const DATE_FORMAT = 'YYYYMMDDhhmmss';
 
 export const PLATYPUS_GALLERY = {

@@ -10,10 +10,19 @@ $ember-basic-dropdown-content-z-index: 10000;
 @import "nypr-design-system/objects/gallery-overlay";
 
 // embedded media compat
-// blockquote.instagram-media,
-// blockquote.instagram-media-registered {
-//   opacity: 0;
-// }
+.responsive-object {
+  position: relative;
+
+  iframe,
+  > .fb-video,
+  > img {
+    position: absolute;
+  	top: 0;
+  	left: 0;
+  	width: 100%;
+  	height: 100%;
+  }
+}
 
 .c-featured-blocks__heading--wnyc .wnyc-logo-icon {
   width: 94px;
@@ -31,7 +40,8 @@ $ember-basic-dropdown-content-z-index: 10000;
 }
 
 // target links embedded in gothamist captions with proper styling
-.o-caption__text > span > a {
+// sometimes they're not a direct child
+.o-caption__text > span a {
   display: inline;
   color: #333;
   border-bottom: 2px dotted #333;
@@ -39,7 +49,7 @@ $ember-basic-dropdown-content-z-index: 10000;
   box-decoration-break: clone;
 }
 
-// embedded MT images
+// legacy moveable type images embedded in article content
 .image-none {
   i {
     display: flex;
@@ -62,6 +72,14 @@ $ember-basic-dropdown-content-z-index: 10000;
     color: #333;
     border-bottom-color: #333;
   }
+}
+
+// fix extra spacing from line breaks
+// try to get both breaks following an image
+.c-article__body > blockquote > br,
+.c-article__body > .image-none + br,
+.c-article__body > .image-none + br + br {
+  display: none;
 }
 
 // header compat for hanging logo
@@ -96,14 +114,6 @@ $ember-basic-dropdown-content-z-index: 10000;
   overflow: scroll;
 }
 
-// fix extra spacing from line breaks
-// try to get both breaks following an image
-.c-article__body > blockquote > br,
-.c-article__body > .image-none + br,
-.c-article__body > .image-none + br + br {
-  display: none;
-}
-
 .c-article__body {
   .image-right,
   .image-left {
@@ -133,6 +143,7 @@ $ember-basic-dropdown-content-z-index: 10000;
   transform: translateX(-50%);
   width: 100vw;
 }
+
 .space-filler {
   margin: 40px 0 32px 0;
 }

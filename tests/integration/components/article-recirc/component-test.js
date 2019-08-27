@@ -10,7 +10,8 @@ import test from 'ember-sinon-qunit/test-support/test';
 const ARTICLE = {
   id: 100,
   section: {
-    basename: 'foo',
+    slug: 'foo',
+    id: 500,
   }
 };
 
@@ -20,11 +21,11 @@ module('Integration | Component | article-recirc', function(hooks) {
   test('it renders', async function(assert) {
     await render(hbs`<ArticleRecirc/>`);
 
-    assert.dom('[data-test-recirc-popular]').exists();
+    assert.dom('[data-test-recirc-recent]').exists();
     assert.dom('[data-test-recirc-featured]').exists();
   });
 
-  test('it fetches featured and popular stories', async function(assert) {
+  test('it fetches featured and recent stories', async function(assert) {
 
     const store = this.owner.lookup('service:store');
     const stub = this.stub(store, 'query')
@@ -50,21 +51,19 @@ module('Integration | Component | article-recirc', function(hooks) {
 
     await render(hbs`<ArticleRecirc @article={{ARTICLE}}/>`);
 
-    assert.dom('[data-test-recirc-popular] .c-block').exists({count: 3});
+    assert.dom('[data-test-recirc-recent] .c-block').exists({count: 3});
     assert.dom('[data-test-recirc-featured] .c-block').exists({count: 1});
 
     assert.ok(stub.firstCall.calledWith('article', {
-      index: 'gothamist',
-      sort: 'socialtopics_score_1d',
-      count: 4,
-      term: `c|${ARTICLE.section.basename}`,
-    }));
+      descendant_of: ARTICLE.section.id,
+      limit: 4,
+    }), 'recent query is correct');
 
     assert.ok(stub.secondCall.calledWith('article', {
-      index: 'gothamist',
-      term: ['@main', `c|${ARTICLE.section.basename}`],
-      count: 5,
-    }));
+      descendant_of: ARTICLE.section.id,
+      show_as_feature: true,
+      limit: 5,
+    }), 'featured query is correct');
   });
 
   test('it dedupes', async function(assert) {
@@ -72,23 +71,23 @@ module('Integration | Component | article-recirc', function(hooks) {
     this.stub(store, 'query')
       .onFirstCall().resolves([ARTICLE, {
         id: 2,
-        title: 'Popular 1',
+        title: 'Recent 1',
       }, {
         id: 3,
-        title: 'Popular 2',
+        title: 'Recent 2',
       }, {
         id: 4,
-        title: 'Popular 3',
+        title: 'Recent 3',
       }])
       .onSecondCall().resolves([ARTICLE, {
         id: 2,
-        title: 'Popular 1',
+        title: 'Recent 1',
       }, {
         id: 3,
-        title: 'Popular 2',
+        title: 'Recent 2',
       }, {
         id: 4,
-        title: 'Popular 3',
+        title: 'Recent 3',
       }, {
         id: 5,
         title: 'Featured',
@@ -101,9 +100,9 @@ module('Integration | Component | article-recirc', function(hooks) {
 
     await render(hbs`<ArticleRecirc @article={{ARTICLE}}/>`);
 
-    assert.dom('[data-test-recirc-popular] li:nth-child(1) .c-block__title').hasText('Popular 1');
-    assert.dom('[data-test-recirc-popular] li:nth-child(2) .c-block__title').hasText('Popular 2');
-    assert.dom('[data-test-recirc-popular] li:nth-child(3) .c-block__title').hasText('Popular 3');
+    assert.dom('[data-test-recirc-recent] li:nth-child(1) .c-block__title').hasText('Recent 1');
+    assert.dom('[data-test-recirc-recent] li:nth-child(2) .c-block__title').hasText('Recent 2');
+    assert.dom('[data-test-recirc-recent] li:nth-child(3) .c-block__title').hasText('Recent 3');
     assert.dom('[data-test-recirc-featured] .c-block__title').hasText('Featured');
   });
 });

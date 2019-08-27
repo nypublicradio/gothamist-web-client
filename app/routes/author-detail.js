@@ -15,7 +15,7 @@ export default Route.extend({
   fastboot: inject(),
   header: inject('nypr-o-header'),
 
-  titleToken: model => model.name,
+  titleToken: model => model.author.title,
 
   beforeModel() {
     this.header.addRule('author-detail', {
@@ -30,15 +30,18 @@ export default Route.extend({
     });
   },
 
-  model({ name }) {
+  model({ slug }) {
+    const QUERY = {
+      author_slug: slug,
+      limit: COUNT,
+    };
+
     return hash({
-      name,
-      articles: this.store.query('article', {
-        index: 'gothamist',
-        term: `a|${name}`,
-        count: COUNT,
-      })
-    })
+      author: this.store.queryRecord('page', {
+        html_path: `staff/${slug}`
+      }),
+      articles: this.store.query('article', QUERY),
+    });
   },
 
   setupController(controller, model) {
@@ -46,10 +49,8 @@ export default Route.extend({
 
     controller.setProperties({
       query: {
-        index: 'gothamist',
-        term: `a|${model.name}`,
-        count: COUNT,
-        page: 2,
+        limit: COUNT,
+        author_slug: model.author.slug,
       },
       transition: fade,
     });
@@ -60,6 +61,15 @@ export default Route.extend({
       addCommentCount(model.articles);
 
       controller.set('addComments', results => (addCommentCount(results), results));
+    }
+  },
+
+  actions: {
+    didTransition() {
+      if (!this.fastboot.isFastBoot) {
+        window.scrollTo(0, 0);
+      }
+      return true;
     }
   }
 });

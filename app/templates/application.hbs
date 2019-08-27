@@ -1,4 +1,6 @@
-<DfpAd class="dfp-skin" role="presentation" aria-hidden="true" @slot='gothamist/skin' @sizes={{array (array 1 1)}} @clearOnEmptyRefresh={{true}} />
+{{#unless this.sensitive.on}}
+  <DfpAd class="dfp-skin" role="presentation" aria-hidden="true" @slot='gothamist/skin' @sizes={{array (array 1 1)}} @clearOnEmptyRefresh={{true}} />
+{{/unless}}
 
 <HeadLayout/>
 
@@ -6,14 +8,17 @@
   class={{if (eq target.currentRouteName 'index') 'c-main-header--emphasis'}}
   @floatLandmark={{headerLandmark}}
   @donateURL={{DONATE_URL}}
+  data-test-main-header
   as |header|>
 
   <header.leaderboard>
-    {{#if (eq target.currentRouteName 'index')}}
-      <AdTagLeaderboard @slot='gothamist/index/leaderboard' />
-    {{else}}
-      <AdTagLeaderboard @slot='gothamist/interior/leaderboard' />
-    {{/if}}
+    {{#unless this.sensitive.on}}
+      {{#if (eq target.currentRouteName 'index')}}
+        <AdTagLeaderboard @slot='gothamist/index/leaderboard' />
+      {{else}}
+        <AdTagLeaderboard @slot='gothamist/interior/leaderboard' />
+      {{/if}}
+    {{/unless}}
   </header.leaderboard>
 
   <header.menu @donateUrl={{DONATE_URL}} data-test-side-menu as |menu|>
@@ -66,7 +71,7 @@
     <header.nav @navItems={{model.primaryNav}} data-test-top-nav/>
   {{/if}}
 
-  <header.right as |right|>
+  <header.right data-test-header-right as |right|>
     {{#with header.rules.share as |share|}}
       <NyprMShareTools class="c-main-header__share" @label='Share' as |tools|>
         <tools.share
@@ -104,12 +109,17 @@
     {{#if header.rules.search}}
       <right.search as |search|>
         <search.open/>
-        <search.form @search={{action this.search}}/>
+        <search.form data-test-header-search @search={{action this.search}}/>
       </right.search>
     {{/if}}
 
     {{#if header.rules.close}}
-      <NyprAButton @blank={{true}} @onclick={{header.rules.close}} class="u-padding--half">
+      <NyprAButton
+        @blank={{true}}
+        @onclick={{header.rules.close}}
+        class="u-padding--half"
+        data-test-header-close
+      >
         <NyprASvg @icon='close' class='c-main-header__close'/>
       </NyprAButton>
     {{/if}}

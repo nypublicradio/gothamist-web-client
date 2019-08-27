@@ -1,0 +1,23 @@
+{{set-body-class "gallery"}}
+<DoTargeting key='Template' value='Article Gallery' />
+<NyprOGalleryOverlay
+  @title={{parentArticle.title}}
+  @parentRoute={{array 'article' parentArticle.section.slug parentArticle.path}}
+  @slides={{slides}}
+  @viewedSlide={{action viewedSlide}}
+  @slideForInit={{image}}
+  @share={{shareMetadata}}
+  @breakM={{600}}
+  @breakL={{1000}}
+  as |index gallery|>
+  {{!-- 1 ad every 3 photos --}}
+  {{#if (eq (mod index 3) 2)}}
+    {{!-- No more than 2 inline ads on one page --}}
+    {{#if (lt index 6)}}
+      <gallery.billboard>
+        <AdTagWide @slot="gothamist/interior/midpage/gallery"
+        @showLabel={{true}} />
+      </gallery.billboard>
+    {{/if}}
+  {{/if}}
+</NyprOGalleryOverlay>

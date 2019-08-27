@@ -1,17 +1,37 @@
+import RSVP from 'rsvp';
+
 import Route from '@ember/routing/route';
 import { inject } from '@ember/service';
 import { doTargetingForModels, clearTargetingForModels } from 'nypr-ads';
+import { reads } from '@ember/object/computed';
 
+import addCommentCount from '../utils/add-comment-count';
 import config from '../config/environment';
 
 
+const {
+  articleViewsCookie,
+  donateCookie,
+} = config;
+
+const { hash } = RSVP;
+
+const { log } = console;
+
 export default Route.extend({
+  header: inject('nypr-o-header'),
+  dataLayer: inject('nypr-metrics/data-layer'),
   cookies: inject(),
   headData: inject(),
   metrics: inject(),
   fastboot: inject(),
+  sensitive: inject('ad-sensitivity'),
 
-  model({ any }) {
+  isFastBoot: reads('fastboot.isFastBoot'),
+
+  titleToken: model => model.article.title,
+
+  model({ section, path }) {
     if (!this.cookies.exists(config.donateCookie)) {
       // donate tout has not been closed within the past 24 hours
 
@@ -28,49 +48,101 @@ export default Route.extend({
     }
 
     return this.store.queryRecord('article', {
-      record: `http://gothamist.com/${any}`,
-    }).then(article => article.loadGallery());
+      html_path: `${section}/${path}`,
+    }).then(article => hash({
+      article,
+       // load gallery in the model hook to prevent async leaks in fastboot
+       // but if gallery fails for some reason, don't bork out
+      gallery: article.gallery.catch(() => log('gallery not found')),
+    }));
   },
 
-  afterModel(model) {
+  afterModel({ article }) {
+    if (article.sensitiveContent) {
+      this.sensitive.activate();
+    }
+
+    this.dataLayer.setForType('article', article);
+    this.dataLayer.push({template: 'article'});
 
     this.headData.setProperties({
-      metaDescription: model.excerptPretty,
+      metaDescription: article.description,
       ogType: 'article',
-      ogTitle: model.title, // don't include " - Gothamist" like in <title> tag
-      publishedTime: model.publishedMoment.tz('America/New_York').format(),
-      modifiedTime: model.modifiedMoment.tz('America/New_York').format(),
-      section: model.section.label,
-      tags: model.displayTags,
-      authors: model.authors,
-      image: {
-        full: model.thumbnail640,
-        width: 640,
-      },
-      ampId: model.platypusId,
+      ogTitle: article.title, // don't include " - Gothamist" like in <title> tag
+      publishedTime: article.publishedMoment.format(),
+      modifiedTime: article.modifiedMoment.isValid() && article.modifiedMoment.format(),
+      section: article.section.title,
+      tags: article.displayTags.mapBy('name'),
+      authors: article.authors,
+      image: article.ogImage,
+      hideFromRobots: !article.showOnIndexListing,
+      path: `${article.section.slug}/${article.path}`,
     });
 
-    if (!this.fastboot.isFastBoot) {
+    this.header.addRule('article', {
+      all: {
+        donate: true,
+        search: true,
+      },
+      resting: {
+        leaderboard: true,
+        nav: true,
+      },
+      floating: {
+        headline: article.title,
+        progressTarget: '.c-article__body',
+        logoLinkClass: 'u-hide-until--m',
+        share: {
+          title: article.title,
+          permalink: article.permalink,
+        }
+      }
+    });
+
+    this.controllerFor('application').setProperties({
+      headerLandmark: '.c-article__share',
+    });
+
+    if (!this.isFastBoot) {
       this.set('metrics.context.pageData', {
         // merge with existing value, which is the previous URL set in the application route
         ...this.metrics.context.pageData,
-        sections: model.section.label || model.section.basename,
-        authors: model.authors,
-        path: `/${model.path}`,
+        sections: article.section.slug,
+        authors: article.authors,
+        path: `/${article.section.slug}/${article.path}`,
       });
     }
 
+    // save the comment API call for the client
+    if (this.isFastBoot || article.disableComments) {
+      return;
+    }
+
+    addCommentCount(article);
+
+  },
+
+  setupController(controller) {
+    this._super(...arguments);
+
+    // have seen at least 3 articles
+    // have not closed the donation tout in the past 24 hours
+    let showTout = this.cookies.read(articleViewsCookie) >= 3 && !this.cookies.exists(donateCookie);
+    controller.set('showTout', showTout);
+  },
+
+  resetController(controller) {
+    controller.set('to', null);
   },
 
   actions: {
     didTransition() {
-      let article = this.currentModel;
-      doTargetingForModels(article);
+      doTargetingForModels(this.currentModel.article);
       return true;
     },
     willTransition() {
-      let article = this.currentModel;
-      clearTargetingForModels(article);
+      clearTargetingForModels(this.currentModel.article);
+      this.dataLayer.clearForType('article');
       return true;
     }
   }

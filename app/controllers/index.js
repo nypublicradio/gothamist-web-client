@@ -1,8 +1,5 @@
-import moment from 'moment';
-
 import Controller from '@ember/controller';
 import fade from 'ember-animated/transitions/fade';
-import { inject as service } from '@ember/service';
 
 import addCommentCount from '../utils/add-comment-count';
 import config from '../config/environment';
@@ -12,10 +9,8 @@ import {
   TOTAL_COUNT,
 } from '../routes/index';
 
-
 const WTC_ENDPOINT = `${config.apiServer}/opt-in/v1/subscribe/mailchimp`;
 const WTC_PARAMS = {list: config.wtcNewsletter};
-const HIDE_PLEDGE_COOKIE = 'goth_hidePledgeAsk';
 
 export default Controller.extend({
   GROUP_SIZE,
@@ -24,10 +19,6 @@ export default Controller.extend({
   WTC_ENDPOINT,
   WTC_PARAMS,
 
-  showPledgeAsk: true,
-
-  cookies: service(),
-
   init() {
     this._super(...arguments);
 
@@ -35,15 +26,8 @@ export default Controller.extend({
     const { TOTAL_COUNT } = this;
 
     this.set('riverQuery', {
-      index: 'gothamist',
-      count: TOTAL_COUNT,
-      page: 2,
+      limit: TOTAL_COUNT,
     });
-
-    let hideAsk = this.cookies.exists(HIDE_PLEDGE_COOKIE);
-    if (hideAsk) {
-      this.set('showPledgeAsk', false);
-    }
   },
 
   transition: fade,
@@ -64,12 +48,4 @@ export default Controller.extend({
 
     return moreArticles;
   },
-
-  actions: {
-    hideBannerFor24() {
-      let expires = moment().add(24, 'hours').toDate();
-      this.cookies.write(HIDE_PLEDGE_COOKIE, 1, {expires, path: '/'});
-      this.set('showPledgeAsk', false);
-    }
-  }
 });
