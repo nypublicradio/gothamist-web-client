@@ -16,9 +16,10 @@ import { inject as service } from '@ember/service';
  */
 export default Helper.extend({
   router: service(),
+  fastboot: service(),
   compute([ url ]/*, hash*/) {
     // If we're not in fastboot don't try this.
-    if (window && window.location) {
+    if (!this.fastboot.isFastBoot && url) {
       let origin = `${location.protocol}//${location.host}`;
       url = url.replace(origin, '');
 
