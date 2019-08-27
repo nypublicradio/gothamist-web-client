@@ -105,6 +105,6 @@ module('Acceptance | analytics', function(hooks) {
       articlePublishTime: null,
     }, 'dataLayer is cleared of article metadata on route exit');
 
-    assert.ok(spyLayer.push.calledWith({template: 'article gallery'}), 'article template is declared');
+    assert.ok(spyLayer.push.calledWith({template: 'article gallery'}), 'gallery template is declared');
   });
 });
