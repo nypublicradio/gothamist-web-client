@@ -63,25 +63,17 @@ test_redirect(){
     done
 }
 
-test_proxy_pass(){
+test_status(){
     test_url="$1"
-    expected_resp="${2:-200}"
-    host_header="${3:-gothamist.com}"
+    expected_resp="$2"
 
-    test_host="http://localhost"
-
-    test_urls=("$test_url")
-
-    for url in "${test_urls[@]}"; do
-        read returned_resp time_totla <<<$(curl -H "Host: $host_header" -sI "$test_host$url" -o /dev/null -w "%{http_code} %{time_total}")
-        if [[ ! "${returned_resp}" == "${expected_resp}" ]]; then
-            fail "(${time_total}s) $url returned $returned_resp instead of $expected_resp"
-        else
-            pass "(${time_total}s) $url returned $returned_resp"
-        fi
-    done
+    read returned_resp time_total <<<$(curl -H "Host: gothmist.com" -sI "http://localhost$test_url" -o /dev/null -w "%{http_code} %{time_total}")
+    if [[ ! "${returned_resp}" == "${expected_resp}" ]]; then
+        fail "(${time_total}s) $test_url returned $returned_resp instead of $expected_resp"
+    else
+        pass "(${time_total}s) $test_url returned $returned_resp"
+    fi
 }
-
 
 # Tests Below Here
 
@@ -137,5 +129,9 @@ test_redirect /sections/arts 301 /arts-entertainment
 test_redirect /sections/art 301 /arts-entertainment
 test_redirect '/author/Jen Chung' 301 https://gothamist.com/staff/jen-chung
 test_redirect '/author/John Del Signore' 301 https://gothamist.com/staff/john-del-signore
+
+# test response code
+test_status '/favicon.png' 404
+test_status '/news/mraid.js' 404
 
 totals
