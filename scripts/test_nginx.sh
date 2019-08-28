@@ -63,25 +63,9 @@ test_redirect(){
     done
 }
 
-test_proxy_pass(){
     test_url="$1"
-    expected_resp="${2:-200}"
-    host_header="${3:-gothamist.com}"
 
-    test_host="http://localhost"
-
-    test_urls=("$test_url")
-
-    for url in "${test_urls[@]}"; do
-        read returned_resp time_totla <<<$(curl -H "Host: $host_header" -sI "$test_host$url" -o /dev/null -w "%{http_code} %{time_total}")
-        if [[ ! "${returned_resp}" == "${expected_resp}" ]]; then
-            fail "(${time_total}s) $url returned $returned_resp instead of $expected_resp"
-        else
-            pass "(${time_total}s) $url returned $returned_resp"
-        fi
-    done
 }
-
 
 # Tests Below Here
 
