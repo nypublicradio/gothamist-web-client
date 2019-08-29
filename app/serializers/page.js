@@ -30,7 +30,7 @@ export default ApplicationSerializer.extend({
   },
 
   normalizeQueryRecordResponse(store, PageModel, payload, ...rest) {
-    // some resposes, like previews for unsaved pages don't
+    // some responses, like previews for unsaved pages don't
     // have an id, but Ember Data needs an id to work.
     if (payload.id === null) {
       payload.id = 0;
