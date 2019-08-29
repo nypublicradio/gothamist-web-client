@@ -33,6 +33,8 @@ export default ApplicationAdapter.extend({
     let url;
     if (preview) {
       let { identifier, token } = query;
+      identifier = encodeURIComponent(identifier);
+      token = encodeURIComponent(token);
       url = `${this.buildURL()}page_preview?identifier=${identifier}&token=${token}`;
     } else {
       url = `${this.buildURL('page')}find/?html_path=${query.html_path}`;
