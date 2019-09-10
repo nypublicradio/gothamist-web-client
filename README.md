@@ -64,6 +64,10 @@ Commits to master (and merged pull requests) will deploy to [https://gothamist-c
 
 Branches that follow the pattern `/[A-Za-z-_]+\/[A-Za-z-_\d]+/` will deploy a QA build. You can read more on QA builds [here](https://wiki.nypr.digital/display/DT/Web+Clients).
 
+### CloudFront
+
+CloudFront forwards requests to `assets/*`, `fonts/*`, and `static-images/*` back to the S3 bucket, so any static assets that that part of the source can be saved in `public/fonts/*` or `public/static-images/` for public access.
+
 #### Manual Static Deploys
 
 The ember app can be deployed locally by running `ember deploy [deploy target]`, where `[deploy target]` is one of:
