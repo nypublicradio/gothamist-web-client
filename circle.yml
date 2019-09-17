@@ -64,7 +64,7 @@ templates:
           name: Deploy Fastboot
           command: |
             TAG=${TAG:-$CIRCLE_TAG}
-            CLUSTER=$ENV && [[ $ENV == "wagtail" ]] && CLUSTER="demo"
+            CLUSTER=$ENV
             source ~/.venv/bin/activate
             nyprsetuptools DockerDeploy \
               --cpu=1024 \
