@@ -66,7 +66,7 @@ export default Route.extend({
     this.dataLayer.push({template: 'article'});
 
     this.headData.setProperties({
-      metaDescription: article.description,
+      metaDescription: JSON.stringify(article.description),
       ogType: 'article',
       ogTitle: article.title, // don't include " - Gothamist" like in <title> tag
       publishedTime: article.publishedMoment.format(),

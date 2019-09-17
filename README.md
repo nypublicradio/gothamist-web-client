@@ -31,6 +31,14 @@ $ MIRAGE=1 ember serve
 
 It can be `MIRAGE=<any truthy value>` to start enable mirage with that local server instance.
 
+### Running the fastboot app server
+
+* Ensure sure you have AWS credentials set up locally. Contact devops for help with this.
+* Specify `AWS_BUCKET` in your `.env` file
+* Run `$ npm fastboot`
+
+The local fastboot server will download the latest fastboot build from the S3 bucket specified in your `.env` file and start it up on port 3000. It will behave as a deployed fastboot server, which means it will only respond to HTTP requests that include an `Accept: text/html` header.
+
 
 ### Running Tests
 
@@ -55,6 +63,10 @@ Deployments are handled by `ember-cli-deploy` and associated plugins. Commits ar
 Commits to master (and merged pull requests) will deploy to [https://gothamist-client.demo.nypr.digital](https://gothamist-client.demo.nypr.digital).
 
 Branches that follow the pattern `/[A-Za-z-_]+\/[A-Za-z-_\d]+/` will deploy a QA build. You can read more on QA builds [here](https://wiki.nypr.digital/display/DT/Web+Clients).
+
+### CloudFront
+
+CloudFront forwards requests to `assets/*`, `fonts/*`, and `static-images/*` back to the S3 bucket, so any static assets that that part of the source can be saved in `public/fonts/*` or `public/static-images/` for public access.
 
 #### Manual Static Deploys
 
