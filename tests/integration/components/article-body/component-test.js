@@ -56,8 +56,9 @@ module('Integration | Component | article-body', function(hooks) {
       id: 'abcde-1325'
     }];
 
-    const EXPECTED_HEIGHT = Math.round((630 * 2000) / 1000)
-    const EXPECTED_URL = wagtailImageUrl([{id: 123}, 630, EXPECTED_HEIGHT]);
+    const EXPECTED_WIDTH = 634;
+    const EXPECTED_HEIGHT = Math.round((EXPECTED_WIDTH * 2000) / 1000)
+    const EXPECTED_URL = wagtailImageUrl([{id: 123}, EXPECTED_WIDTH, EXPECTED_HEIGHT]);
 
     this.set('body', BODY);
 

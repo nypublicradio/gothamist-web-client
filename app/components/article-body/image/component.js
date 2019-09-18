@@ -4,7 +4,7 @@ import { computed } from '@ember/object';
 export default Component.extend({
   tagName: '',
 
-  width: 630,
+  width: 634,
 
   height: computed('value.image', function() {
     if (this.value.image) {
