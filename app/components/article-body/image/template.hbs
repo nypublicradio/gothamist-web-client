@@ -3,5 +3,7 @@
   @credit={{@value.image.credit}}
   @creditLink={{@value.image.credit_link}}
   @alt={{@value.image.alt}}
-  @srcS={{wagtail-image-url @value.image 630}}
+  @srcS={{wagtail-image-url @value.image this.width this.height}}
+  @width={{this.width}}
+  @height={{this.height}}
 />
