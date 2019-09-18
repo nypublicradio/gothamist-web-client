@@ -9198,10 +9198,10 @@ nypr-auth@^0.2.4:
     ember-get-config "^0.2.2"
     ember-simple-auth "^1.7.0"
 
-nypr-design-system@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/nypr-design-system/-/nypr-design-system-2.0.3.tgz#ae2fb9a2ae24cf3b4ddfad6b01cbb06564714784"
-  integrity sha512-9YZhExtf0A/wSWYj5wKqnbXalNvsTCmhLxpOxVEGyketmZqJdk3/xdFrUrfxwECOAKO2TDSogX0EJ7E0ef13Ew==
+nypr-design-system@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/nypr-design-system/-/nypr-design-system-2.0.4.tgz#9f29ea48dfc06961efe98a8e0767fe2e157a24f3"
+  integrity sha512-WFJlugDKYoAcvXUAonsSgxa1pS2HuN2ImOM6CG5AKzk4D5sanG97aUp/H3VR8CHlhNZ/ER8J+3QxwTikyOfAVQ==
   dependencies:
     "@babel/core" "^7.0.0"
     broccoli-merge-files "^0.8.0"
