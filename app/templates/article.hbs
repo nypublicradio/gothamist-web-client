@@ -67,8 +67,9 @@
           {{else}}
             {{#with model.article.leadImage as |lead|}}
               {{#if model.article.leadImageLink}}
-                <a href={{model.article.leadImageLink}} target="_blank" rel="noopener">
+                <a data-test-lead-image-link href={{model.article.leadImageLink}} target="_blank" rel="noopener">
                   <NyprMFigure
+                    data-test-lead-image
                     class="c-lead"
                     @srcS={{wagtail-image-url lead.image 661 496}}
                     @caption={{or lead.caption lead.image.caption}}
@@ -81,6 +82,7 @@
                 </a>
               {{else}}
                 <NyprMFigure
+                  data-test-lead-image
                   class="c-lead"
                   @srcS={{wagtail-image-url lead.image 661 496}}
                   @caption={{or lead.caption lead.image.caption}}

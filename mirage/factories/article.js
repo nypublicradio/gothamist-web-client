@@ -76,6 +76,7 @@ export default Factory.extend({
           id: 1283,
         },
         caption: faker.lorem.words(5),
+        image_link: faker.internet.url(),
       },
       id: faker.random.uuid(),
     }

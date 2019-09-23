@@ -59,6 +59,16 @@ module('Acceptance | article', function(hooks) {
     // recirc
     assert.dom('[data-test-recirc-recent] .c-block').exists({count: 3});
     assert.dom('[data-test-recirc-featured] .c-block').exists({count: 1});
+
+    // lead image
+    const imageUrl = `${config.APP.wagtailImages.imagePath}/${article.lead_asset[0].value.image.id}/fill-661x496/`
+    assert.dom('[data-test-lead-image] img').exists({count: 1});
+    assert.dom('[data-test-lead-image] img').hasAttribute('src', imageUrl);
+
+    // lead image link
+    const imageLink = article.lead_asset[0].value.image_link;
+    assert.dom('[data-test-lead-image-link]').exists({count: 1});
+    assert.dom('[data-test-lead-image-link]').hasAttribute('href', imageLink);
   });
 
   test('tweeting an article', async function() {
