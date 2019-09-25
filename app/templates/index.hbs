@@ -3,17 +3,7 @@
 <DoTargeting key='Template' value='Homepage' />
 
 <h1 class="is-vishidden" aria-hidden="true">Gothamist: New York City Local News, Food, Arts & Events</h1>
-<div class="c-home__sections u-section-spacing--wide l-container l-container--xl l-wrap u-trigger-floating-header">
-
-  <div class="l-container l-container--16col">
-    {{#each model.sitewideComponents.breakingNews as |news|}}
-      <BreakingNewsBanner @news={{news}} />
-    {{/each}}
-  </div>
-
-  {{#with model.systemMessages.topProductBanner as |productBanner|}}
-    <ProductBanner @banner={{productBanner}} />
-  {{/with}}
+<div class="c-home__content-top u-section-spacing--wide l-container l-container--xl l-wrap">
 
   <NyprOFeaturedBlockList data-test-featured-block-list as |fbl|>
     <fbl.heading>
@@ -134,7 +124,7 @@
   </div>
 </div>
 
-<div class="c-home__sections">
+<div class="c-home__tout">
   <NyprODonate
     @linkUrl='https://pledge3.wnyc.org/donate/gothamist/onestep?utm_medium=partnersite&utm_source=gothamist&utm_campaign=homepagedonationask'
     @linkText='Donate'
@@ -145,7 +135,7 @@
   </NyprODonate>
 </div>
 
-<div class="c-home__sections u-spacing--quad l-container l-wrap">
+<div class="c-home__content-bottom u-spacing--quad l-container l-wrap">
 
   <div class="l-container l-container--14col">
     <ArticleList @articles={{slice (multiply GROUP_SIZE 3) undefined model.river}} @ad='gothamist/index/midpage/3' />
