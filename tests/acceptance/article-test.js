@@ -348,6 +348,26 @@ module('Acceptance | article', function(hooks) {
     assert.equal(spy.secondCall.args[0].virtualReferrer, '/food/foo');
   });
 
+  test('og metadata is correct', async function(assert) {
+    const article = server.create('article');
+
+    await visit(`/${article.html_path}`);
+
+    assert.equal(document.querySelector("meta[property='og:title']")
+      .getAttribute("content"),
+      article.title);
+    assert.equal(document.querySelector("meta[name='twitter:title']")
+      .getAttribute("content"),
+      article.title);
+    assert.equal(document.querySelector("meta[property='og:description']")
+      .getAttribute("content"),
+      article.description);
+    assert.equal(document.querySelector("meta[name='twitter:description']")
+      .getAttribute("content"),
+      article.description);
+  });
+
+
   test('structured data is correct', async function(assert) {
     const article = server.create('article');
 
@@ -357,8 +377,8 @@ module('Acceptance | article', function(hooks) {
 
     assert.equal(data.author[0].name,
       `${article.related_authors[0].first_name} ${article.related_authors[0].last_name}`);
-    assert.equal(data.headline, article.ogTitle);
-    assert.equal(data.description, JSON.stringify(article.description));
+    assert.equal(data.headline, article.title);
+    assert.equal(data.description, article.description);
     assert.equal(data.publisher.name, "Gothamist");
   });
 });
