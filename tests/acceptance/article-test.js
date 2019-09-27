@@ -347,4 +347,18 @@ module('Acceptance | article', function(hooks) {
     assert.equal(spy.firstCall.args[0].virtualReferrer, '/');
     assert.equal(spy.secondCall.args[0].virtualReferrer, '/food/foo');
   });
+
+  test('structured data is correct', async function(assert) {
+    const article = server.create('article');
+
+    await visit(`/${article.html_path}`);
+
+    let data = JSON.parse(document.querySelector('#structured-data').innerText);
+
+    assert.equal(data.author[0].name,
+      `${article.related_authors[0].first_name} ${article.related_authors[0].last_name}`);
+    assert.equal(data.headline, article.ogTitle);
+    assert.equal(data.description, JSON.stringify(article.description));
+    assert.equal(data.publisher.name, "Gothamist");
+  });
 });
