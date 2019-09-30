@@ -76,6 +76,21 @@ module('Acceptance | gallery', function(hooks) {
         `image src should have expected path: ${src}`
       );
 
+      // image caption
+      const caption = slide.value.slide_image.caption;
+      assert.dom(`[data-test-gallery-slide="${i}"] .c-slide__dek`).exists({count: 1});
+      assert.dom(`[data-test-gallery-slide="${i}"] .c-slide__dek`).containsText(caption);
+
+      // image credit
+      const credit = slide.value.slide_image.image.credit;
+      assert.dom(`[data-test-gallery-slide="${i}"] .o-credit`).exists({count: 1});
+      assert.dom(`[data-test-gallery-slide="${i}"] .o-credit`).containsText(credit);
+
+      // image credit link
+      const creditLink = slide.value.slide_image.image.credit_link;
+      assert.dom(`[data-test-gallery-slide="${i}"] .o-credit a`).exists({count: 1});
+      assert.dom(`[data-test-gallery-slide="${i}"] .o-credit a`).hasAttribute('href', creditLink);
+
       let mediumSource = find(`[data-test-gallery-slide="${i}"] [data-test-source-m]`);
       assert.ok(
         mediumSource.srcset.match(`images/${id}/width-800`),

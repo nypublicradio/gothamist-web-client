@@ -65,6 +65,8 @@ export default Factory.extend({
           slide_image: {
             image: {
               id: faker.random.number(5000),
+              credit: faker.name.findName(),
+              credit_link: faker.internet.url(),
             },
             caption: faker.lorem.sentence(),
           },
