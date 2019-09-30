@@ -149,7 +149,10 @@ export default Page.extend({
     }
     switch(this.leadAsset.type) {
       case LEAD_IMAGE:
-        return camelizeObject(this.leadAsset.value);
+        return {
+          image: camelizeObject(this.leadAsset.value.image),
+          caption: this.leadAsset.value.caption,
+        }
       default:
         if (this.leadAsset.value.default_image) {
           return {
