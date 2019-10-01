@@ -74,6 +74,8 @@ export default Factory.extend({
       value: {
         image: {
           id: 1283,
+          credit: faker.name.findName(),
+          credit_link: faker.internet.url(),
         },
         caption: faker.lorem.words(5),
         image_link: faker.internet.url(),

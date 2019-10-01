@@ -65,6 +65,16 @@ module('Acceptance | article', function(hooks) {
     assert.dom('[data-test-lead-image] img').exists({count: 1});
     assert.dom('[data-test-lead-image] img').hasAttribute('src', imageUrl);
 
+    // lead image credit
+    const credit = article.lead_asset[0].value.image.credit;
+    assert.dom('[data-test-lead-image] .o-credit').exists({count: 1});
+    assert.dom('[data-test-lead-image] .o-credit').hasText(credit);
+
+    // lead image credit link
+    const creditLink = article.lead_asset[0].value.image.credit_link;
+    assert.dom('[data-test-lead-image] .o-credit a').exists({count: 1});
+    assert.dom('[data-test-lead-image] .o-credit a').hasAttribute('href', creditLink);
+
     // lead image link
     const imageLink = article.lead_asset[0].value.image_link;
     assert.dom('[data-test-lead-image-link]').exists({count: 1});
