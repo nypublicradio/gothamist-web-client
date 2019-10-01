@@ -4,6 +4,7 @@ import DS from 'ember-data';
 import Route from '@ember/routing/route';
 import { get } from '@ember/object';
 import { inject } from '@ember/service';
+import { hash } from 'rsvp';
 import { schedule } from '@ember/runloop';
 import { doTargetingForPath, clearTargetingForPath } from 'nypr-ads';
 import config from '../config/environment';
@@ -57,7 +58,7 @@ export default Route.extend({
   },
 
   model() {
-    return {
+    return hash({
       primaryNav: [{
         route: ['sections', 'news'],
         text: 'News',
@@ -84,8 +85,10 @@ export default Route.extend({
       }, {
         route: ['staff'],
         text: 'Staff'
-      }]
-    }
+      }],
+      systemMessages: this.store.findRecord('system-messages', config.siteId).catch(() => ''),
+      sitewideComponents: this.store.findRecord('sitewide-components', config.siteId).catch(() => ''),
+    });
   },
 
   afterModel(_model, transition) {

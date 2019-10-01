@@ -94,4 +94,42 @@ module('Acceptance | section', function(hooks) {
     assert.dom('[data-test-section-river] [data-test-block="foo"]').doesNotExist('featured articles should be filtered out of the river');
     assert.dom('[data-test-section-river] [data-test-block="bar"]').doesNotExist('featured articles should be filtered out of the river');
   });
+
+  test('breaking news on section route', async function(assert) {
+    server.create('sitewide-component');
+    server.create('breaking-news');
+
+    server.create('page', 'withArticles', {
+      slug: 'news',
+      title: 'News',
+    });
+    await visit('/news');
+
+    assert.dom('.c-block--urgent').exists({count: 1});
+  });
+
+  test('top product banner on section route', async function(assert) {
+    //clear cookie
+    document.cookie = `${config.productBannerCookiePrefix}12345=; expires=${moment().subtract(1, 'day')}; path=/`;
+    // create banner;
+    server.create('system-message');
+    server.create('product-banner', {
+      "id": "12345",
+      "title": "Test Title",
+      "description": "<p>Test Description</p>",
+      "button_text": "Test Button",
+      "button_link": "http://example.com",
+    });
+
+    server.create('page', 'withArticles', {
+      slug: 'news',
+      title: 'News',
+    });
+    await visit('/news');
+
+    assert.dom('[data-test-top-product-banner]').exists();
+    assert.dom('[data-test-top-product-banner] .o-box-banner__title').includesText("Test Title");
+    assert.dom('[data-test-top-product-banner] .o-box-banner__dek').includesText("Test Description");
+    assert.dom('[data-test-top-product-banner] .o-box-banner__cta').includesText("Test Button");
+  });
 });

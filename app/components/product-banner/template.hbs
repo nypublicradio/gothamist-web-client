@@ -1,0 +1,33 @@
+<DismissableBlock
+  @cookieId={{@banner.cookieId}}
+  @dismissedFor={{@banner.frequency}}
+  as |dismiss|>
+  <NyprMBoxBanner
+    class={{unless @banner.description 'o-box-banner--no-desc'}}
+    @close={{action dismiss}}
+    data-test-top-product-banner
+    as |box-banner|>
+
+    <box-banner.title>
+      {{{@banner.title}}}
+    </box-banner.title>
+
+    {{#if (or @banner.description @banner.buttonText)}}
+      <box-banner.body as |body|>
+        {{#if @banner.description}}
+          <body.dek>
+            {{{@banner.description}}}
+          </body.dek>
+        {{/if}}
+
+        {{#if @banner.buttonText}}
+          <body.cta>
+            <NyprAButton @url={{@banner.buttonLink}}>
+              {{@banner.buttonText}}
+            </NyprAButton>
+          </body.cta>
+        {{/if}}
+      </box-banner.body>
+    {{/if}}
+  </NyprMBoxBanner>
+</DismissableBlock>

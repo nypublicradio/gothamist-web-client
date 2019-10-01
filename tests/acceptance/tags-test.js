@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 import { module, test } from 'qunit';
 import { visit, currentURL, click,findAll } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
@@ -45,5 +47,37 @@ module('Acceptance | tags', function(hooks) {
       assert.ok(block.querySelector('.c-block-meta__comments'), 'comments are rendered');
       assert.dom(block.querySelector('.c-block-meta__comments')).includesText(String(posts));
     });
+  });
+
+  test('breaking news on author route', async function(assert) {
+    server.create('sitewide-component');
+    server.create('breaking-news');
+
+    server.createList('article', COUNT * 5, {tags: [{slug: 'dogs-and-cats', name: 'dogs and cats'}], section: 'food', tag_slug: 'dogs-and-cats'});
+    await visit('/tags/dogs-and-cats');
+
+    assert.dom('.c-block--urgent').exists({count: 1});
+  });
+
+  test('top product banner on author route', async function(assert) {
+    //clear cookie
+    document.cookie = `${config.productBannerCookiePrefix}12345=; expires=${moment().subtract(1, 'day')}; path=/`;
+    // create banner;
+    server.create('system-message');
+    server.create('product-banner', {
+      "id": "12345",
+      "title": "Test Title",
+      "description": "<p>Test Description</p>",
+      "button_text": "Test Button",
+      "button_link": "http://example.com",
+    });
+
+    server.createList('article', COUNT * 5, {tags: [{slug: 'dogs-and-cats', name: 'dogs and cats'}], section: 'food', tag_slug: 'dogs-and-cats'});
+    await visit('/tags/dogs-and-cats');
+
+    assert.dom('[data-test-top-product-banner]').exists();
+    assert.dom('[data-test-top-product-banner] .o-box-banner__title').includesText("Test Title");
+    assert.dom('[data-test-top-product-banner] .o-box-banner__dek').includesText("Test Description");
+    assert.dom('[data-test-top-product-banner] .o-box-banner__cta').includesText("Test Button");
   });
 });

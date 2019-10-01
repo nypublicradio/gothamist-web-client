@@ -129,6 +129,18 @@
 </NyprOHeader>
 
 <main class={{concat "c-main " this.mainRouteClasses}}>
+  <div class="c-banners u-section-spacing--wide l-container l-container--xl l-wrap">
+    <div class="c-banners__breaking-news l-container l-container--16col">
+      {{#each model.sitewideComponents.breakingNews as |news|}}
+        <BreakingNewsBanner @news={{news}} />
+      {{/each}}
+    </div>
+
+    {{#with model.systemMessages.topProductBanner as |productBanner|}}
+      <ProductBanner @banner={{productBanner}} />
+    {{/with}}
+  </div>
+
   {{outlet}}
 </main>
 
