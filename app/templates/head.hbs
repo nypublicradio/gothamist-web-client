@@ -72,8 +72,8 @@
       "@type": "NewsArticle",
       "mainEntityOfPage": "https://gothamist.com/{{model.path}}",
       "image": "{{if model.image (wagtail-image-url model.image 1200 650)}}",
-      "headline": "{{model.title}}",
-      "description": {{model.metaDescription}},
+      "headline": "{{or model.ogTitle model.title}}",
+      "description": {{stringify model.metaDescription}},
       "datePublished": "{{model.publishedTime}}",
       "dateModified": "{{if model.modifiedTime model.modifiedTime}}",
     "author": [
