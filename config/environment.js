@@ -64,7 +64,7 @@ module.exports = function(environment) {
     donateCookie:       'goth_donateToutClosed',
     articleViewsCookie: 'goth_articleViews',
     productBannerCookiePrefix: 'gothamist_product_banner_',
-    siteId:             1, //id for system_messages, sitewidecomponents, etc.
+    siteId:             Number(process.env.GOTHAMIST_SITE_ID) || 2, //id for system_messages, sitewidecomponents, etc.
 
     // for nypr-auth
     etagAPI: process.env.BROWSER_ID_ENDPOINT,
@@ -97,6 +97,7 @@ module.exports = function(environment) {
     };
 
     // for mirage endpoints
+    ENV.siteId = Number(process.env.GOTHAMIST_SITE_ID) || 1;
     ENV.apiServer = ENV.apiServer || 'https://api.demo.nypr.digital';
     ENV.cmsServer = ENV.cmsServer || 'https://cms.demo.nypr.digital';
     ENV.disqusAPI = ENV.disqusAPI || 'https://disqus.com';
@@ -116,6 +117,7 @@ module.exports = function(environment) {
     ENV.APP.autoboot = false;
 
     // for mirage endpoints
+    ENV.siteId = 1;
     ENV.cmsServer = 'https://cms.demo.nypr.digital';
     ENV.apiServer = 'https://api.demo.nypr.digital';
     ENV.cmsServer = 'https://cms.demo.nypr.digital';
