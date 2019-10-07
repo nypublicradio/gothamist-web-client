@@ -64,7 +64,7 @@ module.exports = function(environment) {
     donateCookie:       'goth_donateToutClosed',
     articleViewsCookie: 'goth_articleViews',
     productBannerCookiePrefix: 'gothamist_product_banner_',
-    siteId:             process.env.SITE_ID || 2, //id for system_messages, sitewidecomponents, etc.
+    siteId:             Number(process.env.SITE_ID) || 2, //id for system_messages, sitewidecomponents, etc.
 
     // for nypr-auth
     etagAPI: process.env.BROWSER_ID_ENDPOINT,
