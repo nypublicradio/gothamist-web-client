@@ -1,5 +1,8 @@
 # gothamist-web-client
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/db8f5caa65b32075199e/maintainability)](https://codeclimate.com/github/nypublicradio/gothamist-web-client/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/db8f5caa65b32075199e/test_coverage)](https://codeclimate.com/github/nypublicradio/gothamist-web-client/test_coverage)
+
 This is the ember web client for gothamist.com. Most of the components and styles are provided by the [`nypr-design-system`](https://github.com/nypublicradio/nypr-design-system).
 
 ## Prerequisites
