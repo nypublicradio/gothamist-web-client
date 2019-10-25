@@ -31,8 +31,9 @@ module.exports = function(environment) {
       includeTimezone: 'all',
     },
 
-    'nypr-ads': {
+    'nypr-ads-htl': {
       prefix: process.env.AD_PREFIX,
+      scriptURL: 'https://htlbid.com/v3/gothamist.com/htlbid.js',
     },
 
     'ember-math-helpers': {

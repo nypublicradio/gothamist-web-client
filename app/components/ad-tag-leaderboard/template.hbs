@@ -1,34 +1,9 @@
-<DfpAd
+<HtlbidAd
   @slot={{@slot}}
-  @target={{@target}}
-  @mapping={{array
-    (array 0
-      (array
-        (array 320 50)
-      )
-    )
-    (array 750
-      (array
-        (array 728 90)
-      )
-    )
-    (array 1000
-      (array
-        (array 970 250)
-        (array 970 90)
-        (array 728 90)
-      )
-    )
-  }}
-  @sizes={{array
-    (array 320 50)
-    (array 728 90)
-    (array 970 90)
-    (array 970 250)
-  }}
+  @sizes="0x0:320x50|750x0:728x90|1000x0:970x250,970x90,728x90"
 as |ad|>
   {{ad.tag}}
   {{#unless ad.isEmpty}}
     <NyprAAdLabel/>
   {{/unless}}
-</DfpAd>
+</HtlbidAd>

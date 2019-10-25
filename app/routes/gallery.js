@@ -3,7 +3,7 @@ import RSVP from 'rsvp';
 import Route from '@ember/routing/route';
 import { inject } from '@ember/service';
 import { or } from '@ember/object/computed';
-import { doTargetingForModels, clearTargetingForModels } from 'nypr-ads';
+import { doTargetingForModels, clearTargetingForModels } from 'nypr-ads-htl';
 
 import { GALLERY_PATH } from '../router';
 

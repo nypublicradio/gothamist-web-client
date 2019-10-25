@@ -9460,6 +9460,13 @@ nwsapi@^2.0.9, nwsapi@^2.1.4:
   resolved "https://registry.yarnpkg.com/nwsapi/-/nwsapi-2.1.4.tgz#e006a878db23636f8e8a67d33ca0e4edf61a842f"
   integrity sha512-iGfd9Y6SFdTNldEy2L0GUhcarIutFmk+MPWIn9dmj8NMIup03G08uUF2KGbbmv/Ux4RT0VZJoP/sVbWA6d/VIw==
 
+nypr-ads-htl@nypublicradio/nypr-ads-htl#master:
+  version "0.0.0"
+  resolved "git+ssh://git@github.com/nypublicradio/nypr-ads-htl.git#1054192b299304832872158bfceca4fb65ba62f6"
+  dependencies:
+    ember-cli-babel "^7.1.2"
+    ember-cli-htmlbars "^3.0.0"
+
 nypr-ads@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/nypr-ads/-/nypr-ads-1.1.1.tgz#b1464bd2f673ca0a2882df637decc6258944c253"
