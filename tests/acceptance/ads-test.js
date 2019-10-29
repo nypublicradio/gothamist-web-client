@@ -18,7 +18,7 @@ const HTL_STUB = () => ({
 
 let original = htlbid.default
 
-module('Acceptance | dfp', function(hooks) {
+module('Acceptance | ads', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
