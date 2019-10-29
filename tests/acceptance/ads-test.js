@@ -10,7 +10,6 @@ const HTL_STUB = () => ({
   cmd: {
     push: fn => fn(), // force function queue to run
   },
-  addEventListener() {},
   clearTargeting() {},
   setTargeting() {},
   on() {},
