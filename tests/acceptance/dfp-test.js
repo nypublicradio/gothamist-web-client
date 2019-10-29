@@ -1,7 +1,7 @@
 import * as htlbid from 'htlbid';
 
 import { module } from 'qunit';
-import { visit } from '@ember/test-helpers';
+import { click, currentURL, findAll, visit } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import test from 'ember-sinon-qunit/test-support/test';
@@ -55,30 +55,22 @@ module('Acceptance | dfp', function(hooks) {
     assert.ok(targetingSpy.calledWith('Template', 'Article'), 'should pass template');
   });
 
-  // test('sensitive articles should not render ads', async function(assert) {
-  //   const sensitive = server.create('article', {sensitive_content: true, show_as_feature: true});
-  //   const numb = server.create('article', {show_as_feature: true});
+  test('sensitive articles should not render ads', async function(assert) {
+    const sensitive = server.create('article', {sensitive_content: true, show_as_feature: true});
+    const numb = server.create('article', {show_as_feature: true});
 
-  //   const defineSpy = this.spy(googletag.default, 'defineSlot');
+    await visit('/');
+    await click(`[data-test-block="${sensitive.id}"] a`);
 
-  //   await visit('/');
+    assert.equal(currentURL(), `/${sensitive.section}/${sensitive.meta.slug}`);
+    assert.equal(findAll('.htl-ad').length, 0, 'no ads should appear on sensitive articles');
 
-  //   const HOMEPAGE_ADS = defineSpy.callCount;
 
-  //   await click(`[data-test-block="${sensitive.id}"] a`);
+    await click('[data-test-header-logo]'); // back to homepage
+    await click(`[data-test-block="${numb.id}"] a`);
 
-  //   assert.equal(currentURL(), `/${sensitive.section}/${sensitive.meta.slug}`);
-
-  //   assert.equal(defineSpy.callCount, HOMEPAGE_ADS, 'no additional ads should be called on sensitive articles');
-
-  //   await click('[data-test-header-logo]'); // back to homepage
-
-  //   assert.equal(defineSpy.callCount, HOMEPAGE_ADS * 2, 'only ads defined should be those on homepage');
-
-  //   await click(`[data-test-block="${numb.id}"] a`);
-
-  //   assert.ok(defineSpy.callCount > HOMEPAGE_ADS * 2, 'non-sensitive articles should call ads after a sensitive ad');
-  // });
+    assert.ok(findAll('.htl-ad').length > 1, 'non-sensitive articles should call ads after a sensitive ad');
+  });
 
   test('sponsored articles should pass their sponsor name to DFP', async function(assert) {
     const targetingSpy = this.spy(htlbid.default, 'setTargeting');
