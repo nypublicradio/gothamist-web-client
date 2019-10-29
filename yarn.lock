@@ -9460,10 +9460,10 @@ nwsapi@^2.0.9, nwsapi@^2.1.4:
   resolved "https://registry.yarnpkg.com/nwsapi/-/nwsapi-2.1.4.tgz#e006a878db23636f8e8a67d33ca0e4edf61a842f"
   integrity sha512-iGfd9Y6SFdTNldEy2L0GUhcarIutFmk+MPWIn9dmj8NMIup03G08uUF2KGbbmv/Ux4RT0VZJoP/sVbWA6d/VIw==
 
-nypr-ads-htl@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/nypr-ads-htl/-/nypr-ads-htl-0.1.0.tgz#2031014c9975f64cfb72e583bdd219937da84fca"
-  integrity sha512-ti6NrlhMNAxHb/ap3vywpgA4b/F2Am7WFoi6nl8fQwwtM/3iot2zUSn1WkPmjcdjZGROE25yYodRr3vB+9N4Nw==
+nypr-ads-htl@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/nypr-ads-htl/-/nypr-ads-htl-0.1.2.tgz#6bbeb108f24f9c9a6f70ab8b2d638ea6d854e7ea"
+  integrity sha512-2SyAcurFMe/FFg7bIjZTIdhbmfPJfWF6xq7ZTdVIoZPs55X0/kahFAJTSO5W5maRMxWy7vlNhcvLXcHKcEQblQ==
   dependencies:
     ember-cli-babel "^7.1.2"
     ember-cli-htmlbars "^3.0.0"
