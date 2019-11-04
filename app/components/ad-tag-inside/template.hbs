@@ -1,12 +1,9 @@
-<div
-  {{insert-target (or @contentsId "inserted-ad")
-    containerSelector=(or @containerSelector ".c-article__body")
-    contentsId=@contentsId
-    afterInsert=(action 'handleInsert')
+<div data-test-inserted-ad-wrapper>
+  {{yield (hash
+    willRender=(action 'handleWillRender')
+    didRender=(action 'handleDidRender')
+    )
   }}
-  data-test-inserted-ad-wrapper
->
-  {{yield}}
 </div>
 
 {{!--

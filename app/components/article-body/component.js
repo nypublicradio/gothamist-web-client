@@ -9,4 +9,18 @@ export default Component.extend({
     const owner = getOwner(this);
     return Boolean(owner.lookup(`component:article-body/${block.type}`));
   }),
+
+  willRender() {
+    this._super(...arguments);
+    if (this.onWillRender) {
+      this.onWillRender()
+    }
+  },
+
+  didRender() {
+    this._super(...arguments);
+    if (this.onDidRender) {
+      this.onDidRender()
+    }
+  }
 });

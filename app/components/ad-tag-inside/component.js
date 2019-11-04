@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { and, not } from '@ember/object/computed';
+import insertAdDiv from '../../utils/insert-ad-div';
 
 export default Component.extend({
   tagName: '',
@@ -15,8 +16,14 @@ export default Component.extend({
   shouldRender: and('wormholeDestination', 'notFastBoot', 'notSensitive'),
 
   actions: {
-    handleInsert(insertedTarget) {
-      this.set('wormholeDestination', insertedTarget);
-    }
+    handleWillRender() {
+      this.set('wormholeDestination', null);
+    },
+
+    handleDidRender() {
+      let targetDiv = document.querySelector('.c-article__body');
+      let insertedDiv = this.target =  insertAdDiv('inserted-target', targetDiv);
+      this.set('wormholeDestination', insertedDiv);
+    },
   }
 });
