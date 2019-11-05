@@ -21,7 +21,6 @@ module('Integration | Component | ad-tag-inside', function(hooks) {
         <NyprOArticleBody>
           <ArticleBody
             @blocks={{this.blocks}}
-            @onWillRender={{hooks.willRender}}
             @onDidRender={{hooks.didRender}}
           />
         </NyprOArticleBody>
@@ -40,7 +39,6 @@ module('Integration | Component | ad-tag-inside', function(hooks) {
         <div class="special-div">
           <ArticleBody
             @blocks={{this.blocks}}
-            @onWillRender={{hooks.willRender}}
             @onDidRender={{hooks.didRender}}
           />
         </div>
@@ -60,7 +58,6 @@ module('Integration | Component | ad-tag-inside', function(hooks) {
         <NyprOArticleBody>
           <ArticleBody
             @blocks={{this.blocks}}
-            @onWillRender={{hooks.willRender}}
             @onDidRender={{hooks.didRender}}
           />
         </NyprOArticleBody>

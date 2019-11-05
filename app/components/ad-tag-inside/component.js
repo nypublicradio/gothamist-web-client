@@ -17,10 +17,6 @@ export default Component.extend({
   shouldRender: and('wormholeDestination', 'notFastBoot', 'notSensitive'),
 
   actions: {
-    handleWillRender() {
-      this.set('wormholeDestination', null);
-    },
-
     handleDidRender() {
       let containerSelector = this.containerSelector || '.c-article__body';
       let targetDiv = document.querySelector(containerSelector);
