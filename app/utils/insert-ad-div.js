@@ -33,7 +33,7 @@ const getWordWeight = function(node) {
   return wordWeight;
 }
 
-// Get top level "text" nodes
+// Get top level nodes, ignoring whitespace only nodes
 const getChildNodes = function(container) {
   return [...container.childNodes].filter(node => {
     // ignore whitespace only text and P nodes.
@@ -47,10 +47,10 @@ let target = undefined;
 /**
   Inserts a div into a story's DOM based on the following rules.
 
-  For each top level text node(a P tag or #text node) child of 
-  the first container identified by `containerSelector`, count 
-  the words. When the total word count exceeds the value of
-  `wordBoundary`, insert the div right after that node, unless...
+  For each top level child node of `container`, count the words 
+  (embeds count as at least 50 words).  When the total word count 
+  exceeds the value of `wordBoundary`, insert the div right after 
+  that node, unless...
 
   Unless one of the dontInsertBefore, dontInsertAfter, 
   dontInsertBetween, rules applies. Then continue to the 
