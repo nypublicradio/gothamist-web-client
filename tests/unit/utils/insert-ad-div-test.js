@@ -23,14 +23,14 @@ module('Unit | Utility | insert-ad-div', function(hooks) {
     </div>`);
     let container = document.querySelector('#container');
 
-    insertAdDiv('trgt', container, {wordBoundary: 300})
+    insertAdDiv('trgt', container, {wordsBeforeAd: 300})
  
     let elementList = [...this.element.firstChild.children].map(el => el.id);
     assert.dom('div#trgt').exists({count: 1});
     assert.deepEqual(elementList, ['p1','p2','p3','trgt','p4']);
   });
 
-  test('it accepts wordBoundary parameter', async function(assert) {
+  test('it accepts wordsBeforeAd parameter', async function(assert) {
     await render(hbs`<div id="container">
       <p id="p1">{{this.oneHundredWords}}</p>
       <p id="p2">{{this.oneHundredWords}}</p>
@@ -39,7 +39,7 @@ module('Unit | Utility | insert-ad-div', function(hooks) {
     </div>`);
     let container = document.querySelector('#container');
  
-    insertAdDiv('trgt', container, {wordBoundary: 200})
+    insertAdDiv('trgt', container, {wordsBeforeAd: 200})
 
     let elementList = [...this.element.firstChild.children].map(el => el.id);
     assert.dom('div#trgt').exists({count: 1});
@@ -56,7 +56,7 @@ module('Unit | Utility | insert-ad-div', function(hooks) {
     </div>`);
     let container = document.querySelector('#container');
     
-    insertAdDiv('trgt', container, {wordBoundary: 300});
+    insertAdDiv('trgt', container, {wordsBeforeAd: 300});
 
     let elementList = [...this.element.firstChild.children].map(el => el.id);
     assert.dom('div#trgt').exists({count: 1});
@@ -74,7 +74,7 @@ module('Unit | Utility | insert-ad-div', function(hooks) {
     </div>`);
     let container = document.querySelector('#container');
     
-    insertAdDiv('trgt', container, {wordBoundary: 300});
+    insertAdDiv('trgt', container, {wordsBeforeAd: 300});
 
     let elementList = [...this.element.firstChild.children].map(el => el.id);
     assert.dom('div#trgt').exists({count: 1});
@@ -90,7 +90,7 @@ module('Unit | Utility | insert-ad-div', function(hooks) {
     </div>`);
     let container = document.querySelector('#container');
     
-    insertAdDiv('trgt', container, {wordBoundary: 150});
+    insertAdDiv('trgt', container, {wordsBeforeAd: 150});
 
     let elementList = [...this.element.firstChild.children].map(el => el.id);
     assert.dom('div#trgt').exists({count: 1});
@@ -106,7 +106,7 @@ module('Unit | Utility | insert-ad-div', function(hooks) {
     </div>`);
     let container = document.querySelector('#container');
     
-    insertAdDiv('trgt', container, {wordBoundary: 300});
+    insertAdDiv('trgt', container, {wordsBeforeAd: 300});
 
     let elementList = [...this.element.firstChild.childNodes]
       .filter(node => {
@@ -130,7 +130,7 @@ module('Unit | Utility | insert-ad-div', function(hooks) {
     </div>`);
     let container = document.querySelector('#container');
     
-    insertAdDiv('trgt', container, {wordBoundary: 300});
+    insertAdDiv('trgt', container, {wordsBeforeAd: 300});
 
     let elementList = [...this.element.firstChild.childNodes]
       .filter(node => {
@@ -151,7 +151,7 @@ module('Unit | Utility | insert-ad-div', function(hooks) {
     </div>`);
     let container = document.querySelector('#container');
     
-    insertAdDiv('trgt', container, {wordBoundary: 300});
+    insertAdDiv('trgt', container, {wordsBeforeAd: 300});
 
     let elementList = [...this.element.firstChild.children].map(el => el.id);
     assert.dom('div#trgt').exists({count: 1});
@@ -160,7 +160,7 @@ module('Unit | Utility | insert-ad-div', function(hooks) {
 
   // test('it should reinsert when the contentsId changes', async function(assert) {
   //   this.set('id','foo');
-  //   await render(hbs`<div id="container" {{insert-target 'trgt' wordBoundary=300 contentsId=id}}>
+  //   await render(hbs`<div id="container" {{insert-target 'trgt' wordsBeforeAd=300 contentsId=id}}>
   //     <p id="p1">{{this.oneHundredWords}}</p>
   //     <p id="p2">{{this.oneHundredWords}}</p>
   //     <p id="p3">{{this.oneHundredWords}}</p>
@@ -168,7 +168,7 @@ module('Unit | Utility | insert-ad-div', function(hooks) {
   //   </div>`);
   //   let container = document.querySelector('#container');
     
-  //   insertAdDiv('trgt', container, {wordBoundary: 300});
+  //   insertAdDiv('trgt', container, {wordsBeforeAd: 300});
 
   //   let elementList = [...this.element.firstChild.children].map(el => el.id);
   //   assert.dom('div#trgt').exists({count: 1});

@@ -13,11 +13,6 @@ const shouldntInsertBetween = function(current, next) {
   return dontInsertBetween
     .some(([first, second]) => current === first && next === second);
 };
-const isValidInsertLocation = function(currentTag, nextTag) {
-  return !dontInsertAfter.includes(currentTag)
-  && !dontInsertBefore.includes(nextTag)
-  && !shouldntInsertBetween(currentTag, nextTag)
-}
 
 // Word count helpers
 const countWords = function(node) {
@@ -49,8 +44,7 @@ let target = undefined;
 
   For each top level child node of `container`, count the words 
   (embeds count as at least 50 words).  When the total word count 
-  exceeds the value of `wordBoundary`, insert the div right after 
-  that node, unless...
+  exceeds the value of `wordsBeforeAd`, insert the div right after that node, unless...
 
   Unless one of the dontInsertBefore, dontInsertAfter, 
   dontInsertBetween, rules applies. Then continue to the 
@@ -63,24 +57,29 @@ let target = undefined;
   @param container {Element} The top level element to insert the 
   ad into
   @param options {Object}
-  @param options.wordBoundary {number}  The minimum number of words 
+  @param options.wordsBeforeAd {number}  The minimum number of words 
   before inserting the div
   @param options.classNames {string[]}  A list of classes to apply 
   to the inserted Div 
   @return {Element} The inserted div
 */
 
-const insertAdDiv = function(divId, container, { wordBoundary=150, classNames=[] } = {}) {
+const insertAdDiv = function(divId, container, { wordsBeforeAd=150, classNames=[] } = {}) {
   let nodes = getChildNodes(container);
   let wordCount = 0;
-  let boundary = nodes.find((node, index) => {
+
+  // Loop through nodes, return the first valid insert location
+  let adSibling = nodes.find((node, index) => {
     let currentTag = node.nodeName.toLowerCase();
     let nextNode = nodes[index+1];
     let nextTag = nextNode && nextNode.nodeName.toLowerCase();
-
     wordCount = wordCount += getWordWeight(node);
 
-    if (wordCount >= wordBoundary && isValidInsertLocation(currentTag, nextTag)) {
+    // check for a valid insert location
+    if (wordCount >= wordsBeforeAd 
+        && !dontInsertAfter.includes(currentTag)
+        && !dontInsertBefore.includes(nextTag)
+        && !shouldntInsertBetween(currentTag, nextTag)) {
       return node;
     }
   })
@@ -88,8 +87,8 @@ const insertAdDiv = function(divId, container, { wordBoundary=150, classNames=[]
   target.id = divId;
   target.className = '';
   target.classList.add(...classNames)
-  if (boundary && boundary.nextSibling) {
-    container.insertBefore(target, boundary.nextSibling);
+  if (adSibling && adSibling.nextSibling) {
+    container.insertBefore(target, adSibling.nextSibling);
   } else {
     container.appendChild(target);
   }
