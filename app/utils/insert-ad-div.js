@@ -71,7 +71,7 @@ let target = undefined;
 */
 
 const insertAdDiv = function(divId, container, { wordBoundary=150, classNames=[] } = {}) {
-  let nodes = getChildNodes(container)
+  let nodes = getChildNodes(container);
   let wordCount = 0;
   let boundary = nodes.find((node, index) => {
     let currentTag = node.nodeName.toLowerCase();
