@@ -107,15 +107,14 @@
 
     <AdTagInside 
       @slot="gothamist/interior/midpage/1"
-      @article=""
-      as |adHooks|>
+      as |hooks|>
       <NyprOArticleBody 
         class={{unless model.article.hasLead 'u-space--zero--top'}} 
         data-test-article-body>
         <ArticleBody 
           @blocks={{model.article.body}}
-          @onWillRender={{adHooks.willRender}}
-          @onDidRender={{adHooks.didRender}}
+          @onWillRender={{hooks.willRender}}
+          @onDidRender={{hooks.didRender}}
         />
       </NyprOArticleBody>
     </AdTagInside>

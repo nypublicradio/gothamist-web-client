@@ -9,7 +9,8 @@ export default Component.extend({
   fastboot: service(),
   sensitive: service('ad-sensitivity'),
 
-  wormholeDestination: "",
+  wormholeDestination: null,
+  containerSelector: null,
 
   notFastBoot: not('fastboot.isFastBoot'),
   notSensitive: not('sensitive.on'),
@@ -21,8 +22,9 @@ export default Component.extend({
     },
 
     handleDidRender() {
-      let targetDiv = document.querySelector('.c-article__body');
-      let insertedDiv = this.target =  insertAdDiv('inserted-target', targetDiv);
+      let containerSelector = this.containerSelector || '.c-article__body';
+      let targetDiv = document.querySelector(containerSelector);
+      let insertedDiv = this.target =  insertAdDiv('inserted-ad', targetDiv);
       this.set('wormholeDestination', insertedDiv);
     },
   }
