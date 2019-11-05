@@ -1,8 +1,4 @@
-const countWords = function(node) {
-  const text = node.textContent
-  return text.replace(/[^\w ]/g, "").split(/\s+/).length;
-}
-
+// Tag types
 const inline = ['a', 'b', 'i', 'em', 'strong'];
 const headers = ['h1', 'h2', 'h3', 'h4', 'h5']
 const embeds = ['iframe', 'embed', 'video',
@@ -13,14 +9,40 @@ const embeds = ['iframe', 'embed', 'video',
 const dontInsertBefore = ['blockquote', ...inline];
 const dontInsertAfter = [...headers, ...inline];
 const dontInsertBetween = embeds.map(embed => ['p', embed]);
-
 const shouldntInsertBetween = function(current, next) {
   return dontInsertBetween
     .some(([first, second]) => current === first && next === second);
 };
+const isValidInsertLocation = function(currentTag, nextTag) {
+  return !dontInsertAfter.includes(currentTag)
+  && !dontInsertBefore.includes(nextTag)
+  && !shouldntInsertBetween(currentTag, nextTag)
+}
+
+// Word count helpers
+const countWords = function(node) {
+  const text = node.textContent
+  return text.replace(/[^\w ]/g, "").split(/\s+/).length;
+}
+const getWordWeight = function(node) {
+  let wordWeight = countWords(node);
+  // count embeds as at least 50 words.
+  if (wordWeight < 50 && embeds.includes(node.nodeName.toLowerCase())) {
+    wordWeight = 50;
+  }
+  return wordWeight;
+}
+
+// Get top level "text" nodes
+const getChildNodes = function(container) {
+  return [...container.childNodes].filter(node => {
+    // ignore whitespace only text and P nodes.
+    return !(['#text', 'P'].includes(node.nodeName)
+      && node.textContent.replace(/\s/g, '').length === 0);
+  });
+}
 
 let target = undefined;
-
 
 /**
   Inserts a div into a story's DOM based on the following rules.
@@ -49,28 +71,16 @@ let target = undefined;
 */
 
 const insertAdDiv = function(divId, container, { wordBoundary=150, classNames=[] } = {}) {
-  let nodes = [...container.childNodes].filter(node => {
-    // ignore whitespace only text and P nodes.
-    return !(['#text', 'P'].includes(node.nodeName)
-      && node.textContent.replace(/\s/g, '').length === 0);
-  });
+  let nodes = getChildNodes(container)
   let wordCount = 0;
   let boundary = nodes.find((node, index) => {
     let currentTag = node.nodeName.toLowerCase();
     let nextNode = nodes[index+1];
-    let nextTag =  nextNode && nextNode.nodeName.toLowerCase();
+    let nextTag = nextNode && nextNode.nodeName.toLowerCase();
 
-    let wordWeight = countWords(node);
-    // count embeds as at least 50 words.
-    if (wordWeight < 50 && embeds.includes(currentTag)) {
-      wordWeight = 50;
-    }
-    wordCount += wordWeight;
+    wordCount = wordCount += getWordWeight(node);
 
-    if (wordCount >= wordBoundary
-      && !dontInsertAfter.includes(currentTag)
-      && !dontInsertBefore.includes(nextTag)
-      && !shouldntInsertBetween(currentTag, nextTag)) {
+    if (wordCount >= wordBoundary && isValidInsertLocation(currentTag, nextTag)) {
       return node;
     }
   })
