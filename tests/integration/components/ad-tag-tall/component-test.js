@@ -12,6 +12,6 @@ module('Integration | Component | ad-tag-tall', function(hooks) {
 
     await render(hbs`{{ad-tag-tall}}`);
 
-    assert.dom('[id^=ad_]').exists()
+    assert.dom('div.htl-ad').exists()
   });
 });

@@ -6,7 +6,7 @@ import { get } from '@ember/object';
 import { inject } from '@ember/service';
 import { hash } from 'rsvp';
 import { schedule } from '@ember/runloop';
-import { doTargetingForPath, clearTargetingForPath } from 'nypr-ads';
+import { doTargetingForPath, clearTargetingForPath } from 'nypr-ads-htl';
 import config from '../config/environment';
 
 export default Route.extend({

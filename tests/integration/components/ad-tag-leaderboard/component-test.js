@@ -12,6 +12,6 @@ module('Integration | Component | ad-tag-leaderboard', function(hooks) {
 
     await render(hbs`{{ad-tag-leaderboard}}`);
 
-    assert.dom('[id^=ad_]').exists()
+    assert.dom('div.htl-ad').exists()
   });
 });

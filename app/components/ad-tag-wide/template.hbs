@@ -1,39 +1,8 @@
 {{#unless this.sensitive.on}}
-  <DfpAd
+  <HtlbidAd
     @slot={{@slot}}
-    @target={{@target}}
-    @mapping={{array
-      (array 0
-        (array
-          (array 300 250)
-          (array 320 50)
-        )
-      )
-      (array 750
-        (array
-          (array 300 600)
-          (array 728 90)
-          (array 300 250)
-        )
-      )
-      (array 1000
-        (array
-          (array 970 250)
-          (array 970 90)
-          (array 728 90)
-          (array 300 600)
-          (array 300 250)
-        )
-      )
-    }}
-    @sizes={{array
-      (array 320 50)
-      (array 300 250)
-      (array 300 600)
-      (array 728 90)
-      (array 970 90)
-      (array 970 250)
-    }}
+    @isEager={{@isEager}}
+    @sizes="0x0:300x250,320x50|750x0:300x600,728x90,300x250|1000x0:970x250,970x90,728x90,300x600,300x250"
     data-test-ad-tag-wide
   as |ad|>
     <div class={{if @breakMargins "break-margins"}}>
@@ -48,5 +17,5 @@
       <div class="space-filler"
       style={{html-safe (concat "height:" ad.height "px")}}></div>
     {{/if}}
-  </DfpAd>
+  </HtlbidAd>
 {{/unless}}
