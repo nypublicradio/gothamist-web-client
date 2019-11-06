@@ -20,8 +20,7 @@ module.exports = function(deployTarget) {
       activateOnDeploy: true
     },
     manifest: {
-      // Since we always want to re-upload ads.txt
-      // leave them out of the manifest.
+      // Since we always want to re-upload ads.txt, leave it out of the manifest.
       fileIgnorePattern: "ads.txt"
     },
     s3: {
