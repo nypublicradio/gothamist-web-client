@@ -20,9 +20,9 @@ module.exports = function(deployTarget) {
       activateOnDeploy: true
     },
     manifest: {
-      // Since we always want to re-upload ads.txt, robots.txt, etc.
+      // Since we always want to re-upload ads.txt
       // leave them out of the manifest.
-      fileIgnorePattern: "**/*.txt"
+      fileIgnorePattern: "ads.txt"
     },
     s3: {
       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -47,7 +47,7 @@ module.exports = function(deployTarget) {
       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
       distribution: process.env.AWS_CLOUDFRONT_DISTRIBUTION,
-      objectPaths: ['/assets/*','/*.txt'], // invalidate all cached fastboot responses, and txt files
+      objectPaths: ['/assets/*','/ads.txt'], // invalidate all cached fastboot responses, and ads.txt
     }
   };
 
