@@ -47,7 +47,7 @@ module.exports = function(deployTarget) {
       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
       distribution: process.env.AWS_CLOUDFRONT_DISTRIBUTION,
-      objectPaths: ['/assets/*'], // invalidate all cached fastboot responses
+      objectPaths: ['/assets/*','**/*.txt'], // invalidate all cached fastboot responses, and txt files
     }
   };
 
