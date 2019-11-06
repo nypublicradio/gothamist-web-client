@@ -157,31 +157,4 @@ module('Unit | Utility | insert-ad-div', function(hooks) {
     assert.dom('div#trgt').exists({count: 1});
     assert.deepEqual(elementList, ['p1','p2','trgt']);
   });
-
-  // test('it should reinsert when the contentsId changes', async function(assert) {
-  //   this.set('id','foo');
-  //   await render(hbs`<div id="container" {{insert-target 'trgt' wordsBeforeAd=300 contentsId=id}}>
-  //     <p id="p1">{{this.oneHundredWords}}</p>
-  //     <p id="p2">{{this.oneHundredWords}}</p>
-  //     <p id="p3">{{this.oneHundredWords}}</p>
-  //     <p id="p4">{{this.oneHundredWords}}</p>
-  //   </div>`);
-  //   let container = document.querySelector('#container');
-    
-  //   insertAdDiv('trgt', container, {wordsBeforeAd: 300});
-
-  //   let elementList = [...this.element.firstChild.children].map(el => el.id);
-  //   assert.dom('div#trgt').exists({count: 1});
-  //   assert.deepEqual(elementList, ['p1','p2','p3','trgt','p4']);
-
-  //   this.element.querySelector('#container').innerHTML =
-  //     `<p id="p5">${this.oneHundredWords}</p>` +
-  //     `<p id="p6">${this.oneHundredWords}</p>` +
-  //     `<p id="p7">${this.oneHundredWords}</p>` +
-  //     `<p id="p8">${this.oneHundredWords}</p>`;
-  //   this.set('id','bar');
-  //   elementList = [...this.element.firstChild.children].map(el => el.id);
-  //   assert.dom('div#trgt').exists({count: 1});
-  //   assert.deepEqual(elementList, ['p5','p6','p7','trgt','p8']);
-  // });
 });
