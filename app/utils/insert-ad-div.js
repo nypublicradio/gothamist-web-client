@@ -19,22 +19,20 @@ const countWords = function(node) {
   const text = node.textContent
   return text.replace(/[^\w ]/g, "").split(/\s+/).length;
 }
+const EMBED_WEIGHT = 50;
 const getWordWeight = function(node) {
+  let tagType = node.nodeName.toLowerCase();
   let wordWeight = countWords(node);
-  // count embeds as at least 50 words.
-  if (wordWeight < 50 && embeds.includes(node.nodeName.toLowerCase())) {
-    wordWeight = 50;
+  if (embeds.includes(tagType)) {
+    wordWeight = Math.max(wordWeight, EMBED_WEIGHT);
   }
   return wordWeight;
 }
 
-// Get top level nodes, ignoring whitespace only nodes
-const getChildNodes = function(container) {
-  return [...container.childNodes].filter(node => {
-    // ignore whitespace only text and P nodes.
-    return !(['#text', 'P'].includes(node.nodeName)
-      && node.textContent.replace(/\s/g, '').length === 0);
-  });
+// return false for whitespace only text and P nodes.
+const isNotWhitespaceOnly = function(node) { 
+  return !(['#text', 'P'].includes(node.nodeName)
+  && node.textContent.replace(/\s/g, '').length === 0);
 }
 
 let target = undefined;
@@ -65,17 +63,18 @@ let target = undefined;
 */
 
 const insertAdDiv = function(divId, container, { wordsBeforeAd=150, classNames=[] } = {}) {
-  let nodes = getChildNodes(container);
+  let nodes = [...container.childNodes].filter(isNotWhitespaceOnly)
   let wordCount = 0;
 
   // Loop through nodes, return the first valid insert location
-  let adSibling = nodes.find((node, index) => {
+  let insertLocation = nodes.find((node, index) => {
     let currentTag = node.nodeName.toLowerCase();
-    let nextNode = nodes[index+1];
-    let nextTag = nextNode && nextNode.nodeName.toLowerCase();
+    let nextTag = nodes[index+1] && nodes[index+1].nodeName.toLowerCase();
+
+    // Increment the word count
     wordCount = wordCount += getWordWeight(node);
 
-    // check for a valid insert location
+    // Check if this is a valid insert location
     if (wordCount >= wordsBeforeAd 
         && !dontInsertAfter.includes(currentTag)
         && !dontInsertBefore.includes(nextTag)
@@ -83,12 +82,15 @@ const insertAdDiv = function(divId, container, { wordsBeforeAd=150, classNames=[
       return node;
     }
   })
+  // Create the target div (or reuse it)
   target = target || document.createElement('div');
   target.id = divId;
   target.className = '';
   target.classList.add(...classNames)
-  if (adSibling && adSibling.nextSibling) {
-    container.insertBefore(target, adSibling.nextSibling);
+
+  // Insert next to insertLocation, or append the end.
+  if (insertLocation && insertLocation.nextSibling) {
+    container.insertBefore(target, insertLocation.nextSibling);
   } else {
     container.appendChild(target);
   }
