@@ -1,38 +1,52 @@
 // Tag types
-const inline = ['a', 'b', 'i', 'em', 'strong'];
-const headers = ['h1', 'h2', 'h3', 'h4', 'h5']
-const embeds = ['iframe', 'embed', 'video',
+const INLINE_TAGS = ['a', 'b', 'i', 'em', 'strong'];
+const HEADER_TAGS = ['h1', 'h2', 'h3', 'h4', 'h5']
+const EMBED_TAGS = ['iframe', 'embed', 'video',
                 'twitter-widget', 'center', 'div'];
 // a `div` tag in MT article markup is probably from an embed
+const EMBED_WEIGHT = 50;
 
 // Rules for where to avoid inserting ads
-const dontInsertBefore = ['blockquote', ...inline];
-const dontInsertAfter = [...headers, ...inline];
-const dontInsertBetween = embeds.map(embed => ['p', embed]);
-const shouldntInsertBetween = function(current, next) {
-  return dontInsertBetween
+const DONT_INSERT_BEFORE = ['blockquote', ...INLINE_TAGS];
+const DONT_INSERT_AFTER = [...HEADER_TAGS, ...INLINE_TAGS];
+const DONT_INSERT_BETWEEN = EMBED_TAGS.map(embed => ['p', embed]);
+function _shouldntInsertBetween(current, next) {
+  return DONT_INSERT_BETWEEN
     .some(([first, second]) => current === first && next === second);
-};
+}
+function _canInsertHere(current, next) {
+  return !DONT_INSERT_AFTER.includes(current)
+  && !DONT_INSERT_BEFORE.includes(next)
+  && !_shouldntInsertBetween(current, next)
+}
 
 // Word count helpers
-const countWords = function(node) {
+function _countWords(node) {
   const text = node.textContent
   return text.replace(/[^\w ]/g, "").split(/\s+/).length;
 }
-const EMBED_WEIGHT = 50;
-const getWordWeight = function(node) {
+function _getWordWeight(node) {
   let tagType = node.nodeName.toLowerCase();
-  let wordWeight = countWords(node);
-  if (embeds.includes(tagType)) {
+  let wordWeight = _countWords(node);
+  if (EMBED_TAGS.includes(tagType)) {
     wordWeight = Math.max(wordWeight, EMBED_WEIGHT);
   }
   return wordWeight;
 }
 
 // return false for whitespace only text and P nodes.
-const isNotWhitespaceOnly = function(node) { 
+function _isNotWhitespaceOnly(node) {
   return !(['#text', 'P'].includes(node.nodeName)
   && node.textContent.replace(/\s/g, '').length === 0);
+}
+
+// Insert next to insertLocation, or append the end.
+function _insertAtLocation(element, container, insertLocation) {
+  if (insertLocation && insertLocation.nextSibling) {
+    container.insertBefore(element, insertLocation.nextSibling);
+  } else {
+    container.appendChild(element);
+  }
 }
 
 let target = undefined;
@@ -61,9 +75,8 @@ let target = undefined;
   to the inserted Div 
   @return {Element} The inserted div
 */
-
 const insertAdDiv = function(divId, container, { wordsBeforeAd=150, classNames=[] } = {}) {
-  let nodes = [...container.childNodes].filter(isNotWhitespaceOnly)
+  let nodes = [...container.childNodes].filter(_isNotWhitespaceOnly)
   let wordCount = 0;
 
   // Loop through nodes, return the first valid insert location
@@ -72,13 +85,10 @@ const insertAdDiv = function(divId, container, { wordsBeforeAd=150, classNames=[
     let nextTag = nodes[index+1] && nodes[index+1].nodeName.toLowerCase();
 
     // Increment the word count
-    wordCount = wordCount += getWordWeight(node);
+    wordCount = wordCount += _getWordWeight(node);
 
     // Check if this is a valid insert location
-    if (wordCount >= wordsBeforeAd 
-        && !dontInsertAfter.includes(currentTag)
-        && !dontInsertBefore.includes(nextTag)
-        && !shouldntInsertBetween(currentTag, nextTag)) {
+    if (wordCount >= wordsBeforeAd && _canInsertHere(currentTag,nextTag)) {
       return node;
     }
   })
@@ -86,14 +96,9 @@ const insertAdDiv = function(divId, container, { wordsBeforeAd=150, classNames=[
   target = target || document.createElement('div');
   target.id = divId;
   target.className = '';
-  target.classList.add(...classNames)
+  target.classList.add(...classNames);
 
-  // Insert next to insertLocation, or append the end.
-  if (insertLocation && insertLocation.nextSibling) {
-    container.insertBefore(target, insertLocation.nextSibling);
-  } else {
-    container.appendChild(target);
-  }
+  _insertAtLocation(target, container, insertLocation);
   return target;
 }
 
