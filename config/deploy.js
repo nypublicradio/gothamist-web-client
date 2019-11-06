@@ -19,6 +19,11 @@ module.exports = function(deployTarget) {
       // `ENV.pipeline.activateOnDeploy = false` to an environment conditional below.
       activateOnDeploy: true
     },
+    manifest: {
+      // Since we always want to re-upload ads.txt, robots.txt, etc.
+      // leave them out of the manifest.
+      fileIgnorePattern: "**/*.txt"
+    },
     s3: {
       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
