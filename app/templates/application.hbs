@@ -12,12 +12,14 @@
   as |header|>
 
   <header.leaderboard>
-    {{#unless (or this.sensitive.on routeIsChanging)}}
-      {{#if (eq target.currentRouteName 'index')}}
-        <AdTagLeaderboard @slot='gothamist/index/leaderboard' />
-      {{else}}
-        <AdTagLeaderboard @slot='gothamist/interior/leaderboard' />
-      {{/if}}
+    {{#unless this.sensitive.on}}
+      {{#unless routeIsChanging}}
+        {{#if (eq target.currentRouteName 'index')}}
+          <AdTagLeaderboard @slot='gothamist/index/leaderboard' />
+        {{else}}
+          <AdTagLeaderboard @slot='gothamist/interior/leaderboard' />
+        {{/if}}
+      {{/unless}}
     {{/unless}}
   </header.leaderboard>
 
