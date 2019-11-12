@@ -25,7 +25,7 @@ export default Route.extend({
     // for 404 tracking
     this.router.on('routeWillChange', () => {
       this.dataLayer.push({previousPath: this.router.currentURL})
-
+      this.controllerFor('application').set('routeIsChanging', true)
       // reset metrics context before every transition with just the referring URL
       // subsequent updates to pagedata will need to merge with this existing value
       this.set('metrics.context.pageData', {
@@ -37,6 +37,7 @@ export default Route.extend({
     this.router.on('routeDidChange', (transition) => {
       const from = get(transition, 'from.name')
       const to = get(transition, 'to.name')
+      this.controllerFor('application').set('routeIsChanging', false)
       if (from === 'gallery' && to === 'gallery') {
         schedule('afterRender', () => this.dataLayer.push('event', 'Gallery Slide View'));
       } else {

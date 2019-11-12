@@ -12,7 +12,7 @@
   as |header|>
 
   <header.leaderboard>
-    {{#unless this.sensitive.on}}
+    {{#unless (or this.sensitive.on routeIsChanging)}}
       {{#if (eq target.currentRouteName 'index')}}
         <AdTagLeaderboard @slot='gothamist/index/leaderboard' />
       {{else}}
