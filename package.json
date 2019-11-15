@@ -85,7 +85,7 @@
     "jsdom": "^15.1.1",
     "loader.js": "^4.7.0",
     "memory-scroll": "^0.9.1",
-    "nypr-ads-htl": "^0.1.3",
+    "nypr-ads-htl": "^0.1.4",
     "nypr-auth": "^0.2.4",
     "nypr-design-system": "^2.0.4",
     "nypr-metrics": "^0.7.0",
