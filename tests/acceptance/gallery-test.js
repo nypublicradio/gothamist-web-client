@@ -105,6 +105,18 @@ module('Acceptance | gallery', function(hooks) {
     });
   });
 
+  /*
+    The following tests are to verify the correct gallery ad cadence.
+    We want ads after every 6th slide, and the 3rd slide.
+
+    1, 2, 3, AD,
+    4, 5, 6, AD,
+    7, 8, 9, 10, 11, 12, AD,
+    13, 14, 15, 16, 17, 18, AD,
+    19, 20, 21, 22, 23, 24, AD,
+    and so on...
+  */
+
   test('gallery should contain 2 slides and 0 ads', async function(assert) {
     const gallery = server.create('gallery', {count: 2});
 
@@ -147,13 +159,33 @@ module('Acceptance | gallery', function(hooks) {
     assert.dom('[data-test-gallery-overlay] [data-test-ad-tag-wide]').exists({count: 2});
   });
 
-  test('gallery should contain 14 slides and still only 2 ads', async function(assert) {
-    const gallery = server.create('gallery', {count: 14});
+  test('gallery should contain 11 slides and 2 ads', async function(assert) {
+    const gallery = server.create('gallery', {count: 11});
 
     await visit(gallery.html_path);
 
     assert.equal(currentURL(), gallery.html_path);
-    assert.dom('[data-test-gallery-slide]').exists({count: 14});
+    assert.dom('[data-test-gallery-slide]').exists({count: 11});
     assert.dom('[data-test-gallery-overlay] [data-test-ad-tag-wide]').exists({count: 2});
+  });
+
+  test('gallery should contain 12 slides and 3 ads', async function(assert) {
+    const gallery = server.create('gallery', {count: 12});
+
+    await visit(gallery.html_path);
+
+    assert.equal(currentURL(), gallery.html_path);
+    assert.dom('[data-test-gallery-slide]').exists({count: 12});
+    assert.dom('[data-test-gallery-overlay] [data-test-ad-tag-wide]').exists({count: 3});
+  });
+
+  test('gallery should contain 24 slides and 5 ads', async function(assert) {
+    const gallery = server.create('gallery', {count: 24});
+
+    await visit(gallery.html_path);
+
+    assert.equal(currentURL(), gallery.html_path);
+    assert.dom('[data-test-gallery-slide]').exists({count: 24});
+    assert.dom('[data-test-gallery-overlay] [data-test-ad-tag-wide]').exists({count: 5});
   });
 });
