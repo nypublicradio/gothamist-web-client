@@ -25,7 +25,6 @@ export default Route.extend({
     // for 404 tracking
     this.router.on('routeWillChange', () => {
       this.dataLayer.push({previousPath: this.router.currentURL})
-
       // reset metrics context before every transition with just the referring URL
       // subsequent updates to pagedata will need to merge with this existing value
       this.set('metrics.context.pageData', {

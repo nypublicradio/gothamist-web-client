@@ -12,6 +12,7 @@ const HTL_STUB = () => ({
   },
   clearTargeting() {},
   setTargeting() {},
+  removeSlot() {},
   on() {},
 })
 
