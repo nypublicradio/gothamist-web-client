@@ -14,12 +14,17 @@ module('Integration | Component | ad-tag-inside', function(hooks) {
   });
 
   test('it renders in an article', async function(assert) {
+    let blocks = [{type: "paragraph", value: "<p>some text</p>", id: '100'}]
+    this.set('blocks', blocks);
     await render(hbs`
-      {{#ad-tag-inside}}
-        <div class='c-article__body'>
-          template block text
-        </div>
-      {{/ad-tag-inside}}
+      <AdTagInside as |hooks|>
+        <NyprOArticleBody>
+          <ArticleBody
+            @blocks={{this.blocks}}
+            @onDidRender={{hooks.didRender}}
+          />
+        </NyprOArticleBody>
+      </AdTagInside>
     `);
 
     assert.dom('[data-test-inserted-ad-wrapper]').exists()
@@ -27,39 +32,48 @@ module('Integration | Component | ad-tag-inside', function(hooks) {
   });
 
   test('it renders in the specified container', async function(assert) {
+    let blocks = [{type: "paragraph", value: "<p>some text</p>", id: '100'}]
+    this.set('blocks', blocks);
     await render(hbs`
-      {{#ad-tag-inside containerSelector='.special-div'}}
-        <div class='special-div'>
-          template block text
+      <AdTagInside @containerSelector=".special-div" as |hooks|>
+        <div class="special-div">
+          <ArticleBody
+            @blocks={{this.blocks}}
+            @onDidRender={{hooks.didRender}}
+          />
         </div>
-      {{/ad-tag-inside}}
-    `);
+      </AdTagInside>
+      `);
 
     assert.dom('[data-test-inserted-ad-wrapper]').exists()
     assert.dom('.special-div #inserted-ad .ad-tag-wide').exists()
     assert.dom('[data-test-inserted-ad]').exists()
   });
 
-  test('it still has an ad after updating the contents', async function(assert) {
-    this.set('id','foo');
+  test('it still has an ad after changing the contents', async function(assert) {
+    let blocks = [{type: "paragraph", value: '<p id="foo">some text</p>', id: '200'}]
+    this.set('blocks', blocks);
     await render(hbs`
-      {{#ad-tag-inside contentsId=id}}
-        <div class='c-article__body'>
-          template block text
-        </div>
-      {{/ad-tag-inside}}
+      <AdTagInside as |hooks|>
+        <NyprOArticleBody>
+          <ArticleBody
+            @blocks={{this.blocks}}
+            @onDidRender={{hooks.didRender}}
+          />
+        </NyprOArticleBody>
+      </AdTagInside>
     `);
 
     assert.dom('[data-test-inserted-ad-wrapper]').exists()
-    assert.dom('.c-article__body #foo').exists()
-    assert.dom('.c-article__body #foo [data-test-inserted-ad]').exists()
+    assert.dom('.c-article__body p#foo').exists()
+    assert.dom('.c-article__body p#foo + #inserted-ad > [data-test-inserted-ad]').exists()
 
-    this.element.querySelector('.c-article__body').innerHTML = `completely new article`;
-    this.set('id', 'bar');
+    let newBlocks = [{type: "paragraph", value: '<p id="bar">different text</p>', id: '201'}]
+    this.set('blocks', newBlocks);
 
     await settled();
 
-    assert.dom('.c-article__body #bar').exists()
-    assert.dom('.c-article__body #bar [data-test-inserted-ad]').exists()
+    assert.dom('.c-article__body p#bar').exists()
+    assert.dom('.c-article__body p#bar + #inserted-ad > [data-test-inserted-ad]').exists()
   });
 });

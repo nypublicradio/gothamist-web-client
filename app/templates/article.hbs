@@ -105,9 +105,16 @@
 
     </NyprOArticleHeader>
 
-    <AdTagInside @slot="gothamist/interior/midpage/1" @contentsId={{model.article.idForComments}}>
-      <NyprOArticleBody class={{unless model.article.hasLead 'u-space--zero--top'}} data-test-article-body>
-        <ArticleBody @blocks={{model.article.body}} />
+    <AdTagInside 
+      @slot="gothamist/interior/midpage/1"
+      as |hooks|>
+      <NyprOArticleBody 
+        class={{unless model.article.hasLead 'u-space--zero--top'}} 
+        data-test-article-body>
+        <ArticleBody 
+          @blocks={{model.article.body}}
+          @onDidRender={{hooks.didRender}}
+        />
       </NyprOArticleBody>
     </AdTagInside>
 
