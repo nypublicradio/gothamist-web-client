@@ -56,6 +56,16 @@ module('Acceptance | article', function(hooks) {
     assert.dom('[data-test-article-body]').hasText('foo');
     assert.dom('[data-test-article-body] [data-test-inserted-ad]').exists({count: 1})
 
+    //byline
+    const author_name = `${article.related_authors[0].first_name} ${article.related_authors[0].last_name}`;
+    const author_org = article.related_authors[0].contributing_organization;
+    assert.dom('[data-test-author-name]').exists({count: 1})
+    assert.dom('[data-test-author-name]').hasText(author_name)
+    assert.dom('[data-test-author-org-link]').exists({count: 1});
+    assert.dom('[data-test-author-org-link]').hasAttribute('href', author_org.external_link);
+    assert.dom('[data-test-author-org]').exists({count: 1});
+    assert.dom('[data-test-author-org]').hasText(author_org.name);
+
     // recirc
     assert.dom('[data-test-recirc-recent] .c-block').exists({count: 3});
     assert.dom('[data-test-recirc-featured] .c-block').exists({count: 1});
