@@ -117,6 +117,13 @@ export default Factory.extend({
       website: "",
       email: "",
       slug: slug(),
+      contributing_organization: {
+        id: 12,
+        name: faker.company.companyName(),
+        slug: slug(),
+        external_link: faker.internet.url(),
+        logo: 23,
+      }
     }
   ]),
   related_contributing_organizations: () => ([]),

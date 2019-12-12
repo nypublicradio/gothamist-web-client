@@ -120,6 +120,7 @@ export default Page.extend({
       name: `${author.first_name} ${author.last_name}`,
       route: ['author-detail', author.slug],
       url: author.slug && this.router.urlFor('author-detail', author.slug),
+      org: author.contributing_organization,
     }));
   }),
 
