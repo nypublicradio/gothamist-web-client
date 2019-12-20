@@ -48,25 +48,22 @@
 
   <div class="l-container l-container--14col">
     <NyprONewsletterTout
-      @endpoint={{WTC_ENDPOINT}}
-      @params={{WTC_PARAMS}}
-      @ariaTitle="We the Commuters"
+      @endpoint={{NEWSLETTER_ENDPOINT}}
+      @params={{NEWSLETTER_PARAMS}}
+      @ariaTitle="Gothamist Daily"
       @img={{hash
-        src='/static-images/wtc.png'
+        src='/static-images/gothamist-logo-white.png'
         alt=''
       }}
       as |tout|>
 
       <tout.heading>
-        {{#link-to 'tags' 'wethecommuters'}}
-          We the Commuters: Comprehensive Coverage of Transportation in our Region from WNYC, Gothamist and More.
-        {{/link-to}}
+        Gothamist Daily
       </tout.heading>
 
       <tout.blurb>
-        {{#link-to 'tags' 'wethecommuters'}}
-          Sign up to receive the weekly newsletter
-        {{/link-to}}
+        Sign up to get the Gothamist Daily newsletter in your inbox, with a
+selection of our best stories every day at 5pm.
       </tout.blurb>
 
       <tout.legal/>
