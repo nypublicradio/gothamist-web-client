@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { and, not } from '@ember/object/computed';
 import insertAdDiv from '../../utils/insert-ad-div';
-import config from '/gothamist-web-client/config/environment';
+import config from 'gothamist-web-client/config/environment';
 
 export default Component.extend({
   tagName: '',
