@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { inject } from '@ember/service';
+import config from 'gothamist-web-client/config/environment';
 
 export default Component.extend({
   classNames: ['ad-tag-wide'],
@@ -33,6 +34,8 @@ export default Component.extend({
     @argument slotRenderEndedAction
     @type {function}
   */
+  isEager: (!config.lazyLoadAds),
+
   actions: {
     handleSlotRendered(slot) {
       if (this.slotRenderEndedAction) {

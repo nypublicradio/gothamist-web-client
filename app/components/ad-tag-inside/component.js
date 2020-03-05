@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { and, not } from '@ember/object/computed';
 import insertAdDiv from '../../utils/insert-ad-div';
+import config from '/gothamist-web-client/config/environment';
 
 export default Component.extend({
   tagName: '',
@@ -15,6 +16,8 @@ export default Component.extend({
   notFastBoot: not('fastboot.isFastBoot'),
   notSensitive: not('sensitive.on'),
   shouldRender: and('wormholeDestination', 'notFastBoot', 'notSensitive'),
+
+  isEager: (!config.lazyLoadAds),
 
   actions: {
     handleDidRender() {
