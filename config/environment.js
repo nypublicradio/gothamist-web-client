@@ -66,6 +66,7 @@ module.exports = function(environment) {
     articleViewsCookie: 'goth_articleViews',
     productBannerCookiePrefix: 'gothamist_product_banner_',
     siteId:             Number(process.env.GOTHAMIST_SITE_ID) || 2, //id for system_messages, sitewidecomponents, etc.
+    lazyLoadAds:        !!process.env.LAZY_LOAD_ADS,  // If LAZY_LOAD_ADS exists, turn on lazy loading for non-sticky ads
 
     // for nypr-auth
     etagAPI: process.env.BROWSER_ID_ENDPOINT,
@@ -76,7 +77,7 @@ module.exports = function(environment) {
       disableEagerListenAnalytics: true,
     },
   };
-
+  
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;

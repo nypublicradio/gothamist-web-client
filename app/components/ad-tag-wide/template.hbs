@@ -2,7 +2,7 @@
   <HtlbidAd
     @slot={{@slot}}
     @sizes="0x0:300x250,320x50|750x0:300x600,728x90,300x250|1000x0:970x250,970x90,728x90,300x600,300x250"
-    @isEager={{true}}
+    @isEager={{this.isEager}}
     data-test-ad-tag-wide
   as |ad|>
     <div class={{if @breakMargins "break-margins"}}>
