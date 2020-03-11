@@ -1,13 +1,20 @@
 import Route from '@ember/routing/route';
 import { get } from '@ember/object';
+import { inject } from '@ember/service';
 import { WAGTAIL_MODEL_TYPE as ARTICLE_TYPE } from '../models/article';
 import { WAGTAIL_MODEL_TYPE as GALLERY_TYPE } from '../models/gallery';
 import RSVP from 'rsvp';
 const { hash, resolve } = RSVP;
 const { log } = console;
 
+
 export default Route.extend({
+  fastboot: inject(),
   model({ identifier, token }) {
+    let isFastBoot = this.fastboot.isFastBoot;
+    if (isFastBoot) {
+      this.fastboot.response.headers.set('Cache-Control', 'no-cache');
+    }
     return this.store.queryRecord('page', {identifier, token},
       {adapterOptions: {preview: true}}
     );
