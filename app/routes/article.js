@@ -129,6 +129,7 @@ export default Route.extend({
     // have not closed the donation tout in the past 24 hours
     let showTout = this.cookies.read(articleViewsCookie) >= 3 && !this.cookies.exists(donateCookie);
     controller.set('showTout', showTout);
+    controller.set('isPreview', false);
   },
 
   resetController(controller) {
