@@ -103,7 +103,6 @@ export default Route.extend({
     controller.set('isPreview', false);
   },
 
-
   resetController(controller, isExiting) {
     if (isExiting) {
       // don't save gallery position
