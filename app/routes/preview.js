@@ -7,7 +7,12 @@ const { hash, resolve } = RSVP;
 const { log } = console;
 
 export default Route.extend({
+  fastboot: service(),
   model({ identifier, token }) {
+    let isFastBoot = this.fastboot.isFastBoot;
+    if (isFastBoot) {
+      this.fastboot.response.headers.set('Cache-Control', 'no-cache');
+    }
     return this.store.queryRecord('page', {identifier, token},
       {adapterOptions: {preview: true}}
     );
