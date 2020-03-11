@@ -34,5 +34,9 @@ export default Route.extend({
       default:
         this._super(...arguments);
     }
-  }
+  },
+  setupController(controller) {
+    this._super(...arguments);
+    controller.set('isPreview', true);
+  },
 });

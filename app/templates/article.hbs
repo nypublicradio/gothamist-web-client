@@ -162,7 +162,9 @@
     </div>
 
     <div class="l-container l-container--14col">
-      <ArticleRecirc @article={{model.article}}/>
+      {{#unless isPreview}}
+          <ArticleRecirc @article={{if model.article}}/>
+      {{/unless}}
     </div>
 
   </article>
