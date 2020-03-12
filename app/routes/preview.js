@@ -20,11 +20,9 @@ export default Route.extend({
     );
   },
   renderTemplate(controller, model) {
-    let previewedController;
     switch(get(model, 'meta.type')) {
       case ARTICLE_TYPE:
-        previewedController = this.controllerFor('article');
-        previewedController.set('isPreview', true);
+        this.controllerFor('article').set('isPreview', true);
         hash({
           article: model,
           gallery: resolve(model.gallery)
@@ -34,8 +32,7 @@ export default Route.extend({
         });
         break;
       case GALLERY_TYPE:
-        previewedController = this.controllerFor('gallery');
-        previewedController.set('isPreview', true);
+        this.controllerFor('gallery').set('isPreview', true);
         hash({
           gallery: model,
           articles: model.relatedArticles,
