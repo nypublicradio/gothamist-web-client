@@ -32,6 +32,28 @@ module('Acceptance | section', function(hooks) {
     assert.dom('[data-test-block]').exists({count: COUNT * 2}, 'Clicking "read more" brings in another set of results equal to the amount of COUNT');
   });
 
+  test('og metadata is correct', async function(assert) {
+    server.create('page', 'withArticles', {
+      slug: 'news',
+      title: 'News',
+    });
+
+    await visit('/news');
+
+    assert.equal(document.querySelector("meta[property='og:title']")
+      .getAttribute("content"),
+      'News - Gothamist');
+    assert.equal(document.querySelector("meta[name='twitter:title']")
+      .getAttribute("content"),
+      'News - Gothamist');
+    assert.equal(document.querySelector("meta[property='og:image']")
+      .getAttribute("content"),
+      config.fallbackMetadataImage);
+    assert.equal(document.querySelector("meta[property='twitter:image']")
+      .getAttribute("content"),
+      config.fallbackMetadataImage);
+  });
+
   test('section lists get updated with commentCount', async function(assert) {
     server.create('page', 'withArticles', {
       id: '1',

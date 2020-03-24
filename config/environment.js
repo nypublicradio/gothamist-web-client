@@ -68,6 +68,10 @@ module.exports = function(environment) {
     siteId:             Number(process.env.GOTHAMIST_SITE_ID) || 2, //id for system_messages, sitewidecomponents, etc.
     lazyLoadAds:        !!process.env.LAZY_LOAD_ADS,  // If LAZY_LOAD_ADS exists, turn on lazy loading for non-sticky ads
 
+    // for header meta tags, see head.hbs for dimensions
+    fallbackMetadataImage: '/static-images/home_og_1200x650.png',
+
+
     // for nypr-auth
     etagAPI: process.env.BROWSER_ID_ENDPOINT,
 

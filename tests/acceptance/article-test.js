@@ -5,6 +5,7 @@ import { visit, currentURL, click, find } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import test from 'ember-sinon-qunit/test-support/test';
+import { wagtailImageUrl } from 'ember-wagtail-images';
 
 import { scrollPastHeader, scrollPastTarget } from 'nypr-design-system/test-support';
 import { SERVICE_MAP } from 'nypr-design-system/components/nypr-m-share-tools';
@@ -382,9 +383,25 @@ module('Acceptance | article', function(hooks) {
     assert.equal(document.querySelector("meta[property='og:description']")
       .getAttribute("content"),
       article.description);
-    assert.equal(document.querySelector("meta[name='twitter:description']")
+    assert.equal(document.querySelector("meta[property='og:image']")
       .getAttribute("content"),
-      article.description);
+      wagtailImageUrl([article.lead_asset[0].value.image, 1200, 650]));
+    assert.equal(document.querySelector("meta[property='twitter:image']")
+      .getAttribute("content"),
+      wagtailImageUrl([article.lead_asset[0].value.image, 1200, 650]));
+  });
+
+  test('og metadata fallback works', async function(assert) {
+    const article = server.create('article');
+    delete article.image;
+    await visit(`/${article.html_path}`);
+
+    assert.equal(document.querySelector("meta[property='og:image']")
+      .getAttribute("content"),
+      config.fallbackMetadataImage);
+    assert.equal(document.querySelector("meta[property='twitter:image']")
+      .getAttribute("content"),
+      config.fallbackMetadataImage);
   });
 
   test('structured data is correct', async function(assert) {
