@@ -5,7 +5,7 @@
     <header class="c-search-results__header u-spacing">
       <h1 class="is-vishidden">Search Results</h1>
       <div
-        class="c-search-results__result-number u-font--secondary-style u-font--secondary"
+        class="c-search-results__result-number"
         style={{resultsStyle}}
       >
         {{#if this.results}}
@@ -26,7 +26,7 @@
 
   <div class="c-listing__sections u-section-spacing l-container l-container--14col l-wrap" data-test-search-results>
     {{#if this.search.isRunning}}
-      <p class="u-align--center u-font--l u-font--primary">
+      <p class="c-listing__sections-title u-align--center">
         Searching...
       </p>
     {{else if this.articles}}
@@ -77,7 +77,7 @@
         {{/unless}}
       </QueryMore>
     {{else if (gt this.search.performCount 0)}}
-      <p class="u-align--center u-font--l u-font--primary">
+      <p class="c-listing__sections-title u-align--center">
         No Results
       </p>
     {{/if}}

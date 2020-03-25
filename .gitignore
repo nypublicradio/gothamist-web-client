@@ -35,4 +35,5 @@
 
 .eggs
 
-.idea/
+/.yalc/
+yalc.lock
