@@ -391,11 +391,23 @@ module('Acceptance | article', function(hooks) {
       wagtailImageUrl([article.lead_asset[0].value.image, 1200, 650]));
   });
 
-  test('og metadata fallback works', async function(assert) {
-    const article = server.create('article');
-    delete article.image;
+  test('og custom social image works', async function(assert) {
+    const article = server.create('article', {social_image: {id: '1284'}});
+
     await visit(`/${article.html_path}`);
 
+    assert.equal(document.querySelector("meta[property='og:image']")
+      .getAttribute("content"),
+      wagtailImageUrl([article.social_image, 1200, 650]));
+    assert.equal(document.querySelector("meta[property='twitter:image']")
+      .getAttribute("content"),
+      wagtailImageUrl([article.social_image, 1200, 650]));
+  });
+
+  test('og metadata fallback works', async function(assert) {
+    const article = server.create('article', {lead_asset: undefined});
+
+    await visit(`/${article.html_path}`);
     assert.equal(document.querySelector("meta[property='og:image']")
       .getAttribute("content"),
       config.fallbackMetadataImage);

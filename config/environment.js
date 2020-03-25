@@ -71,7 +71,6 @@ module.exports = function(environment) {
     // for header meta tags, see head.hbs for dimensions
     fallbackMetadataImage: '/static-images/home_og_1200x650.png',
 
-
     // for nypr-auth
     etagAPI: process.env.BROWSER_ID_ENDPOINT,
 

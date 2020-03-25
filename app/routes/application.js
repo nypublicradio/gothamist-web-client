@@ -95,14 +95,14 @@ export default Route.extend({
       let { host, path } = this.fastboot.request;
       let url = `https://${host}${path.replace(/\/$/, '')}`;
 
-      this.headData.setProperties({
-        url,
-        apiServer: config.apiServer,
-        champEndpoint: config.champEndpoint,
-        // default og image if nested route does not override
-        image: config.fallbackMetadataImage
-      });
+      this.headData.set('url', url);
     }
+    this.headData.setProperties({
+      apiServer: config.apiServer,
+      champEndpoint: config.champEndpoint,
+      // default og image if nested route does not override
+      defaultImage: config.fallbackMetadataImage
+    });
 
     const metrics = this.metrics;
 
