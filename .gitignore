@@ -33,3 +33,5 @@
 !.env.deploy.sample
 
 .eggs
+/.yalc/
+yalc.lock

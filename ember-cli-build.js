@@ -25,7 +25,7 @@ module.exports = function(defaults) {
       enabled: false,
     },
     'nypr-design-system': {
-      theme: 'gothamist'
+      themes: ['gothamist', 'white-label', 'deprecated']
     }
   });
 
