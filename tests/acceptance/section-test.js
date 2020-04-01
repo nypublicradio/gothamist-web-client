@@ -40,18 +40,17 @@ module('Acceptance | section', function(hooks) {
 
     await visit('/news');
 
+    const title = 'News - Gothamist';
+    const imagePath = window.location.origin + config.fallbackMetadataImage;
+
     assert.equal(document.querySelector("meta[property='og:title']")
-      .getAttribute("content"),
-      'News - Gothamist');
+      .getAttribute("content"), title);
     assert.equal(document.querySelector("meta[name='twitter:title']")
-      .getAttribute("content"),
-      'News - Gothamist');
+      .getAttribute("content"), title);
     assert.equal(document.querySelector("meta[property='og:image']")
-      .getAttribute("content"),
-      config.fallbackMetadataImage);
+      .getAttribute("content"), imagePath);
     assert.equal(document.querySelector("meta[property='twitter:image']")
-      .getAttribute("content"),
-      config.fallbackMetadataImage);
+      .getAttribute("content"), imagePath);
   });
 
   test('section lists get updated with commentCount', async function(assert) {

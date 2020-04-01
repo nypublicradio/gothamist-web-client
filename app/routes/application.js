@@ -91,17 +91,19 @@ export default Route.extend({
   },
 
   afterModel(_model, transition) {
+    let protocol, host, path;
     if (this.fastboot.isFastBoot) {
-      let { host, path } = this.fastboot.request;
-      let url = `https://${host}${path.replace(/\/$/, '')}`;
-
-      this.headData.set('url', url);
+      ({ protocol, host, path } = this.fastboot.request);
+    } else {
+      ({ protocol, host, pathname: path } = window.location);
     }
+
     this.headData.setProperties({
+      url: `${protocol}//${host}${path.replace(/\/$/, '')}`,
       apiServer: config.apiServer,
       champEndpoint: config.champEndpoint,
       // default og image if nested route does not override
-      defaultImage: config.fallbackMetadataImage
+      defaultImage: `${protocol}//${host}${config.fallbackMetadataImage}`,
     });
 
     const metrics = this.metrics;

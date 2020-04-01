@@ -47,22 +47,21 @@ module('Acceptance | homepage', function(hooks) {
     server.create('wnyc-story', {id: 'gothamist-wnyc-crossposting'});
 
     await visit(`/`);
+    
+    const title = 'Gothamist: New York City Local News, Food, Arts & Events';
+    const desc = 'Gothamist is a website about New York City news, arts and events, and food, brought to you by New York Public Radio.';
+    const imagePath = window.location.origin + config.fallbackMetadataImage;
 
     assert.equal(document.querySelector("meta[property='og:title']")
-      .getAttribute("content"),
-      'Gothamist: New York City Local News, Food, Arts & Events');
+      .getAttribute("content"), title);
     assert.equal(document.querySelector("meta[name='twitter:title']")
-      .getAttribute("content"),
-      'Gothamist: New York City Local News, Food, Arts & Events');
+      .getAttribute("content"), title);
     assert.equal(document.querySelector("meta[property='og:description']")
-      .getAttribute("content"),
-      'Gothamist is a website about New York City news, arts and events, and food, brought to you by New York Public Radio.');
+      .getAttribute("content"), desc);
     assert.equal(document.querySelector("meta[property='og:image']")
-      .getAttribute("content"),
-      config.fallbackMetadataImage);
+      .getAttribute("content"), imagePath);
     assert.equal(document.querySelector("meta[property='twitter:image']")
-      .getAttribute("content"),
-      config.fallbackMetadataImage);
+      .getAttribute("content"), imagePath);
   });
 
   test('sponsored posts younger than 24 hours appear in sponsored tout', async function(assert) {
