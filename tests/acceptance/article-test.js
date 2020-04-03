@@ -5,6 +5,7 @@ import { visit, currentURL, click, find } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import test from 'ember-sinon-qunit/test-support/test';
+import { wagtailImageUrl } from 'ember-wagtail-images';
 
 import { scrollPastHeader, scrollPastTarget } from 'nypr-design-system/test-support';
 import { SERVICE_MAP } from 'nypr-design-system/components/nypr-m-share-tools';
@@ -373,18 +374,44 @@ module('Acceptance | article', function(hooks) {
 
     await visit(`/${article.html_path}`);
 
+    const imagePath = wagtailImageUrl([article.lead_asset[0].value.image, 1200, 650]);
+
     assert.equal(document.querySelector("meta[property='og:title']")
-      .getAttribute("content"),
-      article.title);
+      .getAttribute("content"), article.title);
     assert.equal(document.querySelector("meta[name='twitter:title']")
-      .getAttribute("content"),
-      article.title);
+      .getAttribute("content"), article.title);
     assert.equal(document.querySelector("meta[property='og:description']")
-      .getAttribute("content"),
-      article.description);
-    assert.equal(document.querySelector("meta[name='twitter:description']")
-      .getAttribute("content"),
-      article.description);
+      .getAttribute("content"), article.description);
+    assert.equal(document.querySelector("meta[property='og:image']")
+      .getAttribute("content"), imagePath);
+    assert.equal(document.querySelector("meta[property='twitter:image']")
+      .getAttribute("content"), imagePath);
+  });
+
+  test('og custom social image works', async function(assert) {
+    const article = server.create('article', {social_image: {id: '1284'}});
+
+    await visit(`/${article.html_path}`);
+
+    const imagePath = wagtailImageUrl([article.social_image, 1200, 650]);
+
+    assert.equal(document.querySelector("meta[property='og:image']")
+      .getAttribute("content"), imagePath);
+    assert.equal(document.querySelector("meta[property='twitter:image']")
+      .getAttribute("content"), imagePath);
+  });
+
+  test('og metadata fallback works', async function(assert) {
+    const article = server.create('article', {lead_asset: undefined});
+
+    await visit(`/${article.html_path}`);
+
+    const imagePath = window.location.origin + config.fallbackMetadataImage;
+
+    assert.equal(document.querySelector("meta[property='og:image']")
+      .getAttribute("content"), imagePath);
+    assert.equal(document.querySelector("meta[property='twitter:image']")
+      .getAttribute("content"), imagePath);
   });
 
   test('structured data is correct', async function(assert) {
