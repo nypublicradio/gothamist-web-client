@@ -10,7 +10,7 @@ import {
 } from '../routes/index';
 
 const WTC_ENDPOINT = `${config.apiServer}/opt-in/v1/subscribe/mailchimp`;
-const WTC_PARAMS = {list: config.wtcNewsletter};
+const WTC_PARAMS = {list: config.dailyNewsletter};
 
 export default Controller.extend({
   GROUP_SIZE,

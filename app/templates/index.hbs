@@ -50,22 +50,22 @@
     <NyprONewsletterTout
       @endpoint={{WTC_ENDPOINT}}
       @params={{WTC_PARAMS}}
-      @ariaTitle="We the Commuters"
+      @ariaTitle="Stay Informed About COVID-19 in NYC"
       @img={{hash
-        src='/static-images/wtc.png'
+        src='/static-images/logo.png'
         alt=''
       }}
       as |tout|>
 
       <tout.heading>
-        {{#link-to 'tags' 'wethecommuters'}}
-          We the Commuters: Comprehensive Coverage of Transportation in our Region from WNYC, Gothamist and More.
+        {{#link-to 'tags' 'coronavirus'}}
+          Stay Informed About COVID-19 in NYC
         {{/link-to}}
       </tout.heading>
 
       <tout.blurb>
-        {{#link-to 'tags' 'wethecommuters'}}
-          Sign up to receive the weekly newsletter
+        {{#link-to 'tags' 'coronavirus'}}
+          Subscribe to the Gothamist Daily newsletter to receive our most important stories every day at 5 p.m.
         {{/link-to}}
       </tout.blurb>
 
