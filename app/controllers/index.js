@@ -9,15 +9,15 @@ import {
   TOTAL_COUNT,
 } from '../routes/index';
 
-const WTC_ENDPOINT = `${config.apiServer}/opt-in/v1/subscribe/mailchimp`;
-const WTC_PARAMS = {list: config.dailyNewsletter};
+const NEWSLETTER_ENDPOINT = `${config.apiServer}/opt-in/v1/subscribe/mailchimp`;
+const NEWSLETTER_PARAMS = {list: config.dailyNewsletter};
 
 export default Controller.extend({
   GROUP_SIZE,
   TOTAL_COUNT,
 
-  WTC_ENDPOINT,
-  WTC_PARAMS,
+  NEWSLETTER_ENDPOINT,
+  NEWSLETTER_PARAMS,
 
   init() {
     this._super(...arguments);
