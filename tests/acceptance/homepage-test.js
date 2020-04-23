@@ -38,6 +38,32 @@ module('Acceptance | homepage', function(hooks) {
     assert.dom('[data-test-block]').exists({count: TOTAL_COUNT * 2}, 'Clicking "read more" brings in another set of results equal to the amount of TOTAL_COUNT');
   });
 
+  test('og metadata is correct', async function(assert) {
+    server.createList('article', 10, 'now', {
+      show_as_feature: true,
+    });
+    server.createList('article', TOTAL_COUNT * 2);
+
+    server.create('wnyc-story', {id: 'gothamist-wnyc-crossposting'});
+
+    await visit(`/`);
+    
+    const title = 'Gothamist: New York City Local News, Food, Arts & Events';
+    const desc = 'Gothamist is a website about New York City news, arts and events, and food, brought to you by New York Public Radio.';
+    const imagePath = window.location.origin + config.fallbackMetadataImage;
+
+    assert.equal(document.querySelector("meta[property='og:title']")
+      .getAttribute("content"), title);
+    assert.equal(document.querySelector("meta[name='twitter:title']")
+      .getAttribute("content"), title);
+    assert.equal(document.querySelector("meta[property='og:description']")
+      .getAttribute("content"), desc);
+    assert.equal(document.querySelector("meta[property='og:image']")
+      .getAttribute("content"), imagePath);
+    assert.equal(document.querySelector("meta[property='twitter:image']")
+      .getAttribute("content"), imagePath);
+  });
+
   test('sponsored posts younger than 24 hours appear in sponsored tout', async function(assert) {
     const TITLE = 'foo';
 
