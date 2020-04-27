@@ -65,6 +65,7 @@ export default Route.extend({
       sponsored: this.getSponsoredPost().catch(failSafe('sponsored')),
       sponsoredMain: this.getSponsoredMain().catch(failSafe('sponsoredMain')),
       main: this.store.query('article', {
+        sponsored_content: false,
         show_as_feature: true,
         limit: MAIN_COUNT,
         fields: LISTING_FIELDS,
@@ -80,7 +81,6 @@ export default Route.extend({
         addCommentCount(results.river);
         addCommentCount(results.main);
       }
-
       results.meta = results.river.meta;
       results.river = results.river.filter(article => !results.main.includes(article));
       // remove featured sponsored post from river
@@ -90,6 +90,8 @@ export default Route.extend({
       // splice in sponsored main to main stories set
       if (results.sponsoredMain) {
         results.main.replace(MAIN_COUNT - 1, 1, [results.sponsoredMain]);
+        // remove featured sponsored post from river
+        results.river = results.river.filter(article => article !== results.sponsoredMain);
       }
       return results;
     });
@@ -136,6 +138,5 @@ async function getWnycStories() {
     return [];
   }
   let json = await response.json();
-
   return json.data.attributes['bucket-items'].map(s => s.attributes);
 }
