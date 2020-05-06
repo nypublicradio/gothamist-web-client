@@ -87,7 +87,7 @@
     "memory-scroll": "^0.9.1",
     "nypr-ads-htl": "^0.1.5",
     "nypr-auth": "^0.2.4",
-    "nypr-design-system": "nypublicradio/nypr-design-system#ba410eabbe4fa6be6e76a5102a0b070371e37706",
+    "nypr-design-system": "nypublicradio/nypr-design-system#0b1294c83eb541a99252e293b3c8e4bffc56467e",
     "nypr-metrics": "^0.7.0",
     "qunit-dom": "^0.8.0",
     "sass": "^1.17.0",
