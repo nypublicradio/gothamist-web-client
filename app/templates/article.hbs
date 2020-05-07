@@ -115,18 +115,18 @@
           @blocks={{model.article.body}}
           @onDidRender={{hooks.didRender}}
         />
+      </NyprOArticleBody>
+      <div class="l-container--content u-section-spacing">
         <NyprONewsletterArticle
                 @endpoint={{NEWSLETTER_ENDPOINT}}
                 @params={{NEWSLETTER_PARAMS}}
                 as |tout|>
-
           <tout.heading>
-              Sign Up for Daily NYC COVID-19 Coverage
+            Sign Up for Daily NYC COVID-19 Coverage
           </tout.heading>
-
           <tout.legal/>
         </NyprONewsletterArticle>
-      </NyprOArticleBody>
+      </div>
     </AdTagInside>
 
     <div class="l-container--content u-section-spacing">
