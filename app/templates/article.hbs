@@ -116,18 +116,20 @@
           @onDidRender={{hooks.didRender}}
         />
       </NyprOArticleBody>
-      <div class="l-container--content u-section-spacing">
-        <NyprONewsletterArticle
-                @endpoint={{NEWSLETTER_ENDPOINT}}
-                @params={{NEWSLETTER_PARAMS}}
-                as |tout|>
-          <tout.heading>
-            Sign Up for Daily NYC COVID-19 Coverage
-          </tout.heading>
-          <tout.legal/>
-        </NyprONewsletterArticle>
-      </div>
+
     </AdTagInside>
+
+    <div class="l-container--content u-section-spacing">
+      <NyprONewsletterArticle
+              @endpoint={{NEWSLETTER_ENDPOINT}}
+              @params={{NEWSLETTER_PARAMS}}
+              as |tout|>
+        <tout.heading>
+          Sign Up for Daily NYC COVID-19 Coverage
+        </tout.heading>
+        <tout.legal/>
+      </NyprONewsletterArticle>
+    </div>
 
     <div class="l-container--content u-section-spacing">
       <NyprOArticleFooter as |footer|>
