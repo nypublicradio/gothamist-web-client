@@ -1,5 +1,8 @@
 import moment from 'moment';
 
+const NEWSLETTER_ENDPOINT = `${config.apiServer}/opt-in/v1/subscribe/mailchimp`;
+const NEWSLETTER_PARAMS = {list: config.dailyNewsletter};
+
 import Controller from '@ember/controller';
 import { inject } from '@ember/service';
 import { computed } from '@ember/object';
@@ -9,6 +12,8 @@ import config from '../config/environment';
 
 
 export default Controller.extend({
+  NEWSLETTER_ENDPOINT,
+  NEWSLETTER_PARAMS,
   queryParams: ['to'],
   to: null, // for scrolling to comments on internal routing
 

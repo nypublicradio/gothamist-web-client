@@ -34,3 +34,5 @@
 !.env.deploy.sample
 
 .eggs
+
+.idea/
