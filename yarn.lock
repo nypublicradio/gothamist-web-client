@@ -1448,15 +1448,15 @@ abbrev@1:
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
   integrity sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==
 
-abortcontroller-polyfill@^1.2.4:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/abortcontroller-polyfill/-/abortcontroller-polyfill-1.4.0.tgz#0d5eb58e522a461774af8086414f68e1dda7a6c4"
-  integrity sha512-3ZFfCRfDzx3GFjO6RAkYx81lPGpUS20ISxux9gLxuKnqafNcFQo59+IoZqpO2WvQlyc287B62HDnDdNYRmlvWA==
-
 abortcontroller-polyfill@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/abortcontroller-polyfill/-/abortcontroller-polyfill-1.3.0.tgz#de69af32ae926c210b7efbcc29bf644ee4838b00"
   integrity sha512-lbWQgf+eRvku3va8poBlDBO12FigTQr9Zb7NIjXrePrhxWVKdCP2wbDl1tLDaYa18PWTom3UEWwdH13S46I+yA==
+
+abortcontroller-polyfill@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/abortcontroller-polyfill/-/abortcontroller-polyfill-1.4.0.tgz#0d5eb58e522a461774af8086414f68e1dda7a6c4"
+  integrity sha512-3ZFfCRfDzx3GFjO6RAkYx81lPGpUS20ISxux9gLxuKnqafNcFQo59+IoZqpO2WvQlyc287B62HDnDdNYRmlvWA==
 
 accepts@~1.3.4, accepts@~1.3.5:
   version "1.3.5"
@@ -7163,6 +7163,18 @@ glob@^7.1.2, glob@^7.1.3, glob@^7.1.4:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
+glob@^7.1.6:
+  version "7.1.6"
+  resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.6.tgz#141f33b81a7c2492e125594307480c46679278a6"
+  integrity sha512-LwaxwyZ72Lk7vZINtNNrywX0ZuLyStrdDtabefZKAY5ZGJhVtgdznluResxNmPitE0SAO+O26sWTHeKSI2wMBA==
+  dependencies:
+    fs.realpath "^1.0.0"
+    inflight "^1.0.4"
+    inherits "2"
+    minimatch "^3.0.4"
+    once "^1.3.0"
+    path-is-absolute "^1.0.0"
+
 global-modules@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/global-modules/-/global-modules-1.0.0.tgz#6d770f0eb523ac78164d72b5e71a8877265cc3ea"
@@ -9487,11 +9499,13 @@ nypr-auth@^0.2.4:
     ember-get-config "^0.2.2"
     ember-simple-auth "^1.7.0"
 
-nypr-design-system@nypublicradio/nypr-design-system#58ffc9c70ce08d5e5bf8770884a59a5e63eb6782:
-  version "2.10.3"
-  resolved "https://codeload.github.com/nypublicradio/nypr-design-system/tar.gz/58ffc9c70ce08d5e5bf8770884a59a5e63eb6782"
+nypr-design-system@2.10.4:
+  version "2.10.4"
+  resolved "https://registry.yarnpkg.com/nypr-design-system/-/nypr-design-system-2.10.4.tgz#2a50f5387f5add6a37550b9ada6d6c3eea2c9671"
+  integrity sha512-z5VPuWyiSpGkoXV9D8j3O8bl8ZeajpGmYdVY0vxh6Pd55rdn2EVhnvIGToVQ1hD6M1SK3rRV1uFurT/KITYgcg==
   dependencies:
     "@babel/core" "^7.0.0"
+    amd-name-resolver "^1.3.1"
     broccoli-merge-files "^0.8.0"
     ember-auto-import "^1.2.19"
     ember-basic-dropdown "^1.1.2"
@@ -9506,7 +9520,7 @@ nypr-design-system@nypublicradio/nypr-design-system#58ffc9c70ce08d5e5bf8770884a5
     ember-moment "^7.8.1"
     ember-truth-helpers "^2.1.0"
     filendir "^1.0.2"
-    glob "^7.1.3"
+    glob "^7.1.6"
     imagesloaded "^4.1.4"
     sander "^0.6.0"
     sass "^1.16.1"
