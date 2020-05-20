@@ -105,18 +105,31 @@
 
     </NyprOArticleHeader>
 
-    <AdTagInside 
+    <AdTagInside
       @slot="gothamist/interior/midpage/1"
       as |hooks|>
-      <NyprOArticleBody 
-        class={{unless model.article.hasLead 'u-space--zero--top'}} 
+      <NyprOArticleBody
+        class={{unless model.article.hasLead 'u-space--zero--top'}}
         data-test-article-body>
-        <ArticleBody 
+        <ArticleBody
           @blocks={{model.article.body}}
           @onDidRender={{hooks.didRender}}
         />
       </NyprOArticleBody>
+
     </AdTagInside>
+
+    <div class="l-container--content u-section-spacing">
+      <NyprONewsletterArticle
+              @endpoint={{NEWSLETTER_ENDPOINT}}
+              @params={{NEWSLETTER_PARAMS}}
+              as |tout|>
+        <tout.heading>
+          Sign Up for Daily NYC COVID-19 Coverage
+        </tout.heading>
+        <tout.legal/>
+      </NyprONewsletterArticle>
+    </div>
 
     <div class="l-container--content u-section-spacing">
       <NyprOArticleFooter as |footer|>
