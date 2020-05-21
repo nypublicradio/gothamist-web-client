@@ -88,7 +88,7 @@
     "memory-scroll": "^0.9.1",
     "nypr-ads-htl": "^0.1.5",
     "nypr-auth": "^0.2.4",
-    "nypr-design-system": "^2.10.4",
+    "nypr-design-system": "file:.yalc/nypr-design-system",
     "nypr-metrics": "^0.7.0",
     "qunit-dom": "^0.8.0",
     "sass": "^1.17.0",
@@ -100,7 +100,8 @@
   "dependencies": {
     "abortcontroller-polyfill": "^1.4.0",
     "dotenv": "^6.2.0",
-    "nypr-fastboot": "^0.7.0"
+    "nypr-fastboot": "^0.7.0",
+    "yalc": "^1.0.0-pre.35"
   },
   "resolutions": {
     "ember-template-lint": "^1.2.0"

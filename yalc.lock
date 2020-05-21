@@ -1,0 +1,10 @@
+{
+  "version": "v1",
+  "packages": {
+    "nypr-design-system": {
+      "signature": "eb84ad07f27665049f764d0ccc18d6e5",
+      "file": true,
+      "replaced": "3.0.0-alpha2"
+    }
+  }
+}

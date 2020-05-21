@@ -19,6 +19,7 @@
 /testem.log
 /yarn-error.log
 .idea/*
+.yalc/*
 
 # ember-try
 /.node_modules.ember-try/
