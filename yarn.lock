@@ -9499,7 +9499,7 @@ nypr-auth@^0.2.4:
     ember-get-config "^0.2.2"
     ember-simple-auth "^1.7.0"
 
-nypr-design-system@2.10.4:
+nypr-design-system@^2.10.4:
   version "2.10.4"
   resolved "https://registry.yarnpkg.com/nypr-design-system/-/nypr-design-system-2.10.4.tgz#2a50f5387f5add6a37550b9ada6d6c3eea2c9671"
   integrity sha512-z5VPuWyiSpGkoXV9D8j3O8bl8ZeajpGmYdVY0vxh6Pd55rdn2EVhnvIGToVQ1hD6M1SK3rRV1uFurT/KITYgcg==
