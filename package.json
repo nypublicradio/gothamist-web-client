@@ -100,7 +100,8 @@
   "dependencies": {
     "abortcontroller-polyfill": "^1.4.0",
     "dotenv": "^6.2.0",
-    "nypr-fastboot": "^0.7.0"
+    "nypr-fastboot": "^0.7.0",
+    "yalc": "^1.0.0-pre.35"
   },
   "resolutions": {
     "ember-template-lint": "^1.2.0"
