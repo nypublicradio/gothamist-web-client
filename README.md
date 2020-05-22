@@ -110,6 +110,12 @@ docker run gothamist-web-client ./scripts/test_nginx.sh
 
 ## Notes
 
+### node gyp error on older Macs
+
+Upgrade your operating system to at least Catalina
+
+Install xcode from the app store (must be from the app store, not from cli)
+
 ### `store.queryRecord('article')` throws a 404
 
 Use `queryRecord` to retrieve a piece of **primary** content, such as for an article detail view. The presumption in this case is that browser URL contains a piece of uniquely identifying information, like a `slug` or an `id`.
