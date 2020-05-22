@@ -2,9 +2,9 @@
   "version": "v1",
   "packages": {
     "nypr-design-system": {
-      "signature": "d5525974d46daabd50a6a24c6d74f8a4",
+      "signature": "465c1201b747afbc88ed87753d68f541",
       "file": true,
-      "replaced": "3.0.0-alpha2"
+      "replaced": "nypublicradio/nypr-design-system#28db6eec32492dde4a4be5ddd9195f4329ae1c69"
     }
   }
 }
