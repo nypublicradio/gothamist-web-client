@@ -1188,6 +1188,11 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
+"@panosvoudouris/addon-versions@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@panosvoudouris/addon-versions/-/addon-versions-1.0.1.tgz#b8dad7e218025b1308465d71d5e2ba564fb9eeb3"
+  integrity sha512-C9FJM1w+xyPNNHIHGFmXiJUbS3WM2X9nxNUoDabVREbck5gvkxlizzf24NAGyXu1Loicd761wSwKVuI6V+unFg==
+
 "@sentry/core@4.4.2":
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/@sentry/core/-/core-4.4.2.tgz#562526bc634c087f04bbca68b09cedc4b41cc64d"
@@ -7644,10 +7649,10 @@ glob@^7.0.3:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@^7.1.2, glob@^7.1.3, glob@^7.1.4:
-  version "7.1.4"
-  resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.4.tgz#aa608a2f6c577ad357e1ae5a5c26d9a8d1969255"
-  integrity sha512-hkLPepehmnKk41pUGm3sYxoFs/umurYfYJCerbXEyFIWcAzvpipAgVkBqqT9RBKMGjnq6kMuyYwha6csxbiM1A==
+glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, glob@^7.1.6:
+  version "7.1.6"
+  resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.6.tgz#141f33b81a7c2492e125594307480c46679278a6"
+  integrity sha512-LwaxwyZ72Lk7vZINtNNrywX0ZuLyStrdDtabefZKAY5ZGJhVtgdznluResxNmPitE0SAO+O26sWTHeKSI2wMBA==
   dependencies:
     fs.realpath "^1.0.0"
     inflight "^1.0.4"
@@ -8123,9 +8128,9 @@ ignore@^4.0.3, ignore@^4.0.6:
   integrity sha512-cyFDKrqc/YdcWFniJhzI42+AzS+gNwmUzOSFcRCQYwySuBBBy/KjuxWLZ/FHEH6Moq1NizMOBWyTcv8O4OZIMg==
 
 ignore@^5.0.4:
-  version "5.1.4"
-  resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.1.4.tgz#84b7b3dbe64552b6ef0eca99f6743dbec6d97adf"
-  integrity sha512-MzbUSahkTW1u7JpKKjY7LCARd1fU5W2rLdxlM4kdkayuCwZImjkpluF9CM1aLewYJguPDqewLam18Y6AU69A8A==
+  version "5.1.6"
+  resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.1.6.tgz#643194ad4bf2712f37852e386b6998eff0db2106"
+  integrity sha512-cgXgkypZBcCnOgSihyeqbo6gjIaIyDqPQB7Ra4vhE9m6kigdGoQDMHjviFhRZo3IMlRy6yElosoviMs5YxZXUA==
 
 imagesloaded@^4.1.4:
   version "4.1.4"
@@ -10066,12 +10071,13 @@ nypr-auth@^0.2.4:
     ember-get-config "^0.2.2"
     ember-simple-auth "^1.7.0"
 
-nypr-design-system@^3.0.0-alpha2:
+nypr-design-system@nypublicradio/nypr-design-system#28db6eec32492dde4a4be5ddd9195f4329ae1c69:
   version "3.0.0-alpha2"
-  resolved "https://registry.yarnpkg.com/nypr-design-system/-/nypr-design-system-3.0.0-alpha2.tgz#a8d674e45060c3b4fb41e990a41e816a30555b73"
-  integrity sha512-pb0QYMX55+aKqLWP8NRErsBVSX7KrOWpoFm6rFTbCXBVRE6ajAl8f7aKZ29bjvtmGizgS4Wo2fhc0a/RkLCGSQ==
+  resolved "https://codeload.github.com/nypublicradio/nypr-design-system/tar.gz/28db6eec32492dde4a4be5ddd9195f4329ae1c69"
   dependencies:
     "@babel/core" "^7.0.0"
+    "@panosvoudouris/addon-versions" "^1.0.1"
+    amd-name-resolver "^1.3.1"
     broccoli-merge-files "^0.8.0"
     ember-auto-import "^1.2.19"
     ember-basic-dropdown "^1.1.2"
@@ -10086,11 +10092,12 @@ nypr-design-system@^3.0.0-alpha2:
     ember-moment "^7.8.1"
     ember-truth-helpers "^2.1.0"
     filendir "^1.0.2"
-    glob "^7.1.3"
+    glob "^7.1.6"
     imagesloaded "^4.1.4"
     sander "^0.6.0"
     sass "^1.16.1"
     strip-json-comments "^2.0.1"
+    yalc "^1.0.0-pre.35"
 
 nypr-fastboot@^0.7.0:
   version "0.7.0"
@@ -13460,17 +13467,18 @@ yam@^1.0.0:
     fs-extra "^4.0.2"
     lodash.merge "^4.6.0"
 
-yargs-parser@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-5.0.0.tgz#275ecf0d7ffe05c77e64e7c86e4cd94bf0e1228a"
-  integrity sha1-J17PDX/+Bcd+ZOfIbkzZS/DhIoo=
+yargs-parser@5.0.0-security.0:
+  version "5.0.0-security.0"
+  resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-5.0.0-security.0.tgz#4ff7271d25f90ac15643b86076a2ab499ec9ee24"
+  integrity sha512-T69y4Ps64LNesYxeYGYPvfoMTt/7y1XtfpIslUeK4um+9Hu7hlGoRtaDLvdXb7+/tfq4opVa2HRY5xGip022rQ==
   dependencies:
     camelcase "^3.0.0"
+    object.assign "^4.1.0"
 
 yargs@^7.1.0:
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/yargs/-/yargs-7.1.0.tgz#6ba318eb16961727f5d284f8ea003e8d6154d0c8"
-  integrity sha1-a6MY6xaWFyf10oT46gA+jWFU0Mg=
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/yargs/-/yargs-7.1.1.tgz#67f0ef52e228d4ee0d6311acede8850f53464df6"
+  integrity sha512-huO4Fr1f9PmiJJdll5kwoS2e4GqzGSsMT3PPMpOwoVkOK8ckqAewMTZyA6LXVQWflleb/Z8oPBEvNsMft0XE+g==
   dependencies:
     camelcase "^3.0.0"
     cliui "^3.2.0"
@@ -13484,7 +13492,7 @@ yargs@^7.1.0:
     string-width "^1.0.2"
     which-module "^1.0.0"
     y18n "^3.2.1"
-    yargs-parser "^5.0.0"
+    yargs-parser "5.0.0-security.0"
 
 yeast@0.1.2:
   version "0.1.2"
