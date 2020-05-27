@@ -10071,9 +10071,9 @@ nypr-auth@^0.2.4:
     ember-get-config "^0.2.2"
     ember-simple-auth "^1.7.0"
 
-nypr-design-system@nypublicradio/nypr-design-system#e2b645048b5f5fb23c92f8cd0e431f60c5112feb:
+nypr-design-system@nypublicradio/nypr-design-system#fac620162eaee4035962d1567c147b15f237d0c3:
   version "3.0.0-alpha2"
-  resolved "https://codeload.github.com/nypublicradio/nypr-design-system/tar.gz/e2b645048b5f5fb23c92f8cd0e431f60c5112feb"
+  resolved "https://codeload.github.com/nypublicradio/nypr-design-system/tar.gz/fac620162eaee4035962d1567c147b15f237d0c3"
   dependencies:
     "@babel/core" "^7.0.0"
     "@panosvoudouris/addon-versions" "^1.0.1"
