@@ -2,6 +2,8 @@
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
+var env = process.env.ENV;
+
 module.exports = function(defaults) {
   let app = new EmberApp(defaults, {
     sourcemaps: {
@@ -20,7 +22,9 @@ module.exports = function(defaults) {
       exclude: ['png'], // default images
     },
     'nypr-design-system': {
-      themes: ['gothamist', 'white-label', 'deprecated']
+      themes: env && env.toUpperCase() === 'PROD' ?
+        ['gothamist'] :
+        ['gothamist', 'white-label', 'deprecated']
     },
     SRI: {
       // JS preload fails due to a bug in chromium
