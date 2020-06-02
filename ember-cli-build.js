@@ -19,6 +19,9 @@ module.exports = function(defaults) {
     fingerprint: {
       exclude: ['png'], // default images
     },
+    'nypr-design-system': {
+      themes: ['gothamist', 'white-label', 'deprecated']
+    },
     SRI: {
       // JS preload fails due to a bug in chromium
       // patched, should land soon: https://chromium.googlesource.com/chromium/src.git/+/664b6639caeb2e0e7a9755db5a69256050b9d2e2

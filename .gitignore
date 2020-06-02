@@ -18,7 +18,7 @@
 /npm-debug.log*
 /testem.log
 /yarn-error.log
-.idea/
+.idea/*
 
 # ember-try
 /.node_modules.ember-try/
@@ -35,4 +35,6 @@
 
 .eggs
 
-.idea/
+.yalc/*
+/.yalc/
+yalc.lock
