@@ -88,11 +88,12 @@
     "memory-scroll": "^0.9.1",
     "nypr-ads-htl": "^0.1.5",
     "nypr-auth": "^0.2.4",
-    "nypr-design-system": "3.0.0-beta1",
+    "nypr-design-system": "nypublicradio/nypr-design-system#64d198a13f17ac340f49426368f34d7d0f2cf8ed",
     "nypr-metrics": "^0.7.0",
     "qunit-dom": "^0.8.0",
     "sass": "^1.17.0",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "yalc": "^1.0.0-pre.35"
   },
   "engines": {
     "node": "6.* || 8.* || >= 10.*"
