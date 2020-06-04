@@ -1,6 +1,7 @@
 'use strict';
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
+const autoprefixer = require('autoprefixer');
 
 var env = process.env.ENV;
 
@@ -17,6 +18,19 @@ module.exports = function(defaults) {
         'node_modules/include-media/dist',
       ],
       sourceMap: true,
+    },
+    postcssOptions: {
+      compile: {
+        enabled: false,
+      },
+      filter: {
+        enabled: true,
+        plugins: [
+          {
+            module: autoprefixer,
+          }
+        ]
+      }
     },
     fingerprint: {
       exclude: ['png'], // default images
