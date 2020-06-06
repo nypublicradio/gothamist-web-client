@@ -10185,10 +10185,10 @@ nypr-auth@^0.2.4:
     ember-get-config "^0.2.2"
     ember-simple-auth "^1.7.0"
 
-nypr-design-system@3.0.0-beta5:
-  version "3.0.0-beta5"
-  resolved "https://registry.yarnpkg.com/nypr-design-system/-/nypr-design-system-3.0.0-beta5.tgz#9656c1c2c2b3c926dc98aed192c78fc96796d9ac"
-  integrity sha512-CGdCUz97nLaA9zrD8kBUbQcs6eIVv3HetlKpP2+i2crJwqwr9HsDR8bpPolVEjZi71uLLVtESzFmisvLg4cZcg==
+nypr-design-system@3.0.0-beta6:
+  version "3.0.0-beta6"
+  resolved "https://registry.yarnpkg.com/nypr-design-system/-/nypr-design-system-3.0.0-beta6.tgz#57615a59fddadc35f1cefa31230c540a45968054"
+  integrity sha512-XlMW8sCkENQ9R9miF9RATqO2kZkX7yVXKRyiJJZ8hQV25YTKSZkxwIonZamwFv0PUhYluA0HGwmbvdBUL0twvw==
   dependencies:
     "@babel/core" "^7.0.0"
     "@panosvoudouris/addon-versions" "^1.0.1"
