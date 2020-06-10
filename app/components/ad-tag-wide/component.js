@@ -14,13 +14,6 @@ export default Component.extend({
   */
   slot: undefined,
   /**
-    When true, displays an 'ADVERTISING' label.
-
-    @argument showLabel
-    @type {boolean}
-  */
-  showLabel: false,
-  /**
     When true adds markup and classes for
     breaking out of horizontal margins.
 
