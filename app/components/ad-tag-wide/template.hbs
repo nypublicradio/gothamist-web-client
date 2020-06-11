@@ -8,9 +8,9 @@
     <div class={{if @breakMargins "break-margins"}}>
       <div class="flex-wrapper">
         {{ad.tag}}
-        {{#if (and @showLabel (not ad.isEmpty))}}
+        {{#unless ad.isEmpty}}
           <NyprAAdLabel/>
-        {{/if}}
+        {{/unless}}
       </div>
     </div>
     {{#if (and @breakMargins (not ad.isEmpty))}}
