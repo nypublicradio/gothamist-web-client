@@ -73,7 +73,7 @@
     <ArticleList @articles={{slice GROUP_SIZE (multiply GROUP_SIZE 2)  model.river}}/>
   </div>
 
-  <NyprOFeaturedBlockList class="c-featured-blocks--secondary" as |fbl|>
+  <NyprOFeaturedBlockList name="wnycSection" class="c-featured-blocks--secondary" as |fbl|>
     <~fbl.heading class="c-featured-blocks__heading--wnyc">
       <span class="o-bg-text-accent">
         New From
@@ -107,6 +107,7 @@
       <NyprAButton
         @url='https://www.wnyc.org'
         class="c-featured-blocks__cta o-button--c-quaternary u-full-width"
+        name="readMoreWnyc"
       >
         Read More on WNYC
       </NyprAButton>

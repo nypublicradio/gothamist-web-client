@@ -43,7 +43,7 @@
       @search={{action this.search}}
     />
 
-    <menu.tipButton @url="mailto:tips@gothamist.com">
+    <menu.tipButton @url="mailto:tips@gothamist.com" name="storyIdeaSideMenu">
       Send a Story Idea
     </menu.tipButton>
   </header.menu>
@@ -101,7 +101,7 @@
     {{/with}}
 
     {{#if header.rules.donate}}
-      <NyprAButton class='c-main-header__donate o-button--sm mod-donate' @url={{DONATE_URL}}>
+      <NyprAButton class='c-main-header__donate o-button--sm mod-donate' name="donateHeader" @url={{DONATE_URL}}>
         Donate
       </NyprAButton>
     {{/if}}
