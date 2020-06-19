@@ -89,9 +89,12 @@ export default Route.extend({
       }
       // splice in sponsored main to main stories set
       if (results.sponsoredMain) {
+        let articleForRiver = results.main[MAIN_COUNT - 1];
         results.main.replace(MAIN_COUNT - 1, 1, [results.sponsoredMain]);
         // remove featured sponsored post from river
         results.river = results.river.filter(article => article !== results.sponsoredMain);
+        // add article removed from main/featured to the river
+        results.river.unshift(articleForRiver);
       }
       return results;
     });
