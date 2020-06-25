@@ -10185,10 +10185,9 @@ nypr-auth@^0.2.4:
     ember-get-config "^0.2.2"
     ember-simple-auth "^1.7.0"
 
-nypr-design-system@3.0.1-beta1:
+nypr-design-system@nypublicradio/nypr-design-system#27aa1d45cbfd7e0bd1d5f0c2b2165dddde8a313d:
   version "3.0.1-beta1"
-  resolved "https://registry.yarnpkg.com/nypr-design-system/-/nypr-design-system-3.0.1-beta1.tgz#81b918bba8151ce619846465431c3f1ed4e8c681"
-  integrity sha512-y18rbZg9MSzeykE46Zm2tRvE2iw+SyYTirStw4TVTnWUsHwuuJBd5HfbanMU+FGHNG6WzNDft9DKTEUutsSGZQ==
+  resolved "https://codeload.github.com/nypublicradio/nypr-design-system/tar.gz/27aa1d45cbfd7e0bd1d5f0c2b2165dddde8a313d"
   dependencies:
     "@babel/core" "^7.0.0"
     "@panosvoudouris/addon-versions" "^1.0.1"
