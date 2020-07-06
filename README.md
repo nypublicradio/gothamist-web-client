@@ -59,13 +59,35 @@ The local fastboot server will download the latest fastboot build from the S3 bu
 * `ember build` (development)
 * `ember build --environment production` (production)
 
-### Deploying
+### Deploying with CircleCI
 
-Deployments are handled by `ember-cli-deploy` and associated plugins. Commits are pushed to our CircleCI account, where tests are run every time. CircleCI will also run deployments.
+#### Deploying to the Production Environment
 
-Commits to master (and merged pull requests) will deploy to [https://gothamist-client.demo.nypr.digital](https://gothamist-client.demo.nypr.digital).
+Creating and publishing a git tag that matches a semver version number (e.g. v1.1.1) will trigger a CircleCI workflow that deploys the client to production environment. (https://www.gothamist.com)
 
-Branches that follow the pattern `/[A-Za-z-_]+\/[A-Za-z-_\d]+/` will deploy a QA build. You can read more on QA builds [here](https://wiki.nypr.digital/display/DT/Web+Clients).
+The usual way to do this is [creating a new release in GitHub](https://docs.github.com/en/github/administering-a-repository/managing-releases-in-a-repository#creating-a-release). Use your version number, starting with a "v", as the tag version, and fill in the description with a list of what's been added since the last release to serve as release notes.
+
+#### Deploying to the Demo Environment
+
+Whenever code is merged to the `master` branch, it's automatically deployed to the demo environment. (https://gothamist-client.demo.nypr.digital)
+
+If you want to manually deploy code in another branch to the demo environment, you can use create a tag named `demo` and push that tag.
+
+```
+git tag demo -f
+git push origin refs/tags/demo -f
+```
+
+#### Deploying QA Builds
+
+QA builds are static builds of the ember client that can be loaded via a query string. 
+
+CircleCI will create a QA build when you push code to a branch matching the pattern /[A-Za-z-_]+\/[A-Za-z-_\d]+/ (e.g. username/DT-500). You can find a link to the QA build on the "Artifacts" tab of the deploy step in the CircleCI web interface.
+
+Note: Fastboot's server-side rendering will still render the initial page load using the code loaded on the demo enviroment, but the client will replace it with the code from your QA build almost immediately. Unless you're testing something that relies on the server rendered output, such as Open Graph metadata fetching, you won't need to worry about this detail.
+
+Read more about how QA Builds work here: https://wiki.nypr.digital/display/DT/Web+Clients
+
 
 ### CloudFront
 
