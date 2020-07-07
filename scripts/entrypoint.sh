@@ -17,7 +17,6 @@ wagtail)
     ;;
 *)
     export DIST_PATH="dist/"
-    # export HOST="localhost"
     node fastboot
     ;;
 esac
