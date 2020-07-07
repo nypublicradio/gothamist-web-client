@@ -6,7 +6,8 @@ const server = fastboot({
   sentryDSN: process.env.SENTRY_DSN,
   env: process.env.ENV,
   serviceName: process.env.SERVICE_NAME,
-  fastbootConfig: {resilient: true}
+  fastbootConfig: {resilient: true,
+                   distPath: process.env.DIST_PATH}
 });
 
 server.start();
