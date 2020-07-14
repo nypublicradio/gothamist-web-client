@@ -67,6 +67,10 @@ export default Route.extend({
       }, {
         route: ['sections', 'food'],
         text: 'Food',
+      }, {
+        url: '/newsletter',
+        text: 'Newsletter',
+        icon: 'email'
       }],
 
       secondaryNav: [{
