@@ -80,9 +80,6 @@ export default Route.extend({
         route: ['contact'],
         text: 'Contact Us'
       }, {
-        url: 'https://wnyc.us5.list-manage.com/subscribe?u=4109fdd323aaac7078eadaa8f&id=65dbec786b',
-        text: 'Newsletter',
-      }, {
         url: '/feed/',
         text: 'RSS Feed',
       }, {
