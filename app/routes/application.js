@@ -68,9 +68,15 @@ export default Route.extend({
         route: ['sections', 'food'],
         text: 'Food',
       }, {
-        url: '/newsletter',
+        // TODO: change to `route: 'newsletter'` when this route is available (https://jira.wnyc.org/browse/DS-859)
+        url: 'https://wnyc.us5.list-manage.com/subscribe?u=4109fdd323aaac7078eadaa8f&id=65dbec786b',
         text: 'Newsletter',
-        icon: 'email'
+        icon: 'email',
+        tracking: {
+          trackClick: true,
+          dataCategory: 'Click Tracking',
+          dataAction: 'Newsletter Link'
+        }
       }],
 
       secondaryNav: [{
