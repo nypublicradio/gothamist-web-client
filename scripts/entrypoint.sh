@@ -16,6 +16,7 @@ wagtail)
     supervisord -c nginx/supervisord.conf
     ;;
 *)
+    export DIST_PATH="dist/"
     node fastboot
     ;;
 esac

@@ -160,9 +160,13 @@ export default Route.extend({
 
     didTransition() {
       doTargetingForPath();
-      if (typeof FastBoot === 'undefined') {
-        this.metrics.trackPage()
+      if (this.fastboot.isFastBoot) {
+        return;
       }
+      this.metrics.trackPage();
+      schedule('afterRender', () => {
+        this.get('dataLayer').push({'event': 'optimize.activate'});
+      });
     },
 
     willTransition() {

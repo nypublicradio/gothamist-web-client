@@ -10184,7 +10184,6 @@ nypr-auth@^0.2.4:
     ember-cli-babel "^6.6.0"
     ember-get-config "^0.2.2"
     ember-simple-auth "^1.7.0"
-
 nypr-design-system@3.0.1-beta5:
   version "3.0.1-beta5"
   resolved "https://registry.yarnpkg.com/nypr-design-system/-/nypr-design-system-3.0.1-beta5.tgz#9d2474007be4a8dfd5a224ae9bac5eef858b52d9"

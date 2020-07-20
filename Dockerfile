@@ -21,4 +21,6 @@ COPY . ./
 RUN rm /etc/nginx/nginx.conf \
     && ln -sf /code/nginx/* /etc/nginx/
 
+RUN ./scripts/devenv.sh
+
 CMD ./scripts/entrypoint.sh

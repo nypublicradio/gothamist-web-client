@@ -60,6 +60,8 @@ module('Acceptance | analytics', function(hooks) {
 
     assert.ok(spyLayer.push.calledWith({template: 'homepage'}), 'homepage template is declared');
 
+    assert.ok(spyLayer.push.calledWith({'event': 'optimize.activate'}), 'datalayer push should be called with optimize.activate event');
+
     await click('[data-test-top-nav] [data-test-nav-link="0"]'); // news section
     assert.ok(spyLayer.push.calledWith({template: 'section'}), 'section template is declared');
 
