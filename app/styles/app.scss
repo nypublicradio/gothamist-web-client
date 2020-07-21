@@ -152,6 +152,6 @@ $ember-basic-dropdown-content-z-index: 10000;
 
 // make sure child elements don't become targets of
 // click events, for gtm tracking purposes
-.gtm__click-tracking > * {
+.c-newsletter-form__button.gtm__click-tracking > * {
   pointer-events: none;
 }
