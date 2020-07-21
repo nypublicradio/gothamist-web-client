@@ -72,7 +72,7 @@ module('Acceptance | analytics', function(hooks) {
     await click('[data-test-main-footer] [data-test-secondary-nav-link="1"]'); // contact us
     assert.ok(spyLayer.push.calledWith({template: 'flatpage'}), 'flatpage template is declared');
 
-    await click('[data-test-main-footer] [data-test-secondary-nav-link="4"]'); // staff
+    await click('[data-test-main-footer] [data-test-secondary-nav-link="3"]'); // staff
     assert.ok(spyLayer.push.calledWith({template: 'flatpage'}), 'flatpage template is declared');
 
     await visit('/search');
