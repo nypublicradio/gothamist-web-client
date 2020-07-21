@@ -10185,9 +10185,10 @@ nypr-auth@^0.2.4:
     ember-get-config "^0.2.2"
     ember-simple-auth "^1.7.0"
 
-"nypr-design-system@https://github.com/nypublicradio/nypr-design-system#bkammin/DS-842_add_newsletter_to_gothamist_top_nav_and_side_menu":
-  version "3.0.1-beta4"
-  resolved "https://github.com/nypublicradio/nypr-design-system#267c73cadde6f2e13fb7c4d8cf154f3926318cb4"
+nypr-design-system@3.0.1-beta6:
+  version "3.0.1-beta6"
+  resolved "https://registry.yarnpkg.com/nypr-design-system/-/nypr-design-system-3.0.1-beta6.tgz#3573d4bfd4b782ecfb3c7e5fc609c5b7fea05b17"
+  integrity sha512-6IHuDNqy3SbgQl12nwOA5nFFnYGnmdfVDD6HRWHdPYgUpXqMCWaZdEZWEmG45E/JZJez15dP2gL0zj9fvxRXoA==
   dependencies:
     "@babel/core" "^7.0.0"
     "@panosvoudouris/addon-versions" "^1.0.1"
