@@ -79,6 +79,8 @@ module.exports = function(environment) {
     'nypr-metrics': {
       disableEagerListenAnalytics: true,
     },
+
+    googleOptimize: process.env.GOOGLE_OPTIMIZE_ID,
   };
   
   if (environment === 'development') {
