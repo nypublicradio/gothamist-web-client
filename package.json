@@ -110,7 +110,8 @@
   },
   "ember-addon": {
     "paths": [
-      "lib/pattern-lab-styles"
+      "lib/pattern-lab-styles",
+      "lib/google-optimize"
     ]
   }
 }
