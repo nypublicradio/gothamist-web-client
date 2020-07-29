@@ -149,3 +149,10 @@ $ember-basic-dropdown-content-z-index: 10000;
 .space-filler {
   margin: 40px 0 32px 0;
 }
+
+// make sure child elements don't become targets of
+// click events, for gtm tracking purposes
+.c-newsletter-form__button.gtm__click-tracking > *,
+.c-primary-nav__link.gtm__click-tracking > * {
+  pointer-events: none;
+}

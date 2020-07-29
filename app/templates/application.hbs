@@ -24,11 +24,11 @@
   <header.menu @donateUrl={{DONATE_URL}} data-test-side-menu as |menu|>
     <menu.branding>
       {{#link-to 'index'}}
-        <NyprASvg @icon='gothamist-logo'/>
+        <Icon @icon='gothamist/logo' @title="gothamist logo"/>
       {{/link-to}}
     </menu.branding>
 
-    <menu.primaryNav @navItems={{model.primaryNav}}/>
+    <menu.primaryNav @navItems={{model.primaryNav}} @linkDataLabel='Side Nav'/>
     <menu.secondaryNav @navItems={{model.secondaryNav}}/>
 
     <menu.social @label='Follow Us' as |share|>
@@ -52,9 +52,9 @@
     <left.branding>
       {{#link-to 'index' class=header.rules.logoLinkClass data-test-header-logo=true}}
         {{#if header.rules.stackLogo}}
-          <NyprASvg @icon='gothamist-logo--stacked'/>
+          <Icon @icon='gothamist/logo-stacked' @title="gothamist logo"/>
         {{else}}
-          <NyprASvg @icon='gothamist-logo'/>
+          <Icon @icon='gothamist/logo' @title="gothamist logo"/>
         {{/if}}
       {{/link-to}}
     </left.branding>
@@ -120,7 +120,7 @@
         class="u-padding--half"
         data-test-header-close
       >
-        <NyprASvg @icon='close' class='c-main-header__close'/>
+        <Icon @icon='close' @title="close" class='c-main-header__close'/>
       </NyprAButton>
     {{/if}}
 
@@ -162,7 +162,7 @@
       @params={{NEWSLETTER_PARAMS}}
       as |newsletter|>
       <newsletter.graphic>
-        <NyprASvg @icon='party-confetti'/>
+        <Icon @icon='gothamist/party-confetti' @title="newsletter signup"/>
       </newsletter.graphic>
 
       <newsletter.blurb>
