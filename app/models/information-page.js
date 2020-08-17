@@ -20,7 +20,7 @@ export default Page.extend({
   socialImage: DS.attr(),
   socialText:  DS.attr('string'),
   socialTitle: DS.attr('string'),
-  body: DS.attr('string'),
+  body:        DS.attr(),
 
   showOnIndexListing: DS.attr('boolean'),
 
