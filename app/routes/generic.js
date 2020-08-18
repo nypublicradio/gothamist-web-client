@@ -7,11 +7,14 @@ export default Route.extend({
     });
   },
   afterModel (model, transition) {
-    // Section page should not render non-IndexPages, and therefore redirects
-    // to the 404 page, which handles generics
-    if (model.meta && (model.meta.type === "standardpages.IndexPage")) {
-      let newTransition = this.transitionTo('sections', transition.to.params.wildcard)
-      newTransition.data.pageId = model.id
+    switch(model.constructor.modelName) {
+      case "information-page":
+        this.transitionTo('information', {wildcard: transition.to.params.wildcard, page: model})
+        break;
+      default:
+        // If specific page type is not returned, assume it is a top-level section (news, food, etc.)
+        let newTransition = this.transitionTo('sections', transition.to.params.wildcard)
+        newTransition.data.pageId = model.id
     }
   }
 });

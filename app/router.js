@@ -33,6 +33,8 @@ Router.map(function() {
   this.route('newsletter');
   this.route('preview');
 
+  this.route('information', {path: '*wildcard'});
+
   this.route('generic', {path: ':wildcard'});
 });
 
