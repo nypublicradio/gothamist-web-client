@@ -8,7 +8,7 @@ export default Route.extend({
   },
   afterModel(model, transition) {
     switch (model.constructor.modelName) {
-      case "information-page":
+      case "information":
         this.transitionTo("information", {
           informationPagePath: transition.to.params.wildcard,
           page: model,

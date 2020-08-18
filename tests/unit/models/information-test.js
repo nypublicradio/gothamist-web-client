@@ -7,7 +7,7 @@ module('Unit | Model | information page', function(hooks) {
   // Replace this with your real tests.
   test('it exists', function(assert) {
     let store = this.owner.lookup('service:store');
-    let model = store.createRecord('information-page', {});
+    let model = store.createRecord('information', {});
     assert.ok(model);
   });
 });
