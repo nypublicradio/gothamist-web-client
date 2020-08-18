@@ -36,6 +36,7 @@ Router.map(function() {
   this.route('information', {path: '*informationPagePath'});
 
   this.route('generic', {path: ':wildcard'});
+  this.route('generic-subpath', {path: ':wildcard/*path'});
 });
 
 export default Router;
