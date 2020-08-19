@@ -30,10 +30,9 @@ export default Route.extend({
     });
   },
 
-  model({ section }) {
-    return this.store.queryRecord('page', {
-      html_path: section,
-    }).then(section => {
+  model({ section }, {data: { pageId }}) {
+
+    let hashModel = (section) => {
       const QUERY = {
         descendant_of: section.id,
         limit: COUNT,
@@ -47,9 +46,21 @@ export default Route.extend({
           ...QUERY,
           show_as_feature: true,
           limit: 2,
-        })
+        }),
       });
-    });
+    };
+
+    // Page ID may already be in the store if we transition from the generic
+    // route, which has already called the API with `html_path` - if so, use
+    // peekRecord to avoid hitting the API again
+    if (pageId) {
+      let pageRecord = this.store.peekRecord('page', pageId)
+      return hashModel(pageRecord)
+    }
+
+    return this.store.queryRecord('page', {
+      html_path: section,
+    }).then(hashModel);
   },
 
   afterModel(model) {

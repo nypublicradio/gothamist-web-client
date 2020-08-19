@@ -20,7 +20,8 @@
   },
   "devDependencies": {
     "@ember/optional-features": "^0.6.3",
-    "@types/ember": "^3.0.27",
+    "@types/ember": "^3.16.0",
+    "@types/ember-data": "^3.16.2",
     "aws-sdk": "^2.496.0",
     "babel": "^6.23.0",
     "better-sqlite3": "^5.4.1",

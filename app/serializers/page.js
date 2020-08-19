@@ -2,6 +2,7 @@ import ApplicationSerializer from './application';
 
 import { WAGTAIL_MODEL_TYPE as ARTICLE } from '../models/article';
 import { WAGTAIL_MODEL_TYPE as GALLERY } from '../models/gallery';
+import { WAGTAIL_MODEL_TYPE as INFORMATION_PAGE } from '../models/information';
 
 
 // making responses p o l y m o r p h i c
@@ -9,6 +10,7 @@ import { WAGTAIL_MODEL_TYPE as GALLERY } from '../models/gallery';
 const TYPES = {
   [ARTICLE]: 'article',
   [GALLERY]: 'gallery',
+  [INFORMATION_PAGE]: 'information',
   // [PERSON]: 'person',
 };
 

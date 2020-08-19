@@ -32,6 +32,11 @@ Router.map(function() {
   this.route('contact');
   this.route('newsletter');
   this.route('preview');
+
+  this.route('information', {path: '*informationPagePath'});
+
+  this.route('generic', {path: ':wildcard'});
+  this.route('generic-subpath', {path: ':wildcard/*path'});
 });
 
 export default Router;

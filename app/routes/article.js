@@ -32,6 +32,17 @@ export default Route.extend({
   titleToken: model => model.article.title,
 
   model({ section, path }) {
+    return this.store.queryRecord('article', {
+      html_path: `${section}/${path}`,
+    }).then(article => hash({
+      article,
+       // load gallery in the model hook to prevent async leaks in fastboot
+       // but if gallery fails for some reason, don't bork out
+      gallery: article.gallery.catch(() => log('gallery not found')),
+    }));
+  },
+
+  async afterModel({ article }) {
     if (!this.cookies.exists(config.donateCookie)) {
       // donate tout has not been closed within the past 24 hours
 
@@ -47,17 +58,6 @@ export default Route.extend({
       this.cookies.write(config.articleViewsCookie, articlesViewed + 1, {path: '/'});
     }
 
-    return this.store.queryRecord('article', {
-      html_path: `${section}/${path}`,
-    }).then(article => hash({
-      article,
-       // load gallery in the model hook to prevent async leaks in fastboot
-       // but if gallery fails for some reason, don't bork out
-      gallery: article.gallery.catch(() => log('gallery not found')),
-    }));
-  },
-
-  afterModel({ article }) {
     if (article.sensitiveContent) {
       this.sensitive.activate();
     }

@@ -1,0 +1,20 @@
+<div class="u-spacing--quad c-basic-page">
+  <div
+    class="c-listing__sections u-section-spacing l-container l-wrap l-container--14col"
+  >
+    <header class="c-basic__header u-spacing">
+      <h1 class="c-basic__heading o-3d-heading">
+        {{model.page.title}}
+      </h1>
+    </header>
+    <NyprOArticleBody
+      class={{unless model.article.hasLead "u-space--zero--top"}}
+      data-test-article-body
+    >
+      <ArticleBody
+        @blocks={{model.page.body}}
+        @onDidRender={{hooks.didRender}}
+      />
+    </NyprOArticleBody>
+  </div>
+</div>
