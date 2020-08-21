@@ -17,7 +17,7 @@ wagtail)
     ;;
 *)
     export DIST_PATH="dist/"
-    node fastboot
+    yarn fastboot
     ;;
 esac
 
