@@ -2,3 +2,5 @@ deployments:
     default:
         port_forwarding:
             80:3000
+        environment:
+            - HOST_WHITELIST: $SQUASH_DOMAIN
