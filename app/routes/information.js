@@ -14,4 +14,13 @@ export default Route.extend({
   isFastBoot: reads('fastboot.isFastBoot'),
 
   titleToken: model => model.page.title,
+
+  afterModel(model) {
+    this.headData.setProperties({
+      metaDescription: model.page.description,
+      ogType: 'information',
+      ogTitle: model.page.title, // don't include " - Gothamist" like in <title> tag
+      hideFromRobots: !model.page.showOnIndexListing,
+    });
+  }
 });
