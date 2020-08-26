@@ -1,6 +1,8 @@
 FROM node:10
 ARG HOST_WHITELIST
 
+ENV HOST_WHITELIST=${HOST_WHITELIST}
+
 RUN apt-get update \
     && apt-get install -y \
         curl \
