@@ -83,10 +83,6 @@ module.exports = function(environment) {
     googleOptimize: process.env.GOOGLE_OPTIMIZE_ID,
   };
 
-  console.log('TKTK+');
-  console.log(ENV);
-  console.log('TKTK-');
-
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
