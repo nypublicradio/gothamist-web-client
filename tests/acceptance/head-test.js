@@ -34,4 +34,18 @@ module("Acceptance | head component", function (hooks) {
       "http://www.example.com"
     );
   });
+
+  test("no index, no follow added for showOnIndexListing", async function (assert) {
+    const article = await server.create("article", "withSection", {
+      text: "foo",
+      section: "food",
+      show_on_index_listing: false
+    });
+
+    await visit(`/food/${article.slug}`);
+
+    assert
+      .dom("meta[name=robots]", document)
+      .hasAttribute("content", "noindex, nofollow");
+  });
 });
