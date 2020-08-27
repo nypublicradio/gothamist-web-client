@@ -107,7 +107,8 @@
     "nypr-fastboot": "^0.7.0"
   },
   "resolutions": {
-    "ember-template-lint": "^1.2.0"
+    "ember-template-lint": "^1.2.0",
+    "nypr-fastboot": "nypublicradio/nypr-fastboot#enhancement/serve-static-in-localmode"
   },
   "ember-addon": {
     "paths": [
