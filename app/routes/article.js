@@ -77,6 +77,7 @@ export default Route.extend({
       image: article.ogImage,
       hideFromRobots: !article.showOnIndexListing,
       path: `${article.section.slug}/${article.path}`,
+      canonicalUrl: article.canonicalUrl
     });
 
     this.header.addRule('article', {
