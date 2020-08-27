@@ -57,6 +57,7 @@ export default Page.extend({
   updatedDate: DS.attr('moment', {timezoneOverride: true}),
 
   url: DS.attr('string'),
+  canonicalUrl: DS.attr('string'),
 
   // computed
   modifiedMoment: reads('updatedDate'),

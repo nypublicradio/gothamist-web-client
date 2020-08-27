@@ -11,7 +11,11 @@
 
 <title>{{{model.title}}}</title>
 
-<link rel="canonical" href={{model.url}}>
+{{#if model.canonicalUrl}}
+  <link rel="canonical" href={{model.canonicalUrl}}>
+{{else}}
+  <link rel="canonical" href={{model.url}}>
+{{/if}}
 
 <meta name="description" content={{{model.metaDescription}}}>
 
