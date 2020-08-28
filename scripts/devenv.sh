@@ -10,11 +10,13 @@ wagtail)
 *)
     if ! [[ -f ".env" ]]; then
         cp .env.sample .env
-        # Squash env var is set with prefix slashes
-        # so we'll remove them here if it's been passed
-        # in, otherwise it'll default to what's in
-        # .env.sample
-        [ -z "$CMS_SERVER" ] && export CMS_SERVER=$(sed -E 's/\/\///' <<< $CMS_SERVER)
+        # Squash CMS_SERVER env var is set with prefix
+        # slashes so we'll remove them here if it's
+        # been passed in to the container, otherwise
+        # it'll default to what's in .env.sample
+        if [[ $CMS_SERVER =~ "^\/\/" ]]; then
+            export CMS_SERVER=$(sed -E 's/\/\///' <<< $CMS_SERVER)
+        fi
         echo "TK HOST_WHITELIST: >>$HOST_WHITELIST<<"
         echo "TK CMS_SERVER: >>$CMS_SERVER<<"
     fi
