@@ -104,11 +104,10 @@
     "abortcontroller-polyfill": "^1.4.0",
     "autoprefixer": "^9.8.0",
     "dotenv": "^6.2.0",
-    "nypr-fastboot": "^0.7.0"
+    "nypr-fastboot": "^0.7.1"
   },
   "resolutions": {
-    "ember-template-lint": "^1.2.0",
-    "nypr-fastboot": "nypublicradio/nypr-fastboot#enhancement/serve-static-in-localmode"
+    "ember-template-lint": "^1.2.0"
   },
   "ember-addon": {
     "paths": [

@@ -10983,10 +10983,10 @@ nypr-design-system@3.1.0:
     stylelint-value-no-unknown-custom-properties "^3.0.0"
     yalc "^1.0.0-pre.35"
 
-nypr-fastboot@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/nypr-fastboot/-/nypr-fastboot-0.7.0.tgz#990ada3bff78e0084cfe86d130eeb13824428820"
-  integrity sha512-5A52GfTL83+Ih1s/dstuwg7buaDDzHTgVO/P9mGLNks4niOAPnjoFFbifpS0kcwzDz5TXt1OqF3x7kdHUYmyhg==
+nypr-fastboot@^0.7.1:
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/nypr-fastboot/-/nypr-fastboot-0.7.1.tgz#5f6122aed19a6c25be8980b8ffca54bbb53118cb"
+  integrity sha512-TehFkwIa0lDJCOfDDEMCuC+z0yHkTO+VeABrMNVKtTrp3RPsou+HWByiYv0ts4fFX0tPwHXOX7WkGCW+V+lr8g==
   dependencies:
     "@sentry/node" "4.4.2"
     aws-sdk "^2.279.1"
