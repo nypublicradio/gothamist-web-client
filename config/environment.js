@@ -143,6 +143,5 @@ module.exports = function(environment) {
     // here you can enable a production-specific feature
   }
 
-  console.log(ENV);
   return ENV;
 };

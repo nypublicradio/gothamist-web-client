@@ -69,11 +69,7 @@ export default Route.extend({
         show_as_feature: true,
         limit: MAIN_COUNT,
         fields: LISTING_FIELDS,
-      }).catch(e => {
-        console.log('TKTK error fetching article: ' + e.message);
-        console.log(e);
-      }),
-      // }).catch(failSafe('main')),
+      }).catch(failSafe('main')),
       river: this.store.query('article', {
         limit: TOTAL_COUNT,
         fields: LISTING_FIELDS,

@@ -17,8 +17,6 @@ wagtail)
         if [[ $CMS_SERVER == "//"* ]]; then
             export CMS_SERVER="https:${CMS_SERVER}"
         fi
-        echo "TK HOST_WHITELIST: >>$HOST_WHITELIST<<"
-        echo "TK CMS_SERVER: >>$CMS_SERVER<<"
     fi
     # AFAIK no good way to _only_ install devDependencies
     # so we have to run `yarn install` again w/o the `-prod` flag
