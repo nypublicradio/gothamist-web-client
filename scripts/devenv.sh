@@ -14,8 +14,10 @@ wagtail)
         # slashes so we'll remove them here if it's
         # been passed in to the container, otherwise
         # it'll default to what's in .env.sample
-        if [[ $CMS_SERVER =~ "^\/\/" ]]; then
+        if [[ $CMS_SERVER == "//"* ]]; then
             export CMS_SERVER=$(sed -E 's/\/\///' <<< $CMS_SERVER)
+        else
+            echo "TK CMS SERVER DOES NOT START WITH SLASHES"
         fi
         echo "TK HOST_WHITELIST: >>$HOST_WHITELIST<<"
         echo "TK CMS_SERVER: >>$CMS_SERVER<<"
