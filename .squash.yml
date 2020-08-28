@@ -1,7 +1,11 @@
 deployments:
-    default:
+    gothamist:
         port_forwarding:
             80:3000
         environment:
             - HOST_WHITELIST=${SQUASH_DOMAIN}
-        build_options: --build-arg HOST_WHITELIST=${SQUASH_DOMAIN}
+            # - CMS_SERVER=${PRODUCTS_API}
+        build_options: --build-arg HOST_WHITELIST=${SQUASH_DOMAIN} CMS_SERVER=${CMS_SERVER}
+    depends_on:
+      - CMS_SERVER:
+          app: cms
