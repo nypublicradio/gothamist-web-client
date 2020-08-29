@@ -13,28 +13,41 @@ export default Route.extend({
     let pageUrl = Object.values(transition.to.params).join('/')
     switch (model.constructor.modelName) {
       case "information":
-        this.transitionTo("information", {
-          informationPagePath: pageUrl,
-          page: model,
-        });
+        this.replaceWith(
+          "information",
+          {
+            informationPagePath: pageUrl,
+            page: model,
+          },
+          {
+            queryParams: transition.to.queryParams,
+          }
+        );
         break;
       case "article": {
-        let newTransition = this.transitionTo("article",
+        let newTransition = this.replaceWith(
+          "article",
           await hash({
             section: transition.to.params.wildcard,
             path: transition.to.params.path,
             article: model,
-            gallery: model.gallery
-          })
-        )
+            gallery: model.gallery,
+          }),
+          {
+            queryParams: transition.to.queryParams,
+          }
+        );
         newTransition.data.pageId = model.id;
         break;
       }
       default: {
         // If specific page type is not returned, assume it is a top-level section (news, food, etc.)
-        let newTransition = this.transitionTo(
+        let newTransition = this.replaceWith(
           "sections",
-          transition.to.params.wildcard
+          transition.to.params.wildcard,
+          {
+            queryParams: transition.to.queryParams,
+          }
         );
         newTransition.data.pageId = model.id;
       }
