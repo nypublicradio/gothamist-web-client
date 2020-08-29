@@ -103,9 +103,7 @@
     {{/with}}
 
     {{#if header.rules.donate}}
-      <NyprAButton class='c-main-header__donate o-button--sm mod-donate' name="donateHeader" @url={{DONATE_URL}}>
-        Donate
-      </NyprAButton>
+      <Button class='mod-donate mod-header' name="donateHeader" @label='Donate' @href={{DONATE_URL}} />
     {{/if}}
 
     {{#if header.rules.search}}
@@ -116,16 +114,8 @@
     {{/if}}
 
     {{#if header.rules.close}}
-      <NyprAButton
-              @blank={{true}}
-              @onclick={{header.rules.close}}
-              class="u-padding--half"
-              data-test-header-close
-      >
-        <Icon @icon='close' @title="close" class='c-main-header__close'/>
-      </NyprAButton>
+      <Button class="mod-flat-icon" @icon="close" @alt="close" onClick={{header.rules.close}}  data-test-header-close />
     {{/if}}
-
   </header.right>
 
 </NyprOHeader>
