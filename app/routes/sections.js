@@ -1,6 +1,6 @@
 import RSVP from 'rsvp';
 
-import Route from '@ember/routing/route';
+import PageRoute from './page'
 import { inject } from '@ember/service';
 
 import addCommentCount from '../utils/add-comment-count';
@@ -8,7 +8,7 @@ import addCommentCount from '../utils/add-comment-count';
 const { hash } = RSVP;
 export const COUNT = 12;
 
-export default Route.extend({
+export default PageRoute.extend({
   fastboot: inject(),
   dataLayer: inject('nypr-metrics/data-layer'),
   header: inject('nypr-o-header'),
