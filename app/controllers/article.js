@@ -3,7 +3,7 @@ import moment from 'moment';
 const NEWSLETTER_ENDPOINT = `${config.apiServer}/opt-in/v1/subscribe/mailchimp`;
 const NEWSLETTER_PARAMS = {list: config.dailyNewsletter};
 
-import Controller from '@ember/controller';
+import PageController from './page'
 import { inject } from '@ember/service';
 import { computed } from '@ember/object';
 import { wagtailImageUrl } from 'ember-wagtail-images';
@@ -11,10 +11,9 @@ import { wagtailImageUrl } from 'ember-wagtail-images';
 import config from '../config/environment';
 
 
-export default Controller.extend({
+export default PageController.extend({
   NEWSLETTER_ENDPOINT,
   NEWSLETTER_PARAMS,
-  queryParams: ['to'],
   to: null, // for scrolling to comments on internal routing
 
   cookies: inject(),

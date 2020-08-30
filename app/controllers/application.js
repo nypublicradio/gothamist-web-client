@@ -1,6 +1,5 @@
 import Controller from '@ember/controller';
 import { inject } from '@ember/service';
-import { computed } from '@ember/object';
 
 import config from '../config/environment';
 
@@ -11,18 +10,10 @@ const NEWSLETTER_PARAMS = {list: config.dailyNewsletter};
 
 
 export default Controller.extend({
-  fastboot: inject(),
   router: inject(),
   sensitive: inject('ad-sensitivity'),
 
-  queryParams: computed('router.location', function() {
-    let qp = this.get('router.location').getURL().split('?')[1]
-    if (qp && this.fastboot.isFastboot) {
-      let qpAsObj = JSON.parse('{"' + decodeURI(qp).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}')
-      return [...Object.keys(qpAsObj), 'build']
-    }
-    return ['build']
-  }),
+  queryParams: ['build'],
   build: null,
 
   DONATE_URL,
