@@ -1,6 +1,6 @@
 import RSVP from 'rsvp';
 
-import Route from '@ember/routing/route';
+import PageRoute from './page'
 import { inject } from '@ember/service';
 import { doTargetingForModels, clearTargetingForModels } from 'nypr-ads-htl';
 import { reads } from '@ember/object/computed';
@@ -18,7 +18,7 @@ const { hash } = RSVP;
 
 const { log } = console;
 
-export default Route.extend({
+export default PageRoute.extend({
   header: inject('nypr-o-header'),
   dataLayer: inject('nypr-metrics/data-layer'),
   cookies: inject(),
@@ -131,10 +131,6 @@ export default Route.extend({
     let showTout = this.cookies.read(articleViewsCookie) >= 3 && !this.cookies.exists(donateCookie);
     controller.set('showTout', showTout);
     controller.set('isPreview', false);
-  },
-
-  resetController(controller) {
-    controller.set('to', null);
   },
 
   actions: {

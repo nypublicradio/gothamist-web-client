@@ -1,8 +1,8 @@
-import Route from '@ember/routing/route';
+import PageRoute from './page'
 import { inject } from '@ember/service';
 import { reads } from '@ember/object/computed';
 
-export default Route.extend({
+export default PageRoute.extend({
   header: inject('nypr-o-header'),
   dataLayer: inject('nypr-metrics/data-layer'),
   cookies: inject(),
