@@ -15,6 +15,10 @@ export default PageRoute.extend({
 
   titleToken: model => model.page.title,
 
+  beforeModel() {
+    this.dataLayer.push({template: 'information'});
+  },
+
   afterModel(model) {
     this.headData.setProperties({
       metaDescription: model.page.description,
