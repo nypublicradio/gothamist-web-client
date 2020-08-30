@@ -1,4 +1,4 @@
-import Controller from '@ember/controller';
+import PageController from './page';
 
-export default Controller.extend({
+export default PageController.extend({
 });
