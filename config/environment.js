@@ -82,7 +82,7 @@ module.exports = function(environment) {
 
     googleOptimize: process.env.GOOGLE_OPTIMIZE_ID,
   };
-  
+
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
@@ -110,6 +110,11 @@ module.exports = function(environment) {
     ENV.disqusAPI = ENV.disqusAPI || 'https://disqus.com';
     ENV.disqusKey = ENV.disqusKey || 'disqus-key';
     ENV.etagAPI = ENV.etagAPI || 'https://browserid.com';
+
+    // @todo: use ENV.cmsServer default for imagePath defined above
+    // @body: we have a fallback CMS server if running locally,
+    // but it's not set for the imagePath, so the fallback CMS_SERVER value
+    // won't be used, even though it should be.
   }
 
   if (environment === 'test') {

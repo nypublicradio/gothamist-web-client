@@ -1,4 +1,9 @@
 FROM node:10
+ARG HOST_WHITELIST
+ARG CMS_SERVER
+
+ENV HOST_WHITELIST=${HOST_WHITELIST}
+ENV CMS_SERVER=${CMS_SERVER}
 
 RUN apt-get update \
     && apt-get install -y \
