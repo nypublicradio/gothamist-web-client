@@ -5,8 +5,10 @@ const { hash } = RSVP;
 
 export default Route.extend({
   model(params) {
+    let wildcard = params.wildcard
+    let path = params.path ? params.path : ''
     return this.store.queryRecord("page", {
-      html_path: Object.values(params).join('/'),
+      html_path: `${wildcard}/${path}`
     });
   },
   async afterModel(model, transition) {
