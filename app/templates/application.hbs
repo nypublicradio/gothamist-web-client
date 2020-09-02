@@ -5,11 +5,11 @@
 <HeadLayout/>
 
 <NyprOHeader
-  class={{if (eq target.currentRouteName 'index') 'c-main-header--emphasis'}}
-  @floatLandmark={{headerLandmark}}
-  @donateURL={{DONATE_URL}}
-  data-test-main-header
-  as |header|>
+        class={{if (eq target.currentRouteName 'index') 'c-main-header--emphasis'}}
+        @floatLandmark={{headerLandmark}}
+        @donateURL={{DONATE_URL}}
+        data-test-main-header
+        as |header|>
 
   <header.leaderboard>
     {{#unless this.sensitive.on}}
@@ -38,14 +38,16 @@
       <share.link @service='youtube' @username='UCY_2VeS5Q9_sMZRhtvF0c5Q'/>
     </menu.social>
 
-    <menu.search
-      @formClass="c-search--side"
-      @search={{action this.search}}
-    />
-
-    <menu.tipButton @url="mailto:tips@gothamist.com" name="storyIdeaSideMenu">
-      Send a Story Idea
-    </menu.tipButton>
+    <menu.component>
+      <NyprMInlineSearch @formClass="c-search--side u-space--triple--top" @search={{action this.search}}/>
+      <NyprAButton
+              @url="mailto:tips@gothamist.com"
+              name="storyIdeaSideMenu"
+              class="c-side-menu__send-story o-button--c-quaternary u-full-width u-space--top"
+      >
+        Send a Story Idea
+      </NyprAButton>
+    </menu.component>
   </header.menu>
 
   <header.left as |left|>
@@ -75,27 +77,27 @@
     {{#with header.rules.share as |share|}}
       <NyprMShareTools class="c-main-header__share" @label='Share' as |tools|>
         <tools.share
-          @service='facebook'
-          @utm={{hash medium='social' source='facebook' campaign='shared_facebook'}}
-          data-test-facebook-share
+                @service='facebook'
+                @utm={{hash medium='social' source='facebook' campaign='shared_facebook'}}
+                data-test-facebook-share
         />
         <tools.share
-          @service='twitter'
-          @params={{hash text=share.title via='gothamist'}}
-          @utm={{hash medium='social' source='twitter' campaign='shared_twitter'}}
-          data-test-twitter-share
+                @service='twitter'
+                @params={{hash text=share.title via='gothamist'}}
+                @utm={{hash medium='social' source='twitter' campaign='shared_twitter'}}
+                data-test-twitter-share
         />
         <tools.share
-          @service='reddit'
-          @params={{hash title=share.title}}
-          @utm={{hash medium='social' source='reddit' campaign='shared_reddit'}}
-          data-test-reddit-share
+                @service='reddit'
+                @params={{hash title=share.title}}
+                @utm={{hash medium='social' source='reddit' campaign='shared_reddit'}}
+                data-test-reddit-share
         />
         <tools.share
-          @service='email'
-          @params={{hash body=(concat share.title ' - {{URL}}')}}
-          @utm={{hash medium='social' source='email' campaign='shared_email'}}
-          data-test-email-share
+                @service='email'
+                @params={{hash body=(concat share.title ' - {{URL}}')}}
+                @utm={{hash medium='social' source='email' campaign='shared_email'}}
+                data-test-email-share
         />
       </NyprMShareTools>
     {{/with}}
@@ -115,10 +117,10 @@
 
     {{#if header.rules.close}}
       <NyprAButton
-        @blank={{true}}
-        @onclick={{header.rules.close}}
-        class="u-padding--half"
-        data-test-header-close
+              @blank={{true}}
+              @onclick={{header.rules.close}}
+              class="u-padding--half"
+              data-test-header-close
       >
         <Icon @icon='close' @title="close" class='c-main-header__close'/>
       </NyprAButton>
@@ -144,9 +146,15 @@
   {{outlet}}
 </main>
 
-<NyprOFooter as |footer|>
+<NyprMToTop/>
+
+<Footer @site="gothamist" as |footer|>
+  <footer.logo>
+    <Icon @icon='gothamist/logo-stacked' @title='logo' />
+  </footer.logo>
+
   <footer.slogan>
-    <p>
+    <p class="u-space--bottom">
       Gothamist is a website about New York City news, arts and events, and food, brought to you by New York Public Radio.
     </p>
     <p>
@@ -154,24 +162,30 @@
     </p>
   </footer.slogan>
 
-  <footer.nav @navItems={{model.secondaryNav}}/>
-
-  <footer.signup>
+  <footer.rightComponent>
     <NyprMNewsletter
-      @endpoint={{NEWSLETTER_ENDPOINT}}
-      @params={{NEWSLETTER_PARAMS}}
-      as |newsletter|>
+            @endpoint={{NEWSLETTER_ENDPOINT}}
+            @params={{NEWSLETTER_PARAMS}}
+            as |newsletter|>
       <newsletter.graphic>
         <Icon @icon='gothamist/party-confetti' @title="newsletter signup"/>
       </newsletter.graphic>
-
       <newsletter.blurb>
         Sign up for our newsletter! Share your email address to get our top stories each day.
       </newsletter.blurb>
-
       <newsletter.legal/>
     </NyprMNewsletter>
+  </footer.rightComponent>
 
-  </footer.signup>
+  <footer.social>
+    <NyprMShareTools @label='Follow Us' as |share|>
+      <share.link @service='facebook' @username='gothamist'/>
+      <share.link @service='twitter' @username='gothamist' />
+      <share.link @service='instagram' @username='gothamist' />
+      <share.link @service='youtube' @username='UCY_2VeS5Q9_sMZRhtvF0c5Q' />
+    </NyprMShareTools>
+  </footer.social>
 
-</NyprOFooter>
+  <footer.primaryNav @navItems={{model.secondaryNav}}/>
+
+</Footer>
