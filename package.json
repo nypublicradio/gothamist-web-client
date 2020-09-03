@@ -26,7 +26,7 @@
     "babel": "^6.23.0",
     "better-sqlite3": "^5.4.1",
     "broccoli-asset-rev": "^2.7.0",
-    "broccoli-stew": "^3.0.0",
+    "broccoli-stew": "^2.0.0",
     "ember-animated": "^0.5.3",
     "ember-auto-import": "^1.2.20",
     "ember-basic-dropdown": "^1.1.2",
