@@ -21,7 +21,7 @@ module.exports = function(deployTarget) {
     },
     manifest: {
       // Since we always want to re-upload ads.txt, leave it out of the manifest.
-      fileIgnorePattern: "ads.txt"
+      fileIgnorePattern: "{robots.txt,ads.txt}"
     },
     s3: {
       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
