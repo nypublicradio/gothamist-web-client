@@ -158,14 +158,12 @@
 
     <div class="l-container l-container--14col">
       <div class="u-align-center">
-        <NyprAButton
+        <Button
+          class="mod-wide"
+          @label={{if more.queryMore.isRunning 'Loading...' 'More Results'}}
+          onclick={{perform more.queryMore}}
           data-test-more-results
-          disabled={{more.queryMore.isRunning}}
-          class="o-button--c-quaternary o-button--extra"
-          @onclick={{perform more.queryMore}}
-        >
-          {{if more.queryMore.isRunning 'Loading...' 'More Results'}}
-        </NyprAButton>
+        />
       </div>
     </div>
   </QueryMore>
