@@ -2,6 +2,7 @@
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const autoprefixer = require('autoprefixer');
+const stew = require('broccoli-stew')
 
 var env = process.env.ENV;
 
@@ -47,6 +48,15 @@ module.exports = function(defaults) {
     }
   });
 
+  let tree = app.toTree()
+  if (env && env.toUpperCase() === 'PROD') {
+    tree = stew.rename(tree, 'robots-prod.txt', 'robots.txt');
+    tree = stew.rm(tree, 'robots-demo.txt')
+  } else {
+    tree = stew.rename(tree, 'robots-demo.txt', 'robots.txt');
+    tree = stew.rm(tree, 'robots-prod.txt')
+  }
+
   // Use `app.import` to add additional libraries to the generated
   // output files.
   //
@@ -60,5 +70,5 @@ module.exports = function(defaults) {
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
 
-  return app.toTree();
+  return tree;
 };
