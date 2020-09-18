@@ -46,74 +46,13 @@
     <ArticleList @articles={{slice 0 GROUP_SIZE model.river}} @ad='gothamist/index/midpage/1' />
   </div>
 
-  <div class="l-container l-container--14col">
-    <NyprONewsletterTout
-      @endpoint={{NEWSLETTER_ENDPOINT}}
-      @params={{NEWSLETTER_PARAMS}}
-      @ariaTitle="NYC News Never Sleeps"
-      @img={{hash
-        src='/static-images/logo.png'
-        alt=''
-      }}
-      as |tout|>
-
-      <tout.heading>
-        NYC News Never Sleeps
-      </tout.heading>
-
-      <tout.blurb>
-        Get the Gothamist Daily newsletter and don't miss a moment.
-      </tout.blurb>
-
-      <tout.legal/>
-    </NyprONewsletterTout>
-  </div>
+  <AdTagLeaderboard @slot="gothamist/index/leaderboard" />
 
   <div class="l-container l-container--10col">
     <ArticleList @articles={{slice GROUP_SIZE (multiply GROUP_SIZE 2)  model.river}}/>
   </div>
 
-  <NyprOFeaturedBlockList name="wnycSection" class="c-featured-blocks--secondary" as |fbl|>
-    <~fbl.heading class="c-featured-blocks__heading--wnyc">
-      <span class="o-bg-text-accent">
-        New From
-        <span class="is-vishidden">WNYC</span>
-        <Icon @icon='wnyc/logo' @title="wnyc logo"/>
-      </span>
-   </~fbl.heading>
-
-    <fbl.featured>
-      {{#with model.wnyc.firstObject as |story|}}
-        <WnycBlock
-          @story={{story}}
-          @imageWidth='466'
-        />
-      {{/with}}
-
-    </fbl.featured>
-
-    <fbl.col>
-      <NyprMBlockList @items={{slice 1 undefined model.wnyc}} as |item|>
-        <WnycBlock
-          @story={{item}}
-          @orientation='h'
-          @size='s'
-          @imageWidth='300'
-          @imageHeight='300'
-          @hideExcerpt={{true}}
-        />
-      </NyprMBlockList>
-
-      <Button
-        class="mod-stretch"
-        @href='https://www.wnyc.org'
-        @label="Read More on WNYC"
-        name="readMoreWnyc"
-      />
-    </fbl.col>
-
-  </NyprOFeaturedBlockList>
-
+  <AdTagLeaderboard @slot="gothamist/index/leaderboard" />
 
   <div class="l-container l-container--14col">
     <ArticleList @articles={{slice (multiply GROUP_SIZE 2) (multiply GROUP_SIZE 3) model.river}} @ad='gothamist/index/midpage/2' />
