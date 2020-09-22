@@ -46,13 +46,17 @@
     <ArticleList @articles={{slice 0 GROUP_SIZE model.river}} @ad='gothamist/index/midpage/1' />
   </div>
 
-  <AdTagLeaderboard @slot="gothamist/index/leaderboard" />
+  <div class="o-ad o-ad--leaderboard">
+    <AdTagLeaderboard @slot="gothamist/index/leaderboard" />
+  </div>
 
   <div class="l-container l-container--10col">
     <ArticleList @articles={{slice GROUP_SIZE (multiply GROUP_SIZE 2)  model.river}}/>
   </div>
 
-  <AdTagLeaderboard @slot="gothamist/index/leaderboard" />
+  <div class="o-ad o-ad--leaderboard">
+    <AdTagLeaderboard @slot="gothamist/index/leaderboard" />
+  </div>
 
   <div class="l-container l-container--14col">
     <ArticleList @articles={{slice (multiply GROUP_SIZE 2) (multiply GROUP_SIZE 3) model.river}} @ad='gothamist/index/midpage/2' />
