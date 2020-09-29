@@ -43,11 +43,11 @@
   {{/if}}
 
   <div class="l-container l-container--14col">
-    <ArticleList @articles={{slice 0 GROUP_SIZE model.river}} @ad='gothamist/index/midpage/1' />
+    <ArticleList @articles={{slice 0 GROUP_SIZE model.river}} @ad='gothamist/index/rectangle/1' />
   </div>
 
   <div class="o-ad o-ad--leaderboard">
-    <AdTagLeaderboard @slot="gothamist/index/leaderboard" />
+    <AdTagLeaderboard @slot="gothamist/index/leaderboard/2" />
   </div>
 
   <div class="l-container l-container--10col">
@@ -55,11 +55,11 @@
   </div>
 
   <div class="o-ad o-ad--leaderboard">
-    <AdTagLeaderboard @slot="gothamist/index/leaderboard" />
+    <AdTagLeaderboard @slot="gothamist/index/leaderboard/3" />
   </div>
 
   <div class="l-container l-container--14col">
-    <ArticleList @articles={{slice (multiply GROUP_SIZE 2) (multiply GROUP_SIZE 3) model.river}} @ad='gothamist/index/midpage/2' />
+    <ArticleList @articles={{slice (multiply GROUP_SIZE 2) (multiply GROUP_SIZE 3) model.river}} @ad='gothamist/index/rectangle/2' />
   </div>
 </div>
 
@@ -78,7 +78,7 @@
 <div class="c-home__content-bottom u-spacing--quad l-container l-wrap">
 
   <div class="l-container l-container--14col">
-    <ArticleList @articles={{slice (multiply GROUP_SIZE 3) undefined model.river}} @ad='gothamist/index/midpage/3' />
+    <ArticleList @articles={{slice (multiply GROUP_SIZE 3) undefined model.river}} @ad='gothamist/index/rectangle/3' />
   </div>
 
   <QueryMore
@@ -92,7 +92,7 @@
         <AriaLoadMessage @message="More Results Loaded" />
         {{#animated-each page use=transition initialInsertion=true as |set|}}
           <div class="l-container l-container--14col">
-            <ArticleList @articles={{set}} @ad='gothamist/index/midpage/repeating' />
+            <ArticleList @articles={{set}} @ad='gothamist/index/rectangle/repeating' />
           </div>
         {{/animated-each}}
       {{/each}}
