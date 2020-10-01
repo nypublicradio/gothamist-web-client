@@ -4,10 +4,12 @@ import { inject } from '@ember/service';
 export default Route.extend({
   fastboot: inject(),
   header: inject('nypr-o-header'),
+  dataLayer: inject('nypr-metrics/data-layer'),
 
   titleToken: 'Staff',
 
   beforeModel() {
+    this.dataLayer.push({template: 'flatpage'});
     this.header.addRule('staff', {
       all: {
         nav: true,

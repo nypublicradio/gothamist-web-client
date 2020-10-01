@@ -26,5 +26,13 @@ export default PageRoute.extend({
       ogTitle: model.page.title, // don't include " - Gothamist" like in <title> tag
       hideFromRobots: !model.page.showOnIndexListing,
     });
+  },
+  actions: {
+    didTransition() {
+      if (!this.fastboot.isFastBoot) {
+        window.scrollTo(0, 0);
+      }
+      return true;
+    }
   }
 });

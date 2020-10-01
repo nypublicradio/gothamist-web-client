@@ -29,7 +29,6 @@ Router.map(function() {
   this.route('sections', {path: ':section'});
   this.route('author-detail', {path: 'staff/:slug'});
 
-  this.route('contact');
   this.route('newsletter');
   this.route('preview');
 

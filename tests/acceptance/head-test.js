@@ -11,14 +11,14 @@ module("Acceptance | head component", function (hooks) {
     const article = await server.create("article", "withSection", {
       text: "foo",
       section: "food",
-      canonicalUrl: "http://www.example.com",
+      canonicalUrl: "http://localhost",
     });
 
     await visit(`/food/${article.slug}`);
 
     assert
       .dom("link[rel=canonical]", document)
-      .hasAttribute("href", "http://www.example.com");
+      .hasAttribute("href", "http://localhost");
   });
 
   test("puts original url if no canonicalUrl", async function (assert) {
@@ -31,7 +31,7 @@ module("Acceptance | head component", function (hooks) {
 
     assert.notEqual(
       document.querySelector("link[rel=canonical").href,
-      "http://www.example.com"
+      "http://localhost"
     );
   });
 
