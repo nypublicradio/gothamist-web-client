@@ -82,7 +82,7 @@ export default Route.extend({
         url: 'https://www.gothamistllc.com/',
         text: 'Advertising',
       }, {
-        url: '/contact',
+        route: ['generic', 'contact'],
         text: 'Contact Us'
       }, {
         url: '/feed/',
