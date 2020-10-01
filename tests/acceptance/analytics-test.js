@@ -12,6 +12,9 @@ import config from 'gothamist-web-client/config/environment';
 import { ANCESTRY } from '../unit/fixtures/article-fixtures';
 import { CMS_TIMESTAMP_FORMAT } from '../../mirage/factories/consts';
 
+function containsText(text) {
+  return [...document.querySelectorAll('a')].find(el => el.textContent.includes(text))
+}
 
 module('Acceptance | analytics', function(hooks) {
   setupApplicationTest(hooks);
@@ -69,10 +72,7 @@ module('Acceptance | analytics', function(hooks) {
     // await click('[data-test-top-nav] [data-test-nav-link="3"]'); // popular "dimension"
     // assert.ok(spyLayer.push.calledWith({template: 'dimension'}), 'dimension template is declared');
 
-    await click('[data-test-main-footer] [data-test-secondary-nav-link="1"]'); // contact us
-    assert.ok(spyLayer.push.calledWith({template: 'flatpage'}), 'flatpage template is declared');
-
-    await click('[data-test-main-footer] [data-test-secondary-nav-link="3"]'); // staff
+    await click(containsText(('Staff'))); // staff
     assert.ok(spyLayer.push.calledWith({template: 'flatpage'}), 'flatpage template is declared');
 
     await visit('/search');
