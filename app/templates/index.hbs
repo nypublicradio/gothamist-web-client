@@ -47,16 +47,18 @@
   </div>
 
   <div class="o-ad o-ad--leaderboard">
-    <AdTagLeaderboard @slot="gothamist/index/leaderboard/2" />
+    <AdTagLeaderboard @slot="gothamist/index/leaderboard/2" @sizes="0x0:300x250|750x0:728x90|1000x0:970x250,970x90,728x90" />
   </div>
 
   <div class="l-container l-container--10col">
     <ArticleList @articles={{slice GROUP_SIZE (multiply GROUP_SIZE 2)  model.river}}/>
   </div>
 
-  <div class="o-ad o-ad--leaderboard">
-    <AdTagLeaderboard @slot="gothamist/index/leaderboard/3" />
-  </div>
+  {{#if (media 'isMediumAndUp')}}
+    <div class="o-ad o-ad--leaderboard">
+      <AdTagLeaderboard @slot="gothamist/index/leaderboard/3" @sizes="0x0:300x250|750x0:728x90|1000x0:970x250,970x90,728x90" />
+    </div>
+  {{/if}}
 
   <div class="l-container l-container--14col">
     <ArticleList @articles={{slice (multiply GROUP_SIZE 2) (multiply GROUP_SIZE 3) model.river}} @ad='gothamist/index/rectangle/2' />
