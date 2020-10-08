@@ -39,7 +39,7 @@ module.exports = function(defaults) {
     'nypr-design-system': {
       themes: env && env.toUpperCase() === 'PROD' ?
         ['gothamist'] :
-        ['gothamist', 'white-label', 'deprecated']
+        ['gothamist', 'white-label', 'deprecated','wnyc']
     },
     SRI: {
       // JS preload fails due to a bug in chromium
