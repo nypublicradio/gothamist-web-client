@@ -34,6 +34,7 @@
 !.env.deploy.sample
 
 .eggs
+.vscode
 
 .yalc/*
 /.yalc/
