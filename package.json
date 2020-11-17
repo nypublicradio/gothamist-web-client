@@ -88,7 +88,7 @@
     "jsdom": "^15.1.1",
     "loader.js": "^4.7.0",
     "memory-scroll": "^0.9.1",
-    "nypr-ads-htl": "nypublicradio/nypr-ads-htl#ecdd6c40b63d7a77e5724c59d132883dd28e116d",
+    "nypr-ads-htl": "0.1.5",
     "nypr-auth": "^0.2.4",
     "nypr-design-system": "3.1.5",
     "nypr-metrics": "^0.7.0",
