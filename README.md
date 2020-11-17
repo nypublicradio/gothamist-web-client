@@ -69,7 +69,7 @@ The usual way to do this is [creating a new release in GitHub](https://docs.gith
 
 #### Deploying to the Demo Environment
 
-Whenever code is merged to the `master` branch, it's automatically deployed to the demo environment. (https://gothamist-client.demo.nypr.digital)
+Whenever code is merged to the `main` branch, it's automatically deployed to the demo environment. (https://gothamist-client.demo.nypr.digital)
 
 If you want to manually deploy code in another branch to the demo environment, you can use create a tag named `demo` and push that tag.
 

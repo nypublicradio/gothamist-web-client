@@ -27,7 +27,7 @@ templates:
   filter_demo: &filter_demo
     filters:
       branches:
-        only: master
+        only: main
       tags:
         only: demo
 
@@ -43,7 +43,7 @@ templates:
       branches:
         only: /[A-Za-z-_\/\d]+/
         ignore:
-          - master
+          - main
           - /dependabot.*/
 
   deploy_fastboot: &deploy_fastboot
@@ -179,7 +179,7 @@ workflows:
       - build-static:
           filters:
             branches:
-              ignore: /master|[A-Za-z-_]+/[A-Za-z-_\d]+/
+              ignore: /main|[A-Za-z-_]+/[A-Za-z-_\d]+/
       - test-static:
           requires:
             - build-static
