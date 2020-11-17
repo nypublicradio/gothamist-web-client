@@ -53,7 +53,7 @@ templates:
       - checkout
       - setup_remote_docker
       - restore_cache:
-          key: deploy-{{ checksum "circle.yml" }}
+          key: v1-deploy-{{ checksum "circle.yml" }}
       - run:
           name: Install Requirements
           command: |
@@ -83,7 +83,7 @@ templates:
               --wait=300 \
               --no-strict-environment
       - save_cache:
-          key: deploy-{{ checksum "circle.yml" }}
+          key: v1-deploy-{{ checksum "circle.yml" }}
           paths:
             - ~/.venv
 
