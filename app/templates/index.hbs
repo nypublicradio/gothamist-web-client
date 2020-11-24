@@ -43,12 +43,12 @@
   {{/if}}
 
   <div class="l-container l-container--14col">
-    <ArticleList @articles={{slice 0 GROUP_SIZE model.river}} @ad='gothamist/index/rectangle/1' />
+    <ArticleList @articles={{slice 0 GROUP_SIZE model.river}} @ad='_demo_test/gothamist/index/rectangle/1' />
   </div>
 
   {{#if (media 'isMediumAndUp')}}
     <div class="o-ad o-ad--leaderboard">
-      <AdTagLeaderboard @slot="gothamist/index/leaderboard/2" @sizes="0x0:300x250|750x0:728x90|1000x0:970x250,970x90,728x90" />
+      <AdTagLeaderboard @slot="_demo_test/gothamist/index/leaderboard/2" @sizes="0x0:300x250|750x0:728x90|1000x0:970x250,970x90,728x90" />
     </div>
   {{/if}}
 
@@ -57,11 +57,11 @@
   </div>
 
   <div class="o-ad o-ad--leaderboard">
-    <AdTagLeaderboard @slot="gothamist/index/leaderboard/3" @sizes="0x0:300x250|750x0:728x90|1000x0:970x250,970x90,728x90" />
+    <AdTagLeaderboard @slot="_demo_test/gothamist/index/leaderboard/3" @sizes="0x0:300x250|750x0:728x90|1000x0:970x250,970x90,728x90" />
   </div>
 
   <div class="l-container l-container--14col">
-    <ArticleList @articles={{slice (multiply GROUP_SIZE 2) (multiply GROUP_SIZE 3) model.river}} @ad='gothamist/index/rectangle/2' />
+    <ArticleList @articles={{slice (multiply GROUP_SIZE 2) (multiply GROUP_SIZE 3) model.river}} @ad='_demo_test/gothamist/index/rectangle/2' />
   </div>
 </div>
 
@@ -80,7 +80,7 @@
 <div class="c-home__content-bottom u-spacing--quad l-container l-wrap">
 
   <div class="l-container l-container--14col">
-    <ArticleList @articles={{slice (multiply GROUP_SIZE 3) undefined model.river}} @ad='gothamist/index/rectangle/3' />
+    <ArticleList @articles={{slice (multiply GROUP_SIZE 3) undefined model.river}} @ad='_demo_test/gothamist/index/rectangle/3' />
   </div>
 
   <QueryMore
@@ -94,7 +94,7 @@
         <AriaLoadMessage @message="More Results Loaded" />
         {{#animated-each page use=transition initialInsertion=true as |set|}}
           <div class="l-container l-container--14col">
-            <ArticleList @articles={{set}} @ad='gothamist/index/rectangle/repeating' />
+            <ArticleList @articles={{set}} @ad='_demo_test/gothamist/index/rectangle/repeating' />
           </div>
         {{/animated-each}}
       {{/each}}

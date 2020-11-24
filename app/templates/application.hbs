@@ -1,5 +1,5 @@
 {{#unless this.sensitive.on}}
-  <HtlbidAd class="dfp-skin" role="presentation" aria-hidden="true" @slot='gothamist/skin' @sizes="0x0:1x1" @isEager={{true}} />
+  <HtlbidAd class="dfp-skin" role="presentation" aria-hidden="true" @slot='_demo_test/gothamist/skin' @sizes="0x0:1x1" @isEager={{true}} />
 {{/unless}}
 
 <HeadLayout/>
@@ -14,9 +14,9 @@
   <header.leaderboard>
     {{#unless this.sensitive.on}}
       {{#if (eq target.currentRouteName 'index')}}
-        <AdTagLeaderboard @slot='gothamist/index/leaderboard/1' />
+        <AdTagLeaderboard @slot='_demo_test/gothamist/index/leaderboard/1' />
       {{else}}
-        <AdTagLeaderboard @slot='gothamist/interior/leaderboard' />
+        <AdTagLeaderboard @slot='_demo_test/gothamist/interior/leaderboard' />
       {{/if}}
     {{/unless}}
   </header.leaderboard>
