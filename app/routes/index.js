@@ -1,11 +1,9 @@
-import fetch from 'fetch';
 import moment from 'moment';
 
 import Route from '@ember/routing/route';
 import { inject } from '@ember/service';
 import { hash } from 'rsvp';
 
-import config from '../config/environment';
 import addCommentCount from '../utils/add-comment-count';
 
 
@@ -73,8 +71,7 @@ export default Route.extend({
       river: this.store.query('article', {
         limit: TOTAL_COUNT,
         fields: LISTING_FIELDS,
-      }).catch(failSafe('river')),
-      wnyc: getWnycStories(),
+      }).catch(failSafe('river'))
     }).then(results => {
       results.main = results.main.slice();
       if (!this.fastboot.isFastBoot) {
@@ -134,12 +131,3 @@ export default Route.extend({
     }
   },
 });
-
-async function getWnycStories() {
-  let response =  await fetch(`${config.apiServer}/api/v3/buckets/gothamist-wnyc-crossposting/`);
-  if (!response.ok) {
-    return [];
-  }
-  let json = await response.json();
-  return json.data.attributes['bucket-items'].map(s => s.attributes);
-}
