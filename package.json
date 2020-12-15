@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@ember/optional-features": "^0.6.3",
+    "@sentry/ember": "^5.29.0",
     "@types/ember": "^3.16.0",
     "@types/ember-data": "^3.16.2",
     "aws-sdk": "^2.496.0",
