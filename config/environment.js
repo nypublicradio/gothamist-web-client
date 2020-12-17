@@ -39,8 +39,7 @@ module.exports = function(environment) {
     '@sentry/ember': {
       sentry: {
         dsn: process.env.SENTRY_DSN,
-        tracesSampleRate: 1.0,
-        disablePerformance: true,
+        tracesSampleRate: 1,
       }
     },
 
@@ -135,6 +134,9 @@ module.exports = function(environment) {
 
     ENV.APP.rootElement = '#ember-testing';
     ENV.APP.autoboot = false;
+
+    // disable sentry
+    ENV['@sentry/ember'] = {};
 
     // for mirage endpoints
     ENV.siteId = 1;
