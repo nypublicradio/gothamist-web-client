@@ -10,7 +10,9 @@ const App = Application.extend({
   Resolver
 });
 
-InitSentryForEmber();
+if (config.environment !== 'test') {
+  InitSentryForEmber();
+}
 loadInitializers(App, config.modulePrefix);
 
 export default App;
