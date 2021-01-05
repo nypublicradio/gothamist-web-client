@@ -37,6 +37,7 @@ module.exports = function(environment) {
     },
 
     '@sentry/ember': {
+      disablePerformance: true,
       sentry: {
         dsn: process.env.SENTRY_DSN,
         tracesSampleRate: 1.0,
