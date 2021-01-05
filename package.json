@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@ember/optional-features": "^0.6.3",
-    "@sentry/ember": "^5.29.0",
+    "@sentry/ember": "^5.29.2",
     "@types/ember": "^3.16.0",
     "@types/ember-data": "^3.16.2",
     "aws-sdk": "^2.496.0",
@@ -105,7 +105,7 @@
     "abortcontroller-polyfill": "^1.4.0",
     "autoprefixer": "^9.8.0",
     "dotenv": "^6.2.0",
-    "nypr-fastboot": "^0.7.1"
+    "nypr-fastboot": "nypublicradio/nypr-fastboot#mwalsh/GOTH-1"
   },
   "resolutions": {
     "ember-template-lint": "^1.2.0",
