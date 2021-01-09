@@ -135,7 +135,12 @@
 
     </AdTagInside>
 
-    <div class="l-container--content u-section-spacing">
+    <div class="l-container--content u-section-spacing"
+      {{track-impression}}
+      data-category="NTG newsletter"
+      data-action="newsletter modal impression 1"
+      data-label="{{model.article.title}}"
+    >
       <NyprONewsletterArticle
               @endpoint={{NEWSLETTER_ENDPOINT}}
               @params={{NEWSLETTER_PARAMS}}
