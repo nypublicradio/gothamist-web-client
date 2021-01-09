@@ -36,6 +36,16 @@ export default Component.extend({
         // we're the only ones controlling these callbacks
         // just replace it on every init
         this.callbacks.onReady = [onReady];
+        this.callbacks.onNewComment = [function (/*comment*/) {
+          if (window && window.dataLayer) {
+            window.dataLayer.push({
+              eventCategory: "NTG user",
+              eventAction: "comment added",
+              eventLabel: "{article title}",
+              nonInteraction: false
+            })
+          }
+        }];
       } else {
         // it's preserved between renders so wipe it out
         this.callbacks.onReady = [];
