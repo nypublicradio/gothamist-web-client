@@ -33,14 +33,15 @@
                 data-label="Newsletter Signup Page"
               >
                 <NyprMNewsletterForm
+                  @endpoint={{NEWSLETTER_ENDPOINT}}
+                  @params={{NEWSLETTER_PARAMS}}
                   @onSuccess={{action this.trackEvent (hash
                     event="newsletter"
                     category="NTG newsletter"
                     action="newsletter signup"
                     label="success"
                   )}}
-                  @endpoint={{NEWSLETTER_ENDPOINT}}
-                  @params={{NEWSLETTER_PARAMS}} as |form|
+                  as |form|
                 >
                   <form.label />
                   <form.input />

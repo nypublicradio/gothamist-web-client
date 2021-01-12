@@ -144,6 +144,12 @@
       <NyprONewsletterArticle
               @endpoint={{NEWSLETTER_ENDPOINT}}
               @params={{NEWSLETTER_PARAMS}}
+              @onSuccess={{action this.trackEvent (hash
+                event="newsletter"
+                category="NTG newsletter"
+                action="newsletter signup"
+                label="success"
+              )}}
               as |tout|>
         <tout.heading>
           NYC news never sleeps. Get the Gothamist Daily newsletter and don't miss a moment.
