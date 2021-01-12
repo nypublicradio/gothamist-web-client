@@ -1,4 +1,4 @@
-const trackEvent = function(params, {event, category, action, label, nonInteraction=false}) {
+const trackEvent = function({event, category, action, label, nonInteraction=false}) {
   if (window && window.dataLayer) {
     window.dataLayer.push({
       event,
