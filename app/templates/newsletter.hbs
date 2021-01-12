@@ -27,12 +27,18 @@
                 </a>
               </p>
               <div class="l-container--content u-section-spacing"
-                {track-impression}}
+                {{track-impression}}
                 data-category="NTG newsletter"
                 data-action="newsletter modal impression 3"
                 data-label="Newsletter Signup Page"
               >
                 <NyprMNewsletterForm
+                  @onSuccess={{action this.trackEvent (hash
+                    event="newsletter"
+                    category="NTG newsletter"
+                    action="newsletter signup"
+                    label="success"
+                  )}}
                   @endpoint={{NEWSLETTER_ENDPOINT}}
                   @params={{NEWSLETTER_PARAMS}} as |form|
                 >
