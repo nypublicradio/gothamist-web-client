@@ -5,19 +5,22 @@ export default modifier(function trackImpression(element/*, params, hash*/) {
   let eventAction = element.dataset.action;
   let eventLabel = element.dataset.label;
   function trackImpression() {
-    if (window && window.dataLayer) {
+    if (window && window.dataLayer && !element.dataset.viewed) {
       window.dataLayer.push({
+        event: "impression",
         eventCategory,
         eventAction,
         eventLabel,
         nonInteraction: true
       })
+      element.dataset.viewed = true;
     }
   }
-  function onChange(changes/*, observer*/) {
+  function onChange(changes, observer) {
     changes.forEach(change => {
       if (change.intersectionRatio >= 1) {
         trackImpression();
+        observer.disconnect();
       }
     });
   }
@@ -29,5 +32,7 @@ export default modifier(function trackImpression(element/*, params, hash*/) {
     };
     let observer = new IntersectionObserver(onChange, options);
     observer.observe(element);
+
+    return () => observer.disconnect();
   }
 });
