@@ -39,9 +39,10 @@ export default Component.extend({
         this.callbacks.onNewComment = [function (/*comment*/) {
           if (window && window.dataLayer) {
             window.dataLayer.push({
+              event: "comment",
               eventCategory: "NTG user",
               eventAction: "comment added",
-              eventLabel: "{article title}",
+              eventLabel: window.title,
               nonInteraction: false
             })
           }
