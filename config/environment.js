@@ -36,6 +36,14 @@ module.exports = function(environment) {
       scriptURL: 'https://htlbid.com/v3/gothamist.com/htlbid.js',
     },
 
+    '@sentry/ember': {
+      disablePerformance: true,
+      sentry: {
+        dsn: process.env.SENTRY_DSN,
+        tracesSampleRate: 1.0,
+      }
+    },
+
     'ember-math-helpers': {
       only: ['mod'],
     },
