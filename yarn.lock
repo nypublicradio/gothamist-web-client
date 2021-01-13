@@ -12893,9 +12893,10 @@ nypr-design-system@3.1.20:
     stylelint-value-no-unknown-custom-properties "^3.0.0"
     yalc "^1.0.0-pre.35"
 
-nypr-fastboot@nypublicradio/nypr-fastboot#mwalsh/GOTH-1:
-  version "0.7.1"
-  resolved "https://codeload.github.com/nypublicradio/nypr-fastboot/tar.gz/7208d54e78d26d628761a290b35dfa3fd57daf9b"
+nypr-fastboot@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/nypr-fastboot/-/nypr-fastboot-0.8.0.tgz#c73538d924233c63d633d33f0fe540b0137358b6"
+  integrity sha512-jJi1jKdukbBa85ymZmUetzFBAIpR+uIz959XdawiO2YWdNgBWazok2jlyZr6p4e54/wmClx2WVMbC9EPJqXAqA==
   dependencies:
     "@sentry/node" "^5.29.2"
     aws-sdk "^2.279.1"
