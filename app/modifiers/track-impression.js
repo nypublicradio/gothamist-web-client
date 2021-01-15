@@ -18,6 +18,7 @@ export default modifier(function trackImpression(element/*, params, hash*/) {
       element.dataset.viewed = true;
     }
   }
+
   function elementIntersectionChanged(changes/*, observer*/) {
     changes.forEach(change => {
       if (change.intersectionRatio >= 0.75) {
@@ -25,14 +26,13 @@ export default modifier(function trackImpression(element/*, params, hash*/) {
       }
     });
   }
-  function routeChanged() {
-    // reset impression when route changes
+
+  function clearViewedStatus() {
     delete element.dataset.viewed;
   }
 
-  window.addEventListener('routeChange', routeChanged);
-
   if ('IntersectionObserver' in window) {
+    window.addEventListener('routeChange', clearViewedStatus);
     let options = {
         root: null, //viewport
         rootMargin: '0px',
@@ -41,6 +41,10 @@ export default modifier(function trackImpression(element/*, params, hash*/) {
     let observer = new IntersectionObserver(elementIntersectionChanged, options);
     observer.observe(element);
 
-    return () => observer.disconnect();
+    // cleanup
+    return () => {
+      window.removeEventListener('routeChange', clearViewedStatus);
+      observer.disconnect();
+    }
   }
 });
