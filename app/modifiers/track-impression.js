@@ -2,17 +2,17 @@ import { modifier } from 'ember-modifier';
 import trackEvent from '../utils/track-event';
 
 export default modifier(function trackImpression(element/*, params, hash*/) {
-  let eventCategory = element.dataset.category;
-  let eventAction = element.dataset.action;
-  let eventLabel = element.dataset.label;
+  let category = element.dataset.category;
+  let action = element.dataset.action;
+  let label = element.dataset.label;
 
   function trackImpression() {
     if (window.dataLayer && !element.dataset.viewed) {
       trackEvent({
         event: "impression",
-        eventCategory,
-        eventAction,
-        eventLabel,
+        category,
+        action,
+        label,
         nonInteraction: true
       })
       element.dataset.viewed = true;

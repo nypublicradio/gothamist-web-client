@@ -40,9 +40,9 @@ export default Component.extend({
         this.callbacks.onNewComment = [function (/*comment*/) {
           trackEvent({
             event: "comment",
-            eventCategory: "NTG user",
-            eventAction: "comment added",
-            eventLabel: window.title,
+            category: "NTG user",
+            action: "comment added",
+            label: window.title,
           });
         }];
       } else {
