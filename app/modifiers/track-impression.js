@@ -9,7 +9,6 @@ export default modifier(function trackImpression(element/*, params, hash*/) {
   function trackImpression() {
     if (window.dataLayer && !element.dataset.viewed) {
       trackEvent({
-        event: "impression",
         category,
         action,
         label,
