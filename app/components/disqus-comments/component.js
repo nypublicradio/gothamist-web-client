@@ -39,7 +39,6 @@ export default Component.extend({
         this.callbacks.onReady = [onReady];
         this.callbacks.onNewComment = [function (/*comment*/) {
           trackEvent({
-            event: "comment",
             category: "NTG user",
             action: "comment added",
             label: window.title,
