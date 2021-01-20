@@ -12,15 +12,13 @@
     <h1 class="c-tag-listing__heading u-font--secondary" data-test-tag-heading>
       {{if model.isWTC 'We the Commuters' model.title}}
     </h1>
-    {{#if model.hasDescription}}
-      <p class="c-tag-listing__description">{{ model.description }}</p>
+    {{#if model.page.hasTopPageZone}}
+      <ArticleBody @blocks={{model.page.topPageZone}} />
     {{/if}}
   </header>
-
   {{#unless model.hasTagImage}}
     <hr class="u-border-accent u-hide-until--m" aria-hidden="true">
   {{/unless}}
-
   {{#if model.isWTC}}
     <section class="c-listing__section o-section">
       <NyprMBlockList @items={{slice 0 3 model.articles}} as |article|>
@@ -65,7 +63,7 @@
       </NyprMBlockList>
     </section>
 
-  {{else if model.hasMidpageZone}}
+  {{else if model.page.hasMidpageZone}}
     <section class="c-listing__section o-section">
       <NyprMBlockList @items={{slice 0 3 model.articles}} as |article|>
         <ArticleBlock
@@ -78,7 +76,7 @@
       </NyprMBlockList>
     </section>
 
-    {{{ model.midPageZone }}}
+    <ArticleBody @blocks={{model.page.midpageZone}} />
 
     <section class="c-listing__section o-section">
       <NyprMBlockList @items={{slice 3 6 model.articles}} as |article|>
