@@ -43,10 +43,16 @@ export default Route.extend({
     return hash({
       tag,
       title: tag.replace(/-/g, ' '),
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      image: 'https://images.unsplash.com/photo-1587162147120-430be9b33be3?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80',
       articles: this.store.query('article', {
         tag_slug: tag,
         limit: COUNT,
       }),
+      hasDescription: true,
+      hasTagImage: true,
+      hasMidpageZone: true,
+      midPageZone: '<p>Mid page zone content goes here</p>',
       // HACK
       isWTC: sanitize(tag) === 'wethecommuters',
     }).then(results => {

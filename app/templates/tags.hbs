@@ -1,14 +1,25 @@
 <DoTargeting key='Template' value='Tag' />
 {{remember-document-scroll key=model.title}}
 
+{{#if model.hasTagImage}}
+  <div class="c-tag-listing__image">
+    <img alt={{ model.title }} src={{ model.image }}>
+  </div>
+{{/if}}
+
 <div class="c-listing__sections u-section-spacing l-container l-container--14col l-wrap">
-  <header class="c-tag-listing__header u-trigger-floating-header">
+  <header class={{if model.hasTagImage "c-tag-listing__header c-tag-listing__header-with-tag-image u-trigger-floating-header l-container l-container--12col" "c-tag-listing__header u-trigger-floating-header"}}>
     <h1 class="c-tag-listing__heading u-font--secondary" data-test-tag-heading>
       {{if model.isWTC 'We the Commuters' model.title}}
     </h1>
+    {{#if model.hasDescription}}
+      <p class="c-tag-listing__description">{{ model.description }}</p>
+    {{/if}}
   </header>
 
-  <hr class="u-border-accent u-hide-until--m" aria-hidden="true">
+  {{#unless model.hasTagImage}}
+    <hr class="u-border-accent u-hide-until--m" aria-hidden="true">
+  {{/unless}}
 
   {{#if model.isWTC}}
     <section class="c-listing__section o-section">
@@ -54,7 +65,35 @@
       </NyprMBlockList>
     </section>
 
+  {{else if model.hasMidpageZone}}
+    <section class="c-listing__section o-section">
+      <NyprMBlockList @items={{slice 0 3 model.articles}} as |article|>
+        <ArticleBlock
+                @article={{article}}
+                @orientation='h'
+                @size='l'
+                @thumbnailSize={{array 100 100 true}}
+                @mediumThumbnailSize={{array 360 240}}
+        />
+      </NyprMBlockList>
+    </section>
+
+    {{{ model.midPageZone }}}
+
+    <section class="c-listing__section o-section">
+      <NyprMBlockList @items={{slice 3 6 model.articles}} as |article|>
+        <ArticleBlock
+                @article={{article}}
+                @orientation='h'
+                @size='l'
+                @thumbnailSize={{array 100 100 true}}
+                @mediumThumbnailSize={{array 360 240}}
+        />
+      </NyprMBlockList>
+    </section>
+
   {{else}}
+
     <section class="c-listing__section o-section">
       <NyprMBlockList @items={{slice 0 6 model.articles}} as |article|>
         <ArticleBlock
