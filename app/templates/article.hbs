@@ -124,14 +124,16 @@
     <AdTagInside
       @slot="gothamist/interior/midpage/1"
       as |hooks|>
-      <NyprOArticleBody
-        class={{unless model.article.hasLead 'u-space--zero--top'}}
-        data-test-article-body>
-        <ArticleBody
-          @blocks={{model.article.body}}
-          @onDidRender={{hooks.didRender}}
-        />
-      </NyprOArticleBody>
+      <div {{track-scroll-depth model.article.title}}>
+        <NyprOArticleBody
+          class={{unless model.article.hasLead 'u-space--zero--top'}}
+          data-test-article-body>
+          <ArticleBody
+            @blocks={{model.article.body}}
+            @onDidRender={{hooks.didRender}}
+          />
+        </NyprOArticleBody>
+      </div>
 
     </AdTagInside>
 
