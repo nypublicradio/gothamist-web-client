@@ -153,18 +153,29 @@
   </footer.slogan>
 
   <footer.rightComponent>
-    <NyprMNewsletter
-            @endpoint={{NEWSLETTER_ENDPOINT}}
-            @params={{NEWSLETTER_PARAMS}}
-            as |newsletter|>
-      <newsletter.graphic>
-        <Icon @icon='gothamist/party-confetti' @title="newsletter signup"/>
-      </newsletter.graphic>
-      <newsletter.blurb>
-        Sign up for our newsletter! Share your email address to get our top stories each day.
-      </newsletter.blurb>
-      <newsletter.legal/>
-    </NyprMNewsletter>
+    <div {{track-impression}}
+      data-category="NTG newsletter"
+      data-action="newsletter modal impression 2"
+      data-label="footer"
+    >
+      <NyprMNewsletter
+              @endpoint={{NEWSLETTER_ENDPOINT}}
+              @params={{NEWSLETTER_PARAMS}}
+              @onSuccess={{action this.trackEvent (hash
+                category="NTG newsletter"
+                action="newsletter signup"
+                label="success"
+              )}}
+              as |newsletter|>
+        <newsletter.graphic>
+          <Icon @icon='gothamist/party-confetti' @title="newsletter signup"/>
+        </newsletter.graphic>
+        <newsletter.blurb>
+          Sign up for our newsletter! Share your email address to get our top stories each day.
+        </newsletter.blurb>
+        <newsletter.legal/>
+      </NyprMNewsletter>
+    </div>
   </footer.rightComponent>
 
   <footer.social>

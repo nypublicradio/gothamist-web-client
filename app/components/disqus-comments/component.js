@@ -1,6 +1,7 @@
 /* global DISQUS */
 import Component from '@ember/component';
 import { schedule } from '@ember/runloop';
+import trackEvent from '../../utils/track-event';
 
 export default Component.extend({
   tagName: '',
@@ -36,6 +37,13 @@ export default Component.extend({
         // we're the only ones controlling these callbacks
         // just replace it on every init
         this.callbacks.onReady = [onReady];
+        this.callbacks.onNewComment = [function (/*comment*/) {
+          trackEvent({
+            category: "NTG user",
+            action: "comment added",
+            label: window.title,
+          });
+        }];
       } else {
         // it's preserved between renders so wipe it out
         this.callbacks.onReady = [];

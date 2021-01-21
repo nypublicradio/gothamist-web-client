@@ -37,21 +37,37 @@
             <share.share
               @service='facebook'
               @utm={{hash medium='social' source='facebook' campaign='shared_facebook'}}
+              class="gtm__click-tracking"
+              data-category="NTG social"
+              data-action="social share"
+              data-label="facebook"
             />
             <share.share
               @service='twitter'
               @params={{hash text=model.article.title via='gothamist'}}
               @utm={{hash medium='social' source='twitter' campaign='shared_twitter'}}
+              class="gtm__click-tracking"
+              data-category="NTG social"
+              data-action="social share"
+              data-label="twitter"
             />
             <share.share
               @service='reddit'
               @params={{hash title=model.article.title}}
               @utm={{hash medium='social' source='reddit' campaign='shared_twitter'}}
+              class="gtm__click-tracking"
+              data-category="NTG social"
+              data-action="social share"
+              data-label="reddit"
             />
             <share.share
               @service='email'
               @params={{hash body=(concat model.article.title ' - {{URL}}')}}
               @utm={{hash medium='social' source='email' campaign='shared_email'}}
+              class="gtm__click-tracking"
+              data-category="NTG social"
+              data-action="social share"
+              data-label="email"
             />
           </NyprMShareTools>
         </lead.left>
@@ -119,10 +135,20 @@
 
     </AdTagInside>
 
-    <div class="l-container--content u-section-spacing">
+    <div class="l-container--content u-section-spacing"
+      {{track-impression}}
+      data-category="NTG newsletter"
+      data-action="newsletter modal impression 1"
+      data-label={{model.article.title}}
+    >
       <NyprONewsletterArticle
               @endpoint={{NEWSLETTER_ENDPOINT}}
               @params={{NEWSLETTER_PARAMS}}
+              @onSuccess={{action this.trackEvent (hash
+                category="NTG newsletter"
+                action="newsletter signup"
+                label="success"
+              )}}
               as |tout|>
         <tout.heading>
           NYC news never sleeps. Get the Gothamist Daily newsletter and don't miss a moment.

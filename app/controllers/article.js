@@ -7,6 +7,7 @@ import PageController from './page'
 import { inject } from '@ember/service';
 import { computed } from '@ember/object';
 import { wagtailImageUrl } from 'ember-wagtail-images';
+import trackEvent from '../utils/track-event';
 
 import config from '../config/environment';
 
@@ -43,6 +44,8 @@ export default PageController.extend({
       title,
     }));
   }),
+
+  trackEvent,
 
   actions: {
     viewGallery() {
