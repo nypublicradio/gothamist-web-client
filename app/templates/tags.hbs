@@ -1,14 +1,14 @@
 <DoTargeting key='Template' value='Tag' />
 {{remember-document-scroll key=model.title}}
 
-{{#if model.hasTagImage}}
+{{#if model.page.hasDesignedHeader }}
   <div class="c-tag-listing__image">
-    <img alt={{ model.title }} src={{ model.image }}>
+    <img alt={{ model.page.designedHeader.value.image.alt }} src={{wagtail-image-url model.page.designedHeader.value.image 1600 277}}>
   </div>
 {{/if}}
 
 <div class="c-listing__sections u-section-spacing l-container l-container--14col l-wrap">
-  <header class={{if model.hasTagImage "c-tag-listing__header c-tag-listing__header-with-tag-image u-trigger-floating-header l-container l-container--12col" "c-tag-listing__header u-trigger-floating-header"}}>
+  <header class={{if model.page.hasDesignedHeader "c-tag-listing__header c-tag-listing__header-with-tag-image u-trigger-floating-header l-container l-container--12col" "c-tag-listing__header u-trigger-floating-header"}}>
     <h1 class="c-tag-listing__heading u-font--secondary" data-test-tag-heading>
       {{if model.isWTC 'We the Commuters' model.title}}
     </h1>
@@ -16,7 +16,7 @@
       <ArticleBody @blocks={{model.page.topPageZone}} />
     {{/if}}
   </header>
-  {{#unless model.hasTagImage}}
+  {{#unless model.page.hasDesignedHeader}}
     <hr class="u-border-accent u-hide-until--m" aria-hidden="true">
   {{/unless}}
   {{#if model.isWTC}}

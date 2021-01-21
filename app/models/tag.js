@@ -11,5 +11,5 @@ export default Page.extend({
 
   hasMidpageZone: notEmpty('midpageZone'),
   hasTopPageZone: notEmpty('topPageZone'),
-  hasDesignedHeader: notEmpty('topPageZone'),
+  hasDesignedHeader: notEmpty('designedHeader'),
 });
