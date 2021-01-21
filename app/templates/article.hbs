@@ -194,6 +194,7 @@
               @identifier={{model.article.idForComments}}
               @permalink={{model.article.permalink}}
               @onReady={{navigateToComments}}
+              @onNewComment={{action trackNewComment model.article.title}}
             />
           </footer.comments>
         {{/unless}}
