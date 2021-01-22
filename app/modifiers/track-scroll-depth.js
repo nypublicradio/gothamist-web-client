@@ -1,6 +1,6 @@
 import { modifier } from 'ember-modifier';
 import { debounce } from '@ember/runloop';
-import trackEvent from '../utils/trackevent'
+import trackEvent from '../utils/track-event'
 
 
 export default modifier(function trackScrollDepth(element, [label]/*, params, hash*/) {
