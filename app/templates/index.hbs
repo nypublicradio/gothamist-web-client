@@ -68,7 +68,7 @@
 <div class="c-home__tout"
   {{track-impression}}
   data-category="NTG memebership"
-  data-action="membership modal impression 1"
+  data-action="membership modal impression 4"
   data-label={{document.title}}
 >
   <NyprODonate
@@ -76,9 +76,11 @@
     @linkText='Donate'
     @icon='gothamist/nyc-love'
     class="c-donate-tout--static gtm_click-tracking"
-    data-category="NTG membership"
-    data-action="marketing modal click"
-    data-label={{document.title}}
+    @donateClicked={{action this.trackEvent (hash
+      category="NTG membership"
+      action="marketing modal click"
+      label=document.title
+    )}}
   >
     <p>
       Help fund the local coverage you rely on. Back the extra reporting you need during this global pandemic.
