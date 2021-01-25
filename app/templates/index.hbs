@@ -65,12 +65,21 @@
   </div>
 </div>
 
-<div class="c-home__tout">
+<div class="c-home__tout"
+  {{track-impression}}
+  data-category="NTG memebership"
+  data-action="membership modal impression 1"
+  data-label={{document.title}}
+>
   <NyprODonate
     @linkUrl='https://pledge3.wnyc.org/donate/gothamist/onestep?utm_medium=partnersite&utm_source=gothamist&utm_campaign=homepagedonationask'
     @linkText='Donate'
     @icon='gothamist/nyc-love'
-    class="c-donate-tout--static">
+    class="c-donate-tout--static gtm_click-tracking"
+    data-category="NTG membership"
+    data-action="marketing modal click"
+    data-label={{document.title}}
+  >
     <p>
       Help fund the local coverage you rely on. Back the extra reporting you need during this global pandemic.
     </p>
