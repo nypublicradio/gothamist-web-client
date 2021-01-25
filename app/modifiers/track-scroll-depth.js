@@ -4,8 +4,12 @@ import trackEvent from '../utils/track-event'
 
 
 export default modifier(function trackScrollDepth(element, [label]/*, params, hash*/) {
-  const thresholds = [0.25,0.50,0.75,1];
-  let watching = thresholds.slice(0);
+  const milestones = [0.25,0.50,0.75,1];
+  let watching = [];
+
+  function resetTrackedMilestones() {
+    watching = milestones.slice(0);
+  }
 
   function trackScrollDepth(threshold) {
     let percentScrolled = threshold * 100;
@@ -43,11 +47,13 @@ export default modifier(function trackScrollDepth(element, [label]/*, params, ha
     }, 200);
   }
 
-
+  resetTrackedMilestones();
+  window.addEventListener('routeChange', resetTrackedMilestones);
   window.addEventListener('scroll', handleScrollChanges, {passive: true});
   window.addEventListener('resize', handleScrollChanges);
 
   return () => {
+    window.removeEventListener('routeChange', resetTrackedMilestones);
     window.removeEventListener('scroll', handleScrollChanges, {passive: true});
     window.removeEventListener('resize', handleScrollChanges);
   }
