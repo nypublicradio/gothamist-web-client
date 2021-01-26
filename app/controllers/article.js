@@ -21,6 +21,8 @@ export default PageController.extend({
 
   commentsAnchor: config.commentsAnchor,
 
+  trackEvent,
+
   navigateToComments: computed('to', function() {
     let { to, commentsAnchor } = this;
     let goToComments = to === commentsAnchor;
@@ -28,6 +30,14 @@ export default PageController.extend({
       return () => document.querySelector(`#${commentsAnchor}`).scrollIntoView();
     }
   }),
+
+  trackNewComment(title) {
+    trackEvent({
+      category: "NTG user",
+      action: "comment added",
+      label: title,
+    });
+  },
 
   galleryLeadSlides: computed('model.gallery', function() {
     if (!this.model.gallery) {
@@ -44,8 +54,6 @@ export default PageController.extend({
       title,
     }));
   }),
-
-  trackEvent,
 
   actions: {
     viewGallery() {
