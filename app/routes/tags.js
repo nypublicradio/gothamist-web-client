@@ -45,7 +45,8 @@ export default Route.extend({
       title: tag.replace(/-/g, ' '),
       page: this.store.queryRecord('tag', {
         html_path: `tags/${tag}`
-      }).catch(/* don't want to throw an error on missing custom tag page */),
+        // eslint-disable-next-line no-unused-vars
+      }).catch(error => { return }),
       articles: this.store.query('article', {
         tag_slug: tag,
         limit: COUNT,
