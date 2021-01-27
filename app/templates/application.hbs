@@ -26,7 +26,7 @@
     @onDonateClick={{action this.trackEvent (hash
       category="NTG membership"
       action="marketing modal click"
-      label={{document.title}}
+      label=document.title
     )}}
     data-test-side-menu
     as |menu|>
@@ -117,22 +117,22 @@
     {{/with}}
 
     {{#if header.rules.donate}}
-    <div
-      {{track-impression}}
-      data-category="NTG membership"
-      data-action="membership modal impression 1"
-      data-label={{window.title}}
-    >
-      <Button
-        class='mod-donate mod-header'
-        name="donateHeader"
-        @label='Donate'
-        @href={{DONATE_URL}}
-        @onclick={{action this.trackEvent (hash
-          category="NTG membership"
-          action="marketing modal click"
-          label=window.title
-        )}}/>
+      <div
+        {{track-impression}}
+        data-category="NTG membership"
+        data-action="membership modal impression 1"
+        data-label={{window.title}}
+      >
+        <Button
+          class='mod-donate mod-header'
+          name="donateHeader"
+          @label='Donate'
+          @href={{DONATE_URL}}
+          @onclick={{action this.trackEvent (hash
+            category="NTG membership"
+            action="marketing modal click"
+            label=window.title
+          )}}/>
         </div>
     {{/if}}
 
