@@ -175,8 +175,18 @@
             @linkText='Donate Now'
             @icon='nyc-love'
             @linkUrl='https://pledge3.wnyc.org/donate/gothamist/onestep?utm_medium=partnersite&utm_source=gothamist&utm_campaign=articledonationask'
+            @onDonateClick={{action this.trackEvent (hash
+              category="NTG membership"
+              action="marketing modal click"
+              label=model.article.title
+            )}}
           >
-            <p>
+            <p
+              {{track-impression}}
+              data-category="NTG membership"
+              data-action="marketing modal impression 3"
+              data-label=model.article.title
+            >
               Help fund the local coverage you rely on. Back the extra reporting you need during this global pandemic.
             </p>
           </footer.donate>

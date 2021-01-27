@@ -159,7 +159,20 @@
     </div>
 
     {{#with model.systemMessages.topProductBanner as |productBanner|}}
-      <ProductBanner @banner={{productBanner}} />
+      <div
+        {{track-impression}}
+        data-category="NTG membership"
+        data-action="membership modal impression 5"
+        data-label={{document.title}}
+      >
+        <ProductBanner
+          @banner={{productBanner}}
+          @onClick={{action this.trackEvent (hash
+              category="NTG membership"
+              action="marketing modal click"
+              label=model.article.title
+            )}}/>
+      </div>
     {{/with}}
   </div>
 
