@@ -26,7 +26,7 @@
     @onDonateClick={{action this.trackEvent (hash
       category="NTG membership"
       action="marketing modal click"
-      label=document.title
+      label=target.headData.title
     )}}
     data-test-side-menu
     as |menu|>
@@ -35,7 +35,7 @@
         {{track-impression}}
         data-category="NTG membership"
         data-action="membership modal impression 2"
-        data-label={{document.title}}
+        data-label={{target.headData.title}}
       />
       {{#link-to 'index'}}
         <Icon @icon='gothamist/logo' @title="gothamist logo"/>
@@ -121,7 +121,7 @@
         {{track-impression}}
         data-category="NTG membership"
         data-action="membership modal impression 1"
-        data-label={{window.title}}
+        data-label={{target.headData.title}}
       >
         <Button
           class='mod-donate mod-header'
@@ -131,7 +131,7 @@
           @onclick={{action this.trackEvent (hash
             category="NTG membership"
             action="marketing modal click"
-            label=window.title
+            label=target.headData.title
           )}}/>
         </div>
     {{/if}}
@@ -163,14 +163,14 @@
         {{track-impression}}
         data-category="NTG membership"
         data-action="membership modal impression 5"
-        data-label={{document.title}}
+        data-label={{target.headData.title}}
       >
         <ProductBanner
           @banner={{productBanner}}
           @onClick={{action this.trackEvent (hash
               category="NTG membership"
               action="marketing modal click"
-              label=model.article.title
+              label=target.headData.title
             )}}/>
       </div>
     {{/with}}

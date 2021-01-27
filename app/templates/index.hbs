@@ -69,7 +69,7 @@
   {{track-impression}}
   data-category="NTG membership"
   data-action="membership modal impression 4"
-  data-label={{document.title}}
+  data-label={{target.headData.title}}
 >
   <NyprODonate
     @linkUrl='https://pledge3.wnyc.org/donate/gothamist/onestep?utm_medium=partnersite&utm_source=gothamist&utm_campaign=homepagedonationask'
@@ -79,7 +79,7 @@
     @onDonateClick={{action this.trackEvent (hash
       category="NTG membership"
       action="marketing modal click"
-      label=document.title
+      label=target.headData.title
     )}}
   >
     <p>
