@@ -21,8 +21,22 @@
     {{/unless}}
   </header.leaderboard>
 
-  <header.menu @donateUrl={{DONATE_URL}} data-test-side-menu as |menu|>
+  <header.menu
+    @donateUrl={{DONATE_URL}}
+    @onDonateClick={{action this.trackEvent (hash
+      category="NTG membership"
+      action="marketing modal click"
+      label={{document.title}}
+    )}}
+    data-test-side-menu
+    as |menu|>
     <menu.branding>
+      <div
+        {{track-impression}}
+        data-category="NTG membership"
+        data-action="membership modal impression 2"
+        data-label={{document.title}}
+      />
       {{#link-to 'index'}}
         <Icon @icon='gothamist/logo' @title="gothamist logo"/>
       {{/link-to}}
