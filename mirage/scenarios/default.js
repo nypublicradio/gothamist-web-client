@@ -5,6 +5,7 @@ export default function(server) {
     This data will not be loaded in your tests.
   */
 
+  server.create('homepage', 'hasFeaturedCollection');
   server.create('system-message');
   server.create('product-banner');
 

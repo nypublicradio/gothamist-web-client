@@ -16,6 +16,7 @@ module('Acceptance | homepage', function(hooks) {
   setupMirage(hooks);
 
   test('visiting homepage', async function(assert) {
+    server.create('homepage');
     server.createList('article', 10, 'now', {
       show_as_feature: true,
     });
@@ -39,6 +40,7 @@ module('Acceptance | homepage', function(hooks) {
   });
 
   test('og metadata is correct', async function(assert) {
+    server.create('homepage');
     server.createList('article', 10, 'now', {
       show_as_feature: true,
     });
@@ -47,7 +49,7 @@ module('Acceptance | homepage', function(hooks) {
     server.create('wnyc-story', {id: 'gothamist-wnyc-crossposting'});
 
     await visit(`/`);
-    
+
     const title = 'Gothamist: New York City Local News, Food, Arts & Events';
     const desc = 'Gothamist is a website about New York City news, arts and events, and food, brought to you by New York Public Radio.';
     const imagePath = window.location.origin + config.fallbackMetadataImage;
@@ -65,6 +67,7 @@ module('Acceptance | homepage', function(hooks) {
   });
 
   test('sponsored posts younger than 24 hours appear in sponsored tout', async function(assert) {
+    server.create('homepage');
     const TITLE = 'foo';
 
     server.create('article', {
@@ -80,6 +83,7 @@ module('Acceptance | homepage', function(hooks) {
   });
 
   test('sponsored posts older than 24 hours do not appear in sponsored tout', async function(assert) {
+    server.create('homepage');
 
     server.create('article', {
       sponsored_content: true,
@@ -91,6 +95,8 @@ module('Acceptance | homepage', function(hooks) {
   });
 
   test('sponsored posts tagged @main and between 24 and 48 hours old appear in featured area', async function(assert) {
+    server.create('homepage');
+
     server.create('article', {
       id: 'sponsored-main',
       show_as_feature: true,
@@ -113,6 +119,8 @@ module('Acceptance | homepage', function(hooks) {
   });
 
   test('articles get updated with commentCount', async function(assert) {
+    server.create('homepage');
+
     server.createList('article', 10, {
       show_as_feature: true,
     });
@@ -134,5 +142,23 @@ module('Acceptance | homepage', function(hooks) {
       assert.ok(block.querySelector('.c-block-meta__comments'), 'comments are rendered');
       assert.dom(block.querySelector('.c-block-meta__comments')).includesText(String(posts));
     });
+  });
+
+  test('featured article pinned content appears and is in the correct order', async function(assert) {
+    server.createList('article', 10, 'now');
+    server.create('homepage', 'hasFeaturedCollection');
+
+    await visit('/');
+
+    assert.dom('.c-featured-blocks__col1 [data-test-block-title]').exists();
+    // assert.dom('[data-test-featured-block-list] [data-test-block]').exists();
+
+    // let featuredHeadings = document.querySelectorAll('.c-featured-blocks h3')
+
+    await this.pauseTest()
+    // assert.equal(featuredHeadings[0].innerText, "Insignificant Blizzard Can't Stop Cronut Fans From Lining Up This Morning")
+    // assert.equal(featuredHeadings[1].innerText, "Gorgeous Mandarin Duck, Rarely Seen In U.S., Mysteriously Appears In Central Park",)
+    // assert.equal(featuredHeadings[2].innerText, "Delicious Tibetan Momos And Noodles At New East Village Location Of Lhasa")
+    // assert.equal(featuredHeadings[3].innerText, "SEE IT: Cynthia Nixon Orders Cinnamon Raisin Bagel With... Lox And Capers")
   });
 });
