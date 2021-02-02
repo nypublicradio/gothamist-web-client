@@ -78,6 +78,10 @@ export default function() {
     // add a trailing slash to match server expectations
     html_path = html_path.replace(/([^/]+)$/, '$1/');
 
+    if (html_path === "/") {
+      return schema['homepages'].all();
+    }
+
     if (html_path.startsWith("tags/")) {
       let slug = html_path.split('/')[1];
       return schema['tagpages'].where({slug});

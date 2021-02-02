@@ -3,7 +3,7 @@ import moment from 'moment';
 import Route from '@ember/routing/route';
 import { inject } from '@ember/service';
 import { hash } from 'rsvp';
-
+import { get } from '@ember/object';
 import addCommentCount from '../utils/add-comment-count';
 
 
@@ -63,6 +63,9 @@ export default Route.extend({
     return hash({
       sponsored: this.getSponsoredPost().catch(failSafe('sponsored')),
       sponsoredMain: this.getSponsoredMain().catch(failSafe('sponsoredMain')),
+      homepage: this.store.queryRecord('home', {
+        html_path: `/`
+      }).catch(() => ({})),
       main: this.store.query('article', {
         sponsored_content: false,
         show_as_feature: true,
@@ -74,26 +77,67 @@ export default Route.extend({
         fields: LISTING_FIELDS,
       }).catch(failSafe('river'))
     }).then(results => {
+      let featuredArticles = get(results, 'homepage.page_collection_relationship.pages');
+      console.log(featuredArticles)
+
       results.main = results.main.slice();
       if (!this.fastboot.isFastBoot) {
         addCommentCount(results.river);
         addCommentCount(results.main);
       }
       results.meta = results.river.meta;
+
+      // replace main with featured articles
+      if (featuredArticles) {
+        results.main.forEach((item, index) => {
+          if (featuredArticles[index]) {
+            results.main[index] = featuredArticles[index];
+          }
+        });
+      }
+
+      // remove articles in main (the featured content area) from the river
+      if (results.sponsoredMain) {
+        results.main.replace(MAIN_COUNT - 1, 1, [results.sponsoredMain]);
+      }
+
       results.river = results.river.filter(article => !results.main.includes(article));
       // remove featured sponsored post from river
+
       if (results.sponsored) {
         results.river = results.river.filter(article => article !== results.sponsored);
       }
+
       // splice in sponsored main to main stories set
-      if (results.sponsoredMain) {
-        let articleForRiver = results.main[MAIN_COUNT - 1];
-        results.main.replace(MAIN_COUNT - 1, 1, [results.sponsoredMain]);
-        // remove featured sponsored post from river
-        results.river = results.river.filter(article => article !== results.sponsoredMain);
-        // add article removed from main/featured to the river
-        results.river.unshift(articleForRiver);
-      }
+      // if (results.sponsoredMain) {
+      //   let articleForRiver = results.main[MAIN_COUNT - 1];
+      //   results.main.replace(MAIN_COUNT - 1, 1, [results.sponsoredMain]);
+      //   // remove featured sponsored post from river
+      //   results.river = results.river.filter(article => article !== results.sponsoredMain);
+      //   // add article removed from main/featured to the river
+      //   results.river.unshift(articleForRiver);
+      // }
+      // if (featuredArticles.length === 4) {
+      //   // results.river.unshift(results.main[MAIN_COUNT -1])
+      //   // results.main.replace(MAIN_COUNT - 1, 1, [featuredArticles[3]])
+      //   // results.river.unshift(results.main[MAIN_COUNT -2])
+      //   // results.main.replace(MAIN_COUNT - 2, 1, [featuredArticles[2]])
+      //   // results.river.unshift(results.main[MAIN_COUNT -3])
+      //   // results.main.replace(MAIN_COUNT - 3, 1, [featuredArticles[1]])
+      //   // results.river.unshift(results.main[MAIN_COUNT -4])
+      //   // results.main.replace(MAIN_COUNT - 4, 1, [featuredArticles[0]])
+
+      //   // results.main.unshift(featuredArticles[3])
+      //   // results.main.unshift(featuredArticles[2])
+      //   // results.main.unshift(featuredArticles[1])
+      //   // results.main.unshift(featuredArticles[0])
+
+
+      //   console.log(results.main.length)
+      //   console.log(results.river.length)
+      //   // console.log(results.homepage.page_collection_relationship.pages)
+      //   console.log('THIS IS a TEST')
+      // }
       return results;
     });
   },
