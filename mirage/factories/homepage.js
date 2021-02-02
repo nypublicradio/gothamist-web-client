@@ -18,10 +18,12 @@ export default Factory.extend({
       homepage.update({
         page_collection_relationship: [{
           title: "Featured Article Collection",
-          pages: server.createList("article", 4, section, {title: faker.list.cycle("Insignificant Blizzard Can't Stop Cronut Fans From Lining Up This Morning",
+          pages: server.createList("article", 4, section,
+          {title: faker.list.cycle("Insignificant Blizzard Can't Stop Cronut Fans From Lining Up This Morning",
           "Gorgeous Mandarin Duck, Rarely Seen In U.S., Mysteriously Appears In Central Park", "Delicious Tibetan Momos And Noodles At New East Village Location Of Lhasa",
           "SEE IT: Cynthia Nixon Orders Cinnamon Raisin Bagel With... Lox And Capers",
           "Rent Now Slightly Less Too Damn High In Manhattan"),
+          show_as_feature: true,
         })
         }]
       });
