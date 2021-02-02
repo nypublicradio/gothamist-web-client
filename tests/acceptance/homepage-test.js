@@ -151,14 +151,36 @@ module('Acceptance | homepage', function(hooks) {
     await visit('/');
 
     assert.dom('.c-featured-blocks__col1 [data-test-block-title]').exists();
-    // assert.dom('[data-test-featured-block-list] [data-test-block]').exists();
 
-    // let featuredHeadings = document.querySelectorAll('.c-featured-blocks h3')
+    let featuredHeadings = document.querySelectorAll('.c-featured-blocks h3')
 
-    await this.pauseTest()
-    // assert.equal(featuredHeadings[0].innerText, "Insignificant Blizzard Can't Stop Cronut Fans From Lining Up This Morning")
-    // assert.equal(featuredHeadings[1].innerText, "Gorgeous Mandarin Duck, Rarely Seen In U.S., Mysteriously Appears In Central Park",)
-    // assert.equal(featuredHeadings[2].innerText, "Delicious Tibetan Momos And Noodles At New East Village Location Of Lhasa")
-    // assert.equal(featuredHeadings[3].innerText, "SEE IT: Cynthia Nixon Orders Cinnamon Raisin Bagel With... Lox And Capers")
+    assert.equal(featuredHeadings[0].innerText, "Insignificant Blizzard Can't Stop Cronut Fans From Lining Up This Morning")
+    assert.equal(featuredHeadings[1].innerText, "Gorgeous Mandarin Duck, Rarely Seen In U.S., Mysteriously Appears In Central Park",)
+    assert.equal(featuredHeadings[2].innerText, "Delicious Tibetan Momos And Noodles At New East Village Location Of Lhasa")
+    assert.equal(featuredHeadings[3].innerText, "SEE IT: Cynthia Nixon Orders Cinnamon Raisin Bagel With... Lox And Capers")
+  });
+
+  test('when featured content is pinned & sponsored posts tagged @main and between 24 and 48 hours old appear in featured area', async function(assert) {
+    server.create('homepage', 'hasFeaturedCollection');
+
+    server.create('article', {
+      id: 'sponsored-main',
+      show_as_feature: true,
+      sponsored_content: true,
+      publication_date: moment.utc().subtract(36, 'hours').format(CMS_TIMESTAMP_FORMAT),
+    });
+
+    server.create('article', {
+      id: 'sponsored',
+      sponsored_content: true,
+      publication_date: moment.utc().subtract(12, 'hours').format(CMS_TIMESTAMP_FORMAT),
+    });
+
+    server.createList('article', 10, {show_as_feature: true});
+
+    await visit('/');
+    assert.dom('[data-test-featured-block-list] [data-test-block-list-item="2"] [data-test-block="sponsored-main"]').exists('sponsored post is in the featured list in the 3rd position');
+
+    assert.dom('[data-test-sponsored-tout] .c-block__title').exists('regular sponsored post should also appear too');
   });
 });
