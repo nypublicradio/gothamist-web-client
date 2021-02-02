@@ -2,6 +2,7 @@ import Controller from '@ember/controller';
 import fade from 'ember-animated/transitions/fade';
 
 import addCommentCount from '../utils/add-comment-count';
+import trackEvent from '../utils/track-event';
 import config from '../config/environment';
 
 import {
@@ -31,6 +32,8 @@ export default Controller.extend({
   },
 
   transition: fade,
+
+  trackEvent,
 
   riverCallback(results) {
     const moreArticles = [];
