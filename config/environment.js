@@ -41,6 +41,7 @@ module.exports = function(environment) {
       sentry: {
         dsn: process.env.SENTRY_DSN,
         tracesSampleRate: 1.0,
+        whitelistUrls: [/gothamist-client\.demo\.nypr\.digital/, /gothamist\.com/],
       }
     },
 
