@@ -82,5 +82,12 @@ export default Route.extend({
 
       controller.set('addComments', results => (addCommentCount(results), results));
     }
+  },
+
+  actions: {
+    didTransition() {
+      this.controllerFor('application').set('mainRouteClasses', 'tags-page')
+      return true;
+    }
   }
 });
