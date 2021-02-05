@@ -65,7 +65,7 @@ export default Route.extend({
       sponsoredMain: this.getSponsoredMain().catch(failSafe('sponsoredMain')),
       homepage: this.store.queryRecord('home', {
         html_path: `/`
-      }).catch(() => ({})),
+      }).catch(e => console.log(e)),
       main: this.store.query('article', {
         sponsored_content: false,
         show_as_feature: true,
@@ -78,7 +78,7 @@ export default Route.extend({
       }).catch(failSafe('river'))
     }).then(results => {
       let featuredArticles = get(results, 'homepage.page_collection_relationship.pages');
-      console.log(featuredArticles)
+      console.log(results.homepage)
 
       results.main = results.main.slice();
       if (!this.fastboot.isFastBoot) {
