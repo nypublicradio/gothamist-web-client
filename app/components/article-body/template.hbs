@@ -1,4 +1,5 @@
 {{#each this.components as |block|}}
-  <div class="u-padding"></div>
-  {{component (concat 'article-body/' block.type) value=block.value}}
+  <div class="c-article__body-item">
+    {{component (concat 'article-body/' block.type) value=block.value}}
+  </div>
 {{/each}}
