@@ -31,9 +31,9 @@ export default DS.Model.extend({
     }
   }),
 
-  publishedMoment: computed('meta.first_published_at', 'publicationDate', function () {
-    if (this.publicationDate && this.publicationDate.isValid()) {
-      return this.publicationDate;
+  publishedMoment: computed('meta.first_published_at', 'publicationDate', function() {
+    if (this.publicationDate && moment(this.publicationDate).isValid()) {
+      return moment(this.publicationDate);
     } else {
       return moment.tz(this.meta.first_published_at, moment.defaultZone.name);
     }

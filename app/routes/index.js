@@ -3,7 +3,6 @@ import moment from 'moment';
 import Route from '@ember/routing/route';
 import { inject } from '@ember/service';
 import { hash } from 'rsvp';
-import { get } from '@ember/object';
 import addCommentCount from '../utils/add-comment-count';
 
 
@@ -76,9 +75,8 @@ export default Route.extend({
         limit: TOTAL_COUNT,
         fields: LISTING_FIELDS,
       }).catch(failSafe('river'))
-    }).then(results => {
-      let featuredArticles = get(results, 'homepage.page_collection_relationship.pages');
-      console.log(results.homepage)
+    }).then((results)=> {
+      let featuredArticles = results.homepage.featuredArticles.slice(0);
 
       results.main = results.main.slice();
       if (!this.fastboot.isFastBoot) {

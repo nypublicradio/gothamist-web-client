@@ -212,6 +212,6 @@ export default Page.extend({
   permalink: reads('url'),
 
   // relationships
-  gallery: DS.belongsTo(),
+  gallery: DS.belongsTo({async: true}),
 
 });
