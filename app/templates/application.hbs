@@ -21,8 +21,22 @@
     {{/unless}}
   </header.leaderboard>
 
-  <header.menu @donateUrl={{DONATE_URL}} data-test-side-menu as |menu|>
+  <header.menu
+    @donateUrl={{DONATE_URL}}
+    @onDonateClick={{action this.trackEvent (hash
+      category="NTG membership"
+      action="marketing modal click"
+      label=target.headData.title
+    )}}
+    data-test-side-menu
+    as |menu|>
     <menu.branding>
+      <div
+        {{track-impression}}
+        data-category="NTG membership"
+        data-action="membership modal impression 2"
+        data-label={{target.headData.title}}
+      />
       {{#link-to 'index'}}
         <Icon @icon='gothamist/logo' @title="gothamist logo"/>
       {{/link-to}}
@@ -103,7 +117,23 @@
     {{/with}}
 
     {{#if header.rules.donate}}
-      <Button class='mod-donate mod-header' name="donateHeader" @label='Donate' @href={{DONATE_URL}} />
+      <div
+        {{track-impression}}
+        data-category="NTG membership"
+        data-action="membership modal impression 1"
+        data-label={{target.headData.title}}
+      >
+        <Button
+          class='mod-donate mod-header'
+          name="donateHeader"
+          @label='Donate'
+          @href={{DONATE_URL}}
+          @onclick={{action this.trackEvent (hash
+            category="NTG membership"
+            action="marketing modal click"
+            label=target.headData.title
+          )}}/>
+      </div>
     {{/if}}
 
     {{#if header.rules.search}}
@@ -129,7 +159,20 @@
     </div>
 
     {{#with model.systemMessages.topProductBanner as |productBanner|}}
-      <ProductBanner @banner={{productBanner}} />
+      <div
+        {{track-impression}}
+        data-category="NTG membership"
+        data-action="membership modal impression 5"
+        data-label={{target.headData.title}}
+      >
+        <ProductBanner
+          @banner={{productBanner}}
+          @onButtonClick={{action this.trackEvent (hash
+              category="NTG membership"
+              action="marketing modal click"
+              label=target.headData.title
+            )}}/>
+      </div>
     {{/with}}
   </div>
 

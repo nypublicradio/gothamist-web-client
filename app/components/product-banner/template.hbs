@@ -28,7 +28,9 @@
               data-action="Product Marketing Banner"
               data-label="CTA Button"
               @href={{@banner.buttonLink}}
-              @label={{@banner.buttonText}} />
+              @label={{@banner.buttonText}}
+              @onclick={{optional @onButtonClick}}
+            />
           </body.cta>
         {{/if}}
       </box-banner.body>
