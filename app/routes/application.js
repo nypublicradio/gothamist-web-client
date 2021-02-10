@@ -170,6 +170,7 @@ export default Route.extend({
         return;
       }
       this.metrics.trackPage();
+      window.dispatchEvent(new Event('routeChange'));
       schedule('afterRender', () => {
         this.get('dataLayer').push({'event': 'optimize.activate'});
       });

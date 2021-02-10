@@ -1,5 +1,6 @@
 import Controller from '@ember/controller';
 import config from '../config/environment';
+import trackEvent from '../utils/track-event';
 
 const NEWSLETTER_ENDPOINT = `${config.apiServer}/opt-in/v1/subscribe/mailchimp`;
 const NEWSLETTER_PARAMS = {list: config.dailyNewsletter};
@@ -7,4 +8,5 @@ const NEWSLETTER_PARAMS = {list: config.dailyNewsletter};
 export default Controller.extend({
   NEWSLETTER_ENDPOINT,
   NEWSLETTER_PARAMS,
+  trackEvent
 });
