@@ -3,7 +3,7 @@ import DS from 'ember-data';
 import { camelize, dasherize } from '@ember/string';
 import fromEntries from '../utils/from-entries';
 
-const normalizePageAttributes= function(page) {
+const normalizePageAttributes = function(page) {
   return fromEntries(
     Object.entries(page).map(([k, v]) => {
       if (k === 'lead_asset' && page.lead_asset) {
@@ -78,7 +78,7 @@ export default ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
           page_collection_relationship: {
             data: {
               type: 'content-collection',
-              id: 4
+              id: 4 // this should be pulled from the content-collection
             }
           }
         },

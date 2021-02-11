@@ -79,11 +79,6 @@ export default Route.extend({
       let featuredArticles = results.homepage.featuredArticles.slice(0);
 
       results.main = results.main.slice();
-      if (!this.fastboot.isFastBoot) {
-        addCommentCount(results.river);
-        addCommentCount(results.main);
-      }
-      results.meta = results.river.meta;
 
       // replace main with featured articles
       if (featuredArticles) {
@@ -93,6 +88,12 @@ export default Route.extend({
           }
         });
       }
+
+      if (!this.fastboot.isFastBoot) {
+        addCommentCount(results.main);
+        addCommentCount(results.river);
+      }
+      results.meta = results.river.meta;
 
       // remove articles in main (the featured content area) from the river
       if (results.sponsoredMain) {
