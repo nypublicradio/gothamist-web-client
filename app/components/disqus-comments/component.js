@@ -27,7 +27,7 @@ export default Component.extend({
       return;
     }
 
-    let { identifier, permalink, onReady } = this;
+    let { identifier, permalink, onReady, onNewComment } = this;
     const config = function() {
       this.page.identifier = identifier;
       this.page.url = permalink;
@@ -39,6 +39,12 @@ export default Component.extend({
       } else {
         // it's preserved between renders so wipe it out
         this.callbacks.onReady = [];
+      }
+
+      if (onNewComment) {
+        this.callbacks.onNewComment = [onNewComment];
+      } else {
+        this.callbacks.onNewComment = [];
       }
     }
 

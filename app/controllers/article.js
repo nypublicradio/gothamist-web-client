@@ -7,6 +7,7 @@ import PageController from './page'
 import { inject } from '@ember/service';
 import { computed } from '@ember/object';
 import { wagtailImageUrl } from 'ember-wagtail-images';
+import trackEvent from '../utils/track-event';
 
 import config from '../config/environment';
 
@@ -20,6 +21,8 @@ export default PageController.extend({
 
   commentsAnchor: config.commentsAnchor,
 
+  trackEvent,
+
   navigateToComments: computed('to', function() {
     let { to, commentsAnchor } = this;
     let goToComments = to === commentsAnchor;
@@ -27,6 +30,14 @@ export default PageController.extend({
       return () => document.querySelector(`#${commentsAnchor}`).scrollIntoView();
     }
   }),
+
+  trackNewComment(title) {
+    trackEvent({
+      category: "NTG user",
+      action: "comment added",
+      label: title,
+    });
+  },
 
   galleryLeadSlides: computed('model.gallery', function() {
     if (!this.model.gallery) {

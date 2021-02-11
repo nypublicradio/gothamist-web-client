@@ -2,6 +2,7 @@ import Controller from '@ember/controller';
 import { inject } from '@ember/service';
 
 import config from '../config/environment';
+import trackEvent from '../utils/track-event';
 
 const DONATE_URL = 'https://pledge3.wnyc.org/donate/gothamist/onestep/?utm_medium=partnersite&utm_source=gothamist&utm_campaign=brandheader';
 
@@ -36,6 +37,7 @@ export default Controller.extend({
 
   headerLandmark: null,
 
+  trackEvent,
   /**
    Conduct a search
 
