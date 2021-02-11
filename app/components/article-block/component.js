@@ -240,4 +240,10 @@ export default Component.extend({
     @type {String}
   */
   title: or('article.{listingTitle,title}'),
+
+  /**
+    Derived updated_date
+    @type {String}
+  */
+  updated_date: or('article.updated_date'),
 });

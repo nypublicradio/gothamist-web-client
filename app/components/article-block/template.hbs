@@ -42,6 +42,7 @@
       <body.meta
         @authors={{if showAuthor @article.authors}}
         @timestamp={{if showTimestamp (timestamp @article.publishedMoment)}}
+        @updatedTimestamp={{if showTimestamp (timestamp @article.updatedMoment)}}
         @commentCount={{if showCommentCount @article.commentCount}}
         @commentRoute={{array 'article' @article.section.slug @article.path (hash isQueryParams=true values=(hash to=commentsAnchor))}}
         data-test-article-block-meta
