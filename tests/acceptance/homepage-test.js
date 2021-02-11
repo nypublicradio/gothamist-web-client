@@ -183,4 +183,43 @@ module('Acceptance | homepage', function(hooks) {
 
     assert.dom('[data-test-sponsored-tout] .c-block__title').exists('regular sponsored post should also appear too');
   });
+
+  test('featured article pinned content collection with lead galleries displays correctly', async function(assert) {
+    server.createList('article', 10, 'now');
+    server.create('homepage', 'hasFeaturedCollectionWithGalleries');
+
+    await visit('/');
+
+    const EXPECTED_IMG = `https://example.com/images/1283/fill-800x533/`
+
+    assert.dom('.c-featured-blocks__col1 img').exists();
+    assert.dom('.c-featured-blocks__col1 img').hasAttribute('src', EXPECTED_IMG);
+    assert.dom('.c-featured-blocks__col1 .c-block__title--has-icon.c-block__title--is-gallery').exists();
+  });
+
+  test('featured article pinned content collection displays comment counts', async function(assert) {
+    server.createList('article', 100, 'now');
+    server.create('homepage', 'hasFeaturedCollection');
+
+    const EXPECTED = server.schema.articles.all()
+      .models.map((a, i) => ({posts: Math.ceil(Math.random() * i + 1), identifiers: [a.uuid]}));
+
+    server.get(`${config.disqusAPI}/threads/set.json`, (schema, request) => {
+        let ids =  request.url.split('&').filter(p => p.startsWith('thread:ident=')).map(p => p.replace('thread:ident=', ''));
+        console.log('fakeDisqus', request)
+        let filteredResponse = EXPECTED.filter(item => ids.includes(item.identifiers[0]))
+        console.log('fakeDisqus', request)
+        return {response: filteredResponse}
+    });
+
+    await visit('/');
+
+    findAll('.c-featured-blocks .c-block').forEach(block => {
+      let id = block.dataset.testBlock;
+      let { uuid } = server.schema.articles.find(id);
+      let { posts } = EXPECTED.find(d => d.identifiers.includes(uuid));
+      assert.ok(block.querySelector('.c-block-meta__comments'), 'comments are rendered');
+      assert.dom(block.querySelector('.c-block-meta__comments') || 'comments blocks').includesText(String(posts));
+    });
+  });
 });
