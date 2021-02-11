@@ -39,6 +39,14 @@ export default DS.Model.extend({
     }
   }),
 
+  updatedMoment: computed('updated_date', 'updateDate', function() {
+    if (this.updateDate && this.updateDate.isValid()) {
+      return 'this.updateDate';
+    } else {
+      return moment.tz(this.updated_date, moment.defaultZone.name);
+    }
+  }),
+
   uuid: DS.attr('string'),
 
 });

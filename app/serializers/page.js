@@ -2,6 +2,7 @@ import ApplicationSerializer from './application';
 
 import { WAGTAIL_MODEL_TYPE as ARTICLE } from '../models/article';
 import { WAGTAIL_MODEL_TYPE as GALLERY } from '../models/gallery';
+import { WAGTAIL_MODEL_TYPE as TAG } from '../models/tag';
 import { WAGTAIL_MODEL_TYPE as INFORMATION_PAGE } from '../models/information';
 
 
@@ -10,6 +11,7 @@ import { WAGTAIL_MODEL_TYPE as INFORMATION_PAGE } from '../models/information';
 const TYPES = {
   [ARTICLE]: 'article',
   [GALLERY]: 'gallery',
+  [TAG]: 'tag',
   [INFORMATION_PAGE]: 'information',
   // [PERSON]: 'person',
 };
@@ -19,7 +21,7 @@ export default ApplicationSerializer.extend({
   // if it's an actual `Page` response coming straight from the server
   // the key will be `items`
   // `'page'` is the default because it's the polymorphic base model
-  modelNameFromPayloadKey: (key = 'page') => key === 'items' ? 'page' : key,
+  modelNameFromPayloadKey: (key = 'page') => {return key === 'items' ? 'page' : key},
 
   normalizeQueryResponse(store, PageModel, payload, id, requestType) {
     payload.items = payload.items.map(({ result }) => {

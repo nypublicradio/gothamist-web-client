@@ -24,6 +24,7 @@ const LISTING_FIELDS = [
   'show_as_feature',
   'sponsored_content',
   'tags',
+  'updated_date',
   'url',
   'uuid',
 ].join(',');

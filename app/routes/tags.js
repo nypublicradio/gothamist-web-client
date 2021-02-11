@@ -43,6 +43,10 @@ export default Route.extend({
     return hash({
       tag,
       title: tag.replace(/-/g, ' '),
+      page: this.store.queryRecord('tag', {
+        html_path: `tags/${tag}`
+        // eslint-disable-next-line no-unused-vars
+      }).catch(error => { return }),
       articles: this.store.query('article', {
         tag_slug: tag,
         limit: COUNT,
@@ -77,6 +81,13 @@ export default Route.extend({
       addCommentCount(model.articles);
 
       controller.set('addComments', results => (addCommentCount(results), results));
+    }
+  },
+
+  actions: {
+    didTransition() {
+      this.controllerFor('application').set('mainRouteClasses', 'tags-page')
+      return true;
     }
   }
 });

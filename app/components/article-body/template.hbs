@@ -1,3 +1,4 @@
 {{#each this.components as |block|}}
+  <div class="c-article__body-spacer" />
   {{component (concat 'article-body/' block.type) value=block.value}}
 {{/each}}

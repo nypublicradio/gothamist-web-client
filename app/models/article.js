@@ -56,6 +56,10 @@ export default Page.extend({
   tags:        DS.attr({defaultValue: () => []}),
   updatedDate: DS.attr('moment', {timezoneOverride: true}),
 
+  updated_date: DS.attr('moment', {
+    timezoneOverride: true,
+  }),
+
   url: DS.attr('string'),
   canonicalUrl: DS.attr('string'),
 

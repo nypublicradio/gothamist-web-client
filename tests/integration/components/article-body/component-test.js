@@ -56,7 +56,7 @@ module('Integration | Component | article-body', function(hooks) {
       id: 'abcde-1325'
     }];
 
-    const EXPECTED_WIDTH = 634;
+    const EXPECTED_WIDTH = 864;
     const EXPECTED_HEIGHT = Math.round((EXPECTED_WIDTH * 2000) / 1000)
     const EXPECTED_URL = wagtailImageUrl([{id: 123}, EXPECTED_WIDTH, EXPECTED_HEIGHT]);
 
@@ -64,7 +64,7 @@ module('Integration | Component | article-body', function(hooks) {
 
     await render(hbs`<ArticleBody @blocks={{body}} />`);
 
-    assert.dom('.o-figure .o-picture img').hasAttribute('src', EXPECTED_URL, 'image blocks are rendered at 630px across');
+    assert.dom('.o-figure .o-picture img').hasAttribute('src', EXPECTED_URL, 'image blocks are rendered at 864px across');
   });
 
   test('it handles headings', async function(assert) {

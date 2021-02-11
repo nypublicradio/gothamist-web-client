@@ -1,15 +1,24 @@
 <DoTargeting key='Template' value='Tag' />
 {{remember-document-scroll key=model.title}}
 
+{{#if model.page.hasDesignedHeader }}
+  <div class="c-tag-listing__image">
+    <img alt={{ model.page.designedHeader.value.image.alt }} src={{wagtail-image-url model.page.designedHeader.value.image 1600 277}}>
+  </div>
+{{/if}}
+
 <div class="c-listing__sections u-section-spacing l-container l-container--14col l-wrap">
-  <header class="c-tag-listing__header u-trigger-floating-header">
+  <header class={{if model.page.hasDesignedHeader "c-tag-listing__header c-tag-listing__header-with-tag-image u-trigger-floating-header l-container" "c-tag-listing__header u-trigger-floating-header"}}>
     <h1 class="c-tag-listing__heading u-font--secondary" data-test-tag-heading>
       {{if model.isWTC 'We the Commuters' model.title}}
     </h1>
+    {{#if model.page.hasTopPageZone}}
+      <ArticleBody @blocks={{model.page.topPageZone}} />
+    {{/if}}
   </header>
-
-  <hr class="u-border-accent u-hide-until--m" aria-hidden="true">
-
+  {{#unless model.page.hasDesignedHeader}}
+    <hr class="u-border-accent u-hide-until--m" aria-hidden="true">
+  {{/unless}}
   {{#if model.isWTC}}
     <section class="c-listing__section o-section">
       <NyprMBlockList @items={{slice 0 3 model.articles}} as |article|>
@@ -66,7 +75,35 @@
       </NyprMBlockList>
     </section>
 
+  {{else if model.page.hasMidpageZone}}
+    <section class="c-listing__section o-section">
+      <NyprMBlockList @items={{slice 0 3 model.articles}} as |article|>
+        <ArticleBlock
+                @article={{article}}
+                @orientation='h'
+                @size='l'
+                @thumbnailSize={{array 100 100 true}}
+                @mediumThumbnailSize={{array 360 240}}
+        />
+      </NyprMBlockList>
+    </section>
+
+    <ArticleBody @blocks={{model.page.midpageZone}} />
+
+    <section class="c-listing__section o-section">
+      <NyprMBlockList @items={{slice 3 6 model.articles}} as |article|>
+        <ArticleBlock
+                @article={{article}}
+                @orientation='h'
+                @size='l'
+                @thumbnailSize={{array 100 100 true}}
+                @mediumThumbnailSize={{array 360 240}}
+        />
+      </NyprMBlockList>
+    </section>
+
   {{else}}
+
     <section class="c-listing__section o-section">
       <NyprMBlockList @items={{slice 0 6 model.articles}} as |article|>
         <ArticleBlock
