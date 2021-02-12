@@ -57,15 +57,13 @@ export default ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
     page_collection_relationship: { embedded: 'always' },
     pages: { embedded: 'always' },
   },
-  modelNameFromPayloadKey: () => 'home',
+  modelNameFromPayloadKey: () => 'homepage',
   normalizeQueryRecordResponse(store, primaryModelClass, payload) {
     payload.page_collection_relationship = payload.page_collection_relationship ? payload.page_collection_relationship[0] : {title: "", pages: []};
 
-    console.log('JSON', payload)
-
     let newPayload = {
       data: {
-        type: 'home',
+        type: 'homepage',
         id: payload.id,
         attributes: {
           meta: payload.meta,
@@ -78,7 +76,7 @@ export default ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
           page_collection_relationship: {
             data: {
               type: 'content-collection',
-              id: 4 // this should be pulled from the content-collection
+              id: 4 // TK this should be pulled from the content-collection
             }
           }
         },
@@ -108,7 +106,7 @@ export default ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
         }
       }), ...getGalleries(payload)]
   }
-  console.log('PAYLOAD', newPayload)
+
   return newPayload
   },
 });
