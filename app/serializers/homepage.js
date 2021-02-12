@@ -59,7 +59,7 @@ export default ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
   },
   modelNameFromPayloadKey: () => 'homepage',
   normalizeQueryRecordResponse(store, primaryModelClass, payload) {
-    payload.page_collection_relationship = payload.page_collection_relationship ? payload.page_collection_relationship[0] : {title: "", pages: []};
+    payload.page_collection_relationship = payload.page_collection_relationship ? payload.page_collection_relationship[0] : {title: "", id: 0, pages: []};
 
     let newPayload = {
       data: {
@@ -76,14 +76,14 @@ export default ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
           page_collection_relationship: {
             data: {
               type: 'content-collection',
-              id: 4 // TK this should be pulled from the content-collection
+              id: payload.page_collection_relationship.id
             }
           }
         },
       },
       included: [{
         type: 'content-collection',
-        id: 4,
+        id: payload.page_collection_relationship.id,
         attributes: {
           title: payload.page_collection_relationship.title,
         },
