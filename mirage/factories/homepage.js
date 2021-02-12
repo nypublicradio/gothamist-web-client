@@ -18,6 +18,7 @@ export default Factory.extend({
       homepage.update({
         page_collection_relationship: [{
           title: "Featured Article Collection",
+          id: 4,
           pages: server.createList("article", 4, section,
           {title: faker.list.cycle("Insignificant Blizzard Can't Stop Cronut Fans From Lining Up This Morning",
           "Gorgeous Mandarin Duck, Rarely Seen In U.S., Mysteriously Appears In Central Park", "Delicious Tibetan Momos And Noodles At New East Village Location Of Lhasa",
@@ -34,6 +35,7 @@ export default Factory.extend({
       homepage.update({
         page_collection_relationship: [{
           title: "Featured Article Collection",
+          id: 4,
           pages: server.createList("article", 4, section, 'withGallery',
           {title: faker.list.cycle("Insignificant Blizzard Can't Stop Cronut Fans From Lining Up This Morning",
           "Gorgeous Mandarin Duck, Rarely Seen In U.S., Mysteriously Appears In Central Park", "Delicious Tibetan Momos And Noodles At New East Village Location Of Lhasa",
