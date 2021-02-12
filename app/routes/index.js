@@ -62,9 +62,9 @@ export default Route.extend({
     return hash({
       sponsored: this.getSponsoredPost().catch(failSafe('sponsored')),
       sponsoredMain: this.getSponsoredMain().catch(failSafe('sponsoredMain')),
-      homepage: this.store.queryRecord('home', {
+      homepage: this.store.queryRecord('homepage', {
         html_path: `/`
-      }).catch(e => console.log(e)),
+      }).catch(failSafe('homepage')),
       main: this.store.query('article', {
         sponsored_content: false,
         show_as_feature: true,
@@ -76,7 +76,11 @@ export default Route.extend({
         fields: LISTING_FIELDS,
       }).catch(failSafe('river'))
     }).then((results)=> {
-      let featuredArticles = results.homepage.featuredArticles.slice(0);
+
+      let featuredArticles = []
+      if (results.homepage) {
+        featuredArticles = results.homepage.featuredArticles.slice(0);
+      }
 
       results.main = results.main.slice();
 
@@ -107,41 +111,12 @@ export default Route.extend({
         results.river = results.river.filter(article => article !== results.sponsored);
       }
 
-      // splice in sponsored main to main stories set
-      // if (results.sponsoredMain) {
-      //   let articleForRiver = results.main[MAIN_COUNT - 1];
-      //   results.main.replace(MAIN_COUNT - 1, 1, [results.sponsoredMain]);
-      //   // remove featured sponsored post from river
-      //   results.river = results.river.filter(article => article !== results.sponsoredMain);
-      //   // add article removed from main/featured to the river
-      //   results.river.unshift(articleForRiver);
-      // }
-      // if (featuredArticles.length === 4) {
-      //   // results.river.unshift(results.main[MAIN_COUNT -1])
-      //   // results.main.replace(MAIN_COUNT - 1, 1, [featuredArticles[3]])
-      //   // results.river.unshift(results.main[MAIN_COUNT -2])
-      //   // results.main.replace(MAIN_COUNT - 2, 1, [featuredArticles[2]])
-      //   // results.river.unshift(results.main[MAIN_COUNT -3])
-      //   // results.main.replace(MAIN_COUNT - 3, 1, [featuredArticles[1]])
-      //   // results.river.unshift(results.main[MAIN_COUNT -4])
-      //   // results.main.replace(MAIN_COUNT - 4, 1, [featuredArticles[0]])
-
-      //   // results.main.unshift(featuredArticles[3])
-      //   // results.main.unshift(featuredArticles[2])
-      //   // results.main.unshift(featuredArticles[1])
-      //   // results.main.unshift(featuredArticles[0])
-
-
-      //   console.log(results.main.length)
-      //   console.log(results.river.length)
-      //   // console.log(results.homepage.page_collection_relationship.pages)
-      //   console.log('THIS IS a TEST')
-      // }
       return results;
     });
   },
 
-  // fetch the most recent sponsor post
+  // fetch the most recent sponsored content post
+  // this is the sponsored content post with an outline
   // filter it out if it's older than 24 hours
   async getSponsoredPost() {
     let { firstObject:post } = await this.store.query('article', {
@@ -159,6 +134,7 @@ export default Route.extend({
 
   // fetch the most recent sponsored *main* post
   // filter if it's not between 24 and 48 hours old
+  // this is the sponsored content post that appears as the last featured item
   async getSponsoredMain() {
     let { firstObject:post } = await this.store.query('article', {
       sponsored_content: true,

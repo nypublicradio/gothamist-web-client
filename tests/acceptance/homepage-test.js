@@ -146,14 +146,17 @@ module('Acceptance | homepage', function(hooks) {
 
   test('featured article pinned content appears and is in the correct order', async function(assert) {
     server.createList('article', 10, 'now');
+    // create homepage with a pinned featured content collection
     server.create('homepage', 'hasFeaturedCollection');
 
     await visit('/');
 
     assert.dom('.c-featured-blocks__col1 [data-test-block-title]').exists();
 
+    // create array with pinned featured content headings
     let featuredHeadings = document.querySelectorAll('.c-featured-blocks h3')
 
+    // compare to expected headings
     assert.equal(featuredHeadings[0].innerText, "Insignificant Blizzard Can't Stop Cronut Fans From Lining Up This Morning")
     assert.equal(featuredHeadings[1].innerText, "Gorgeous Mandarin Duck, Rarely Seen In U.S., Mysteriously Appears In Central Park",)
     assert.equal(featuredHeadings[2].innerText, "Delicious Tibetan Momos And Noodles At New East Village Location Of Lhasa")
@@ -204,16 +207,16 @@ module('Acceptance | homepage', function(hooks) {
     const EXPECTED = server.schema.articles.all()
       .models.map((a, i) => ({posts: Math.ceil(Math.random() * i + 1), identifiers: [a.uuid]}));
 
+    // fetch fake disqus data
     server.get(`${config.disqusAPI}/threads/set.json`, (schema, request) => {
         let ids =  request.url.split('&').filter(p => p.startsWith('thread:ident=')).map(p => p.replace('thread:ident=', ''));
-        console.log('fakeDisqus', request)
         let filteredResponse = EXPECTED.filter(item => ids.includes(item.identifiers[0]))
-        console.log('fakeDisqus', request)
         return {response: filteredResponse}
     });
 
     await visit('/');
 
+    // compare and ensure comments posts are what's expected
     findAll('.c-featured-blocks .c-block').forEach(block => {
       let id = block.dataset.testBlock;
       let { uuid } = server.schema.articles.find(id);

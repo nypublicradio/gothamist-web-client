@@ -3,7 +3,7 @@ import ApplicationSerializer from './application';
 import { WAGTAIL_MODEL_TYPE as ARTICLE } from '../models/article';
 import { WAGTAIL_MODEL_TYPE as GALLERY } from '../models/gallery';
 import { WAGTAIL_MODEL_TYPE as TAG } from '../models/tag';
-import { WAGTAIL_MODEL_TYPE as HOME } from '../models/home';
+import { WAGTAIL_MODEL_TYPE as HOME } from '../models/homepage';
 import { WAGTAIL_MODEL_TYPE as INFORMATION_PAGE } from '../models/information';
 
 
@@ -13,7 +13,7 @@ const TYPES = {
   [ARTICLE]: 'article',
   [GALLERY]: 'gallery',
   [TAG]: 'tag',
-  [HOME]: 'home',
+  [HOME]: 'homepage',
   [INFORMATION_PAGE]: 'information',
   // [PERSON]: 'person',
 };
