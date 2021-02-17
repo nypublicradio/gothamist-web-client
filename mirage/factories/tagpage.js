@@ -1,6 +1,10 @@
 import PageFactory from './page'
 import { faker, trait } from 'ember-cli-mirage';
 
+import {
+  section,
+} from './consts';
+
 export default PageFactory.extend({
   type: "tagpages.TagPage",
   designed_header: () => ([
@@ -34,4 +38,34 @@ export default PageFactory.extend({
       id: faker.random.uuid(),
     }];
   },
+
+  hasCollectionInMidpageZone: trait({
+    afterCreate(tagpage, server) {
+      tagpage.update({
+        midpage_zone: [{
+          title: "Featured Article Collection",
+          id: 10,
+          pages: server.createList("article", 2, section, {
+            title: faker.list.cycle("Insignificant Blizzard Can't Stop Cronut Fans From Lining Up This Morning", "Gorgeous Mandarin Duck, Rarely Seen In U.S., Mysteriously Appears In Central Park"),
+            show_as_feature: true
+          }),
+        }]
+      })
+    },
+  }),
+
+  hasCollectionInTopPageZone: trait({
+    afterCreate(tagpage, server) {
+      tagpage.update({
+        top_page_zone: [{
+          title: "Featured Article Collection",
+          id: 11,
+          pages: server.createList("article", 2, section, {
+            title: faker.list.cycle("Insignificant Blizzard Can't Stop Cronut Fans From Lining Up This Morning", "Gorgeous Mandarin Duck, Rarely Seen In U.S., Mysteriously Appears In Central Park"),
+            show_as_feature: true
+          }),
+        }]
+      })
+    },
+  })
 });
