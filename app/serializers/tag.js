@@ -1,10 +1,13 @@
 import { dasherize } from '@ember/string';
-
 import ApplicationSerializer from './application';
+import DS from 'ember-data';
 
-export default ApplicationSerializer.extend({
+export default ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
+  attrs: {
+    topPageZone: {embedded: 'always'},
+    midpageZone: {embedded: 'always'}
+  },
   modelNameFromPayloadKey: () => 'tag',
-
   normalize(TagModel, payload) {
     // `type` key is used to look up a corresponding component
     // ember wants component names to be dasherized
