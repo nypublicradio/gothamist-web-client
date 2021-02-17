@@ -82,6 +82,11 @@ export default function() {
       return schema['homepages'].all();
     }
 
+    if (html_path.startsWith("tags/")) {
+      let slug = html_path.split('/')[1];
+      return schema['tagpages'].where({slug});
+    }
+
     let found = searchAllCollections({ html_path }, schema);
 
     return found || new Response(404);

@@ -6,6 +6,8 @@ export default function(server) {
   */
 
   server.create('homepage', 'hasFeaturedCollection');
+  server.createList('article', 5, {tags: [{slug: 'humans', name: 'humans'}], tag_slug: 'humans'});
+  server.create('tagpage', {slug: 'humans'});
   server.create('system-message');
   server.create('product-banner');
 
