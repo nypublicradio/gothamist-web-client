@@ -7,7 +7,6 @@ export default ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
   },
   modelNameFromPayloadKey: () => 'streamfieldBlock',
   normalize(blockModel, hash) {
-    debugger;
     if (hash.type === 'content-collection') {
       hash.relatedCollection = hash.value
     }
