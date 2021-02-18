@@ -10,28 +10,28 @@ import { extractPath } from '../utils/wagtail-api';
 export default DS.Model.extend({
   meta: DS.attr(),
 
-  listingImage:   DS.attr(),
+  listingImage: DS.attr(),
   listingSummary: DS.attr('string'),
-  listingTitle:   DS.attr('string'),
+  listingTitle: DS.attr('string'),
 
   socialImage: DS.attr(),
-  socialText:  DS.attr('string'),
+  socialText: DS.attr('string'),
   socialTitle: DS.attr('string'),
 
   showOnIndexListing: DS.attr('boolean'),
 
-  title: DS.attr('string', {defaultValue: ''}),
+  title: DS.attr('string', { defaultValue: '' }),
 
   // computeds
   slug: reads('meta.slug'),
 
-  path: computed('meta.html_url', function() {
+  path: computed('meta.html_url', function () {
     if (this.meta) {
       return extractPath(this.meta.html_url);
     }
   }),
 
-  publishedMoment: computed('meta.first_published_at', 'publicationDate', function() {
+  publishedMoment: computed('meta.first_published_at', 'publicationDate', function () {
     if (this.publicationDate && this.publicationDate.isValid()) {
       return this.publicationDate;
     } else {
@@ -39,11 +39,13 @@ export default DS.Model.extend({
     }
   }),
 
-  updatedMoment: computed('updated_date', 'updateDate', function() {
+  updatedMoment: computed('updated_date', 'updateDate', function () {
     if (this.updateDate && this.updateDate.isValid()) {
-      return 'this.updateDate';
+      return this.updateDate;
     } else {
-      return moment.tz(this.updated_date, moment.defaultZone.name);
+      if (this.updated_date.isValid()) {
+        return moment.tz(this.updated_date, moment.defaultZone.name);
+      }
     }
   }),
 

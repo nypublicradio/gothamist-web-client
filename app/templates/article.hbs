@@ -25,8 +25,10 @@
             @authors={{model.article.authors}}
             @sponsor={{model.article.relatedSponsors.firstObject}}
           />
-          <meta.publishDate @publishDate={{model.article.publishedMoment}} />
-          <meta.updateDate @updatedDate={{model.article.updated_date}} />
+          <meta.publishDate @publishDate={{model.article.publishedMoment}}  />
+          {{#if model.article.updatedMoment }}
+            <meta.updateDate @updateDate={{model.article.updatedMoment}} />
+          {{/if}}
 
         </top.meta>
 
