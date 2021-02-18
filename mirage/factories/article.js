@@ -7,6 +7,9 @@ import {
   section,
 } from './consts';
 
+const randomImage = function() {
+  return [212049,212048,211970,211968,211967][Math.floor(Math.random() * 5)]
+}
 
 export default Factory.extend({
   // mirage-only attrs
@@ -73,7 +76,7 @@ export default Factory.extend({
       type: 'lead_image',
       value: {
         image: {
-          id: 1283,
+          id: randomImage(),
           credit: faker.name.findName(),
           credit_link: faker.internet.url(),
         },
@@ -161,7 +164,7 @@ export default Factory.extend({
           value: {
             gallery: gallery.id,
             default_image: {
-              id: 1283,
+              id: randomImage(),
             },
           },
           id: faker.random.uuid(),
