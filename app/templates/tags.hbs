@@ -2,7 +2,7 @@
 {{remember-document-scroll key=model.title}}
 
 {{#if model.page.hasDesignedHeader }}
-  <div class="c-tag-listing__image">
+  <div class="c-tag-listing__image" data-test-designed-header>
     <img alt={{ model.page.designedHeader.value.image.alt }} src={{wagtail-image-url model.page.designedHeader.value.image 1600 277}}>
   </div>
 {{/if}}
@@ -13,7 +13,9 @@
       {{if model.isWTC 'We the Commuters' model.title}}
     </h1>
     {{#if model.page.hasTopPageZone}}
-      <ArticleBody @blocks={{model.page.topPageZone}} />
+      <div data-test-top-page-zone>
+        <ArticleBody @blocks={{model.page.topPageZone}} />
+      </div>
     {{/if}}
   </header>
   {{#unless model.page.hasDesignedHeader}}
@@ -87,9 +89,9 @@
         />
       </NyprMBlockList>
     </section>
-
-    <ArticleBody @blocks={{model.page.midpageZone}} />
-
+    <div data-test-midpage-zone>
+      <ArticleBody @blocks={{model.page.midpageZone}} />
+    </div>
     <section class="c-listing__section o-section">
       <NyprMBlockList @items={{slice 3 6 model.articles}} as |article|>
         <ArticleBlock
