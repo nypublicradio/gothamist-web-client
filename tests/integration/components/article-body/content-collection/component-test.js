@@ -13,14 +13,5 @@ module('Integration | Component | article-body/content-collection', function(hoo
     await render(hbs`{{article-body/content-collection}}`);
 
     assert.equal(this.element.textContent.trim(), '');
-
-    // Template block usage:
-    await render(hbs`
-      {{#article-body/content-collection}}
-        template block text
-      {{/article-body/content-collection}}
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
   });
 });
