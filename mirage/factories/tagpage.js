@@ -50,7 +50,8 @@ export default PageFactory.extend({
             id: 10,
             pages: server.createList("article", 2, section, {
               title: faker.list.cycle("Insignificant Blizzard Can't Stop Cronut Fans From Lining Up This Morning", "Gorgeous Mandarin Duck, Rarely Seen In U.S., Mysteriously Appears In Central Park"),
-              show_as_feature: true
+              tags: [{slug: tagpage.slug, name: tagpage.slug.replace('-',' ')}],
+              tag_slug: tagpage.slug
             }),
           }
         }]
@@ -69,7 +70,8 @@ export default PageFactory.extend({
             id: 12,
             pages: server.createList("article", 2, section, {
               title: faker.list.cycle("Insignificant Blizzard Can't Stop Cronut Fans From Lining Up This Morning", "Gorgeous Mandarin Duck, Rarely Seen In U.S., Mysteriously Appears In Central Park"),
-              show_as_feature: true
+              tags: [{slug: tagpage.slug, name: tagpage.slug.replace('-',' ')}],
+              tag_slug: tagpage.slug
             }),
           }
         }]

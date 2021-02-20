@@ -139,7 +139,7 @@ module('Acceptance | tags', function(hooks) {
       .models.map((a, i) => ({posts: Math.ceil(Math.random() * i + 1), identifiers: [a.uuid]}));
     server.get(`${config.disqusAPI}/threads/set.json`, (schema, request) => {
         let ids =  request.url.split('&').filter(p => p.startsWith('thread:ident=')).map(p => p.replace('thread:ident=', ''));
-        let filteredResponse = EXPECTED.filter(item => ids.includes(item.identifiers[0]))
+        let filteredResponse = COMMENT_DATA.filter(item => ids.includes(item.identifiers[0]))
         return {response: filteredResponse}
     });
 
@@ -154,10 +154,26 @@ module('Acceptance | tags', function(hooks) {
     const allCards = topCards.concat(midCards)
 
     allCards.forEach((card, index) => {
-      let commentCount = COMMENT_DATA.find(d => d.identifiers.includes(allArticles[index].id))
+      let {posts: commentCount} = COMMENT_DATA.find(d => d.identifiers.includes(allArticles[index].uuid))
       assert.dom('.c-block-meta__comments', card).exists(`card ${index} should have comments`)
       assert.dom('.c-block-meta__comments', card).includesText(String(commentCount), `card ${index} should show the correct comment count`)
     })
   });
+
+  test('featured articles are removed from the initial results list', async function(assert) {
+    const tagPage = server.create('tagpage', {slug: 'dogs-and-cats'}, 'hasCollectionInTopPageZone')
+    server.createList('article', COUNT * 5, {tags: [{slug: 'dogs-and-cats', name: 'dogs and cats'}], section: 'food', tag_slug: 'dogs-and-cats'});
+
+    const articles = tagPage.top_page_zone[0].value.pages
+
+    await visit('/tags/dogs-and-cats');
+
+    let titles = [];
+    findAll('[data-test-block-title]').forEach(title => titles.push(title.innerText));
+
+    articles.forEach((article) => {
+      assert.equal(titles.filter(title => title === article.title).length, 1, `The article "${article.title}" should appear only once`)
+    })
+  })
 
 });

@@ -144,7 +144,7 @@
     @query={{query}}
     @model='article'
     @callback={{addComments}}
-    @total={{model.articles.meta.total}}
+    @total={{model.meta.total}}
     as |more|>
     <AnimatedContainer class="u-section-spacing" @onInitialRender={{true}}>
       {{#each more.pages as |page|}}
