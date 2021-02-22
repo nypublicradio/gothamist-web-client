@@ -21,10 +21,10 @@
         />
       {{/if}}
       {{#if @article.isOpinion}}
-        <o.eyebrow @kickerClass="o-kicker--opinion" @text="Opinion"/>
+        <o.eyebrow @kickerClass="o-kicker--opinion" @route={{array 'tags' 'opinion'}} @text="Opinion"/>
       {{/if}}
     {{else if @article.isOpinion}}
-      <o.eyebrow @kickerClass="o-kicker--opinion" @text="Opinion"/>
+      <o.eyebrow @kickerClass="o-kicker--opinion" @route={{array 'tags' 'opinion'}} @text="Opinion"/>
     {{/if}}
 
     <o.title
