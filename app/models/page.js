@@ -40,10 +40,10 @@ export default DS.Model.extend({
   }),
 
   updatedMoment: computed('updated_date', 'updateDate', function () {
-    if (this.updateDate && this.updateDate.isValid()) {
-      return this.updateDate;
+    if (this.updateDate && moment(this.updateDate).isValid()) {
+      return moment(this.updateDate);
     } else {
-      if (this.updated_date.isValid()) {
+      if (this.updated_date && this.updated_date.isValid()) {
         return moment.tz(this.updated_date, moment.defaultZone.name);
       }
     }
