@@ -68,6 +68,9 @@ export default Route.extend({
         route: ['sections', 'food'],
         text: 'Food',
       }, {
+        route: ['tags', 'election-2021'],
+        text: 'Elections 2021',
+      }, {
         route: ['newsletter'],
         text: 'Newsletter',
         icon: 'email',
