@@ -47,7 +47,7 @@ module('Acceptance | homepage', function(hooks) {
     server.create('wnyc-story', {id: 'gothamist-wnyc-crossposting'});
 
     await visit(`/`);
-    
+
     const title = 'Gothamist: New York City Local News, Food, Arts & Events';
     const desc = 'Gothamist is a website about New York City news, arts and events, and food, brought to you by New York Public Radio.';
     const imagePath = window.location.origin + config.fallbackMetadataImage;

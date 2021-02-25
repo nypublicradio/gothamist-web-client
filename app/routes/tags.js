@@ -19,6 +19,7 @@ export const COUNT = 12;
 
 export default Route.extend({
   fastboot: inject(),
+  headData: inject(),
   header: inject('nypr-o-header'),
   dataLayer: inject('nypr-metrics/data-layer'),
 
@@ -46,7 +47,7 @@ export default Route.extend({
       page: this.store.queryRecord('tag', {
         html_path: `tags/${tag}`
         // eslint-disable-next-line no-unused-vars
-      }).catch(error => { return }),
+      }).catch(error => ({})),
       articles: this.store.query('article', {
         tag_slug: tag,
         limit: COUNT,
@@ -61,6 +62,13 @@ export default Route.extend({
       }
       return results;
     })
+  },
+
+  afterModel(model) {
+    let { page } = model;
+    if (page.socialTitle) { this.headData.set('ogTitle', page.socialTitle)}
+    if (page.socialText) { this.headData.set('metaDescription', page.socialText)}
+    if (page.socialImage) { this.headData.set('image', page.socialImage)}
   },
 
   setupController(controller, model) {
