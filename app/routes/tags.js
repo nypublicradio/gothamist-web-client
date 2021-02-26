@@ -60,6 +60,8 @@ export default Route.extend({
         e.url = `tags/${results.tag}`;
         throw e;
       }
+      // get tag name from first article
+      results.title = results.articles.firstObject.tags.findBy('slug', tag)['name']
       return results;
     })
   },
