@@ -1,0 +1,15 @@
+{{#if (eq pages.length 1)}}
+  <FeaturedOneUp @article={{object-at 0 pages}} />
+{{else if (eq pages.length 2)}}
+  <FeaturedTwoUp @articles={{pages}} />
+{{else if (eq pages.length 3)}}
+  <FeaturedOneUp @article={{object-at 0 pages}} />
+  <FeaturedTwoUp @articles={{slice 1 2 pages}} />
+{{else if (eq pages.length 4)}}
+  <FeaturedTwoUp @articles={{slice 0 2 pages}} />
+  <FeaturedTwoUp @articles={{slice 2 4 pages}} />
+{{else if (eq pages.length 5)}}
+  <FeaturedOneUp @article={{object-at 0 pages}} />
+  <FeaturedTwoUp @articles={{slice 1 3 pages}} />
+  <FeaturedTwoUp @articles={{slice 3 5 pages}} />
+{{/if}}
