@@ -48,7 +48,7 @@ export default PageFactory.extend({
           value: {
             title: "Featured Article Collection",
             id: 10,
-            pages: server.createList("article", 5, section, {
+            pages: server.createList("article", 2, section, {
               title: faker.list.cycle("Insignificant Blizzard Can't Stop Cronut Fans From Lining Up This Morning", "Gorgeous Mandarin Duck, Rarely Seen In U.S., Mysteriously Appears In Central Park"),
               tags: [{slug: tagpage.slug, name: tagpage.slug.replace('-',' ')}],
               tag_slug: tagpage.slug
