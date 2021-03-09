@@ -186,7 +186,7 @@ export default Component.extend({
   /**
     Breakpoint for which the `mediumThumbnailSize` `source` elements will be configured. Please do not edit directly. Change in `app/breakpoints.js`.
 
-    @argument thumbnailBreakpoint
+    @argument thubnailBreakpoint
     @type {String}
   */
   thumbnailBreakpoint: medium,

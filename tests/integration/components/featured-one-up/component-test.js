@@ -1,26 +1,34 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
+import moment from 'moment';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | featured-one-up', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
 
-    await render(hbs`{{featured-one-up}}`);
+    const article = {
+      title: 'Article Title',
+      description: 'Summary of the article',
+      publishedMoment: moment(),
+      thumbnail: {
+        id: 100,
+      },
+      section: {
+        slug: 'news',
+        title: 'News',
+      }
+    };
 
-    assert.equal(this.element.textContent.trim(), '');
+    this.set('article', article);
 
-    // Template block usage:
-    await render(hbs`
-      {{#featured-one-up}}
-        template block text
-      {{/featured-one-up}}
-    `);
+    await render(hbs`<FeaturedOneUp @article={{article}} />`);
 
-    assert.equal(this.element.textContent.trim(), 'template block text');
+    assert.dom('.c-block__eyebrow').containsText('News')
+    assert.dom('[data-test-block-title]').containsText('Article Title')
+    assert.dom('.c-block__dek').containsText('Summary of the article')
+    assert.dom('[data-test-timestamp]').containsText('Just now')
   });
 });
