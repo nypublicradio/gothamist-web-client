@@ -12881,10 +12881,11 @@ nypr-auth@^0.2.4:
     ember-get-config "^0.2.2"
     ember-simple-auth "^1.7.0"
 
-nypr-design-system@3.1.23:
-  version "3.1.23"
-  resolved "https://registry.yarnpkg.com/nypr-design-system/-/nypr-design-system-3.1.23.tgz#c1788f57cf488fb5bda4a9d9898170b57cc5f9c2"
-  integrity sha512-AwW50w5YA6N1i7UfK2tK27ivyoJ9s8Ktfzu9Ovvzh5lMYObLDQeG8q9CJUdpa7WuAb5mAqV9W+w4io9wM4Uxqw==
+nypr-design-system@3.1.26:
+  version "3.1.26"
+  resolved "https://registry.yarnpkg.com/nypr-design-system/-/nypr-design-system-3.1.26.tgz#cd5c1106fb867713a8d361d2283008cf0bfc4490"
+  integrity sha512-rGhPm4zvDZs8TMAR66lHseaOhjg2Xt00R7qXOZnZsDsvEgNrr3tEVsEM/m89kxmF9Ivzvy5NWDECy5J9QzkKjA==
+
   dependencies:
     "@babel/core" "^7.0.0"
     "@panosvoudouris/addon-versions" "^1.0.1"

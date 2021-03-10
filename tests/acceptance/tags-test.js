@@ -176,4 +176,31 @@ module('Acceptance | tags', function(hooks) {
     })
   })
 
+  test('og metadata for curated tag page is correct', async function(assert) {
+    const TITLE = 'Custom Title';
+    const DESCRIPTION = 'Custom Description';
+    const IMAGE_ID = 12345;
+    const IMAGE_PATH = `https://example.com/images/${IMAGE_ID}/fill-1200x650/`;
+
+    server.create('tagpage', {
+      slug: 'dogs-and-cats',
+      social_title: TITLE,
+      social_text: DESCRIPTION,
+      social_image: {id: IMAGE_ID}
+    })
+    server.createList('article', COUNT * 5, {tags: [{slug: 'dogs-and-cats', name: 'dogs and cats'}], section: 'food', tag_slug: 'dogs-and-cats'});
+
+    await visit('/tags/dogs-and-cats');
+
+    assert.equal(document.querySelector("meta[property='og:title']")
+      .getAttribute("content"), TITLE);
+    assert.equal(document.querySelector("meta[name='twitter:title']")
+      .getAttribute("content"), TITLE);
+    assert.equal(document.querySelector("meta[property='og:description']")
+      .getAttribute("content"), DESCRIPTION);
+    assert.equal(document.querySelector("meta[property='og:image']")
+      .getAttribute("content"), IMAGE_PATH);
+    assert.equal(document.querySelector("meta[property='twitter:image']")
+      .getAttribute("content"), IMAGE_PATH);
+  });
 });

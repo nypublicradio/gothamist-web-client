@@ -92,6 +92,8 @@ export default function() {
     return found || new Response(404);
   });
 
+
+
   // elasticsearch endpoint
   this.get('/api/v2/search/', function(schema, { queryParams }) {
     let {
