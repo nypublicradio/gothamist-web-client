@@ -3,7 +3,6 @@ import moment from 'moment';
 import Route from '@ember/routing/route';
 import { inject } from '@ember/service';
 import { hash } from 'rsvp';
-
 import addCommentCount from '../utils/add-comment-count';
 
 
@@ -63,6 +62,9 @@ export default Route.extend({
     return hash({
       sponsored: this.getSponsoredPost().catch(failSafe('sponsored')),
       sponsoredMain: this.getSponsoredMain().catch(failSafe('sponsoredMain')),
+      homepage: this.store.queryRecord('homepage', {
+        html_path: `/`
+      }).catch(failSafe('homepage')),
       main: this.store.query('article', {
         sponsored_content: false,
         show_as_feature: true,
@@ -73,32 +75,48 @@ export default Route.extend({
         limit: TOTAL_COUNT,
         fields: LISTING_FIELDS,
       }).catch(failSafe('river'))
-    }).then(results => {
+    }).then((results)=> {
+
+      let featuredArticles = []
+      if (results.homepage) {
+        featuredArticles = results.homepage.featuredArticles.slice(0);
+      }
+
       results.main = results.main.slice();
+
+      // replace main with featured articles
+      if (featuredArticles) {
+        results.main.forEach((item, index) => {
+          if (featuredArticles[index]) {
+            results.main[index] = featuredArticles[index];
+          }
+        });
+      }
+
       if (!this.fastboot.isFastBoot) {
-        addCommentCount(results.river);
         addCommentCount(results.main);
+        addCommentCount(results.river);
       }
       results.meta = results.river.meta;
+
+      // remove articles in main (the featured content area) from the river
+      if (results.sponsoredMain) {
+        results.main.replace(MAIN_COUNT - 1, 1, [results.sponsoredMain]);
+      }
+
       results.river = results.river.filter(article => !results.main.includes(article));
       // remove featured sponsored post from river
+
       if (results.sponsored) {
         results.river = results.river.filter(article => article !== results.sponsored);
       }
-      // splice in sponsored main to main stories set
-      if (results.sponsoredMain) {
-        let articleForRiver = results.main[MAIN_COUNT - 1];
-        results.main.replace(MAIN_COUNT - 1, 1, [results.sponsoredMain]);
-        // remove featured sponsored post from river
-        results.river = results.river.filter(article => article !== results.sponsoredMain);
-        // add article removed from main/featured to the river
-        results.river.unshift(articleForRiver);
-      }
+
       return results;
     });
   },
 
-  // fetch the most recent sponsor post
+  // fetch the most recent sponsored content post
+  // this is the sponsored content post with an outline
   // filter it out if it's older than 24 hours
   async getSponsoredPost() {
     let { firstObject:post } = await this.store.query('article', {
@@ -116,6 +134,7 @@ export default Route.extend({
 
   // fetch the most recent sponsored *main* post
   // filter if it's not between 24 and 48 hours old
+  // this is the sponsored content post that appears as the last featured item
   async getSponsoredMain() {
     let { firstObject:post } = await this.store.query('article', {
       sponsored_content: true,

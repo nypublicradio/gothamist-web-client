@@ -5,7 +5,7 @@ export default Factory.extend({
   id: () => faker.random.uuid(),
   type: "product-banner",
   title: () => capitalize(faker.lorem.words()),
-  description: () => `<p>${faker.lorem.sentence(5)}</p>`,
+  description: () => `<p>${faker.lorem.sentence(18)}</p>`,
   button_text: () => capitalize(faker.lorem.words()),
   button_link: () => faker.internet.url(),
   frequency: 8,

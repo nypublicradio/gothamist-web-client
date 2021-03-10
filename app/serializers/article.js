@@ -9,6 +9,7 @@ export default ApplicationSerializer.extend({
   modelNameFromPayloadKey: () => 'article',
 
   normalize(ArticleModel, payload) {
+
     // the server defines this as an array
     // but it'll always be a single POJO
     // pull out the first index for easier reference in the app
@@ -20,7 +21,6 @@ export default ApplicationSerializer.extend({
     if (payload.body) {
       payload.body.forEach(block => block.type = dasherize(block.type));
     }
-
     return this._super(ArticleModel, payload);
   },
 

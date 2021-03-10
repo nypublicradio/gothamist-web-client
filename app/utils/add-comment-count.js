@@ -54,15 +54,14 @@ export default async function addCommentCount(modelOrRecordArray, options = {}) 
   if (modelOrRecordArray instanceof DS.Model) {
     let [thread] = response;
     modelOrRecordArray.set('commentCount', thread.posts);
-  } else if (modelOrRecordArray instanceof DS.RecordArray){
+  } else if (modelOrRecordArray instanceof DS.RecordArray || modelOrRecordArray instanceof Array){
     response.forEach(thread => {
       let { identifiers, posts } = thread;
       let [ id ] = identifiers;
-      let article = modelOrRecordArray.findBy(options.ident, id);
+      let article = modelOrRecordArray.find(article => article[options.ident].toString() === id.toString())
       if (article) {
         article.set('commentCount', posts);
       }
     });
   }
-
 }
