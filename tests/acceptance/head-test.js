@@ -30,7 +30,7 @@ module("Acceptance | head component", function (hooks) {
     await visit(`/food/${article.slug}`);
 
     assert.notEqual(
-      document.querySelector("link[rel=canonical").href,
+      document.querySelector("link[rel=canonical]").href,
       "http://localhost"
     );
   });
