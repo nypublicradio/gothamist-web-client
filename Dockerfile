@@ -11,6 +11,7 @@ RUN apt-get update \
         netcat \
         nginx-extras \
         python \
+        python-pip \
         python-setuptools \
         unzip \
     && pip install supervisor \
