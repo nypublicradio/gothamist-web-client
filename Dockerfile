@@ -13,7 +13,7 @@ RUN apt-get update \
         python \
         python-setuptools \
         unzip \
-    && python -m easy_install supervisor \
+    && pip install supervisor \
     && mkdir -p /code
 
 WORKDIR /code
