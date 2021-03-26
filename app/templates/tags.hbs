@@ -13,9 +13,10 @@
       {{if model.isWTC 'We the Commuters' model.title}}
     </h1>
     {{#if model.page.hasTopPageZone}}
-      <div data-test-top-page-zone>
+      <NyprOArticleBody
+        data-test-top-page-zone>
         <ArticleBody @blocks={{model.page.topPageZone}} />
-      </div>
+      </NyprOArticleBody>
     {{/if}}
   </header>
   {{#unless model.page.hasDesignedHeader}}
@@ -89,9 +90,10 @@
         />
       </NyprMBlockList>
     </section>
-    <div data-test-midpage-zone>
+    <NyprOArticleBody
+      data-test-midpage-zone>
       <ArticleBody @blocks={{model.page.midpageZone}} />
-    </div>
+    </NyprOArticleBody>
     <section class="c-listing__section o-section">
       <NyprMBlockList @items={{slice 3 6 model.articles}} as |article|>
         <ArticleBlock
