@@ -93,6 +93,9 @@ export default Route.extend({
       }, {
         route: ['staff'],
         text: 'Staff'
+      }, {
+        url: 'https://www.nypublicradio.org/diversity-dei-overview/',
+        text: 'Diversity (DEI)'
       }],
       systemMessages: this.store.findRecord('system-messages', config.siteId).catch(() => ''),
       sitewideComponents: this.store.findRecord('sitewide-components', config.siteId).catch(() => ''),
