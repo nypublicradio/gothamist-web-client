@@ -14,6 +14,7 @@
     </h1>
     {{#if model.page.hasTopPageZone}}
       <NyprOArticleBody
+        class="tagpage-zone"
         data-test-top-page-zone>
         <ArticleBody @blocks={{model.page.topPageZone}} />
       </NyprOArticleBody>
@@ -91,6 +92,7 @@
       </NyprMBlockList>
     </section>
     <NyprOArticleBody
+      class="tagpage-zone"
       data-test-midpage-zone>
       <ArticleBody @blocks={{model.page.midpageZone}} />
     </NyprOArticleBody>
