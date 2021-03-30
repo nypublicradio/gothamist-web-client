@@ -65,6 +65,18 @@ export default Route.extend({
       isWTC: sanitize(tag) === 'wethecommuters',
     }).then(results => {
 
+      if (results.articles.length === 0 && results.page === {}) {
+        let e = new DS.NotFoundError();
+        e.url = `tags/${results.tag}`;
+        throw e;
+      }
+
+      // get tag name from first article
+      if (results.articles.length > 0) {
+        results.title = results.articles.firstObject.tags.findBy('slug', tag)['name'];
+      }
+
+
       if (results.page) {
         let topFeaturedArticles = results.page.hasTopPageZone ? getArticlesfromStreamfield(results.page.topPageZone) : [];
         let midFeaturedArticles = results.page.hasMidpageZone ? getArticlesfromStreamfield(results.page.midpageZone) : [];
@@ -79,14 +91,6 @@ export default Route.extend({
         return !results.featuredArticles.map(a => a.id).includes(article.id)
       });
 
-
-      if (results.articles.length === 0) {
-        let e = new DS.NotFoundError();
-        e.url = `tags/${results.tag}`;
-        throw e;
-      }
-      // get tag name from first article
-      results.title = results.articles.firstObject.tags.findBy('slug', tag)['name']
       return results;
     })
   },
