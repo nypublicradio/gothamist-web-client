@@ -1,17 +1,9 @@
 <NyprMBlock @orientation={{@orientation}} @size={{@size}} data-test-block={{@article.id}} as |block|>
   {{#if @titleOnTop}}
     <block.object as |o|>
-      {{#if (and @article.section.title (not @hideEyebrow))}}
-        {{#if @article.isSponsored}}
-          <o.eyebrow @kickerClass="o-kicker--sponsored" @text="Sponsored"/>
-        {{else}}
-          <o.eyebrow
-            @route={{array 'sections' @article.section.slug}}
-            @text={{@article.section.title}}
-            data-test-section-label
-          />
-        {{/if}}
-      {{/if}}
+      {{#unless @hideEyebrow}}
+        {{article-block/tags article=@article}}
+      {{/unless}}
 
       <o.title
         @h3
@@ -37,22 +29,9 @@
 
   <block.object as |o|>
     {{#if (not @titleOnTop)}}
-      {{#if (and @article.section.title (not @hideEyebrow))}}
-        {{#if @article.isSponsored}}
-          <o.eyebrow @kickerClass="o-kicker--sponsored" @text="Sponsored"/>
-        {{else}}
-          <o.eyebrow
-            @route={{array 'sections' @article.section.slug}}
-            @text={{@article.section.title}}
-            data-test-section-label
-          />
-        {{/if}}
-        {{#if @article.isOpinion}}
-          <o.eyebrow @kickerClass="o-kicker--opinion" @route={{array 'tags' 'opinion'}} @text="Opinion"/>
-        {{/if}}
-      {{else if @article.isOpinion}}
-        <o.eyebrow @kickerClass="o-kicker--opinion" @route={{array 'tags' 'opinion'}} @text="Opinion"/>
-      {{/if}}
+      {{#unless @hideEyebrow}}
+        {{article-block/tags article=@article}}
+      {{/unless}}
 
       <o.title
         @h3
