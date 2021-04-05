@@ -44,6 +44,7 @@ export default Route.extend({
         });
         break;
       case TAG_TYPE:
+        this.controllerFor('application').set('mainRouteClasses', 'tags-page')
         this.controllerFor('page').set('isPreview', true);
         hash({
           tag: model.get('slug'),
@@ -65,17 +66,6 @@ export default Route.extend({
         }).then(model => {
           this.render('tags', { model })
         });
-
-
-
-
-
-
-        // hash({
-        //   tag: model
-        // }).then(model => {
-        //   this.render('tags', { model })
-        // });
         break;
       case INFORMATION_TYPE:
         this.controllerFor('information').set('isPreview', true);
