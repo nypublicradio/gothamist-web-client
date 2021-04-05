@@ -126,4 +126,21 @@ module('Acceptance | preview', function(hooks) {
     });
   });
 
+  test('visiting preview tagpage', async function(assert) {
+    let identifier = 'preview';
+    let token = '123';
+    let url = `/preview?identifier=${identifier}&token=${token}`;
+
+    server.create('tagpage', {
+      identifier,
+      token,
+      slug: 'dogs-and-cats',
+    })
+    server.createList('article', 5, {tags: [{slug: 'dogs-and-cats', name: 'dogs and cats'}], section: 'food', tag_slug: 'dogs-and-cats'});
+
+    await visit(url);
+
+    assert.equal(currentURL(), url);
+  });
+
 });
