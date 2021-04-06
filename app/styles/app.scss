@@ -161,3 +161,18 @@ $ember-basic-dropdown-content-z-index: 10000;
 .featured-collection img {
   width: 100%
 }
+
+.featured-list-one-up {
+  h3 {
+    font-size: var(--font-size-14);
+    font-weight: var(--font-weight-header);
+    line-height: var(--line-height-14);
+    letter-spacing: var(--letter-spacing-header);
+    margin-top: var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+}
+
+.featured-list-one-up, .featured-list-two-up {
+  margin-bottom: var(--space-5);
+}
