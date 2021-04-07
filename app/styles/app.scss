@@ -180,13 +180,14 @@ $ember-basic-dropdown-content-z-index: 10000;
     letter-spacing: var(--letter-spacing-header);
     margin-top: var(--space-1);
     margin-bottom: var(--space-3);
+
     @media only screen and (min-width: 769px) {
       font-size: var(--font-size-14);
       line-height: var(--line-height-14);
-    }
-    .c-block__title-link:hover {
-      text-decoration-thickness: 3px;
-      text-underline-position: from-font;
+      .c-block__title-link:hover {
+        text-decoration-thickness: 3px;
+        text-underline-position: from-font;
+      }
     }
   }
 }
