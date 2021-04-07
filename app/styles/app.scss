@@ -162,7 +162,9 @@ $ember-basic-dropdown-content-z-index: 10000;
 }
 
 .featured-collection img {
-  width: 100%
+  @media only screen and (min-width: 769px) {
+    width: 100%
+  }
 }
 
 .featured-list-one-up, .featured-list-two-up {
