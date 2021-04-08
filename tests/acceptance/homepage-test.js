@@ -189,11 +189,11 @@ module('Acceptance | homepage', function(hooks) {
 
   test('featured article pinned content collection with lead galleries displays correctly', async function(assert) {
     server.createList('article', 10, 'now');
-    server.create('homepage', 'hasFeaturedCollectionWithGalleries');
+    let homepage = server.create('homepage', 'hasFeaturedCollectionWithGalleries');
 
     await visit('/');
-
-    const EXPECTED_IMG = `https://example.com/images/1283/fill-800x533/`
+    const featuredImage = homepage.page_collection_relationship[0].pages[0].lead_asset[0].value.default_image.id
+    const EXPECTED_IMG = `https://example.com/images/${featuredImage}/fill-800x533/`
 
     assert.dom('.c-featured-blocks__col1 img').exists();
     assert.dom('.c-featured-blocks__col1 img').hasAttribute('src', EXPECTED_IMG);

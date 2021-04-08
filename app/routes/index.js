@@ -79,7 +79,7 @@ export default Route.extend({
 
       let featuredArticles = []
       if (results.homepage) {
-        featuredArticles = results.homepage.featuredArticles.slice(0);
+        featuredArticles = results.homepage.featuredArticles && results.homepage.featuredArticles.slice(0);
       }
 
       results.main = results.main.slice();

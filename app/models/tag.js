@@ -5,8 +5,8 @@ import { notEmpty } from '@ember/object/computed';
 export const WAGTAIL_MODEL_TYPE = 'tagpages.TagPage';
 
 export default Page.extend({
-  midpageZone: DS.attr(),
-  topPageZone: DS.attr(),
+  midpageZone: DS.hasMany('streamfield-block'),
+  topPageZone: DS.hasMany('streamfield-block'),
   designedHeader: DS.attr(),
 
   hasMidpageZone: notEmpty('midpageZone'),

@@ -2,7 +2,7 @@
 {{remember-document-scroll key=model.title}}
 
 {{#if model.page.hasDesignedHeader }}
-  <div class="c-tag-listing__image">
+  <div class="c-tag-listing__image" data-test-designed-header>
     <img alt={{ model.page.designedHeader.value.image.alt }} src={{wagtail-image-url model.page.designedHeader.value.image 1600 277}}>
   </div>
 {{/if}}
@@ -13,7 +13,11 @@
       {{if model.isWTC 'We the Commuters' model.title}}
     </h1>
     {{#if model.page.hasTopPageZone}}
-      <ArticleBody @blocks={{model.page.topPageZone}} />
+      <NyprOArticleBody
+        class="tagpage-zone"
+        data-test-top-page-zone>
+        <ArticleBody @blocks={{model.page.topPageZone}} />
+      </NyprOArticleBody>
     {{/if}}
   </header>
   {{#unless model.page.hasDesignedHeader}}
@@ -87,9 +91,11 @@
         />
       </NyprMBlockList>
     </section>
-
-    <ArticleBody @blocks={{model.page.midpageZone}} />
-
+    <NyprOArticleBody
+      class="tagpage-zone"
+      data-test-midpage-zone>
+      <ArticleBody @blocks={{model.page.midpageZone}} />
+    </NyprOArticleBody>
     <section class="c-listing__section o-section">
       <NyprMBlockList @items={{slice 3 6 model.articles}} as |article|>
         <ArticleBlock
@@ -142,7 +148,7 @@
     @query={{query}}
     @model='article'
     @callback={{addComments}}
-    @total={{model.articles.meta.total}}
+    @total={{model.meta.total}}
     as |more|>
     <AnimatedContainer class="u-section-spacing" @onInitialRender={{true}}>
       {{#each more.pages as |page|}}

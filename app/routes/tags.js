@@ -9,6 +9,15 @@ import fade from 'ember-animated/transitions/fade';
 import config from '../config/environment';
 import addCommentCount from '../utils/add-comment-count';
 
+const getArticlesfromStreamfield = function(streamfield) {
+  return streamfield.reduce((articles, block) => {
+    if (block.type === 'content-collection') {
+      return articles.concat(block.relatedArticles.slice(0));
+    } else {
+      return articles
+    }
+  }, [])
+}
 
 const sanitize = tag => tag
   .replace(/%20|\W/g, '')
@@ -55,13 +64,33 @@ export default Route.extend({
       // HACK
       isWTC: sanitize(tag) === 'wethecommuters',
     }).then(results => {
-      if (results.articles.length === 0) {
+
+      if (results.articles.length === 0 && results.page === {}) {
         let e = new DS.NotFoundError();
         e.url = `tags/${results.tag}`;
         throw e;
       }
+
       // get tag name from first article
-      results.title = results.articles.firstObject.tags.findBy('slug', tag)['name']
+      if (results.articles.length > 0) {
+        results.title = results.articles.firstObject.tags.findBy('slug', tag)['name'];
+      }
+
+
+      if (results.page) {
+        let topFeaturedArticles = results.page.hasTopPageZone ? getArticlesfromStreamfield(results.page.topPageZone) : [];
+        let midFeaturedArticles = results.page.hasMidpageZone ? getArticlesfromStreamfield(results.page.midpageZone) : [];
+        results.featuredArticles = topFeaturedArticles.concat(midFeaturedArticles)
+      } else {
+        results.featuredArticles = []
+      }
+
+      // remove featured articles from the main list of articles
+      results.meta = results.articles.meta
+      results.articles = results.articles.filter((article) => {
+        return !results.featuredArticles.map(a => a.id).includes(article.id)
+      });
+
       return results;
     })
   },
@@ -88,6 +117,7 @@ export default Route.extend({
     if (this.fastboot.isFastBoot) {
       return;
     } else {
+      addCommentCount(model.featuredArticles);
       addCommentCount(model.articles);
 
       controller.set('addComments', results => (addCommentCount(results), results));
