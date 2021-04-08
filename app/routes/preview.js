@@ -6,6 +6,7 @@ import { WAGTAIL_MODEL_TYPE as ARTICLE_TYPE } from '../models/article';
 import { WAGTAIL_MODEL_TYPE as GALLERY_TYPE } from '../models/gallery';
 import { WAGTAIL_MODEL_TYPE as INFORMATION_TYPE } from '../models/information';
 import { WAGTAIL_MODEL_TYPE as TAG_TYPE } from '../models/tag';
+import { getArticlesfromStreamfield } from '../routes/tags';
 import RSVP from 'rsvp';
 const { hash, resolve } = RSVP;
 const { log } = console;
@@ -55,13 +56,36 @@ export default Route.extend({
             limit: 12,
           })
         }).then(results => {
-          if (results.articles.length === 0) {
+          // if tag has no articles with and no curated page, throw a 404 error
+          if (results.articles.length === 0 && results.page === {}) {
             let e = new DS.NotFoundError();
             e.url = `tags/${results.tag}`;
             throw e;
           }
-          // get tag name from first article
-          results.title = results.articles.firstObject.tags.findBy('slug', model.get('slug'))['name']
+
+          if (results.articles.length > 0) {
+            // get real tag name from first article
+            results.title = results.articles.firstObject.tags.findBy('slug', results.tag)['name'];
+            // meta info from the query results used by the load more results component
+            results.meta = results.articles.meta
+          } else {
+            results.meta = { count: 0 }
+          }
+
+          // get a list of featured articles found in collections in the curated page streamfields
+          if (results.page) {
+            let topFeaturedArticles = results.page.hasTopPageZone ? getArticlesfromStreamfield(results.page.topPageZone) : [];
+            let midFeaturedArticles = results.page.hasMidpageZone ? getArticlesfromStreamfield(results.page.midpageZone) : [];
+            results.featuredArticles = topFeaturedArticles.concat(midFeaturedArticles)
+          } else {
+            results.featuredArticles = []
+          }
+
+          // remove featured articles from the main list of articles
+          results.articles = results.articles.filter((article) => {
+            return !results.featuredArticles.map(a => a.id).includes(article.id)
+          });
+
           return results;
         }).then(model => {
           this.render('tags', { model })
