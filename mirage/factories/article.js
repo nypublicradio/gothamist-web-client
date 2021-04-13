@@ -8,7 +8,7 @@ import {
 } from './consts';
 
 const randomImage = function() {
-  return [212049,212048,211970,211968,211967][Math.floor(Math.random() * 5)]
+  return [212049,212048,211970,211968][Math.floor(Math.random() * 4)]
 }
 
 export default Factory.extend({
