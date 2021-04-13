@@ -126,7 +126,8 @@ export default function() {
     if (request.queryParams) {
       let { identifier, token } = request.queryParams;
       return schema.articles.findBy({ identifier, token }) ||
-      schema.galleries.findBy({ identifier, token });
+        schema.galleries.findBy({ identifier, token }) ||
+        schema.tagpages.findBy({ identifier, token });
     }
     return new Response(404);
   });

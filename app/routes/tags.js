@@ -9,7 +9,7 @@ import fade from 'ember-animated/transitions/fade';
 import config from '../config/environment';
 import addCommentCount from '../utils/add-comment-count';
 
-const getArticlesfromStreamfield = function(streamfield) {
+export const getArticlesfromStreamfield = function(streamfield) {
   return streamfield.reduce((articles, block) => {
     if (block.type === 'content-collection') {
       return articles.concat(block.relatedArticles.slice(0));
@@ -64,19 +64,23 @@ export default Route.extend({
       // HACK
       isWTC: sanitize(tag) === 'wethecommuters',
     }).then(results => {
-
+      // if tag has no articles with and no curated page, throw a 404 error
       if (results.articles.length === 0 && results.page === {}) {
         let e = new DS.NotFoundError();
         e.url = `tags/${results.tag}`;
         throw e;
       }
 
-      // get tag name from first article
       if (results.articles.length > 0) {
+        // get real tag name from first article
         results.title = results.articles.firstObject.tags.findBy('slug', tag)['name'];
+        // meta info from the query results used by the load more results component
+        results.meta = results.articles.meta
+      } else {
+        results.meta = { count: 0 }
       }
 
-
+      // get a list of featured articles found in collections in the curated page streamfields
       if (results.page) {
         let topFeaturedArticles = results.page.hasTopPageZone ? getArticlesfromStreamfield(results.page.topPageZone) : [];
         let midFeaturedArticles = results.page.hasMidpageZone ? getArticlesfromStreamfield(results.page.midpageZone) : [];
@@ -86,10 +90,10 @@ export default Route.extend({
       }
 
       // remove featured articles from the main list of articles
-      results.meta = results.articles.meta
       results.articles = results.articles.filter((article) => {
         return !results.featuredArticles.map(a => a.id).includes(article.id)
       });
+
 
       return results;
     })
