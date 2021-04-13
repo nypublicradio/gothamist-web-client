@@ -1,0 +1,21 @@
+<NyprOBlockListGroup @layoutType='two-up' as |blg|>
+  {{#with (object-at 0 @articles) as |article|}}
+    <blg.col1 data-test-col1>
+      <ArticleBlock
+        @article={{article}}
+        @orientation='v'
+        @thumbnailSize={{array 518 344 true}}
+    />
+    </blg.col1>
+  {{/with}}
+
+  {{#with (object-at 1 @articles) as |article|}}
+    <blg.col2 data-test-col2>
+      <ArticleBlock
+        @article={{article}}
+        @orientation='v'
+        @thumbnailSize={{array 518 344 true}}
+      />
+    </blg.col2>
+  {{/with}}
+</NyprOBlockListGroup>

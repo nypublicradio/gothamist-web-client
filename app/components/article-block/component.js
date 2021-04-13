@@ -134,6 +134,14 @@ export default Component.extend({
   */
 
   /**
+    Show the title (including eyebrow) above the image instead of below it
+
+    @argument titleOnTop
+    @type {Boolean}
+  */
+   titleOnTop: false,
+
+  /**
     Show the author's name in the metadata area. Default `false`.
 
     @argument showAuthor
@@ -178,7 +186,7 @@ export default Component.extend({
   /**
     Breakpoint for which the `mediumThumbnailSize` `source` elements will be configured. Please do not edit directly. Change in `app/breakpoints.js`.
 
-    @argument thunbnailBreakpoint
+    @argument thubnailBreakpoint
     @type {String}
   */
   thumbnailBreakpoint: medium,

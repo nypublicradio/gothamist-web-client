@@ -1,4 +1,22 @@
 <NyprMBlock @orientation={{@orientation}} @size={{@size}} data-test-block={{@article.id}} as |block|>
+  {{#if @titleOnTop}}
+    <block.object as |o|>
+      {{#unless @hideEyebrow}}
+        {{article-block/tags article=@article}}
+      {{/unless}}
+
+      <o.title
+        @h3
+        @route={{array 'article' @article.section.slug @article.path}}
+        @hasGallery={{@article.hasGallery}}
+        @hasVideo={{@article.hasVideo}}
+        @hasAudio={{@article.hasAudio}}
+      >
+        {{{this.title}}}
+      </o.title>
+    </block.object>
+  {{/if}}
+
   <block.media
     @route={{array 'article' @article.section.slug @article.path}}
     @srcS={{this.thumbnail.srcS}}
@@ -10,32 +28,21 @@
   />
 
   <block.object as |o|>
-    {{#if (and @article.section.title (not @hideEyebrow))}}
-      {{#if @article.isSponsored}}
-        <o.eyebrow @kickerClass="o-kicker--sponsored" @text="Sponsored"/>
-      {{else}}
-        <o.eyebrow
-          @route={{array 'sections' @article.section.slug}}
-          @text={{@article.section.title}}
-          data-test-section-label
-        />
-      {{/if}}
-      {{#if @article.isOpinion}}
-        <o.eyebrow @kickerClass="o-kicker--opinion" @route={{array 'tags' 'opinion'}} @text="Opinion"/>
-      {{/if}}
-    {{else if @article.isOpinion}}
-      <o.eyebrow @kickerClass="o-kicker--opinion" @route={{array 'tags' 'opinion'}} @text="Opinion"/>
-    {{/if}}
+    {{#if (not @titleOnTop)}}
+      {{#unless @hideEyebrow}}
+        {{article-block/tags article=@article}}
+      {{/unless}}
 
-    <o.title
-      @h3
-      @route={{array 'article' @article.section.slug @article.path}}
-      @hasGallery={{@article.hasGallery}}
-      @hasVideo={{@article.hasVideo}}
-      @hasAudio={{@article.hasAudio}}
-    >
-      {{{this.title}}}
-    </o.title>
+      <o.title
+        @h3
+        @route={{array 'article' @article.section.slug @article.path}}
+        @hasGallery={{@article.hasGallery}}
+        @hasVideo={{@article.hasVideo}}
+        @hasAudio={{@article.hasAudio}}
+      >
+        {{{this.title}}}
+      </o.title>
+    {{/if}}
 
     <o.body as |body|>
       {{#unless @hideExcerpt}}

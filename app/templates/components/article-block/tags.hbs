@@ -1,0 +1,18 @@
+{{#if @article.isSponsored}}
+  <NyprAKicker @text="Sponsored" class="c-block__eyebrow o-kicker--sponsored"/>
+{{else}}
+  {{#if @article.section.title}}
+    <NyprAKicker
+      @route={{array 'sections' @article.section.slug}}
+      @text={{@article.section.title}}
+      data-test-section-label
+      class="c-block__eyebrow"/>
+  {{/if}}
+  {{#if @article.isOpinion}}
+    <NyprAKicker
+      @route={{array 'tags' 'opinion'}}
+      @text="Opinion"
+      class="c-block__eyebrow o-kicker--opinion"
+    />
+  {{/if}}
+{{/if}}
