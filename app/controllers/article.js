@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-const NEWSLETTER_ENDPOINT = `${config.apiServer}/opt-in/v1/subscribe/mailchimp`;
+const NEWSLETTER_ENDPOINT = config.newsletterEndpoint;
 const NEWSLETTER_PARAMS = {list: config.dailyNewsletter};
 
 import PageController from './page'

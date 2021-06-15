@@ -6,7 +6,7 @@ import trackEvent from '../utils/track-event';
 
 const DONATE_URL = 'https://pledge3.wnyc.org/donate/gothamist/onestep/?utm_medium=partnersite&utm_source=gothamist&utm_campaign=brandheader';
 
-const NEWSLETTER_ENDPOINT = `${config.apiServer}/opt-in/v1/subscribe/mailchimp`;
+const NEWSLETTER_ENDPOINT = config.newsletterEndpoint;
 const NEWSLETTER_PARAMS = {list: config.dailyNewsletter};
 
 

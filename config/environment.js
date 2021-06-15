@@ -68,6 +68,7 @@ module.exports = function(environment) {
     champEndpoint: process.env.CHAMP_ENDPOINT,
 
     // OTHER CONFIG
+    newsletterEndpoint: `${process.env.API_SERVER}/email-proxy/subscribe`,
     wtcNewsletter:      '8c376c6dff',
     dailyNewsletter:    '65dbec786b',
     commentsAnchor:     'comments',

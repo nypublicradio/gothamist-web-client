@@ -114,7 +114,7 @@ export default Route.extend({
         limit: COUNT,
       },
       transition: fade,
-      wtcEndpoint: `${config.apiServer}/opt-in/v1/subscribe/mailchimp`,
+      wtcEndpoint: config.newsletterEndpoint,
       wtcParams: {list: config.wtcNewsletter},
     });
 
