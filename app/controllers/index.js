@@ -10,7 +10,7 @@ import {
   TOTAL_COUNT,
 } from '../routes/index';
 
-const NEWSLETTER_ENDPOINT = `${config.apiServer}/opt-in/v1/subscribe/mailchimp`;
+const NEWSLETTER_ENDPOINT = config.newsletterEndpoint;
 const NEWSLETTER_PARAMS = {list: config.dailyNewsletter};
 
 export default Controller.extend({
