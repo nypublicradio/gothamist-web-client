@@ -23,7 +23,7 @@
     "@sentry/ember": "^5.29.2",
     "@types/ember": "^3.16.0",
     "@types/ember-data": "^3.16.2",
-    "aws-sdk": "^2.496.0",
+    "aws-sdk": "^2.814.0",
     "better-sqlite3": "^5.4.1",
     "broccoli-asset-rev": "^2.7.0",
     "broccoli-stew": "^2.0.0",
